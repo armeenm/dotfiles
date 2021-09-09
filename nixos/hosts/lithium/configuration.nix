@@ -124,7 +124,7 @@
 
     xserver = {
       enable = true;
-      layout = builtins.trace config.boot.initrd.kernelModules "us";
+      layout = "us";
 
       displayManager = {
         lightdm.greeter.enable = false;
@@ -135,15 +135,7 @@
         };
       };
 
-      desktopManager.session = [
-        {
-          name = "user-xsession";
-          start = ''
-            ${pkgs.runtimeShell} $HOME/.xsession &
-            waitPID=$!
-          '';
-        }
-      ];
+      user-xsession.enable = true;
 
       xkbOptions = "caps:ctrl_modifier";
 
