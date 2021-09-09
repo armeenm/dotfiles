@@ -1,7 +1,8 @@
 {
   imports = [
     ./nvidia.nix
-    ./user-xsession.nix
     ./autologin.nix
+    ./user-xsession.nix
+    ./noaccel-input.nix
   ];
 }

@@ -126,26 +126,11 @@
       enable = true;
       layout = "us";
 
-      displayManager = {
-        lightdm.greeter.enable = false;
+      userXsession.enable = true;
+      noAccelInput.enable = true;
 
-        autoLogin = {
-          enable = true;
-          user = "nixpower";
-        };
-      };
-
-      user-xsession.enable = true;
-
+      autoLoginUser = "nixpower";
       xkbOptions = "caps:ctrl_modifier";
-
-      libinput = {
-        enable = true;
-        mouse.accelProfile = "flat";
-        mouse.accelSpeed = "0";
-        touchpad.accelProfile = "flat";
-        touchpad.accelSpeed = "0";
-      };
     };
   };
 
