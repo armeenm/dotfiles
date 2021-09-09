@@ -1,8 +1,6 @@
 { config, pkgs, lib, inputs, ... }:
 
 {
-  imports = [ ./hardware-configuration.nix ];
-
   system.stateVersion = "21.05"; # Don't change
   
   nix = {
@@ -12,11 +10,6 @@
       keep-derivations = true
       experimental-features = nix-command flakes
     '';
-  };
-
-  nixpkgs.config = {
-    allowUnfree = true;
-    overlays = [ import ../../overlays/mathematica.nix ];
   };
 
   boot = {
