@@ -22,7 +22,7 @@
     , unstable
     , nur
     , utils
-    , ... } @ inputs: utils.lib.systemFlake {
+    , ... } @ inputs: utils.lib.mkFlake {
       inherit self inputs;
 
       channelsConfig.allowUnfree = true;
@@ -31,10 +31,8 @@
         (import ./overlays/mathematica.nix)
       ];
 
-      hostDefaults.modules = [];
+      hostDefaults.modules = [ ./modules ];
 
-      hosts.lithium.modules = [
-        ./hosts/lithium
-      ];
+      hosts.lithium.modules = [ ./hosts/lithium ];
     };
 }

@@ -19,10 +19,6 @@
         "nls_cp437"
         "nls_iso8859-1"
         "usbhid"
-        "nvidia"
-        "nvidia_modeset"
-        "nvidia_uvm"
-        "nvidia_drm"
       ];
 
       luks = {
@@ -128,8 +124,7 @@
 
     xserver = {
       enable = true;
-      layout = "us";
-      videoDrivers = [ "nvidia" ];
+      layout = builtins.trace config.boot.initrd.kernelModules "us";
 
       displayManager = {
         lightdm.greeter.enable = false;
@@ -164,7 +159,7 @@
 
   hardware = {
     bluetooth.enable = true;
-    nvidia.modesetting.enable = true;
+    nvidia.enable = true;
   };
 
   users.users.nixpower = {
@@ -176,7 +171,6 @@
   environment = {
     systemPackages = with pkgs; [
       neovim
-      rxvt-unicode
       mathematica
       unstable.torbrowser
     ];
