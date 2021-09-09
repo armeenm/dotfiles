@@ -1,4 +1,4 @@
-{ config, pkgs, lib, modulesPath, inputs, ... }:
+{ config, pkgs, lib, inputs, ... }:
 
 {
   imports = [ ./hardware-configuration.nix ];
@@ -16,15 +16,7 @@
 
   nixpkgs.config = {
     allowUnfree = true;
-
-    mullvad-vpn = pkgs.mullvad-vpn.overrideAttrs (old: rec {
-      version = "2020.7";
-      src = pkgs.fetchurl {
-        url = "https://www.mullvad.net/media/app/MullvadVPN-${version}_amd64.deb";
-        sha256 = "07vryz1nq8r4m5y9ry0d0v62ykz1cnnsv628x34yvwiyazbav4ri";
-      };
-    });
-
+    overlays = [ import ../../overlays/mathematica.nix ];
   };
 
   boot = {
@@ -127,7 +119,9 @@
     };
 
     udev = {
-      extraRules = builtins.readFile "${pkgs.ddcutil}/share/ddcutil/data/45-ddcutil-i2c.rules";
+      extraRules = builtins.readFile
+        "${pkgs.ddcutil}/share/ddcutil/data/45-ddcutil-i2c.rules";
+
       packages = with pkgs; [
         ledger-udev-rules
         yubikey-personalization
@@ -190,23 +184,8 @@
     systemPackages = with pkgs; [
       neovim
       rxvt-unicode
-      inputs.nixpkgs-unstable.pkgs.torbrowser
-
-      (mathematica.overrideAttrs (old: rec {
-        version = "12.3.1";
-        lang = "en";
-
-        name = "mathematica-${version}" + lib.optionalString (lang != "en") "-${lang}";
-        src = requireFile rec {
-          name = "Mathematica_${version}" + lib.optionalString (lang != "en") "_${language}" + "_LINUX.sh";
-          message = ''
-            This nix expression requires that ${name} is
-            already part of the store. Find the file on your Mathematica CD
-            and add it to the nix store with nix-store --add-fixed sha256 <FILE>.
-          '';
-          sha256 = "51b9cab12fd91b009ea7ad4968a2c8a59e94dc55d2e6cc1d712acd5ba2c4d509";
-        };
-      }))
+      mathematica
+      unstable.torbrowser
     ];
 
     defaultPackages = lib.mkForce [];
