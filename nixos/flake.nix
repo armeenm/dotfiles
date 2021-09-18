@@ -5,22 +5,22 @@
     nixpkgs.url = "github:nixos/nixpkgs/release-21.05";
     unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
-    nur.url = "github:nix-community/NUR/master";
-    nur.inputs.nixpkgs.follows = "nixpkgs";
-
     agenix.url = "github:ryantm/agenix";
     agenix.inputs.nixpkgs.follows = "nixpkgs";
 
+    home-manager.url = "github:nix-community/home-manager/release-21.05";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+
     nixos-hardware.url = "github:nixos/nixos-hardware";
 
-    utils.url = "github:gytis-ivaskevicius/flake-utils-plus";
+    utils.url = "github:gytis-ivaskevicius/flake-utils-plus/1.3.0";
   };
 
   outputs =
     { self
     , nixpkgs
     , unstable
-    , nur
+    , home-manager
     , utils
     , ... } @ inputs: utils.lib.mkFlake {
       inherit self inputs;
@@ -34,5 +34,15 @@
       hostDefaults.modules = [ ./modules ];
 
       hosts.lithium.modules = [ ./hosts/lithium ];
+
+      homeConfigurations = {
+        "nixpower" = home-manager.lib.homeManagerConfiguration {
+          configuration = import ./home.nix;
+          system = "x86_64-linux";
+          homeDirectory = "/home/nixpower";
+          username = "nixpower";
+          stateVersion = "21.05";
+        };
+      };
     };
 }

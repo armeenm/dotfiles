@@ -54,7 +54,9 @@
 
     networkmanager.enable = true;
     iproute2.enable = true;
-    wireguard.enable = false; # TODO
+    wireguard.enable = true;
+
+    firewall.checkReversePath = "loose";
   };
 
   i18n.defaultLocale = "en_US.UTF-8";
@@ -148,7 +150,7 @@
   environment = {
     systemPackages = with pkgs; [
       neovim
-      mathematica
+      #mathematica
       unstable.torbrowser
     ];
 
@@ -159,6 +161,7 @@
 
   programs = {
     adb.enable = true;
+
     neovim = {
       enable = true;
       viAlias = true;

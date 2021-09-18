@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, nixos-hardware, pkgs, lib, ... }:
 
 let
   inherit (lib) mkOption mkIf types;
