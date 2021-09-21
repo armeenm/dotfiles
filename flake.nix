@@ -5,6 +5,8 @@
     nixpkgs.url = "github:nixos/nixpkgs/release-21.05";
     unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
+    nur.url = "github:nix-community/NUR";
+
     agenix.url = "github:ryantm/agenix";
     agenix.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -20,29 +22,30 @@
     { self
     , nixpkgs
     , unstable
+    , nur
     , home-manager
     , utils
     , ... } @ inputs: utils.lib.mkFlake {
       inherit self inputs;
 
+      overlay = import ./overlays;
+
       channelsConfig.allowUnfree = true;
+
       channels.nixpkgs.overlaysBuilder = channels: [
         (final: prev: { unstable = channels.unstable; })
-        (import ./overlays/mathematica.nix)
       ];
 
-      hostDefaults.modules = [ ./modules ];
+      sharedOverlays = [
+        self.overlay
+        nur.overlay
+      ];
 
-      hosts.lithium.modules = [ ./hosts/lithium ];
+      hostDefaults.modules = [
+        ./modules
+        home-manager.nixosModules.home-manager
+      ];
 
-      homeConfigurations = {
-        "nixpower" = home-manager.lib.homeManagerConfiguration {
-          configuration = import ./home.nix;
-          system = "x86_64-linux";
-          homeDirectory = "/home/nixpower";
-          username = "nixpower";
-          stateVersion = "21.05";
-        };
-      };
+      hosts = import ./hosts;
     };
 }

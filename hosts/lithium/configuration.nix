@@ -150,8 +150,7 @@
   environment = {
     systemPackages = with pkgs; [
       neovim
-      #mathematica
-      unstable.torbrowser
+      unstable.mathematica
     ];
 
     defaultPackages = lib.mkForce [];
