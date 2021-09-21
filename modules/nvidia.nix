@@ -2,9 +2,9 @@
 
 let
   inherit (lib) mkOption mkIf types;
-  cfg = config.hardware.nvidia;
+  cfg = config.hardware.custom.nvidia;
 in {
-  options.hardware.nvidia = {
+  options.hardware.custom.nvidia = {
     enable = mkOption {
       default = false;
       type = types.bool;

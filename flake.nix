@@ -25,27 +25,33 @@
     , nur
     , home-manager
     , utils
-    , ... } @ inputs: utils.lib.mkFlake {
-      inherit self inputs;
+    , ... } @ inputs:
+    let
+      ext = import ./ext { lib = nixpkgs.lib; };
+    in
+      utils.lib.mkFlake {
+        inherit self inputs;
 
-      overlay = import ./overlays;
+        channelsConfig.allowUnfree = true;
 
-      channelsConfig.allowUnfree = true;
+        channels.nixpkgs.overlaysBuilder = channels: [
+          (_: _: { unstable = channels.unstable; })
+        ];
 
-      channels.nixpkgs.overlaysBuilder = channels: [
-        (final: prev: { unstable = channels.unstable; })
-      ];
+        overlay = import ./overlays;
 
-      sharedOverlays = [
-        self.overlay
-        nur.overlay
-      ];
+        sharedOverlays = [
+          self.overlay
+          nur.overlay
+        ];
 
-      hostDefaults.modules = [
-        ./modules
-        home-manager.nixosModules.home-manager
-      ];
+        hosts = import ./hosts;
 
-      hosts = import ./hosts;
-    };
+        hostDefaults.modules = [
+          ./modules
+          home-manager.nixosModules.home-manager
+        ];
+
+        hostDefaults.extraArgs = { inherit ext; };
+      };
 }

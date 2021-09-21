@@ -2,9 +2,9 @@
 
 let
   inherit (lib) mkOption mkIf types;
-  cfg = config.services.xserver.noAccelInput;
+  cfg = config.services.xserver.custom.noAccelInput;
 in {
-  options.services.xserver.noAccelInput = {
+  options.services.xserver.custom.noAccelInput = {
     enable = mkOption {
       default = false;
       type = types.bool;

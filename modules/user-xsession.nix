@@ -2,9 +2,9 @@
 
 let
   inherit (lib) mkOption mkIf types;
-  cfg = config.services.xserver.userXsession;
+  cfg = config.services.xserver.custom.userXsession;
 in {
-  options.services.xserver.userXsession = {
+  options.services.xserver.custom.userXsession = {
     enable = mkOption {
       default = false;
       type = types.bool;

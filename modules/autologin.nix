@@ -2,9 +2,9 @@
 
 let
   inherit (lib) mkOption mkIf types;
-  cfg = config.services.xserver.autoLoginUser;
+  cfg = config.services.xserver.custom.autoLoginUser;
 in {
-  options.services.xserver.autoLoginUser = mkOption {
+  options.services.xserver.custom.autoLoginUser = mkOption {
     default = null;
     type = types.nullOr types.str;
   };
