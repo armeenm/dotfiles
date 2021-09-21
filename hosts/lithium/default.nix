@@ -23,7 +23,6 @@
     hostName = "lithium";
 
     networkmanager.enable = true;
-    iproute2.enable = false;
     wireguard.enable = true;
 
     firewall.checkReversePath = "loose";
@@ -42,7 +41,7 @@
 
   services = {
     upower.enable = true;
-    mullvad-vpn.enable = true;
+    #mullvad-vpn.enable = true;
     avahi.enable = true;
     blueman.enable = true;
     pcscd.enable = true;
