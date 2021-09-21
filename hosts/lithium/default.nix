@@ -23,7 +23,7 @@
     hostName = "lithium";
 
     networkmanager.enable = true;
-    iproute2.enable = true;
+    iproute2.enable = false;
     wireguard.enable = true;
 
     firewall.checkReversePath = "loose";
