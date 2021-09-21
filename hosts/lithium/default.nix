@@ -1,7 +1,7 @@
 { config, pkgs, lib, inputs, ... }:
 
 {
-  imports = [ ./hardware-configuration.nix ];
+  imports = [ ./hardware-configuration.nix ./home.nix ];
   
   system.stateVersion = lib.mkForce "21.05";
 
@@ -123,11 +123,11 @@
     ];
 
     variables.EDITOR = "nvim";
+    pathsToLink = [ "/share/zsh" ];
   };
 
   programs = {
     adb.enable = true;
-    zsh.enable = true;
 
     custom.ddcutil = {
       enable = true;

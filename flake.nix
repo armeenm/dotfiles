@@ -28,6 +28,7 @@
     , ... } @ inputs:
     let
       ext = import ./ext { lib = nixpkgs.lib; };
+      root = ./.;
     in
       utils.lib.mkFlake {
         inherit self inputs;
@@ -52,6 +53,6 @@
           home-manager.nixosModules.home-manager
         ];
 
-        hostDefaults.extraArgs = { inherit ext; };
+        hostDefaults.extraArgs = { inherit ext root; };
       };
 }
