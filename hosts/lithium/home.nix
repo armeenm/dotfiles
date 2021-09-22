@@ -9,13 +9,15 @@ in
     home = let
       symlink = self.lib.file.mkOutOfStoreSymlink;
       seafile = "${self.home.homeDirectory}/.seafile/Seafile";
+      files = "${seafile}/mylib";
+      shared = "${seafile}/common";
     in {
       username = "nixpower";
       homeDirectory = "/home/nixpower";
       stateVersion = lib.mkForce "21.05";
   
       file.lock = {
-        target = "bin/lock";
+        target = ".local/bin/lock";
         executable = true;
         text = ''
           #!${pkgs.bash}/bin/bash
@@ -26,17 +28,19 @@ in
       };
 
       sessionVariables = {
-        HISTFILE = "$XDG_CACHE_HOME/zsh_history";
+        PATH = "$PATH:$HOME/.local/bin";
       };
 
-      file.seafile.source = symlink seafile;
-      file.dl.source = symlink "${seafile}/mylib/dl";
-      file.media.source = symlink "${seafile}/mylib/media";
-      file.music.source = symlink "${seafile}/mylib/music";
-      file.docs.source = symlink "${seafile}/mylib/docs";
-      file.ss.source = symlink "${seafile}/mylib/ss";
+      file.shared.source = symlink shared;
+      file.files.source = symlink files;
+      file.dl.source = symlink "${files}/dl";
+      file.media.source = symlink "${files}/media";
+      file.music.source = symlink "${files}/music";
+      file.docs.source = symlink "${files}/docs";
+      file.ss.source = symlink "${files}/ss";
   
       packages = with pkgs; [
+        o-mathematica
         gimp-with-plugins
         trash-cli
         element-desktop
@@ -96,7 +100,7 @@ in
         nmap
         iperf
         seafile-client
-        seafile-shared
+        o-seafile-shared
         speedtest-cli
         wineWowPackages.stable
         (winetricks.override { wine = wineWowPackages.stable; })
@@ -226,6 +230,7 @@ in
       ncmpcpp.enable = true;
       gpg.enable = true;
       mpv.enable = true;
+      autojump.enable = true;
 
       autorandr = {
         enable = true;
@@ -385,7 +390,8 @@ in
         enableCompletion = true;
         autocd = true;
         defaultKeymap = "viins";
-        dotDir = ".config/zsh";
+        dotDir = ".config/zsh"; # TODO: Have this use XDG
+        history.path = "${self.xdg.dataHome}/zsh/zsh_history";
         shellAliases = {
           "hm" = "home-manager";
           "userctl" = "systemctl --user";

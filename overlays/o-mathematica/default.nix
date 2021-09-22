@@ -1,4 +1,4 @@
-{ pkgs, lib, mathematica }:
+{ pkgs, lib, mathematica, ... }:
 
 with lib;
 
@@ -8,7 +8,7 @@ mathematica.overrideAttrs (old: rec {
   language = "English";
 
   name = "mathematica-${version}" + optionalString (lang != "en") "-${lang}";
-  src = requireFile rec {
+  src = pkgs.requireFile rec {
     name = "Mathematica_${version}" + optionalString (lang != "en") "_${language}" + "_LINUX.sh";
     message = ''
       This nix expression requires that ${name} is

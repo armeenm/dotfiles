@@ -119,8 +119,8 @@
     defaultPackages = lib.mkForce [];
 
     systemPackages = with pkgs; [
+      rxvt_unicode.terminfo
       neovim
-      unstable.mathematica
     ];
 
     variables.EDITOR = "nvim";
