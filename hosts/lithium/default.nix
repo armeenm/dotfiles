@@ -46,7 +46,9 @@
     blueman.enable = true;
     pcscd.enable = true;
     udisks2.enable = true;
-    #tcsd.enable = true;
+    autorandr.enable = true;
+
+    tcsd.enable = false;
 
     openssh = {
       enable = true;

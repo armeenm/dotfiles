@@ -5,8 +5,7 @@ let
 in
 {
   home-manager.users.nixpower = rec {
-    home =
-    let
+    home = let
       #symlink = lib.file.mkOutOfStoreSymlink;
       seafile = "${config.home.homeDirectory}/.seafile/Seafile";
     in {
@@ -24,7 +23,7 @@ in
           #${pkgs.vbetool}/bin/vbetool dpms off
         '';
       };
-  
+
       #file.seafile.source = lib.file.mkOutOfStoreSymlink seafile;
       #file.dl.source = symlink "${seafile}/mylib/dl";
       #file.media.source = symlink "${seafile}/mylib/media";
@@ -142,12 +141,16 @@ in
       ];
     };
 
-    nixpkgs.config.allowUnfree = true;
+    xdg = {
+      enable = true;
+
+      configFile = {
+        "xmobar".source = "${root}/conf/xmobar";
+      };
+    };
 
     fonts.fontconfig.enable = lib.mkForce true;
 
-    xdg.enable = true;
-  
     xsession = {
       enable = true;
   
@@ -218,7 +221,7 @@ in
       ncmpcpp.enable = true;
       gpg.enable = true;
       mpv.enable = true;
-  
+
       autorandr = {
         enable = true;
   
@@ -377,6 +380,7 @@ in
         enableCompletion = true;
         autocd = true;
         defaultKeymap = "viins";
+        dotDir = ".config/zsh";
         shellAliases = {
           "hm" = "home-manager";
           "userctl" = "systemctl --user";
