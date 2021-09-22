@@ -154,8 +154,6 @@ in
       };
     };
 
-    fonts.fontconfig.enable = lib.mkForce true;
-
     xsession = {
       enable = true;
   
@@ -182,6 +180,8 @@ in
         } + "/Xresources"
       );
     };
+
+    fonts.fontconfig.enable = lib.mkForce true;
   
     services = {
       flameshot.enable = true;
