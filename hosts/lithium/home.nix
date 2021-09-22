@@ -2,12 +2,13 @@
 
 let
   restart-wm = "${pkgs.xmonad-with-packages}/bin/xmonad --restart";
+  self = config.home-manager.users.nixpower;
 in
 {
   home-manager.users.nixpower = rec {
     home = let
-      #symlink = lib.file.mkOutOfStoreSymlink;
-      seafile = "${config.home.homeDirectory}/.seafile/Seafile";
+      symlink = self.lib.file.mkOutOfStoreSymlink;
+      seafile = "${self.home.homeDirectory}/.seafile/Seafile";
     in {
       username = "nixpower";
       homeDirectory = "/home/nixpower";
@@ -24,12 +25,16 @@ in
         '';
       };
 
-      #file.seafile.source = lib.file.mkOutOfStoreSymlink seafile;
-      #file.dl.source = symlink "${seafile}/mylib/dl";
-      #file.media.source = symlink "${seafile}/mylib/media";
-      #file.music.source = symlink "${seafile}/mylib/music";
-      #file.docs.source = symlink "${seafile}/mylib/docs";
-      #file.ss.source = symlink "${seafile}/mylib/ss";
+      sessionVariables = {
+        HISTFILE = "$XDG_CACHE_HOME/zsh_history";
+      };
+
+      file.seafile.source = symlink seafile;
+      file.dl.source = symlink "${seafile}/mylib/dl";
+      file.media.source = symlink "${seafile}/mylib/media";
+      file.music.source = symlink "${seafile}/mylib/music";
+      file.docs.source = symlink "${seafile}/mylib/docs";
+      file.ss.source = symlink "${seafile}/mylib/ss";
   
       packages = with pkgs; [
         gimp-with-plugins
