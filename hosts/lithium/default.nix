@@ -10,8 +10,8 @@
   boot = {
     custom.luks-yubikey = {
       enable = true;
-      boot = "/dev/nvme0n1p1";
-      root = "/dev/nvme0n1p2";
+      root = config.fileSystems."/".device;
+      boot = config.fileSystems."/boot".device;
     };
 
     custom.efi.enable = true;

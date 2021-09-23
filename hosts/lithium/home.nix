@@ -41,7 +41,7 @@ in
       file.ss.source = symlink "${files}/ss";
   
       packages = with pkgs; [
-        #ol.mathematica
+        ol.mathematica
         ol.discord
         gimp-with-plugins
         trash-cli
