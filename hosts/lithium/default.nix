@@ -10,7 +10,7 @@
   boot = {
     custom.luks-yubikey = {
       enable = true;
-      root = config.fileSystems."/".device;
+      root = "/dev/disk/by-uuid/6d656974-8d5a-4820-a8c2-957f83ae5a2a";
       boot = config.fileSystems."/boot".device;
     };
 
@@ -97,6 +97,16 @@
 
       layout = "us";
       xkbOptions = "caps:ctrl_modifier";
+
+      displayManager = {
+        #sessionCommands = ''
+        #  ${pkgs.xorg.xrdb}/bin/xrdb -merge "$XDG_CONFIG_HOME"/xresources";
+        #'';
+
+        lightdm.extraConfig = ''
+          user-authority-in-system-dir = true
+        '';
+      };
 
       custom.noAccelInput.enable = true;
       custom.userXsession.enable = true;

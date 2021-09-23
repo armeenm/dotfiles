@@ -34,6 +34,7 @@ in
 
       sessionVariables = {
         PATH = "$PATH:$HOME/.local/bin";
+        LESSHISTFILE = "${self.xdg.dataHome}/less/history";
       };
 
       file.shared.source = symlink shared;
@@ -189,6 +190,8 @@ in
     };
   
     xresources = {
+      path = "${self.xdg.configHome}/xresources";
+      
       extraConfig = builtins.readFile (
         pkgs.fetchFromGitHub {
           owner = "dracula";
@@ -200,7 +203,7 @@ in
     };
 
     fonts.fontconfig.enable = lib.mkForce true;
-  
+
     services = {
       flameshot.enable = true;
       playerctld.enable = true;
@@ -227,10 +230,6 @@ in
         pinentryFlavor = "emacs";
       };
       
-      emacs = {
-        enable = true;
-      };
-  
       mpd = {
         enable = true;
         network.startWhenNeeded = true;
@@ -410,7 +409,7 @@ in
         defaultKeymap = "viins";
 
         dotDir = "${builtins.baseNameOf self.xdg.configHome}/zsh";
-        history.path = "${self.xdg.dataHome}/zsh/zsh_history";
+        history.path = "${self.xdg.dataHome}/zsh/history";
 
         envExtra = ''
           source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme

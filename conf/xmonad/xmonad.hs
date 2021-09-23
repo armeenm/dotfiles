@@ -55,7 +55,8 @@ import XMonad.Util.Themes
 
 main = do
   spawn "urxvtd -q -o -f"
-  -- spawn "autorandr --load default"
+  spawn "emacs --daemon"
+
   xmproc <- spawnPipe "xmobar -x 0"
 
   let barLogHook =
