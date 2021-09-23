@@ -3,3 +3,6 @@
 
 [credential]
   helper = "store"
+
+[core]
+  editor = "nvim"
