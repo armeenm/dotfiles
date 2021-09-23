@@ -98,15 +98,9 @@
       layout = "us";
       xkbOptions = "caps:ctrl_modifier";
 
-      displayManager = {
-        #sessionCommands = ''
-        #  ${pkgs.xorg.xrdb}/bin/xrdb -merge "$XDG_CONFIG_HOME"/xresources";
-        #'';
-
-        lightdm.extraConfig = ''
-          user-authority-in-system-dir = true
-        '';
-      };
+      displayManager.lightdm.extraConfig = ''
+        user-authority-in-system-dir = true
+      '';
 
       custom.noAccelInput.enable = true;
       custom.userXsession.enable = true;
