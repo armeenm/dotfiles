@@ -1,9 +1,12 @@
 { config, pkgs, lib, root, ... }:
 
 let
-  restart-wm = "${pkgs.xmonad-with-packages}/bin/xmonad --restart";
   username = "nixpower";
+  name = "Armeen Mahdian";
+  email = "mahdianarmeen@gmail.com";
   self = config.home-manager.users."${username}";
+
+  restart-wm = "${pkgs.xmonad-with-packages}/bin/xmonad --restart";
 in
 {
   home-manager.users."${username}" = rec {
@@ -329,8 +332,8 @@ in
   
       git = {
         enable = true;
-        userEmail = "mahdianarmeen@gmail.com";
-        userName = "Armeen Mahdian";
+        userEmail = email;
+        userName = name;
   
         delta = {
           enable = true;
