@@ -403,7 +403,7 @@ in
         autocd = true;
         defaultKeymap = "viins";
 
-        dotDir = ".config/zsh";
+        dotDir = "${builtins.baseNameOf self.xdg.configHome}/zsh";
         history.path = "${self.xdg.dataHome}/zsh/zsh_history";
 
         envExtra = ''
