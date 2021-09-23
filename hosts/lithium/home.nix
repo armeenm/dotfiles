@@ -6,6 +6,7 @@ let
   email = "mahdianarmeen@gmail.com";
   self = config.home-manager.users."${username}";
 
+  conf = "${root}/conf";
   restart-wm = "${pkgs.xmonad-with-packages}/bin/xmonad --restart";
 in
 {
@@ -159,9 +160,10 @@ in
       enable = true;
 
       configFile = {
-        "xmobar".source = "${root}/conf/xmobar";
-        "discord/settings.json".source = "${root}/conf/discord/settings.json";
-        "zsh/.p10k.zsh".source = "${root}/conf/zsh/p10k.zsh";
+        "xmobar".source = "${conf}/xmobar";
+        "flameshot".source = "${conf}/flameshot";
+        "discord/settings.json".source = "${conf}/discord/settings.json";
+        "zsh/.p10k.zsh".source = "${conf}/zsh/p10k.zsh";
       };
     };
 

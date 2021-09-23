@@ -171,7 +171,7 @@ myKeys conf =
     , ("M-S-a", windowPrompt myXPConfig Bring allWindows)
     , ("M-g", workspacePrompt myXPConfig (windows . W.greedyView))
     , ("M-S-g", workspacePrompt myXPConfig (windows . W.shift))
-    , ("M-<F1>", spawn "flameshot gui -p ~/ss")
+    , ("M-<F1>", spawn "flameshot gui")
     , ("M-<F2>", spawn "xautolock -locknow")
     , ("M-<F3>", spawn "kill -s USR1 $(pidof dunst)") -- Disable notifs
     , ("M-<F4>", spawn "kill -s USR2 $(pidof dunst)") -- Enable notifs
