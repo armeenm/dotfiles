@@ -167,6 +167,8 @@ in
 
       scriptPath = ".config/xsession";
       profilePath = ".config/xprofile";
+
+      profileExtra = "autorandr --load default";
   
       pointerCursor = {
         package = pkgs.vanilla-dmz;
@@ -243,6 +245,7 @@ in
       gpg.enable = true;
       mpv.enable = true;
       autojump.enable = true;
+      fzf.enable = true;
 
       autorandr = {
         enable = true;
@@ -336,6 +339,8 @@ in
             line-numbers = true;
           };
         };
+
+        includes = [ { path = "${root}/conf/git/general.inc"; } ];
       };
   
       neovim = {
@@ -389,11 +394,6 @@ in
           url-launcher = "chromium";
           perl-ext-common = "default,matcher";
         };
-      };
-  
-      fzf = {
-        enable = true;
-        enableZshIntegration = true;
       };
   
       zsh = {
