@@ -55,7 +55,6 @@ import XMonad.Util.Themes
 
 main = do
   spawn "urxvtd -q -o -f"
-  spawn "emacs --daemon"
 
   xmproc <- spawnPipe "xmobar -x 0"
 

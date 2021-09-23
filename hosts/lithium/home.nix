@@ -207,6 +207,7 @@ in
     services = {
       flameshot.enable = true;
       playerctld.enable = true;
+      emacs.enable = true;
 
       dunst = {
         enable = true;
