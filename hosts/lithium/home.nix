@@ -35,6 +35,9 @@ in
       sessionVariables = {
         PATH = "$PATH:$HOME/.local/bin";
         LESSHISTFILE = "${self.xdg.dataHome}/less/history";
+        ANDROID_SDK_ROOT = "${self.xdg.dataHome}/android";
+        ANDROID_SDK_HOME = "${self.xdg.dataHome}/android";
+        ANDROID_EMULATOR_HOME = "${self.xdg.dataHome}/android";
       };
 
       file.shared.source = symlink shared;
@@ -154,6 +157,7 @@ in
         vulkan-loader
         vulkan-tools
         linuxPackages.cpupower
+        gnome.gtk
       ];
     };
 
@@ -209,7 +213,7 @@ in
       playerctld.enable = true;
 
       emacs = {
-        enable = true;
+        enable = false;
         client.enable = true;
         client.arguments = [ "-c" "-n" ];
       };
