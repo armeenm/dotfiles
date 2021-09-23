@@ -2,18 +2,19 @@
 
 let
   restart-wm = "${pkgs.xmonad-with-packages}/bin/xmonad --restart";
-  self = config.home-manager.users.nixpower;
+  username = "nixpower";
+  self = config.home-manager.users."${username}";
 in
 {
-  home-manager.users.nixpower = rec {
+  home-manager.users."${username}" = rec {
     home = let
       symlink = self.lib.file.mkOutOfStoreSymlink;
       seafile = "${self.home.homeDirectory}/.seafile/Seafile";
       files = "${seafile}/mylib";
       shared = "${seafile}/common";
     in {
-      username = "nixpower";
-      homeDirectory = "/home/nixpower";
+      inherit username;
+      homeDirectory = "/home/${username}";
       stateVersion = lib.mkForce "21.05";
   
       file.lock = {
@@ -40,8 +41,8 @@ in
       file.ss.source = symlink "${files}/ss";
   
       packages = with pkgs; [
-        #o-mathematica
-        o-discord
+        #ol.mathematica
+        ol.discord
         gimp-with-plugins
         trash-cli
         element-desktop
@@ -100,7 +101,7 @@ in
         nmap
         iperf
         seafile-client
-        o-seafile-shared
+        ol.seafile-shared
         speedtest-cli
         wineWowPackages.stable
         (winetricks.override { wine = wineWowPackages.stable; })
@@ -423,6 +424,19 @@ in
           "sudo" = "sudo ";
           "noti" = "noti ";
         };
+
+        plugins = [
+          {
+            name = "zsh-nix-shell";
+            file = "nix-shell.plugin.zsh";
+            src = pkgs.fetchFromGitHub {
+              owner = "chisui";
+              repo = "zsh-nix-shell";
+              rev = "v0.4.0";
+              sha256 = "037wz9fqmx0ngcwl9az55fgkipb745rymznxnssr3rx9irb6apzg";
+            };
+          }
+        ];
       };
     };
   };
