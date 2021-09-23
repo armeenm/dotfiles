@@ -125,6 +125,7 @@ in
         noto-fonts-emoji
         fira-code
         fira-code-symbols
+        font-awesome-ttf
         libreoffice-fresh
         gparted
         parted
@@ -156,6 +157,7 @@ in
       configFile = {
         "xmobar".source = "${root}/conf/xmobar";
         "discord/settings.json".source = "${root}/conf/discord/settings.json";
+        "zsh/.p10k.zsh".source = "${root}/conf/zsh/p10k.zsh";
       };
     };
 
@@ -404,6 +406,16 @@ in
         dotDir = ".config/zsh";
         history.path = "${self.xdg.dataHome}/zsh/zsh_history";
 
+        envExtra = ''
+          source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
+
+          if [[ -r "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh" ]]; then
+            source "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh"
+          fi
+          
+          [[ ! -f ~/.config/zsh/.p10k.zsh ]] || source ~/.config/zsh/.p10k.zsh
+        '';
+
         shellAliases = {
           "hm" = "home-manager";
           "userctl" = "systemctl --user";
@@ -411,8 +423,6 @@ in
           "sudo" = "sudo ";
           "noti" = "noti ";
         };
-
-        plugins = [];
       };
     };
   };
