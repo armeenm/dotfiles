@@ -34,10 +34,11 @@ in
 
       sessionVariables = {
         PATH = "$PATH:$HOME/.local/bin";
-        LESSHISTFILE = "${self.xdg.dataHome}/less/history";
+        LESSHISTFILE = "${self.xdg.cacheHome}/less/history";
         ANDROID_SDK_ROOT = "${self.xdg.dataHome}/android";
         ANDROID_SDK_HOME = "${self.xdg.dataHome}/android";
         ANDROID_EMULATOR_HOME = "${self.xdg.dataHome}/android";
+        CUDA_CACHE_PATH = "${self.xdg.cacheHome}/nv";
       };
 
       file.shared.source = symlink shared;
@@ -46,6 +47,8 @@ in
       file.media.source = symlink "${files}/media";
       file.music.source = symlink "${files}/music";
       file.docs.source = symlink "${files}/docs";
+      file.desktop.source = symlink "${files}/desktop";
+      file.templates.source = symlink "${files}/templates";
       file.ss.source = symlink "${files}/ss";
   
       packages = with pkgs; [
@@ -158,11 +161,24 @@ in
         vulkan-tools
         linuxPackages.cpupower
         gnome.gtk
+        xdg-user-dirs
       ];
     };
 
     xdg = {
       enable = true;
+
+      userDirs = {
+        enable = true;
+        desktop = "\$HOME/desktop";
+        documents = "\$HOME/docs";
+        download = "\$HOME/dl";
+        music = "\$HOME/music";
+        pictures = "\$HOME/media";
+        publicShare = "\$HOME/shared";
+        templates = "\$HOME/templates";
+        videos = "\$HOME/media";
+      };
 
       configFile = {
         "xmobar".source = "${conf}/xmobar";
@@ -419,7 +435,7 @@ in
         defaultKeymap = "viins";
 
         dotDir = "${builtins.baseNameOf self.xdg.configHome}/zsh";
-        history.path = "${self.xdg.dataHome}/zsh/history";
+        history.path = "${self.xdg.cacheHome}/zsh/history";
 
         envExtra = ''
           source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
