@@ -1,0 +1,11 @@
+--- a/src/session.c     2018-08-30 02:28:55.000000000 +0200
++++ b/src/session.c     2020-01-08 14:57:16.495681494 +0100
+@@ -981,7 +981,7 @@
+ {
+     SessionPrivate *priv = session_get_instance_private (session);
+
+-    priv->log_filename = g_strdup (".xsession-errors");
++    priv->log_filename = g_strdup (".cache/xsession-errors");
+     priv->log_mode = LOG_MODE_BACKUP_AND_TRUNCATE;
+     priv->to_child_input = -1;
+     priv->from_child_output = -1;

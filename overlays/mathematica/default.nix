@@ -1,8 +1,8 @@
-{ pkgs, lib, mathematica, ... }:
+{ pkgs, lib, ... }:
 
 with lib;
 
-mathematica.overrideAttrs (old: rec {
+pkgs.mathematica.overrideAttrs (old: rec {
   version = "12.3.1";
   lang = "en";
   language = "English";

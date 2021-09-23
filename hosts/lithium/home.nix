@@ -46,8 +46,8 @@ in
       file.ss.source = symlink "${files}/ss";
   
       packages = with pkgs; [
-        ol.mathematica
-        ol.discord
+        mathematica
+        discord
         gimp-with-plugins
         trash-cli
         element-desktop
@@ -106,7 +106,7 @@ in
         nmap
         iperf
         seafile-client
-        ol.seafile-shared
+        seafile-shared
         speedtest-cli
         wineWowPackages.stable
         (winetricks.override { wine = wineWowPackages.stable; })
@@ -207,7 +207,12 @@ in
     services = {
       flameshot.enable = true;
       playerctld.enable = true;
-      emacs.enable = true;
+
+      emacs = {
+        enable = true;
+        client.enable = true;
+        client.arguments = [ "-c" "-n" ];
+      };
 
       dunst = {
         enable = true;

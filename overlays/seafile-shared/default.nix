@@ -1,7 +1,5 @@
-{ pkgs, lib, seafile-shared, ... }:
+{ pkgs, ... }:
 
-with lib;
-
-seafile-shared.overrideAttrs (old: {
+pkgs.seafile-shared.overrideAttrs (old: {
   pythonPath = old.pythonPath ++ [ pkgs.python3.pkgs.future ];
 })

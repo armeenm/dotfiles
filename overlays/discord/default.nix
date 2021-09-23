@@ -1,6 +1,6 @@
-{ pkgs, lib, discord, ... }:
+{ pkgs, ... }:
 
-discord.overrideAttrs (old: rec {
+pkgs.discord.overrideAttrs (old: rec {
   version = "0.0.16";
 
   src = pkgs.fetchurl {

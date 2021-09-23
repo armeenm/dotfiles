@@ -1,7 +1,6 @@
 final: prev: {
-  ol = {
-    mathematica = prev.callPackage ./mathematica { };
-    seafile-shared = prev.callPackage ./seafile-shared { };
-    discord = prev.callPackage ./discord { };
-  };
+  mathematica = prev.callPackage ./mathematica { pkgs = prev; };
+  seafile-shared = prev.callPackage ./seafile-shared { pkgs = prev; };
+  discord = prev.callPackage ./discord { pkgs = prev; };
+  lightdm = prev.callPackage ./lightdm { pkgs = prev; };
 }
