@@ -16,7 +16,7 @@ in {
     services.xserver.desktopManager.session = [{
       name = "user-xsession";
       start = ''
-        ${pkgs.runtimeShell} $HOME/.xsession &
+        ${pkgs.runtimeShell} $HOME/.config/xsession &
         waitPID=$!
       '';
     }];

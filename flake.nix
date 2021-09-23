@@ -2,16 +2,16 @@
   description = "Nix-based config";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/release-21.05";
+    stable.url = "github:nixos/nixpkgs/release-21.05";
     unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
     nur.url = "github:nix-community/NUR";
 
     agenix.url = "github:ryantm/agenix";
-    agenix.inputs.nixpkgs.follows = "nixpkgs";
+    agenix.inputs.nixpkgs.follows = "unstable";
 
-    home-manager.url = "github:nix-community/home-manager/release-21.05";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    home-manager.url = "github:nix-community/home-manager";
+    home-manager.inputs.nixpkgs.follows = "unstable";
 
     nixos-hardware.url = "github:nixos/nixos-hardware";
 
@@ -21,7 +21,7 @@
   outputs =
     { self
     , nixpkgs
-    , unstable
+    , stable
     , nur
     , home-manager
     , utils
@@ -34,25 +34,33 @@
         inherit self inputs;
 
         channelsConfig.allowUnfree = true;
+        channels = {
+          unstable.overlaysBuilder = channels: [
+            (_: _: { stable = channels.stable; })
+            (_: _: { unstable = channels.unstable; })
+          ];
 
-        channels.nixpkgs.overlaysBuilder = channels: [
-          (_: _: { unstable = channels.unstable; })
-        ];
+          stable.overlaysBuilder = channels: [
+            (_: _: { stable = channels.stable; })
+            (_: _: { unstable = channels.unstable; })
+          ];
+        };
 
         overlay = import ./overlays;
-
         sharedOverlays = [
           self.overlay
           nur.overlay
         ];
 
         hosts = import ./hosts;
+        hostDefaults = {
+          extraArgs = { inherit ext root; };
+          channelName = "unstable";
 
-        hostDefaults.modules = [
-          ./modules
-          home-manager.nixosModules.home-manager
-        ];
-
-        hostDefaults.extraArgs = { inherit ext root; };
+          modules = [
+            ./modules
+            home-manager.nixosModules.home-manager
+          ];
+        };
       };
 }

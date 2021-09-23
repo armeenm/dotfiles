@@ -124,6 +124,7 @@
     ];
 
     variables.EDITOR = "nvim";
+    
     pathsToLink = [ "/share/zsh" ];
   };
 

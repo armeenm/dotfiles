@@ -40,7 +40,8 @@ in
       file.ss.source = symlink "${files}/ss";
   
       packages = with pkgs; [
-        o-mathematica
+        #o-mathematica
+        o-discord
         gimp-with-plugins
         trash-cli
         element-desktop
@@ -82,7 +83,6 @@ in
         wget
         keepassxc
         ledger-live-desktop
-        discord
         ntfs3g
         tdesktop
         whatsapp-for-linux
@@ -155,11 +155,15 @@ in
 
       configFile = {
         "xmobar".source = "${root}/conf/xmobar";
+        "discord/settings.json".source = "${root}/conf/discord/settings.json";
       };
     };
 
     xsession = {
       enable = true;
+
+      scriptPath = ".config/xsession";
+      profilePath = ".config/xprofile";
   
       pointerCursor = {
         package = pkgs.vanilla-dmz;
@@ -190,7 +194,11 @@ in
     services = {
       flameshot.enable = true;
       playerctld.enable = true;
-      dunst.enable = true; # TODO: theme
+
+      dunst = {
+        enable = true;
+        configFile = "${root}/conf/dunst/dunstrc";
+      };
   
       screen-locker = {
         enable = true;
@@ -221,6 +229,7 @@ in
   
     programs = {
       home-manager.enable = true;
+      aria2.enable = true;
       emacs.enable = true;
       htop.enable = true;
       command-not-found.enable = true;
@@ -386,12 +395,15 @@ in
   
       zsh = {
         enable = true;
-        enableAutosuggestions = true;
         enableCompletion = true;
+        enableAutosuggestions = true;
+
         autocd = true;
         defaultKeymap = "viins";
-        dotDir = ".config/zsh"; # TODO: Have this use XDG
+
+        dotDir = ".config/zsh";
         history.path = "${self.xdg.dataHome}/zsh/zsh_history";
+
         shellAliases = {
           "hm" = "home-manager";
           "userctl" = "systemctl --user";
@@ -399,6 +411,8 @@ in
           "sudo" = "sudo ";
           "noti" = "noti ";
         };
+
+        plugins = [];
       };
     };
   };
