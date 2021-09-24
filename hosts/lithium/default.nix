@@ -8,6 +8,8 @@
   nix.custom.flakes.enable = true;
 
   boot = {
+    kernelPackages = pkgs.linuxPackages_latest;
+    
     custom.luks-yubikey = {
       enable = true;
       root = "/dev/disk/by-uuid/6d656974-8d5a-4820-a8c2-957f83ae5a2a";
@@ -125,6 +127,7 @@
     systemPackages = with pkgs; [
       rxvt_unicode.terminfo
       neovim
+      linuxPackages_latest.nvidia_x11.settings
     ];
 
     variables.EDITOR = "nvim";
