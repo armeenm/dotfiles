@@ -9,6 +9,7 @@
 
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;
+    kernelModules = [ "lm92" "nct6775" ];
     
     custom.luks-yubikey = {
       enable = true;
@@ -49,6 +50,7 @@
     pcscd.enable = true;
     udisks2.enable = true;
     autorandr.enable = true;
+    smartd.enable = true;
 
     tcsd.enable = false;
 
@@ -96,17 +98,13 @@
 
     xserver = {
       enable = true;
+      custom.noAccelInput.enable = true;
+      custom.userXsession.enable = true;
+      custom.autoLoginUser = "nixpower";
 
       layout = "us";
       xkbOptions = "caps:ctrl_modifier";
 
-      #displayManager.lightdm.extraConfig = ''
-      #  user-authority-in-system-dir = true
-      #'';
-
-      custom.noAccelInput.enable = true;
-      custom.userXsession.enable = true;
-      custom.autoLoginUser = "nixpower";
     };
   };
 

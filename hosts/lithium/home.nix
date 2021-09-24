@@ -52,6 +52,7 @@ in
       file.ss.source = symlink "${files}/ss";
   
       packages = with pkgs; [
+        mullvad-vpn
         home-manager
         mathematica
         discord
@@ -149,7 +150,6 @@ in
         tpm-tools
         rng-tools
         trousers # TODO
-        ddcutil
         gksu
         efibootmgr
         playerctl
