@@ -438,7 +438,7 @@ in
         dotDir = "${builtins.baseNameOf self.xdg.configHome}/zsh";
         history.path = "${self.xdg.cacheHome}/zsh/history";
 
-        envExtra = ''
+        initExtraFirst = ''
           source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
 
           if [[ -r "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh" ]]; then
@@ -446,11 +446,20 @@ in
           fi
           
           [[ ! -f ~/.config/zsh/.p10k.zsh ]] || source ~/.config/zsh/.p10k.zsh
+          '';
+
+        initExtraBeforeCompInit = ''
+          autoload -Uz zcalc
+          autoload -Uz edit-command-line
+
+          zle -N edit-command-line
+          bindkey -M vicmd v edit-command-line
         '';
 
         shellAliases = {
           "hm" = "home-manager";
           "userctl" = "systemctl --user";
+          "zc" = "zcalc -r";
           "open" = "xdg-open";
           "sudo" = "sudo ";
           "noti" = "noti ";
