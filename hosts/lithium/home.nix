@@ -52,6 +52,7 @@ in
       file.ss.source = symlink "${files}/ss";
   
       packages = with pkgs; [
+        home-manager
         mathematica
         discord
         gimp-with-plugins
@@ -181,7 +182,6 @@ in
       };
 
       configFile = {
-        "nixpkgs".source = "${conf}/nixpkgs";
         "xmobar".source = "${conf}/xmobar";
         "flameshot".source = "${conf}/flameshot";
         "discord/settings.json".source = "${conf}/discord/settings.json";

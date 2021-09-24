@@ -127,7 +127,7 @@
     systemPackages = with pkgs; [
       rxvt_unicode.terminfo
       neovim
-      linuxPackages_latest.nvidia_x11.settings
+      lm_sensors
     ];
 
     variables.EDITOR = "nvim";
