@@ -1,7 +1,7 @@
 { config, pkgs, lib, inputs, ... }:
 
 {
-  imports = [ ./hardware-configuration.nix ./home.nix ];
+  imports = [ ./sys ./home ];
   
   system.stateVersion = lib.mkForce "21.05";
 

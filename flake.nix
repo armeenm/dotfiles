@@ -26,8 +26,13 @@
     , utils
     , ... } @ inputs:
     let
-      ext = import ./ext { lib = unstable.lib; };
       root = ./.;
+      ext = import ./ext { lib = unstable.lib; };
+      user = {
+        login = "nixpower";
+        name = "Armeen Mahdian";
+        email = "mahdianarmeen@gmail.com";
+      };
     in
       utils.lib.mkFlake {
         inherit self inputs;
@@ -53,7 +58,7 @@
 
         hosts = import ./hosts;
         hostDefaults = {
-          extraArgs = { inherit ext root; };
+          extraArgs = { inherit ext root user; };
           channelName = "unstable";
 
           modules = [

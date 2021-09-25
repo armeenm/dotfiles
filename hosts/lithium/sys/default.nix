@@ -1,0 +1,5 @@
+{
+  imports = [
+    ./hw-generated.nix
+  ];
+}
