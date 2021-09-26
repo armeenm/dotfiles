@@ -71,6 +71,7 @@
       { id = "hfjbmagddngcpeloejdejnfgbamkjaeg"; } # Vimium-C
       { id = "kbmfpngjjgdllneeigpgjifpgocmfgmb"; } # RES
       { id = "kcgpggonjhmeaejebeoeomdlohicfhce"; } # Cookie Remover
+      { id = "nibjojkomfdiaoajekhjakgkdhaomnch"; } # IPFS Companion
       { 
         id = "dcpihecpambacapedldabdbpakmachpb";
         updateUrl = "https://raw.githubusercontent.com/iamadamdev/bypass-paywalls-chrome/master/updates.xml";
