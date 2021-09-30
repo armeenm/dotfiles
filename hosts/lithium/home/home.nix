@@ -25,6 +25,12 @@ in
     '';
   };
 
+  file.dnsCheck = {
+    source = "${root}/conf/bin/dnscheck.sh";
+    target = ".local/bin/dnscheck";
+    executable = true;
+  };
+
   sessionVariables = {
     PATH = "$PATH:$HOME/.local/bin";
     LESSHISTFILE = "${config.xdg.cacheHome}/less/history";
@@ -45,6 +51,7 @@ in
   file.ss.source = symlink "${files}/ss";
 
   packages = with pkgs; [
+    jq
     mullvad-vpn
     home-manager
     mathematica
