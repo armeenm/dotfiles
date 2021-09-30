@@ -31,6 +31,11 @@ in
     executable = true;
   };
 
+  file.profile = {
+    target = ".profile";
+    text = "";
+  };
+
   sessionVariables = {
     PATH = "$PATH:$HOME/.local/bin";
     LESSHISTFILE = "${config.xdg.cacheHome}/less/history";
