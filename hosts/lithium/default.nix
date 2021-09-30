@@ -5,7 +5,12 @@
   
   system.stateVersion = lib.mkForce "21.05";
 
-  nix.custom.flakes.enable = true;
+  nix = {
+    trustedUsers = [ "root" "@wheel" ];
+    trustedBinaryCaches = [ "https://hydra.iohk.io" ];
+    binaryCachePublicKeys = [ "hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ=" ];
+    custom.flakes.enable = true;
+  };
 
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;
