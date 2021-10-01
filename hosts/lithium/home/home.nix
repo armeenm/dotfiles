@@ -56,6 +56,9 @@ in
   file.ss.source = symlink "${files}/ss";
 
   packages = with pkgs; [
+    openscad
+    slack-dark
+    cura
     jq
     mullvad-vpn
     home-manager
