@@ -43,6 +43,7 @@ in
     ANDROID_SDK_HOME = "${config.xdg.dataHome}/android";
     ANDROID_EMULATOR_HOME = "${config.xdg.dataHome}/android";
     CUDA_CACHE_PATH = "${config.xdg.cacheHome}/nv";
+    IPFS_PATH = "${config.xdg.dataHome}/ipfs";
   };
 
   file.shared.source = symlink shared;
@@ -171,5 +172,6 @@ in
     linuxPackages.cpupower
     gnome.gtk
     xdg-user-dirs
+    ipfs
   ];
 }

@@ -66,7 +66,7 @@
     };
 
     ipfs = {
-      enable = true;
+      enable = false;
       autoMount = true;
     };
 
