@@ -56,6 +56,7 @@
     udisks2.enable = true;
     autorandr.enable = true;
     smartd.enable = true;
+    nix-serve.enable = true;
 
     tcsd.enable = false;
 

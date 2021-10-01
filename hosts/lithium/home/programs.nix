@@ -198,6 +198,7 @@
       "hm" = "home-manager";
       "userctl" = "systemctl --user";
       "zc" = "zcalc -r";
+      "ipfs" = "sudo -E ipfs";
       "open" = "xdg-open";
       "sudo" = "sudo ";
       "noti" = "noti ";
