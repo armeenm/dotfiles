@@ -18,6 +18,7 @@ in
     xresources = import ./xresources.nix args;
     services = import ./services.nix args;
     programs = import ./programs.nix args;
+    systemd = import ./systemd.nix args;
 
     fonts.fontconfig.enable = lib.mkForce true;
   };
