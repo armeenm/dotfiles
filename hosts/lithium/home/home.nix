@@ -138,10 +138,8 @@ in
     yubikey-personalization
     yubikey-personalization-gui
     yubioath-desktop
-    gnumake
     rsync
     strace
-    glib-networking
     tamsyn
     noto-fonts
     noto-fonts-cjk

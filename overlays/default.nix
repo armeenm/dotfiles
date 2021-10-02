@@ -4,6 +4,7 @@ final: prev: {
   discord = prev.callPackage ./discord { pkgs = prev; };
   lightdm = prev.callPackage ./lightdm { pkgs = prev; };
   nixUnstable = prev.callPackage ./nixUnstable { pkgs = prev; };
+  whatsapp-for-linux = prev.callPackage ./whatsapp-for-linux { pkgs = prev; };
 
   # FIXME
   linuxPackages_latest = prev.linuxPackages_latest.extend (kfinal: kprev: {
