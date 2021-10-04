@@ -76,7 +76,6 @@ in
     evince
     vbetool
     bash
-    tree
     nix-tree
     caffeine-ng
     file
