@@ -67,6 +67,15 @@
           ];
         };
 
+        iso = unstable.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules =  [
+            "${unstable}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
+          ] ++ [
+            modules/iso.nix
+          ];
+        };
+
       } // utils.lib.eachDefaultSystem (system:
         let pkgs = unstable.legacyPackages."${system}";
         in { devShell = import ./shell.nix { inherit pkgs; }; }
