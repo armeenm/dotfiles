@@ -1,3 +1,4 @@
+# Basic ISO for installation
 { config, pkgs, ... }:
 
 {
@@ -17,5 +18,12 @@
     bottom
     networkmanager
     neovim
+    gcc
+    openssl
+    yubikey-personalization
   ];
+
+  environment.variables = {
+    
+  };
 }

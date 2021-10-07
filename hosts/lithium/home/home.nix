@@ -170,5 +170,6 @@ in
     gnome.gtk
     xdg-user-dirs
     ipfs
+    fd
   ];
 }
