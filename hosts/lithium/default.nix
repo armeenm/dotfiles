@@ -15,6 +15,7 @@
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;
     kernelModules = [ "lm92" "nct6775" ];
+    tmpOnTmpfs = true;
     
     custom.luks-yubikey = {
       enable = true;
@@ -46,6 +47,8 @@
   };
 
   security.rtkit.enable = true;
+
+  systemd.services.nix-daemon.environment.TMPDIR = "/tmp/nix";
 
   services = {
     upower.enable = true;
