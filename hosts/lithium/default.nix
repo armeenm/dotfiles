@@ -48,7 +48,16 @@
 
   security.rtkit.enable = true;
 
-  systemd.services.nix-daemon.environment.TMPDIR = "/tmp/nix";
+  systemd = {
+    services = {
+      nix-daemon.environment.TMPDIR = "/tmp/nix";
+    };
+
+    tmpfiles.rules = [
+      "d /tmp/nix 0755 root root"
+    ];
+  };
+
 
   services = {
     upower.enable = true;
