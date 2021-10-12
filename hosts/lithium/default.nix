@@ -53,10 +53,8 @@
 
   fileSystems = {
     "/".options = [
-      "discard=async"
       "noatime"
       "autodefrag"
-      #"compress=zstd"
     ];
   };
 
@@ -98,6 +96,7 @@
     autorandr.enable = true;
     smartd.enable = true;
     nix-serve.enable = true;
+    fstrim.enable = true;
 
     tcsd.enable = false;
 
