@@ -171,5 +171,7 @@ in
     xdg-user-dirs
     ipfs
     fd
+    lsof
+    hdparm
   ];
 }

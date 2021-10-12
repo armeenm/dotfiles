@@ -48,12 +48,34 @@
 
   security.rtkit.enable = true;
 
+  fileSystems = {
+    "/".options = [ "noatime" ];
+    "/home".options = [ "noatime" ];
+  };
+
+  swapDevices = [{
+    device = "/swap/swapfile";
+    size = (1024 * 32) + (1024 * 2);
+  }];
+
   systemd = {
     services = {
       nix-daemon.environment.TMPDIR = "/tmp/nix";
+
+      create-swapfile = {
+        serviceConfig.Type = "oneshot";
+        after = [ "systemd-tmpfiles-setup.service" ];
+        wantedBy = [ "swap-swapfile.swap" ];
+        script = ''
+          ${pkgs.coreutils}/bin/truncate -s 0 /swap/swapfile
+          ${pkgs.e2fsprogs}/bin/chattr +C /swap/swapfile
+          ${pkgs.btrfs-progs}/bin/btrfs property set /swap/swapfile compression none
+        '';
+      };
     };
 
     tmpfiles.rules = [
+      "f /swap/swapfile 0600 root root"
       "d /tmp/nix 0755 root root"
     ];
   };
