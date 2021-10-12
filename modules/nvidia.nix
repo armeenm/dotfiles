@@ -12,18 +12,22 @@ in {
     };
   };
 
+  imports = [ ./nvidia-module.nix ];
+  disabledModules = [ "hardware/video/nvidia.nix" ];
+
   config = mkIf cfg.enable {
     services.xserver.videoDrivers = [ "nvidia" ];
     
-    boot.initrd.kernelModules = [
-      "nvidia"
-      "nvidia_modeset"
-      "nvidia_uvm"
-      "nvidia_drm"
-    ];
+   # boot.initrd.kernelModules = [
+   #   "nvidia"
+   #   "nvidia_modeset"
+   #   "nvidia_uvm"
+   #   "nvidia_drm"
+   # ];
 
     hardware.nvidia = {
       modesetting.enable = true;
+      powerManagement.enable = true;
     };
   };
 }

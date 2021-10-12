@@ -1,3 +1,4 @@
+*.qcow*
 /result
 
 ### Emacs ###

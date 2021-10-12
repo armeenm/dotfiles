@@ -38,6 +38,7 @@ in {
           "nixos-enc" = {
             device = cfg.root;
             preLVM = true;
+            allowDiscards = true;
 
             yubikey = {
               slot = 2;

@@ -173,5 +173,7 @@ in
     fd
     lsof
     hdparm
+    qemu_full
+    virt-manager
   ];
 }

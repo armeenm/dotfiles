@@ -15,7 +15,10 @@
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;
     kernelModules = [ "lm92" "nct6775" ];
+    extraModprobeConfig = "options kvm_intel nested=1";
+
     tmpOnTmpfs = true;
+    cleanTmpDir = true;
     
     custom.luks-yubikey = {
       enable = true;
@@ -49,8 +52,11 @@
   security.rtkit.enable = true;
 
   fileSystems = {
-    "/".options = [ "noatime" ];
-    "/home".options = [ "noatime" ];
+    "/".options = [
+      "discard=async"
+      "noatime"
+      #"compress=zstd"
+    ];
   };
 
   swapDevices = [{
@@ -156,7 +162,13 @@
   users.users.nixpower = {
     isNormalUser = true;
     shell = pkgs.zsh;
-    extraGroups = [ "wheel" "networkmanager" "i2c" "adbusers" ];
+    extraGroups = [
+      "wheel"
+      "networkmanager"
+      "i2c"
+      "adbusers"
+      "libvirtd"
+    ];
   };
 
   environment = {
