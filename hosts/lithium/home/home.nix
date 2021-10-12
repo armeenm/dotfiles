@@ -175,5 +175,6 @@ in
     hdparm
     qemu_full
     virt-manager
+    compsize
   ];
 }

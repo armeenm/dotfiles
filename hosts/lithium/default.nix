@@ -55,6 +55,7 @@
     "/".options = [
       "discard=async"
       "noatime"
+      "autodefrag"
       #"compress=zstd"
     ];
   };
