@@ -176,5 +176,7 @@ in
     qemu_full
     virt-manager
     compsize
+    scrcpy
+    patchutils
   ];
 }
