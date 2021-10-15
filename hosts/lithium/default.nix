@@ -1,4 +1,4 @@
-{ config, pkgs, lib, inputs, ... }:
+{ config, pkgs, lib, inputs, root, ... }:
 
 {
   imports = [ ./sys ./home ];
@@ -13,6 +13,7 @@
   };
 
   boot = {
+    #kernelPackages = pkgs.linuxPackages_5_14_hardened;
     kernelPackages = pkgs.linuxPackages_latest;
     kernelModules = [ "lm92" "nct6775" "tcp_bbr" ];
 
@@ -25,131 +26,162 @@
       "pti=1"
       "vsyscall=none"
       "debugfs=off"
-      #"oops=panic"
-      #"module.sig_enforce=1"
-      #"lockdown=confidentiality"
+      "oops=panic"
+      "lockdown=confidentiality"
       "mce=0"
       "quiet loglevel=0"
       "spectre_v2=on"
       "spec_store_bypass_disable=on"
       "tsx=off"
       "tsx_async_abort=full,nosmt"
-      "mds=full" # nosmt
+      "mds=full"
       "l1tf=full,force"
-      #"nosmt=force"
       "kvm.nx_huge_pages=force"
       "selinux=1"
       "security=selinux"
+      "intel_iommu=on"
+      "amd_iommu_on"
+      "efi=disable_early_pci_dma"
+      "random.trust_cpu=off"
+    ];
+
+    blacklistedKernelModules = [
+      "af_802154"
+      "appletalk"
+      "atm"
+      "ax25"
+      "can"
+      "dccp"
+      "decnet"
+      "econet"
+      "ipx"
+      "n-hdlc"
+      "netrom"
+      "p8022"
+      "p8023"
+      "psnap"
+      "rds"
+      "rose"
+      "sctp"
+      "sysv"
+      "tipc"
+      "x25"
+
+      "adfs"
+      "affs"
+      "bfs"
+      "befs"
+      "cramfs"
+      "efs"
+      "erofs"
+      "exofs"
+      "freevxfs"
+      "f2fs"
+      "hfs"
+      "hpfs"
+      "jfs"
+      "jffs2"
+      "minix"
+      "nilfs2"
+      "omfs"
+      "qnx4"
+      "qnx6"
+      "sysv"
+      "udf"
+      "ufs"
+
+      "cifs"
+      "gfs2"
+      "nfs"
+      "nfsv3"
+      "nfsv4"
+
+      "vivid"
     ];
 
     extraModprobeConfig = ''
       options kvm_intel nested=1
-
-      install dccp /bin/false
-      install sctp /bin/false
-      install rds /bin/false
-      install tipc /bin/false
-      install n-hdlc /bin/false
-      install ax25 /bin/false
-      install netrom /bin/false
-      install x25 /bin/false
-      install rose /bin/false
-      install decnet /bin/false
-      install econet /bin/false
-      install af_802154 /bin/false
-      install ipx /bin/false
-      install appletalk /bin/false
-      install psnap /bin/false
-      install p8023 /bin/false
-      install p8022 /bin/false
-      install can /bin/false
-      install atm /bin/false
-
-      install cramfs /bin/false
-      install freevxfs /bin/false
-      install jffs2 /bin/false
-      install hfs /bin/false
-      install udf /bin/false
-
-      install cifs /bin/true
-      install nfs /bin/true
-      install nfsv3 /bin/true
-      install nfsv4 /bin/true
-      install gfs2 /bin/true
-
-      install vivid /bin/false
     '';
 
     kernel.sysctl = {
-      "net.ipv4.conf.default.rp_filter" = 1;
-      "net.ipv4.conf.all.rp_filter" = 1;
-      "net.ipv4.icmp_echo_ignore_broadcasts" = 1;
-      "net.ipv4.icmp_echo_ignore_all" = 1;
-      "net.ipv4.icmp_ignore_bogus_error_responses" = 1;
-      "net.ipv4.tcp_syncookies" = 1;
+      "net.ipv4.conf.default.rp_filter" = true;
+      "net.ipv4.conf.all.rp_filter" = true;
+      "net.ipv4.icmp_echo_ignore_broadcasts" = true;
+      "net.ipv4.icmp_echo_ignore_all" = true;
+      "net.ipv4.icmp_ignore_bogus_error_responses" = true;
+      "net.ipv4.conf.all.accept_redirects" = false;
+      "net.ipv4.conf.all.secure_redirects" = false;
+      "net.ipv4.conf.default.accept_redirects" = false;
+      "net.ipv4.conf.default.secure_redirects" = false;
+      "net.ipv4.conf.all.send_redirects" = false;
+      "net.ipv4.conf.all.accept_source_route" = false;
+      "net.ipv4.conf.default.accept_source_route" = false;
+      "net.ipv4.tcp_timestamps" = false;
+      "net.ipv4.tcp_syncookies" = true;
       "net.ipv4.tcp_synack_retries" = 5;
-      "net.ipv4.conf.all.accept_redirects" = 0;
-      "net.ipv4.conf.all.secure_redirects" = 0;
-      "net.ipv4.conf.default.accept_redirects" = 0;
-      "net.ipv4.conf.default.secure_redirects" = 0;
-      "net.ipv4.conf.all.send_redirects" = 0;
-      "net.ipv4.conf.all.accept_source_route" = 0;
-      "net.ipv4.conf.default.accept_source_route" = 0;
-      "net.ipv4.tcp_rfc1337" = 1;
+      "net.ipv4.tcp_rfc1337" = true;
       "net.ipv4.tcp_fastopen" = 3;
       "net.ipv4.tcp_congestion_control" = "bbr";
-      "net.ipv4.ip_forward" = 0;
-      "net.ipv4.tcp_sack" = 0;
-      "net.ipv4.tcp_dsack" = 0;
-      "net.ipv4.tcp_fack" = 0;
-      "net.ipv4.conf.all.log_martians" = 1;
+      "net.ipv4.tcp_sack" = false;
+      "net.ipv4.tcp_dsack" = false;
+      "net.ipv4.tcp_fack" = false;
+      "net.ipv4.ip_forward" = false;
+      "net.ipv4.conf.all.log_martians" = true;
+      "net.ipv4.conf.default.log_martians" = true;
+      "net.ipv4.tcp_window_scaling" = true;
 
-      "net.ipv6.conf.all.accept_redirects" = 0;
-      "net.ipv6.conf.default.accept_redirects" = 0;
-      "net.ipv6.conf.all.accept_source_route" = 0;
-      "net.ipv6.conf.default.router_solicitations" = 0;
-      "net.ipv6.conf.default.accept_ra" = 0;
-      "net.ipv6.conf.default.accept_ra_rtr_pref" = 0;
-      "net.ipv6.conf.default.accept_ra_pinfo" = 0;
-      "net.ipv6.conf.default.aceept_ra_defrtr" = 0;
+      "net.ipv6.conf.all.accept_redirects" = false;
+      "net.ipv6.conf.all.secure_redirects" = false;
+      "net.ipv6.conf.default.accept_redirects" = false;
+      "net.ipv6.conf.default.secure_redirects" = false;
+      "net.ipv6.conf.all.accept_source_route" = false;
+      "net.ipv6.conf.default.router_solicitations" = false;
+      "net.ipv6.conf.default.accept_ra" = false;
+      "net.ipv6.conf.default.accept_ra_rtr_pref" = false;
+      "net.ipv6.conf.default.accept_ra_pinfo" = false;
+      "net.ipv6.conf.default.aceept_ra_defrtr" = false;
       "net.ipv6.conf.default.max_addresses" = 1;
 
       "net.core.default_qdisc" = "cake";
-      "net.core.bpf_jit_harden" = 2;
+      "net.core.bpf_jit_enable" = false;
       "net.core.rmem_max" = 8388608;
       "net.core.wmem_max" = 8388608;
       "net.core.netdev_max_backlog" = 5000;
-      "net.ipv4.tcp_window_scaling" = 1;
 
-      "kernel.core_uses_pid" = 1;
+      "kernel.core_uses_pid" = true;
       "kernel.printk" = "3 3 3 3";
       "kernel.sysrq" = 4;
       "kernel.panic" = 10;
       "kernel.perf_event_paranoid" = 3;
       "kernel.kptr_restrict" = 2;
-      "kernel.dmesg_restrict" = 1;
-      "kernel.kexec_load_disabled" = 1;
+      "kernel.dmesg_restrict" = true;
+      "kernel.kexec_load_disabled" = true;
       "kernel.yama.ptrace_scope" = 2;
-      "kernel.unprivileged_bpf_disabled" = 1;
+      "kernel.unprivileged_bpf_disabled" = true;
       "kernel.randomize_va_space" = 2;
 
-      "vm.unprivileged_userfaultfd" = 0;
+      "vm.unprivileged_userfaultfd" = false;
       # Appropriate for x86
       "vm.mmap_rnd_bits" = 32;
       "vm.mmap_rnd_compat_bits" = 16;
+      "vm.max_map_count" = 524240;
 
-      "dev.tty.ldisc_autoload" = 0;
+      "dev.tty.ldisc_autoload" = false;
 
-      #"user.max_user_namespaces" = 0;
+      "user.max_user_namespaces" = 10000;
 
-      "fs.protected_hardlinks" = 1;
-      "fs.protected_symlinks" = 1;
+      "fs.protected_hardlinks" = true;
+      "fs.protected_symlinks" = true;
       "fs.protected_fifos" = 2;
       "fs.protected_regular" = 2;
     };
 
     tmpOnTmpfs = true;
     cleanTmpDir = true;
+
+    loader.systemd-boot = {
+      editor = false;
+    };
     
     custom.luks-yubikey = {
       enable = true;
@@ -180,7 +212,25 @@
     earlySetup = true;
   };
 
-  security.rtkit.enable = true;
+  security = {
+    rtkit.enable = true;
+
+    tpm2 = {
+      enable = true;
+      abrmd.enable = true;
+      pkcs11.enable = true;
+      tctiEnvironment.enable = true;
+    };
+
+    doas = {
+      enable = true;
+      extraRules = [{
+        groups = [ "wheel" ];
+        keepEnv = true;
+        noPass = true;
+      }];
+    };
+  };
 
   fileSystems = {
     "/".options = [
@@ -209,8 +259,16 @@
     smartd.enable = true;
     nix-serve.enable = true;
     fstrim.enable = true;
-
+    timesyncd.enable = false;
     tcsd.enable = false;
+
+    chrony = {
+      enable = true;
+      enableNTS = true;
+      servers = [
+        "time.cloudflare.com"
+      ];
+    };
 
     journald = {
       extraConfig = ''
@@ -223,6 +281,11 @@
       forwardX11 = true;
     };
 
+    usbguard = {
+      enable = false;
+      rules = builtins.readFile ./conf/usbguard/rules.conf;
+    };
+    
     ipfs = {
       enable = false;
       autoMount = true;
@@ -307,10 +370,11 @@
   environment = {
     defaultPackages = lib.mkForce [];
 
+    memoryAllocator.provider = "scudo";
+
     systemPackages = with pkgs; [
       rxvt_unicode.terminfo
       neovim
-      lm_sensors
     ];
 
     variables.EDITOR = "nvim";

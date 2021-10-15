@@ -178,5 +178,7 @@ in
     compsize
     scrcpy
     patchutils
+    lm_sensors
+    usbguard
   ];
 }
