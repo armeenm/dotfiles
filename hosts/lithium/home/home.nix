@@ -20,7 +20,7 @@ in
     text = ''
       #!${pkgs.bash}/bin/bash
       ${pkgs.playerctl}/bin/playerctl -a pause
-      ${sys.security.wrapperDir}/physlock
+      ${sys.security.wrapperDir}/doas ${pkgs.physlock}/bin/physlock
       #${pkgs.vbetool}/bin/vbetool dpms off
     '';
   };

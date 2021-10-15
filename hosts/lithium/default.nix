@@ -23,7 +23,6 @@
       "init_on_alloc=1"
       "init_on_free=1"
       "page_alloc.shuffle=1"
-      "pti=1"
       "vsyscall=none"
       "debugfs=off"
       "oops=panic"
@@ -155,7 +154,6 @@
       "kernel.perf_event_paranoid" = 3;
       "kernel.kptr_restrict" = 2;
       "kernel.dmesg_restrict" = true;
-      "kernel.kexec_load_disabled" = true;
       "kernel.yama.ptrace_scope" = 2;
       "kernel.unprivileged_bpf_disabled" = true;
       "kernel.randomize_va_space" = 2;
@@ -215,6 +213,14 @@
   security = {
     rtkit.enable = true;
 
+    protectKernelImage = true;
+    unprivilegedUsernsClone = false;
+    forcePageTableIsolation = true;
+
+    virtualisation = {
+      flushL1DataCache = "cond";
+    };
+
     tpm2 = {
       enable = true;
       abrmd.enable = true;
@@ -229,6 +235,12 @@
         keepEnv = true;
         noPass = true;
       }];
+    };
+
+    sudo = {
+      enable = true;
+      execWheelOnly = true;
+      wheelNeedsPassword = false;
     };
   };
 
@@ -261,6 +273,7 @@
     fstrim.enable = true;
     timesyncd.enable = false;
     tcsd.enable = false;
+    physlock.enable = true;
 
     chrony = {
       enable = true;
@@ -304,11 +317,6 @@
       drivers = with pkgs; [
         gutenprint gutenprintBin cnijfilter2
       ];
-    };
-
-    physlock = {
-      enable = true;
-      allowAnyUser = true;
     };
 
     udev = {
@@ -370,16 +378,14 @@
   environment = {
     defaultPackages = lib.mkForce [];
 
-    memoryAllocator.provider = "scudo";
+    # NOTE: Scudo may be preferable, but breaks Chromium audio
+    memoryAllocator.provider = "graphene-hardened";
+
+    pathsToLink = [ "/share/zsh" ];
 
     systemPackages = with pkgs; [
       rxvt_unicode.terminfo
-      neovim
     ];
-
-    variables.EDITOR = "nvim";
-    
-    pathsToLink = [ "/share/zsh" ];
   };
 
   programs = {
@@ -394,6 +400,7 @@
       enable = true;
       viAlias = true;
       vimAlias = true;
+      defaultEditor = true;
     };
   };
 }
