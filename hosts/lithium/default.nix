@@ -15,7 +15,12 @@
   boot = {
     #kernelPackages = pkgs.linuxPackages_5_14_hardened;
     kernelPackages = pkgs.linuxPackages_latest;
-    kernelModules = [ "lm92" "nct6775" "tcp_bbr" ];
+
+    kernelModules = [
+      "lm92"
+      "nct6775"
+      "tcp_bbr"
+    ];
 
     kernelParams = [
       "slab_nomerge"
@@ -96,6 +101,9 @@
       "nfsv4"
 
       "vivid"
+
+      "firewire-core"
+      "thunderbolt"
     ];
 
     extraModprobeConfig = ''
@@ -162,7 +170,7 @@
       # Appropriate for x86
       "vm.mmap_rnd_bits" = 32;
       "vm.mmap_rnd_compat_bits" = 16;
-      "vm.max_map_count" = 524240;
+      "vm.max_map_count" = 1048576;
 
       "dev.tty.ldisc_autoload" = false;
 
@@ -177,17 +185,20 @@
     tmpOnTmpfs = true;
     cleanTmpDir = true;
 
-    loader.systemd-boot = {
-      editor = false;
+    loader = {
+      efi.canTouchEfiVariables = true;
+
+      systemd-boot = {
+        enable = true;
+        editor = true;
+      };
     };
-    
+
     custom.luks-yubikey = {
       enable = true;
       root = "/dev/disk/by-uuid/6d656974-8d5a-4820-a8c2-957f83ae5a2a";
       boot = config.fileSystems."/boot".device;
     };
-
-    custom.efi.enable = true;
   };
 
   time.timeZone = "America/Chicago";
@@ -274,6 +285,7 @@
     timesyncd.enable = false;
     tcsd.enable = false;
     physlock.enable = true;
+    haveged.enable = true;
 
     chrony = {
       enable = true;
@@ -315,7 +327,9 @@
     printing = {
       enable = true;
       drivers = with pkgs; [
-        gutenprint gutenprintBin cnijfilter2
+        gutenprint
+        gutenprintBin
+        cnijfilter2
       ];
     };
 
@@ -376,13 +390,12 @@
   };
 
   environment = {
-    defaultPackages = lib.mkForce [];
-
     # NOTE: Scudo may be preferable, but breaks Chromium audio
     memoryAllocator.provider = "graphene-hardened";
 
     pathsToLink = [ "/share/zsh" ];
 
+    defaultPackages = lib.mkForce [];
     systemPackages = with pkgs; [
       rxvt_unicode.terminfo
     ];

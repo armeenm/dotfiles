@@ -29,6 +29,8 @@ in {
         "nls_cp437"
         "nls_iso8859-1"
         "usbhid"
+        "aesni_intel"
+        "cryptd"
       ];
 
       luks = {

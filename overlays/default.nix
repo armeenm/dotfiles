@@ -1,4 +1,5 @@
 final: prev: {
+  # TODO Make cleaner
   nixUnstable = prev.callPackage ./nixUnstable { pkgs = prev; };
   mathematica = prev.callPackage ./mathematica { pkgs = prev; };
   seafile-shared = prev.callPackage ./seafile-shared { pkgs = prev; };
