@@ -7,8 +7,6 @@ final: prev: {
   lightdm = prev.callPackage ./lightdm { pkgs = prev; };
   whatsapp-for-linux = prev.callPackage ./whatsapp-for-linux { pkgs = prev; };
 
-  #linux_latest_hardened = prev.linuxPackagesFor (prev.
-
   # FIXME
   linuxPackages_latest = prev.linuxPackages_latest.extend (kfinal: kprev: {
     nvidia_x11 = kprev.nvidia_x11.overrideAttrs (old: {
