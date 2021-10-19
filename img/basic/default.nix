@@ -6,10 +6,21 @@
   networking.wireless.enable = false;
   networking.networkmanager.enable = true;
 
-  programs.neovim = {
-    enable = true;
-    viAlias = true;
-    vimAlias = true;
+  nix = {
+    package = pkgs.nixUnstable;
+    extraOptions = ''
+      experimental-features = nix-command flakes
+    '';
+  };
+
+  programs = {
+    neovim = {
+      enable = true;
+      viAlias = true;
+      vimAlias = true;
+    };
+
+    bash.shellInit = builtins.readFile ./crypt.sh;
   };
 
   environment.systemPackages = with pkgs; [
@@ -22,8 +33,4 @@
     openssl
     yubikey-personalization
   ];
-
-  environment.variables = {
-    
-  };
 }

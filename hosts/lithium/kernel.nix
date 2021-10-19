@@ -255,7 +255,7 @@ pkgs.linuxPackagesFor (pkgs.linux_5_14_hardened.override {
     XEN_SCSI_FRONTEND = no;
     XILLYBUS = no;
     XILLYUSB = no;
-    DMADEVICES = no;
+    DMADEVICES = yes; # NOTE
     EFI_VARS = no;
     EFI_GENERIC_STUB_INITRD_CMDLINE_LOADER = no;
     APPLE_PROPERTIES = no;
@@ -295,6 +295,8 @@ pkgs.linuxPackagesFor (pkgs.linux_5_14_hardened.override {
     NET_FC = lib.mkForce no;
     INT340X_THERMAL = no;
     ATH11K_PCI = no;
+    PROVIDE_OHCI1394_DMA_INIT = no;
+    KUNIT = no;
     
     DEFAULT_MMAP_MIN_ADDR = freeform "65536";
     IA32_EMULATION = no;
