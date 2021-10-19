@@ -292,7 +292,9 @@ pkgs.linuxPackagesFor (pkgs.linux_5_14_hardened.override {
     MACINTOSH_DRIVERS = no;
     EQUALIZER = no;
     DUMMY = no;
-    CONFIG_NET_FC = no;
+    NET_FC = lib.mkForce no;
+    INT340X_THERMAL = no;
+    ATH11K_PCI = no;
     
     DEFAULT_MMAP_MIN_ADDR = freeform "65536";
     IA32_EMULATION = no;
