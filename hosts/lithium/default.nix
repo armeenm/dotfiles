@@ -16,6 +16,27 @@
   };
 
   boot = {
+    initrd = {
+      availableKernelModules = [
+        "uhci_hcd"
+        "ehci_hcd"
+        "ehci_pci"
+        "ohci_hcd"
+        "ohci_pci"
+        "xhci_hcd"
+        "xhci_pci"
+        "usbhid"
+        "hid_generic"
+        "hid_lenovo"
+        "hid_apple"
+        "hid_roccat"
+        "hid_logitech_hidpp"
+        "hid_logitech_dj"
+        "hid_microsoft"
+      ];
+      includeDefaultModules = false;
+    };
+    
     kernelPackages = pkgs.callPackage ./kernel.nix {};
 
     kernelModules = [
@@ -40,11 +61,6 @@
       "kvm.nx_huge_pages=force"
       "selinux=1"
       "security=selinux"
-
-      "intel_iommu=on"
-      "amd_iommu=on"
-
-      "efi=disable_early_pci_dma"
     ];
 
     blacklistedKernelModules = [
@@ -172,7 +188,7 @@
       "fs.protected_symlinks" = true;
     };
 
-    tmpOnTmpfs = true;
+    tmpOnTmpfs = false;
     cleanTmpDir = true;
 
     loader = {

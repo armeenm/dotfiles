@@ -25,12 +25,13 @@ in {
   config = mkIf cfg.enable {
     boot.initrd = {
       kernelModules = [
-        "vfat"
         "nls_cp437"
         "nls_iso8859-1"
+        "vfat"
         "usbhid"
         "aesni_intel"
         "cryptd"
+        "dm_mod"
       ];
 
       luks = {
