@@ -1,4 +1,5 @@
 decrypt() {
+    set -e
     echo -n "pass: "
     read -s k_user
     salt="$(head -n1 "$1"/crypt-storage/default)"
@@ -9,6 +10,7 @@ decrypt() {
     mkdir -p /mnt/home
     mount -o subvol=root "/dev/partitions/fsroot" /mnt
     mount -o subvol=home "/dev/partitions/fsroot" /mnt/home
+    set +e
 }
 
 cryptshell() {

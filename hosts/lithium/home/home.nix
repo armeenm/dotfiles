@@ -180,5 +180,6 @@ in
     patchutils
     lm_sensors
     usbguard
+    lshw
   ];
 }

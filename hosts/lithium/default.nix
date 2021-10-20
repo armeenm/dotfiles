@@ -25,14 +25,6 @@
         "ohci_pci"
         "xhci_hcd"
         "xhci_pci"
-        "usbhid"
-        "hid_generic"
-        "hid_lenovo"
-        "hid_apple"
-        "hid_roccat"
-        "hid_logitech_hidpp"
-        "hid_logitech_dj"
-        "hid_microsoft"
       ];
       includeDefaultModules = false;
     };
@@ -48,30 +40,22 @@
     kernelParams = [
       "slub_debug=FZ"
       "page_alloc.shuffle=1"
-      "page_poison=1"
       "lockdown=confidentiality"
-      "mce=0"
       "quiet loglevel=0"
-      "spectre_v2=on"
-      "spec_store_bypass_disable=on"
-      "tsx=off"
-      "tsx_async_abort=full,nosmt"
-      "mds=full"
-      "l1tf=full,force"
+      #"spectre_v2=on"
+      #"spec_store_bypass_disable=on"
+      #"tsx=off"
+      #"tsx_async_abort=full"
+      #"mds=full"
+      #"l1tf=full,force"
       "kvm.nx_huge_pages=force"
+      "vsyscall=none"
       "selinux=1"
       "security=selinux"
     ];
 
     blacklistedKernelModules = [
-      "dccp"
-      "sctp"
-      "af_802154"
-      "appletalk"
-      "atm"
       "ax25"
-      "can"
-      "decnet"
       "econet"
       "ipx"
       "n-hdlc"
@@ -81,39 +65,7 @@
       "psnap"
       "rds"
       "rose"
-      "sctp"
-      "sysv"
-      "tipc"
       "x25"
-
-      "adfs"
-      "affs"
-      "bfs"
-      "befs"
-      "cramfs"
-      "efs"
-      "erofs"
-      "exofs"
-      "freevxfs"
-      "f2fs"
-      "hfs"
-      "hpfs"
-      "jfs"
-      "jffs2"
-      "minix"
-      "nilfs2"
-      "omfs"
-      "qnx4"
-      "qnx6"
-      "sysv"
-      "udf"
-      "ufs"
-
-      "cifs"
-      "gfs2"
-      "nfs"
-      "nfsv3"
-      "nfsv4"
     ];
 
     extraModprobeConfig = ''
@@ -398,7 +350,7 @@
 
   environment = {
     # NOTE: Scudo may be preferable, but breaks Chromium audio
-    memoryAllocator.provider = "graphene-hardened";
+    #memoryAllocator.provider = "graphene-hardened";
 
     pathsToLink = [ "/share/zsh" ];
 
