@@ -199,8 +199,9 @@
       "userctl" = "systemctl --user";
       "zc" = "zcalc -r";
       "open" = "xdg-open";
-      "sudo" = "sudo ";
       "noti" = "noti ";
+      "sudo" = "doas ";
+      "doas" = "doas ";
     };
 
     plugins = [

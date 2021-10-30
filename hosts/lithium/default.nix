@@ -15,15 +15,6 @@
 
   boot = {
     initrd = {
-      availableKernelModules = [
-        "uhci_hcd"
-        "ehci_hcd"
-        "ehci_pci"
-        "ohci_hcd"
-        "ohci_pci"
-        "xhci_hcd"
-        "xhci_pci"
-      ];
       includeDefaultModules = false;
     };
     
@@ -36,20 +27,6 @@
       "lockdown=confidentiality"
       "kvm.nx_huge_pages=force"
       #"slub_debug=FZ"
-    ];
-
-    blacklistedKernelModules = [
-      "ax25"
-      "econet"
-      "ipx"
-      "n-hdlc"
-      "netrom"
-      "p8022"
-      "p8023"
-      "psnap"
-      "rds"
-      "rose"
-      "x25"
     ];
 
     kernel.randstructSeed = "eee";
@@ -100,7 +77,7 @@
 
       "kernel.core_uses_pid" = true;
       "kernel.kptr_restrict" = 2;
-      "kernel.panic_on_oops" = true;
+      "kernel.panic_on_oops" = false;
       "kernel.printk" = "3 3 3 3";
       "kernel.randomize_va_space" = 2;
       "kernel.unprivileged_bpf_disabled" = true;
@@ -204,6 +181,12 @@
     ];
   };
 
+  #location = {
+  #  provider = "manual";
+  #  latitude = 
+  #  longitude =
+  #};
+
   services = {
     autorandr.enable = true;
     blueman.enable = true;
@@ -217,6 +200,7 @@
     tcsd.enable = false;
     timesyncd.enable = false;
     udisks2.enable = true;
+    redshift.enable = true;
 
     chrony = {
       enable = true;
