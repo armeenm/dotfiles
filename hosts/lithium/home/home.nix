@@ -57,129 +57,129 @@ in
   file.ss.source = symlink "${files}/ss";
 
   packages = with pkgs; [
-    openscad
-    slack-dark
-    cura
-    jq
-    mullvad-vpn
-    home-manager
-    mathematica
-    discord
-    gimp-with-plugins
-    trash-cli
-    element-desktop
-    mosh
-    monero
-    qdirstat
-    texlive.combined.scheme-full
-    pandoc
-    evince
-    vbetool
-    bash
-    nix-tree
-    caffeine-ng
-    file
-    killall
-    torbrowser
-    niv
-    tcpdump
+    (winetricks.override { wine = wineWowPackages.stable; })
     arandr
-    pamixer
-    pavucontrol
-    ldns
-    mpc_cli
-    xautolock
-    xclip
-    xorg.xinit
-    xorg.xev
-    xorg.xdpyinfo
-    xorg.xkill
-    zoom-us
+    atool
+    bash
     bottom
-    python3
-    nodejs
-    usbutils
-    pciutils
-    fasd
-    libnotify
-    wget
-    keepassxc
-    ledger-live-desktop
-    ntfs3g
-    tdesktop
-    whatsapp-for-linux
-    neofetch
-    vlc
-    streamlink
-    unrar
-    unzip
-    direnv
-    miraclecast
-    weechat
-    whois
-    ripgrep
+    caffeine-ng
     cloc
-    nmap
+    compsize
+    cowsay
+    cura
+    direnv
+    discord
+    dosfstools
+    efibootmgr
+    element-desktop
+    evince
+    exfatprogs
+    fasd
+    fd
+    figlet
+    file
+    fira-code
+    fira-code-symbols
+    font-awesome-ttf
+    fortune
+    gimp-with-plugins
+    gksu
+    gnome.gtk
+    gparted
+    hdparm
+    highlight
+    home-manager
     iperf
+    ipfs
+    jq
+    keepassxc
+    killall
+    ldns
+    ledger-live-desktop
+    libnotify
+    libreoffice-fresh
+    linuxPackages.cpupower
+    lm_sensors
+    lolcat
+    lshw
+    lsof
+    mathematica
+    mediainfo
+    miraclecast
+    monero
+    mosh
+    mpc_cli
+    mtools
+    mullvad-vpn
+    neofetch
+    niv
+    nix-tree
+    nmap
+    nodejs
+    noto-fonts
+    noto-fonts-cjk
+    noto-fonts-emoji
+    ntfs3g
+    openscad
+    pamixer
+    pandoc
+    parted
+    patchutils
+    pavucontrol
+    pciutils
+    playerctl
+    python3
+    qdirstat
+    qemu_full
+    ranger
+    ripgrep
+    rng-tools
+    rsync
+    scrcpy
     seafile-client
     seafile-shared
+    sl
+    slack-dark
     speedtest-cli
-    wineWowPackages.stable
-    (winetricks.override { wine = wineWowPackages.stable; })
-    ranger
-    mediainfo
-    highlight
-    atool
+    strace
+    streamlink
+    tamsyn
+    tcpdump
+    tdesktop
+    texlive.combined.scheme-full
+    toilet
+    torbrowser
+    tpm-tools
+    trash-cli
+    trousers # TODO
+    unrar
+    unzip
+    usbguard
+    usbutils
+    vbetool
+    virt-manager
+    vlc
+    vulkan-loader
+    vulkan-tools
     w3m
+    weechat
+    wget
+    whatsapp-for-linux
+    whois
+    wineWowPackages.stable
+    xautolock
+    xclip
+    xdg-user-dirs
     xmobar
+    xorg.xdpyinfo
+    xorg.xev
+    xorg.xinit
+    xorg.xkill
     yubico-pam
     yubikey-manager-qt
     yubikey-personalization
     yubikey-personalization-gui
     yubioath-desktop
-    rsync
-    strace
-    tamsyn
-    noto-fonts
-    noto-fonts-cjk
-    noto-fonts-emoji
-    fira-code
-    fira-code-symbols
-    font-awesome-ttf
-    libreoffice-fresh
-    gparted
-    parted
-    exfatprogs
-    dosfstools
-    mtools
-    sl
-    tpm-tools
-    rng-tools
-    trousers # TODO
-    gksu
-    efibootmgr
-    playerctl
-    toilet
-    figlet
-    lolcat
-    cowsay
-    fortune
-    vulkan-loader
-    vulkan-tools
-    linuxPackages.cpupower
-    gnome.gtk
-    xdg-user-dirs
-    ipfs
-    fd
-    lsof
-    hdparm
-    qemu_full
-    virt-manager
-    compsize
-    scrcpy
-    patchutils
-    lm_sensors
-    usbguard
-    lshw
+    zoom-us
   ];
 }

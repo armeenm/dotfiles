@@ -10,8 +10,6 @@
 
   nix = {
     trustedUsers = [ "root" "@wheel" ];
-    trustedBinaryCaches = [ "https://hydra.iohk.io" ];
-    binaryCachePublicKeys = [ "hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ=" ];
     custom.flakes.enable = true;
   };
 
@@ -31,27 +29,13 @@
     
     kernelPackages = pkgs.callPackage ./kernel.nix {};
 
-    kernelModules = [
-      "lm92"
-      "nct6775"
-      "tcp_bbr"
-    ];
-
     kernelParams = [
-      "slub_debug=FZ"
+      "quiet"
+      "loglevel=0"
       "page_alloc.shuffle=1"
       "lockdown=confidentiality"
-      "quiet loglevel=0"
-      #"spectre_v2=on"
-      #"spec_store_bypass_disable=on"
-      #"tsx=off"
-      #"tsx_async_abort=full"
-      #"mds=full"
-      #"l1tf=full,force"
       "kvm.nx_huge_pages=force"
-      "vsyscall=none"
-      "selinux=1"
-      "security=selinux"
+      #"slub_debug=FZ"
     ];
 
     blacklistedKernelModules = [
@@ -67,10 +51,6 @@
       "rose"
       "x25"
     ];
-
-    extraModprobeConfig = ''
-      options kvm_intel nested=1
-    '';
 
     kernel.randstructSeed = "eee";
 
@@ -181,6 +161,7 @@
 
   security = {
     rtkit.enable = true;
+    sudo.enable = false;
 
     protectKernelImage = true;
     unprivilegedUsernsClone = false;
@@ -206,18 +187,12 @@
         noPass = true;
       }];
     };
-
-    sudo = {
-      enable = true;
-      execWheelOnly = true;
-      wheelNeedsPassword = false;
-    };
   };
 
   fileSystems = {
     "/".options = [
       "noatime"
-      "autodefrag"
+      "ssd"
     ];
   };
 
@@ -229,22 +204,19 @@
     ];
   };
 
-
   services = {
-    upower.enable = true;
-    mullvad-vpn.enable = true;
-    avahi.enable = true;
-    blueman.enable = true;
-    pcscd.enable = true;
-    udisks2.enable = true;
     autorandr.enable = true;
-    smartd.enable = true;
-    nix-serve.enable = true;
+    blueman.enable = true;
     fstrim.enable = true;
-    timesyncd.enable = false;
-    tcsd.enable = false;
-    physlock.enable = true;
     haveged.enable = true;
+    mullvad-vpn.enable = true;
+    nix-serve.enable = true;
+    pcscd.enable = true;
+    physlock.enable = true;
+    smartd.enable = true;
+    tcsd.enable = false;
+    timesyncd.enable = false;
+    udisks2.enable = true;
 
     chrony = {
       enable = true;
@@ -252,12 +224,6 @@
       servers = [
         "time.cloudflare.com"
       ];
-    };
-
-    journald = {
-      extraConfig = ''
-        ReadKMsg = no
-      '';
     };
 
     openssh = {
@@ -312,39 +278,34 @@
 
       layout = "us";
       xkbOptions = "caps:ctrl_modifier";
-
     };
   };
 
   hardware = {
     bluetooth.enable = true;
+    cpu.amd.updateMicrocode = true;
     custom.nvidia.enable = true;
-
-    cpu = {
-      amd.updateMicrocode = true;
-      intel.updateMicrocode = true;
-    };
-
-    fancontrol = {
-      enable = false;
-      config = ''
-      '';
-    };
   };
 
   users = {
-    #mutableUsers = false; TODO
-    
-    users.nixpower = {
-      isNormalUser = true;
-      shell = pkgs.zsh;
-      extraGroups = [
-        "wheel"
-        "networkmanager"
-        "i2c"
-        "adbusers"
-        "libvirtd"
-      ];
+    mutableUsers = false;
+
+    users = {
+      root.hashedPassword = "*";
+
+      nixpower = {
+        isNormalUser = true;
+        hashedPassword =
+          "$6$D9bjWz87ZjX4AY3Q$vFQLpKIVHktTAdco3FW35ki5dKWtkiMH2h3uSgOUV5nYS2KVPVYBHtP2vkvbiJDbMReWF8jfHfWyw74Q/jBhs1";
+        shell = pkgs.zsh;
+        extraGroups = [
+          "wheel"
+          "networkmanager"
+          "i2c"
+          "adbusers"
+          "libvirtd"
+        ];
+      };
     };
   };
 
@@ -356,6 +317,7 @@
 
     defaultPackages = lib.mkForce [];
     systemPackages = with pkgs; [
+      git
       rxvt_unicode.terminfo
     ];
   };
