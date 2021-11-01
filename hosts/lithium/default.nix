@@ -23,10 +23,9 @@
     kernelParams = [
       "quiet"
       "loglevel=0"
-      "page_alloc.shuffle=1"
-      "lockdown=confidentiality"
       "kvm.nx_huge_pages=force"
-      #"slub_debug=FZ"
+      "slub_debug=FZ"
+      #"lockdown=confidentiality"
     ];
 
     kernel.randstructSeed = "eee";
@@ -77,7 +76,6 @@
 
       "kernel.core_uses_pid" = true;
       "kernel.kptr_restrict" = 2;
-      "kernel.panic_on_oops" = false;
       "kernel.printk" = "3 3 3 3";
       "kernel.randomize_va_space" = 2;
       "kernel.unprivileged_bpf_disabled" = true;

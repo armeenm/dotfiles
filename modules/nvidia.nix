@@ -16,6 +16,7 @@ in {
     services.xserver.videoDrivers = [ "nvidia" ];
     
     hardware.nvidia = {
+      package = config.boot.kernelPackages.nvidia_x11_beta;
       modesetting.enable = true;
     };
   };
