@@ -179,11 +179,11 @@
     ];
   };
 
-  #location = {
-  #  provider = "manual";
-  #  latitude = 
-  #  longitude =
-  #};
+  location = {
+    provider = "manual";
+    latitude = 40.1019564;
+    longitude = -88.2293502;
+  };
 
   services = {
     autorandr.enable = true;
@@ -194,11 +194,17 @@
     nix-serve.enable = true;
     pcscd.enable = true;
     physlock.enable = true;
+    redshift.enable = true;
+    saned.enable = true;
     smartd.enable = true;
     tcsd.enable = false;
     timesyncd.enable = false;
     udisks2.enable = true;
-    redshift.enable = true;
+
+    avahi = {
+      enable = true;
+      nssmdns = true;
+    };
 
     chrony = {
       enable = true;
@@ -267,6 +273,13 @@
     bluetooth.enable = true;
     cpu.amd.updateMicrocode = true;
     custom.nvidia.enable = true;
+
+    sane = {
+      enable = true;
+      extraBackends = with pkgs; [
+        sane-airscan
+      ];
+    };
   };
 
   users = {
@@ -286,7 +299,15 @@
           "i2c"
           "adbusers"
           "libvirtd"
+          "scanner"
+          "lp"
         ];
+      };
+
+      arash = {
+        isNormalUser = true;
+        hashedPassword = "$6$JfszfwIeN4wDyj$xSU.exwiolO9FVVQHYBbma/xbxkrTRQoJ8cyvNfbrYhtybe28B0KVngXCALsxv8q2pe4mrouj1/2OwSRRi/po1";
+        shell = pkgs.zsh;
       };
     };
   };
@@ -300,6 +321,7 @@
     defaultPackages = lib.mkForce [];
     systemPackages = with pkgs; [
       git
+      mathematica
       rxvt_unicode.terminfo
     ];
   };

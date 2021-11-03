@@ -59,6 +59,7 @@ in
   packages = with pkgs; [
     (winetricks.override { wine = wineWowPackages.stable; })
     arandr
+    asciinema
     atool
     bash
     bottom
@@ -110,10 +111,12 @@ in
     mosh
     mpc_cli
     mtools
+    mtr
     mullvad-vpn
     neofetch
     niv
     nix-tree
+    nixopsUnstable
     nmap
     nodejs
     noto-fonts
@@ -138,6 +141,7 @@ in
     scrcpy
     seafile-client
     seafile-shared
+    simple-scan
     sl
     slack-dark
     speedtest-cli

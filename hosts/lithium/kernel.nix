@@ -98,8 +98,7 @@ pkgs.linuxPackagesFor (pkgs.linux_5_14_hardened.override {
     TLS = yes;
     TLS_DEVICE = yes;
     TRUSTED_KEYS = yes;
-    UBSAN = yes;
-    UBSAN_BOUNDS = yes;
+    UBSAN = no;
     UHID = no;
     UIO = no;
     USELIB = no;

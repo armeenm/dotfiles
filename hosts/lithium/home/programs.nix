@@ -148,7 +148,7 @@
       lineSpace = 0;
       geometry = "92x24";
       internalBorder = 12;
-      cursorBlink = true;
+      cursorBlink = false;
       cursorUnderline = false;
       saveline = 2048;
       scrollBar = false;

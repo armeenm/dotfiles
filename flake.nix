@@ -2,19 +2,19 @@
   description = "Nix-based config";
 
   inputs = {
-    stable.url = "github:nixos/nixpkgs/release-21.05";
-    unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    stable.url = github:nixos/nixpkgs/release-21.05;
+    unstable.url = github:nixos/nixpkgs/nixos-unstable;
 
-    agenix.url = "github:ryantm/agenix";
+    agenix.url = github:ryantm/agenix;
     agenix.inputs.nixpkgs.follows = "unstable";
 
-    home-manager.url = "github:nix-community/home-manager";
+    home-manager.url = github:nix-community/home-manager;
     home-manager.inputs.nixpkgs.follows = "unstable";
 
-    emacs-overlay.url = "github:nix-community/emacs-overlay";
-    nixos-hardware.url = "github:nixos/nixos-hardware";
-    nur.url = "github:nix-community/NUR";
-    utils.url = "github:gytis-ivaskevicius/flake-utils-plus/1.3.0";
+    nur.url = github:nix-community/NUR;
+    emacs-overlay.url = github:nix-community/emacs-overlay;
+    nixos-hardware.url = github:nixos/nixos-hardware;
+    utils.url = github:gytis-ivaskevicius/flake-utils-plus/1.3.0;
   };
 
   outputs =
