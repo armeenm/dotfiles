@@ -5,7 +5,7 @@ let
 
   home = "/home/${user.login}";
 
-  seafile = "${config.xdg.dataHome}/.seafile/Seafile";
+  seafile = "${config.xdg.dataHome}/seafile/Seafile";
   files = "${seafile}/mylib";
   shared = "${seafile}/common";
 in
@@ -83,6 +83,7 @@ in
     fira-code-symbols
     font-awesome-ttf
     fortune
+    gh
     gimp-with-plugins
     gksu
     gnome.gtk

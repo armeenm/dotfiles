@@ -87,7 +87,7 @@
   };
 
   gh = {
-    enable = true;
+    enable = false;
   };
 
   git = {
