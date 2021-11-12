@@ -6,18 +6,17 @@
     ./hw-generated.nix
   ];
   
-  system.stateVersion = lib.mkForce "21.05";
+  system.stateVersion = lib.mkForce "21.11";
 
-  nix = {
-    trustedUsers = [ "root" "@wheel" ];
-    custom.flakes.enable = true;
-  };
+  nix.custom.flakes.enable = true;
 
   boot = {
     initrd = {
       includeDefaultModules = false;
     };
     
+    supportedFilesystems = [ "zfs" ];
+
     kernelPackages = pkgs.callPackage ./kernel.nix {};
 
     kernelParams = [
@@ -106,18 +105,13 @@
         editor = true;
       };
     };
-
-    custom.luks-yubikey = {
-      enable = true;
-      root = "/dev/disk/by-uuid/6d656974-8d5a-4820-a8c2-957f83ae5a2a";
-      boot = config.fileSystems."/boot".device;
-    };
   };
 
   time.timeZone = "America/Chicago";
 
   networking = {
     hostName = "lithium";
+    hostId = "5a656e88";
 
     networkmanager.enable = true;
     wireguard.enable = true;
@@ -164,13 +158,6 @@
     };
   };
 
-  fileSystems = {
-    "/".options = [
-      "noatime"
-      "ssd"
-    ];
-  };
-
   zramSwap.enable = true;
 
   systemd = {
@@ -198,7 +185,7 @@
     saned.enable = true;
     smartd.enable = true;
     tcsd.enable = false;
-    timesyncd.enable = false;
+    timesyncd.enable = true;
     udisks2.enable = true;
 
     avahi = {
@@ -207,7 +194,7 @@
     };
 
     chrony = {
-      enable = true;
+      enable = false;
       enableNTS = true;
       servers = [
         "time.cloudflare.com"
@@ -262,7 +249,7 @@
       enable = true;
       custom.noAccelInput.enable = true;
       custom.userXsession.enable = true;
-      custom.autoLoginUser = "nixpower";
+      custom.autoLoginUser = "armeen";
 
       layout = "us";
       xkbOptions = "caps:ctrl_modifier";
@@ -272,6 +259,7 @@
   hardware = {
     bluetooth.enable = true;
     cpu.amd.updateMicrocode = true;
+    video.hidpi.enable = true;
     custom.nvidia.enable = true;
 
     sane = {
@@ -288,7 +276,7 @@
     users = {
       root.hashedPassword = "*";
 
-      nixpower = {
+      armeen = {
         isNormalUser = true;
         hashedPassword =
           "$6$D9bjWz87ZjX4AY3Q$vFQLpKIVHktTAdco3FW35ki5dKWtkiMH2h3uSgOUV5nYS2KVPVYBHtP2vkvbiJDbMReWF8jfHfWyw74Q/jBhs1";
@@ -306,22 +294,22 @@
 
       arash = {
         isNormalUser = true;
-        hashedPassword = "$6$JfszfwIeN4wDyj$xSU.exwiolO9FVVQHYBbma/xbxkrTRQoJ8cyvNfbrYhtybe28B0KVngXCALsxv8q2pe4mrouj1/2OwSRRi/po1";
+        hashedPassword =
+          "$6$JfszfwIeN4wDyj$xSU.exwiolO9FVVQHYBbma/xbxkrTRQoJ8cyvNfbrYhtybe28B0KVngXCALsxv8q2pe4mrouj1/2OwSRRi/po1";
         shell = pkgs.zsh;
       };
     };
   };
 
   environment = {
-    # NOTE: Scudo may be preferable, but breaks Chromium audio
-    #memoryAllocator.provider = "graphene-hardened";
+    memoryAllocator.provider = "graphene-hardened";
 
     pathsToLink = [ "/share/zsh" ];
 
     defaultPackages = lib.mkForce [];
     systemPackages = with pkgs; [
       git
-      mathematica
+      #mathematica
       rxvt_unicode.terminfo
     ];
   };
@@ -331,7 +319,7 @@
 
     custom.ddcutil = {
       enable = true;
-      users = [ "nixpower" ];
+      users = [ "armeen" ];
     };
 
     neovim = {

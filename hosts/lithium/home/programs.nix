@@ -1,19 +1,19 @@
 { config, pkgs, lib, root, user, misc, ... }:
 
 {
-  home-manager.enable = true;
   aria2.enable = true;
-  emacs.enable = true;
-  htop.enable = true;
+  autojump.enable = true;
   command-not-found.enable = true;
   dircolors.enable = true;
+  emacs.enable = true;
   feh.enable = true;
-  noti.enable = true;
-  ncmpcpp.enable = true;
-  gpg.enable = true;
-  mpv.enable = true;
-  autojump.enable = true;
   fzf.enable = true;
+  gpg.enable = true;
+  home-manager.enable = true;
+  htop.enable = true;
+  mpv.enable = true;
+  ncmpcpp.enable = true;
+  noti.enable = true;
 
   autorandr = {
     enable = true;
@@ -54,21 +54,17 @@
     };
   };
 
-  nix-index = {
-    enable = true;
-    enableZshIntegration = false;
-    enableBashIntegration = false;
-    enableFishIntegration = false;
-  };
-
   chromium = {
     enable = true;
     extensions = [
       { id = "gfapcejdoghpoidkfodoiiffaaibpaem"; } # Dracula Theme
       { id = "nkbihfbeogaeaoehlefnkodbefgpgknn"; } # MetaMask
+      { id = "dmkamcknogkgcdfhhbddcghachkejeap"; } # Keplr
       { id = "cjpalhdlnbpafiamejdnhcphjbkeiagm"; } # uBlock Origin
       { id = "ohnjgmpcibpbafdlkimncjhflgedgpam"; } # 4chanX
       { id = "hfjbmagddngcpeloejdejnfgbamkjaeg"; } # Vimium-C
+      { id = "cledppeceojodgghbbkaciochldmpdfk"; } # Twitter Media Assist
+      { id = "dneaehbmnbhcippjikoajpoabadpodje"; } # Old Reddit Redirect
       { id = "kbmfpngjjgdllneeigpgjifpgocmfgmb"; } # RES
       { id = "kcgpggonjhmeaejebeoeomdlohicfhce"; } # Cookie Remover
       { id = "nibjojkomfdiaoajekhjakgkdhaomnch"; } # IPFS Companion
@@ -83,7 +79,6 @@
   direnv = {
     enable = true;
     nix-direnv.enable = true;
-    nix-direnv.enableFlakes = true;
   };
 
   exa = {
@@ -93,7 +88,6 @@
 
   gh = {
     enable = true;
-    settings.git_protocol = "ssh";
   };
 
   git = {

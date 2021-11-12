@@ -29,7 +29,7 @@
       root = ./.;
       ext = import ./ext { lib = unstable.lib; };
       user = {
-        login = "nixpower";
+        login = "armeen";
         name = "Armeen Mahdian";
         email = "mahdianarmeen@gmail.com";
       };

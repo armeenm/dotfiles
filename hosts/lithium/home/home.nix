@@ -5,7 +5,7 @@ let
 
   home = "/home/${user.login}";
 
-  seafile = "${home}/.seafile/Seafile";
+  seafile = "${config.xdg.dataHome}/.seafile/Seafile";
   files = "${seafile}/mylib";
   shared = "${seafile}/common";
 in
@@ -57,7 +57,7 @@ in
   file.ss.source = symlink "${files}/ss";
 
   packages = with pkgs; [
-    (winetricks.override { wine = wineWowPackages.stable; })
+    #(winetricks.override { wine = wineWowPackages.stable; })
     arandr
     asciinema
     atool
@@ -104,7 +104,6 @@ in
     lolcat
     lshw
     lsof
-    mathematica
     mediainfo
     miraclecast
     monero
