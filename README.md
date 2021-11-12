@@ -22,7 +22,7 @@ zfs create                  \
   -o keyformat=passphrase   \
   rpool/root
 zfs create -o mountpoint=legacy rpool/root/nixos
-zfs create -o mountpoint=legacy rpool/root/home
+zfs create -o mountpoint=legacy -o com.sun:autosnapshot=true rpool/root/home
 
 mkfs.vfat $DISK-part2
 ```
