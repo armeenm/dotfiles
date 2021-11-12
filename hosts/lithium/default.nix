@@ -1,4 +1,4 @@
-{ config, pkgs, lib, inputs, root, ... }:
+{ config, pkgs, lib, inputs, root, user, ... }:
 
 {
   imports = [
@@ -249,7 +249,7 @@
       enable = true;
       custom.noAccelInput.enable = true;
       custom.userXsession.enable = true;
-      custom.autoLoginUser = "armeen";
+      custom.autoLoginUser = user.login;
 
       layout = "us";
       xkbOptions = "caps:ctrl_modifier";
@@ -259,7 +259,6 @@
   hardware = {
     bluetooth.enable = true;
     cpu.amd.updateMicrocode = true;
-    video.hidpi.enable = true;
     custom.nvidia.enable = true;
 
     sane = {
@@ -319,7 +318,7 @@
 
     custom.ddcutil = {
       enable = true;
-      users = [ "armeen" ];
+      users = [ user.login ];
     };
 
     neovim = {

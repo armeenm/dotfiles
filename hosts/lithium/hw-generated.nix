@@ -8,7 +8,7 @@
     [ (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
-  boot.initrd.availableKernelModules = [ "nvme" "ahci" "usbhid" ];
+  boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
@@ -19,15 +19,17 @@
     };
 
   fileSystems."/home" =
-    { device = "rpool/home";
+    { device = "rpool/root/home";
       fsType = "zfs";
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/EA90-9ED3";
+    { device = "/dev/disk/by-uuid/4CDA-FEA2";
       fsType = "vfat";
     };
 
   swapDevices = [ ];
 
+  # high-resolution display
+  hardware.video.hidpi.enable = lib.mkDefault true;
 }
