@@ -8,12 +8,13 @@
   
   system.stateVersion = lib.mkForce "21.11";
 
-  nix.custom.flakes.enable = true;
+  nix = {
+    allowedUsers = lib.mkForce [ "root" "@wheel" ];
+    custom.flakes.enable = true;
+  };
 
   boot = {
-    initrd = {
-      includeDefaultModules = false;
-    };
+    initrd.includeDefaultModules= false;
     
     supportedFilesystems = [ "zfs" ];
 
@@ -94,9 +95,6 @@
       "fs.protected_symlinks" = true;
     };
 
-    tmpOnTmpfs = false;
-    cleanTmpDir = true;
-
     loader = {
       efi.canTouchEfiVariables = true;
 
@@ -129,6 +127,7 @@
   };
 
   security = {
+    auditd.enable = true;
     rtkit.enable = true;
     sudo.enable = false;
 
@@ -156,13 +155,30 @@
         noPass = true;
       }];
     };
+
+    audit = {
+      enable = true;
+      rules = [
+      ];
+    };
   };
 
   zramSwap.enable = true;
 
   systemd = {
     tmpfiles.rules = [
-      "d /tmp/nix 0755 root root"
+      "d /run/tmp 1777 - - -"
+      "d /run/cache 0755 - - -"
+      "d /run/log 0755 - - -"
+      "d /run/lib 0755 - - -"
+      "d /run/spool 0755 - - -"
+      "L /tmp - - - - /run/tmp"
+      "q /var 0755 - - -"
+      "L /var/tmp - - - - /run/tmp"
+      "L /var/cache - - - - /run/cache"
+      "L /var/log - - - - /run/log"
+      "L /var/lib - - - - /run/lib"
+      "L /var/spool - - - - /run/spool"
     ];
   };
 
@@ -246,7 +262,10 @@
       ];
 
       extraRules = ''
-        ACTION=="add|change", KERNEL=="sd[a-z]*[0-9]*|mmcblk[0-9]*p[0-9]*|nvme[0-9]*n[0-9]*p[0-9]*", ENV{ID_FS_TYPE}=="zfs_member", ATTR{../queue/scheduler}="none"
+        ACTION=="add|change"                                                    \
+        , KERNEL=="sd[a-z]*[0-9]*|mmcblk[0-9]*p[0-9]*|nvme[0-9]*n[0-9]*p[0-9]*" \
+        , ENV{ID_FS_TYPE}=="zfs_member"                                         \
+        , ATTR{../queue/scheduler}="none"
       '';
     };
 
@@ -324,6 +343,8 @@
       #mathematica
       rxvt_unicode.terminfo
     ];
+
+    #etc."zfs/zpool.cache"/tmp
   };
 
   programs = {
