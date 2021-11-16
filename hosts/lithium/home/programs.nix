@@ -54,6 +54,11 @@
     };
   };
 
+  broot = {
+    enable = true;
+    modal = true;
+  };
+
   chromium = {
     enable = true;
     extensions = [
@@ -70,9 +75,8 @@
       { id = "nibjojkomfdiaoajekhjakgkdhaomnch"; } # IPFS Companion
       { 
         id = "dcpihecpambacapedldabdbpakmachpb";
-        updateUrl = "https://raw.githubusercontent.com/iamadamdev/bypass-paywalls-chrome/master/updates.xml";
+        updateUrl = "https://raw.githubusercontent.com/iamadamdev/bypass-paywalls-chrome/master/manifest.json";
       } # Bypass Paywalls
-      
     ];
   };
 

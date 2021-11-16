@@ -9,8 +9,8 @@
   system.stateVersion = lib.mkForce "21.11";
 
   nix = {
-    allowedUsers = lib.mkForce [ "root" "@wheel" ];
-    custom.flakes.enable = true;
+    allowedUsers = lib.mkForce [ "@wheel" "arash" ];
+    custom.flakes.enable = false;
   };
 
   boot = {
@@ -110,11 +110,10 @@
   networking = {
     hostName = "lithium";
     hostId = "5a656e88";
+    firewall.checkReversePath = "loose";
 
     networkmanager.enable = true;
     wireguard.enable = true;
-
-    firewall.checkReversePath = "loose";
   };
 
   i18n.defaultLocale = "en_US.UTF-8";
@@ -152,8 +151,16 @@
       extraRules = [{
         groups = [ "wheel" ];
         keepEnv = true;
-        noPass = true;
+        noPass = false;
       }];
+    };
+
+    pam = {
+      yubico = {
+        enable = true;
+        debug = false;
+        mode = "challenge-response";
+      };
     };
 
     audit = {
@@ -164,23 +171,9 @@
   };
 
   zramSwap.enable = true;
-
-  systemd = {
-    tmpfiles.rules = [
-      "d /run/tmp 1777 - - -"
-      "d /run/cache 0755 - - -"
-      "d /run/log 0755 - - -"
-      "d /run/lib 0755 - - -"
-      "d /run/spool 0755 - - -"
-      "L /tmp - - - - /run/tmp"
-      "q /var 0755 - - -"
-      "L /var/tmp - - - - /run/tmp"
-      "L /var/cache - - - - /run/cache"
-      "L /var/log - - - - /run/log"
-      "L /var/lib - - - - /run/lib"
-      "L /var/spool - - - - /run/spool"
-    ];
-  };
+  #swapDevices = [
+  #  { device = "/var/swap"; size = 16384; }
+  #];
 
   location = {
     provider = "manual";
@@ -203,6 +196,13 @@
     tcsd.enable = false;
     timesyncd.enable = true;
     udisks2.enable = true;
+    x2goserver.enable = true;
+
+    resolved = {
+      enable = true;
+      dnssec = "true";
+      fallbackDns = [ "" ];
+    };
 
     zfs = {
       trim.enable = true;
@@ -233,11 +233,6 @@
       rules = builtins.readFile ./conf/usbguard/rules.conf;
     };
     
-    ipfs = {
-      enable = false;
-      autoMount = true;
-    };
-
     pipewire = {
       enable = true;
       alsa.enable = true;
@@ -340,11 +335,36 @@
     defaultPackages = lib.mkForce [];
     systemPackages = with pkgs; [
       git
-      #mathematica
+      mathematica
       rxvt_unicode.terminfo
     ];
 
-    #etc."zfs/zpool.cache"/tmp
+    etc = {
+      adjtime.source = "/var/etc/adjtime";
+      NIXOS.source = "/var/etc/NIXOS";
+      "zfs/zpool.cache".source = "/run/zpool.cache";
+      "NetworkManager/system-connections".source = "/var/etc/NetworkManager/system-connections";
+
+      # TODO: Move these into the config (with sops/age)
+      "ssh/ssh_host_ed25519_key".source = "/var/etc/ssh/ssh_host_ed25519_key";
+      "ssh/ssh_host_ed25519_key.pub".source = "/var/etc/ssh/ssh_host_ed25519_key.pub";
+      "ssh/ssh_host_rsa_key".source = "/var/etc/ssh/ssh_host_rsa_key";
+      "ssh/ssh_host_rsa_key.pub".source = "/var/etc/ssh/ssh_host_rsa_key.pub";
+    };
+  };
+
+  systemd = {
+    tmpfiles.rules = [
+      "L /root - - - - /home/root"
+      "d /var/srv 0755 - - -"
+      "d /var/etc 0755 - - -"
+      "d /run/cache 0755 - - -"
+
+      "L /srv - - - - /var/srv"
+      "L /srv - - - - /run/tmp"
+
+      "L /bin/uname - - - - /run/current-system/sw/bin/uname"
+    ];
   };
 
   programs = {

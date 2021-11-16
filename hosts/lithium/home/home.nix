@@ -185,5 +185,6 @@ in
     yubikey-personalization-gui
     yubioath-desktop
     zoom-us
+    wireshark
   ];
 }

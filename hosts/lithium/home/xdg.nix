@@ -21,7 +21,6 @@ in
   configFile = {
     "xmobar".source = "${conf}/xmobar";
     "flameshot".source = "${conf}/flameshot";
-    "discord/settings.json".source = "${conf}/discord/settings.json";
     "zsh/.p10k.zsh".source = "${conf}/zsh/p10k.zsh";
   };
 }

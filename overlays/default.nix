@@ -1,10 +1,11 @@
 final: prev: {
   # TODO Make cleaner
-  nixUnstable = prev.callPackage ./nixUnstable { pkgs = prev; };
-  mathematica = prev.callPackage ./mathematica { pkgs = prev; };
-  seafile-shared = prev.callPackage ./seafile-shared { pkgs = prev; };
   discord = prev.callPackage ./discord { pkgs = prev; };
   lightdm = prev.callPackage ./lightdm { pkgs = prev; };
+  mathematica = prev.callPackage ./mathematica { pkgs = prev; };
+  mdadm = prev.callPackage ./mdadm { pkgs = prev; };
+  nixUnstable = prev.callPackage ./nixUnstable { pkgs = prev; };
+  seafile-shared = prev.callPackage ./seafile-shared { pkgs = prev; };
   whatsapp-for-linux = prev.callPackage ./whatsapp-for-linux { pkgs = prev; };
 
   # FIXME
