@@ -193,13 +193,15 @@
     '';
 
     shellAliases = {
-      "hm" = "home-manager";
-      "userctl" = "systemctl --user";
-      "zc" = "zcalc -r";
-      "open" = "xdg-open";
-      "noti" = "noti ";
-      "sudo" = "doas ";
       "doas" = "doas ";
+      "hm" = "home-manager";
+      "noti" = "noti ";
+      "open" = "xdg-open";
+      "sudo" = "doas ";
+      "userctl" = "systemctl --user";
+      "vi" = "$EDITOR";
+      "vim" = "$EDITOR";
+      "zc" = "zcalc -r";
     };
 
     plugins = [

@@ -44,6 +44,7 @@ in
     ANDROID_EMULATOR_HOME = "${config.xdg.dataHome}/android";
     CUDA_CACHE_PATH = "${config.xdg.cacheHome}/nv";
     IPFS_PATH = "${config.xdg.dataHome}/ipfs";
+    EDITOR = "emacsclient -c -t";
   };
 
   file.shared.source = symlink shared;
