@@ -11,9 +11,7 @@
     home-manager.url = github:nix-community/home-manager;
     home-manager.inputs.nixpkgs.follows = "unstable";
 
-    nur.url = github:nix-community/NUR;
     emacs-overlay.url = github:nix-community/emacs-overlay;
-    nixos-hardware.url = github:nixos/nixos-hardware;
     utils.url = github:gytis-ivaskevicius/flake-utils-plus/1.3.0;
   };
 
@@ -21,7 +19,6 @@
     { self
     , stable
     , unstable
-    , nur
     , home-manager
     , utils
     , ... } @ inputs:
@@ -57,7 +54,6 @@
         overlay = import ./overlays;
         sharedOverlays = [
           self.overlay
-          nur.overlay
         ];
 
         hosts = import ./hosts;
