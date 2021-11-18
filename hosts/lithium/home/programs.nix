@@ -110,31 +110,36 @@
     includes = [ { path = "${root}/conf/git/general.inc"; } ];
   };
 
-  urxvt = {
-    enable = true;
-    fonts = [ "xft:Tamsyn:size=12" ];
-    scroll.bar.enable = false;
+  urxvt =
+    let
+      font = "Tamsyn";
+      size = "10";
+    in
+      {
+        enable = true;
+        fonts = [ "xft:${font}:size=${size}" ];
+        scroll.bar.enable = false;
 
-    extraConfig = {
-      boldFont = "xft:Tamsyn:bold:size=12";
-      cursorBlink = false;
-      cursorUnderline = false;
-      depth = 24;
-      geometry = "92x24";
-      internalBorder = 12;
-      letterSpace = 0;
-      lineSpace = 0;
-      perl-ext-common = "default,matcher";
-      saveline = 2048;
-      scrollTtyKeypress = true;
-      scrollTtyOutput = false;
-      scrollWithBuffer = true;
-      secondaryScreen = 1;
-      secondaryScroll = 0;
-      urgentOnBell = true;
-      url-launcher = "chromium";
-    };
-  };
+        extraConfig = {
+          boldFont = "xft:${font}:bold:size=${size}";
+          cursorBlink = false;
+          cursorUnderline = false;
+          depth = 24;
+          geometry = "92x24";
+          internalBorder = 12;
+          letterSpace = 0;
+          lineSpace = 0;
+          perl-ext-common = "default,matcher";
+          saveline = 2048;
+          scrollTtyKeypress = true;
+          scrollTtyOutput = false;
+          scrollWithBuffer = true;
+          secondaryScreen = 1;
+          secondaryScroll = 0;
+          urgentOnBell = true;
+          url-launcher = "chromium";
+        };
+      };
 
   zsh = {
     enable = true;
