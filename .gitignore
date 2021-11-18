@@ -116,4 +116,5 @@ tags
 [._]*.un~
 
 ### Direnv ###
+.envrc
 .direnv

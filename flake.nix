@@ -84,6 +84,12 @@
 
       } // utils.lib.eachDefaultSystem (system:
         let pkgs = unstable.legacyPackages."${system}";
-        in { devShell = import ./shell.nix { inherit pkgs; }; }
+        in {
+          devShell = pkgs.mkShell {
+            packages = with pkgs; [
+              nixpkgs-fmt
+            ];
+          };
+        }
       );
 }
