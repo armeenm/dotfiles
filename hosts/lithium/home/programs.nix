@@ -110,28 +110,6 @@
     includes = [ { path = "${root}/conf/git/general.inc"; } ];
   };
 
-  neovim = {
-    enable = true;
-    withNodeJs = true;
-    extraConfig = ''
-      set number
-      set hidden
-      set shell=bash
-      set cmdheight=2
-      set nocompatible
-      set shortmess+=c
-      set updatetime=300
-      set background=dark
-      set foldmethod=marker
-      set signcolumn=yes
-      set nobackup nowritebackup
-      set tabstop=2 shiftwidth=2 expandtab
-      set tagrelative
-      set tags^=./.git/tags;
-      set mouse=a
-    '';
-  };
-
   urxvt = {
     enable = true;
     fonts = [ "xft:Tamsyn:size=12" ];
