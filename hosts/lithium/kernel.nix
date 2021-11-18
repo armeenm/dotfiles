@@ -32,7 +32,7 @@ pkgs.linuxPackagesFor (pkgs.linux_5_14_hardened.override {
     DEVPORT = no;
     EFIVAR_FS = yes;
     EFI_DISABLE_PCI_DMA = no;
-    EFI_GENERIC_STUB_INITRD_CMDLINE_LOADER = no;
+    EFI_GENERIC_STUB_INITRD_CMDLINE_LOADER = lib.mkForce no;
     EFI_VARS = no;
     ENCRYPTED_KEYS = yes;
     EXPERT = yes;
@@ -113,7 +113,7 @@ pkgs.linuxPackagesFor (pkgs.linux_5_14_hardened.override {
 
     ## X86_64 ##
     DEFAULT_MMAP_MIN_ADDR = freeform "65536";
-    IA32_EMULATION = no;
+    IA32_EMULATION = yes;
     LEGACY_VSYSCALL_NONE = yes;
     MODIFY_LDT_SYSCALL = no;
     X86_INTEL_UMIP = yes;
@@ -122,7 +122,7 @@ pkgs.linuxPackagesFor (pkgs.linux_5_14_hardened.override {
     X86_IOPL_IOPERM = no;
     X86_MCE_INJECT = no;
     X86_MSR = yes;
-    X86_X32 = no;
+    X86_X32 = yes;
 
     ## Hardware ##
     ACPI_APEI = yes;

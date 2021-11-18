@@ -37,7 +37,11 @@
       utils.lib.mkFlake {
         inherit self inputs;
 
-        channelsConfig.allowUnfree = true;
+        channelsConfig = {
+          allowUnfree = true;
+          contentAddressedByDefault = false;
+        };
+
         channels = {
           unstable.overlaysBuilder = channels: [
             (_: _: { stable = channels.stable; })

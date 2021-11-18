@@ -22,7 +22,7 @@
   };
 
   grobi = {
-    enable = true;
+    enable = false;
     executeAfter = [ misc.restart-wm ];
   };
 

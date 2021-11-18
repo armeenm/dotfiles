@@ -9,8 +9,21 @@
   system.stateVersion = lib.mkForce "21.11";
 
   nix = {
+    package = pkgs.nixUnstable;
     allowedUsers = lib.mkForce [ "@wheel" "arash" ];
-    custom.flakes.enable = false;
+    extraOptions = ''
+      keep-outputs = true
+      keep-derivations = true
+      experimental-features = nix-command flakes ca-derivations
+    '';
+
+    binaryCaches = [
+      "https://cache.ngi0.nixos.org"
+    ];
+
+    binaryCachePublicKeys = [
+      "cache.ngi0.nixos.org-1:KqH5CBLNSyX184S9BKZJo1LxrxJ9ltnY2uAs5c/f1MA="
+    ];
   };
 
   boot = {

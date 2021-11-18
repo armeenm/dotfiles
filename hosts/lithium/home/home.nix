@@ -14,26 +14,37 @@ in
   homeDirectory = home;
   stateVersion = lib.mkForce "21.05";
 
-  file.lock = {
-    target = ".local/bin/lock";
-    executable = true;
-    text = ''
+  file = {
+    profile = {
+      target = ".profile";
+      text = "";
+    };
+
+    lock = {
+      target = ".local/bin/lock";
+      executable = true;
+      text = ''
       #!${pkgs.bash}/bin/bash
       ${pkgs.playerctl}/bin/playerctl -a pause
       ${sys.security.wrapperDir}/doas ${pkgs.physlock}/bin/physlock
       #${pkgs.vbetool}/bin/vbetool dpms off
     '';
-  };
+    };
 
-  file.dnsCheck = {
-    source = "${root}/conf/bin/dnscheck.sh";
-    target = ".local/bin/dnscheck";
-    executable = true;
-  };
+    dnsCheck = {
+      source = "${root}/conf/bin/dnscheck.sh";
+      target = ".local/bin/dnscheck";
+      executable = true;
+    };
 
-  file.profile = {
-    target = ".profile";
-    text = "";
+    editor = {
+      target = ".local/bin/editor";
+      executable = true;
+      text = ''
+        #!/bin/sh
+        emacsclient -c -t "$@"
+      '';
+    };
   };
 
   sessionVariables = {
@@ -44,7 +55,7 @@ in
     ANDROID_EMULATOR_HOME = "${config.xdg.dataHome}/android";
     CUDA_CACHE_PATH = "${config.xdg.cacheHome}/nv";
     IPFS_PATH = "${config.xdg.dataHome}/ipfs";
-    EDITOR = "emacsclient -c -t";
+    EDITOR = "$HOME/.local/bin/editor";
   };
 
   file.shared.source = symlink shared;
