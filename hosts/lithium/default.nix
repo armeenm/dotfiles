@@ -374,7 +374,7 @@
       "d /run/cache 0755 - - -"
 
       "L /srv - - - - /var/srv"
-      "L /srv - - - - /run/tmp"
+      "L /tmp - - - - /run/tmp"
 
       "L /bin/uname - - - - /run/current-system/sw/bin/uname"
     ];
