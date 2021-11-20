@@ -368,14 +368,15 @@
 
   systemd = {
     tmpfiles.rules = [
-      "L /root - - - - /home/root"
+
       "d /var/srv 0755 - - -"
       "d /var/etc 0755 - - -"
       "d /run/cache 0755 - - -"
+      "d /run/tmp 1777 - - -"
 
       "L /srv - - - - /var/srv"
       "L /tmp - - - - /run/tmp"
-
+      "L /root - - - - /home/root"
       "L /bin/uname - - - - /run/current-system/sw/bin/uname"
     ];
   };
