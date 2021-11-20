@@ -341,7 +341,8 @@
   };
 
   environment = {
-    memoryAllocator.provider = "graphene-hardened";
+    # TODO: Not really a good idea; find a better solution
+    #memoryAllocator.provider = "graphene-hardened";
 
     pathsToLink = [ "/share/zsh" ];
 
