@@ -15,11 +15,6 @@ in
   stateVersion = lib.mkForce "21.05";
 
   file = {
-    profile = {
-      target = ".profile";
-      text = "";
-    };
-
     lock = {
       target = ".local/bin/lock";
       executable = true;
@@ -73,8 +68,6 @@ in
     arandr
     asciinema
     atool
-    bash
-    bottom
     caffeine-ng
     cloc
     compsize
@@ -130,7 +123,6 @@ in
     nix-tree
     nixopsUnstable
     nmap
-    nodejs
     noto-fonts
     noto-fonts-cjk
     noto-fonts-emoji
@@ -143,7 +135,6 @@ in
     pavucontrol
     pciutils
     playerctl
-    python3
     qdirstat
     qemu_full
     ranger

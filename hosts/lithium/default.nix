@@ -308,6 +308,7 @@
 
   users = {
     mutableUsers = false;
+    defaultUserShell = pkgs.zsh;
 
     users = {
       root = {
@@ -319,7 +320,6 @@
         isNormalUser = true;
         hashedPassword =
           "$6$D9bjWz87ZjX4AY3Q$vFQLpKIVHktTAdco3FW35ki5dKWtkiMH2h3uSgOUV5nYS2KVPVYBHtP2vkvbiJDbMReWF8jfHfWyw74Q/jBhs1";
-        shell = pkgs.zsh;
         extraGroups = [
           "wheel"
           "networkmanager"
@@ -335,7 +335,6 @@
         isNormalUser = true;
         hashedPassword =
           "$6$JfszfwIeN4wDyj$xSU.exwiolO9FVVQHYBbma/xbxkrTRQoJ8cyvNfbrYhtybe28B0KVngXCALsxv8q2pe4mrouj1/2OwSRRi/po1";
-        shell = pkgs.zsh;
       };
     };
   };

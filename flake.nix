@@ -19,7 +19,9 @@
     { self
     , stable
     , unstable
+    , agenix
     , home-manager
+    , emacs-overlay
     , utils
     , ... } @ inputs:
     let
@@ -63,6 +65,7 @@
 
           modules = [
             ./modules
+            agenix.nixosModules.age
             home-manager.nixosModules.home-manager
           ];
         };
