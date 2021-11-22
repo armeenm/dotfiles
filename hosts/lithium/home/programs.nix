@@ -208,6 +208,7 @@
       "vim" = "$EDITOR";
       "zc" = "zcalc -r";
       "cat" = "bat";
+      "diff" = "delta";
     };
 
     plugins = [

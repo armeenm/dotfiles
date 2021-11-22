@@ -51,6 +51,7 @@ in
     CUDA_CACHE_PATH = "${config.xdg.cacheHome}/nv";
     IPFS_PATH = "${config.xdg.dataHome}/ipfs";
     EDITOR = "$HOME/.local/bin/editor";
+    MANPAGER = "sh -c 'col -bx | bat -l man -p'";
   };
 
   file.shared.source = symlink shared;
