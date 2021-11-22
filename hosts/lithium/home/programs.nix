@@ -207,6 +207,7 @@
       "vi" = "$EDITOR";
       "vim" = "$EDITOR";
       "zc" = "zcalc -r";
+      "cat" = "bat";
     };
 
     plugins = [
