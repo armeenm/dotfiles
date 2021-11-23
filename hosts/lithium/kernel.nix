@@ -10,7 +10,7 @@ pkgs.linuxPackagesFor (pkgs.linux_5_14_hardened.override {
     ACCESSIBILITY = lib.mkForce no;
     AIO = lib.mkForce no;
     BIG_KEYS = yes;
-    BINFMT_MISC = yes; # NOTE
+    BINFMT_MISC = lib.mkForce no;
     BPF_SYSCALL = lib.mkForce no;
     BUG_ON_DATA_CORRUPTION = yes;
     COMPAT_BRK = no;
@@ -299,6 +299,7 @@ pkgs.linuxPackagesFor (pkgs.linux_5_14_hardened.override {
     XFRM_STATISTICS = yes;
     XFRM_SUB_POLICY = yes;
     XFRM_USER = yes;
+    BRIDGE = yes;
 
     ## Storage ##
     AUTOFS_FS = yes;
@@ -454,7 +455,6 @@ pkgs.linuxPackagesFor (pkgs.linux_5_14_hardened.override {
     BNXT_FLOWER_OFFLOAD = no;
     BNXT_HWMON = no;
     BNXT_SRIOV = no;
-    BRIDGE = no;
     BRIDGE_NETFILTER = no;
     BROADCOM_PHY = no;
     BT_BCM = no;

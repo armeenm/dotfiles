@@ -65,7 +65,6 @@ in
   file.ss.source = symlink "${files}/ss";
 
   packages = with pkgs; [
-    #(winetricks.override { wine = wineWowPackages.stable; })
     arandr
     asciinema
     atool
@@ -91,9 +90,9 @@ in
     fortune
     gh
     gimp-with-plugins
-    gksu
     gnome.gtk
     gparted
+    gqrx
     hdparm
     highlight
     home-manager
@@ -151,6 +150,7 @@ in
     speedtest-cli
     strace
     streamlink
+    swtpm
     tamsyn
     tcpdump
     tdesktop
@@ -166,6 +166,7 @@ in
     usbutils
     vbetool
     virt-manager
+    virt-manager
     vlc
     vulkan-loader
     vulkan-tools
@@ -175,6 +176,7 @@ in
     whatsapp-for-linux
     whois
     wineWowPackages.stable
+    wireshark
     xautolock
     xclip
     xdg-user-dirs
@@ -189,6 +191,5 @@ in
     yubikey-personalization-gui
     yubioath-desktop
     zoom-us
-    wireshark
   ];
 }

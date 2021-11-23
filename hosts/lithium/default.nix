@@ -12,8 +12,6 @@
     package = pkgs.nixUnstable;
     allowedUsers = lib.mkForce [ "@wheel" "arash" ];
     extraOptions = ''
-      keep-outputs = true
-      keep-derivations = true
       experimental-features = nix-command flakes ca-derivations
     '';
 
@@ -148,9 +146,7 @@
     forcePageTableIsolation = true;
     allowUserNamespaces = true;
 
-    virtualisation = {
-      flushL1DataCache = "cond";
-    };
+    virtualisation.flushL1DataCache = "cond";
 
     tpm2 = {
       enable = true;
@@ -183,10 +179,23 @@
     };
   };
 
+  virtualisation = {
+    libvirtd = {
+      enable = true;
+      qemu = {
+        swtpm.enable = true;
+        ovmf = {
+          enable = true;
+          package = (pkgs.OVMF.override {
+            secureBoot = true;
+            tpmSupport = true;
+          });
+        };
+      };
+    };
+  };
+
   zramSwap.enable = true;
-  #swapDevices = [
-  #  { device = "/var/swap"; size = 16384; }
-  #];
 
   location = {
     provider = "manual";
@@ -296,6 +305,7 @@
   hardware = {
     bluetooth.enable = true;
     cpu.amd.updateMicrocode = true;
+    rtl-sdr.enable = true;
     custom.nvidia.enable = true;
 
     sane = {
@@ -321,13 +331,14 @@
         hashedPassword =
           "$6$D9bjWz87ZjX4AY3Q$vFQLpKIVHktTAdco3FW35ki5dKWtkiMH2h3uSgOUV5nYS2KVPVYBHtP2vkvbiJDbMReWF8jfHfWyw74Q/jBhs1";
         extraGroups = [
-          "wheel"
-          "networkmanager"
-          "i2c"
           "adbusers"
+          "i2c"
           "libvirtd"
-          "scanner"
           "lp"
+          "networkmanager"
+          "plugdev"
+          "scanner"
+          "wheel"
         ];
       };
 
@@ -342,8 +353,6 @@
   environment = {
     # TODO: Not really a good idea; find a better solution
     #memoryAllocator.provider = "graphene-hardened";
-
-    pathsToLink = [ "/share/zsh" ];
 
     defaultPackages = lib.mkForce [];
     systemPackages = with pkgs; [
@@ -383,6 +392,8 @@
 
   programs = {
     adb.enable = true;
+    zsh.enable = true;
+    dconf.enable = true;
 
     custom.ddcutil = {
       enable = true;
