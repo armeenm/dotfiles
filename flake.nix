@@ -11,6 +11,7 @@
     home-manager.url = github:nix-community/home-manager;
     home-manager.inputs.nixpkgs.follows = "unstable";
 
+    deploy-rs.url = github:serokell/deploy-rs;
     emacs-overlay.url = github:nix-community/emacs-overlay;
     utils.url = github:gytis-ivaskevicius/flake-utils-plus/1.3.0;
   };
@@ -21,6 +22,7 @@
     , unstable
     , agenix
     , home-manager
+    , deploy-rs
     , emacs-overlay
     , utils
     , ... } @ inputs:

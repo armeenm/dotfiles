@@ -25,7 +25,7 @@ in
     interfaces.ens3.useDHCP = true;
 
     firewall = {
-      allowedTCPPorts = [ 22 80 443 18080 18089 ];
+      allowedTCPPorts = [ 22 80 443 ];
     };
   };
 
@@ -43,18 +43,11 @@ in
 
   environment = {
     systemPackages = with pkgs; [
-      monero
       neovim
       wget
       git
-      nodejs
-      python3
-      htop
       bottom
-      fzf
-      fasd
       tmux
-      zsh
       nmap
       ldns
       fd
@@ -103,7 +96,7 @@ in
     };
 
     monero = {
-      enable = true;
+      enable = false;
       dataDir = "/tank/monero";
 
       rpc = {
@@ -122,7 +115,7 @@ in
     };
 
     postgresql = {
-      enable = true;
+      enable = false;
       initialScript = pkgs.writeText "synapse-init.sql" ''
         CREATE ROLE "matrix-synapse" WITH LOGIN PASSWORD 'synapse';
         CREATE DATABASE "matrix-synapse" WITH OWNER "matrix-synapse"
@@ -133,7 +126,7 @@ in
     };
 
     matrix-synapse = {
-      enable = true;
+      enable = false;
       server_name = "natrium.${domain}";
       dataDir = "/tank/matrix";
       listeners = [
