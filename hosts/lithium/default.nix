@@ -394,7 +394,7 @@
       "L /tmp - - - - /run/tmp"
       "R /root - - - - -"
       "L /root - - - - /home/root"
-      "L /bin/uname - - - - /run/current-system/sw/bin/uname"
+      "L /bin/uname - - - - ${pkgs.coreutils}/bin/uname"
     ];
   };
 
