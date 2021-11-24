@@ -36,74 +36,77 @@
       "loglevel=0"
       "kvm.nx_huge_pages=force"
       "slub_debug=FZ"
-      #"lockdown=confidentiality"
+      "lockdown=confidentiality"
     ];
 
-    kernel.randstructSeed = "eee";
+    kernel = {
+      randstructSeed = "aaaaa";
 
-    kernel.sysctl = {
-      "net.ipv4.conf.all.accept_redirects" = false;
-      "net.ipv4.conf.all.accept_source_route" = false;
-      "net.ipv4.conf.all.log_martians" = true;
-      "net.ipv4.conf.all.rp_filter" = true;
-      "net.ipv4.conf.all.secure_redirects" = false;
-      "net.ipv4.conf.all.send_redirects" = false;
-      "net.ipv4.conf.default.accept_redirects" = false;
-      "net.ipv4.conf.default.accept_source_route" = false;
-      "net.ipv4.conf.default.log_martians" = true;
-      "net.ipv4.conf.default.rp_filter" = true;
-      "net.ipv4.conf.default.secure_redirects" = false;
-      "net.ipv4.icmp_echo_ignore_all" = true;
-      "net.ipv4.icmp_echo_ignore_broadcasts" = true;
-      "net.ipv4.icmp_ignore_bogus_error_responses" = true;
-      "net.ipv4.ip_forward" = false;
-      "net.ipv4.tcp_congestion_control" = "bbr";
-      "net.ipv4.tcp_dsack" = false;
-      "net.ipv4.tcp_fack" = false;
-      "net.ipv4.tcp_fastopen" = 3;
-      "net.ipv4.tcp_rfc1337" = true;
-      "net.ipv4.tcp_sack" = false;
-      "net.ipv4.tcp_synack_retries" = 5;
-      "net.ipv4.tcp_timestamps" = false;
-      "net.ipv4.tcp_window_scaling" = true;
+      sysctl = {
+        "net.ipv4.conf.all.accept_redirects" = false;
+        "net.ipv4.conf.all.accept_source_route" = false;
+        "net.ipv4.conf.all.log_martians" = true;
+        "net.ipv4.conf.all.rp_filter" = true;
+        "net.ipv4.conf.all.secure_redirects" = false;
+        "net.ipv4.conf.all.send_redirects" = false;
+        "net.ipv4.conf.default.accept_redirects" = false;
+        "net.ipv4.conf.default.accept_source_route" = false;
+        "net.ipv4.conf.default.log_martians" = true;
+        "net.ipv4.conf.default.rp_filter" = true;
+        "net.ipv4.conf.default.secure_redirects" = false;
+        "net.ipv4.icmp_echo_ignore_all" = true;
+        "net.ipv4.icmp_echo_ignore_broadcasts" = true;
+        "net.ipv4.icmp_ignore_bogus_error_responses" = true;
+        "net.ipv4.ip_forward" = false;
+        "net.ipv4.tcp_congestion_control" = "bbr";
+        "net.ipv4.tcp_dsack" = false;
+        "net.ipv4.tcp_fack" = false;
+        "net.ipv4.tcp_fastopen" = 3;
+        "net.ipv4.tcp_rfc1337" = true;
+        "net.ipv4.tcp_sack" = false;
+        "net.ipv4.tcp_synack_retries" = 5;
+        "net.ipv4.tcp_timestamps" = false;
+        "net.ipv4.tcp_window_scaling" = true;
 
-      "net.ipv6.conf.all.accept_redirects" = false;
-      "net.ipv6.conf.all.accept_source_route" = false;
-      "net.ipv6.conf.all.secure_redirects" = false;
-      "net.ipv6.conf.default.accept_ra" = false;
-      "net.ipv6.conf.default.accept_ra_pinfo" = false;
-      "net.ipv6.conf.default.accept_ra_rtr_pref" = false;
-      "net.ipv6.conf.default.accept_redirects" = false;
-      "net.ipv6.conf.default.aceept_ra_defrtr" = false;
-      "net.ipv6.conf.default.max_addresses" = 1;
-      "net.ipv6.conf.default.router_solicitations" = false;
-      "net.ipv6.conf.default.secure_redirects" = false;
+        "net.ipv6.conf.all.accept_redirects" = false;
+        "net.ipv6.conf.all.accept_source_route" = false;
+        "net.ipv6.conf.all.secure_redirects" = false;
+        "net.ipv6.conf.default.accept_ra" = false;
+        "net.ipv6.conf.default.accept_ra_pinfo" = false;
+        "net.ipv6.conf.default.accept_ra_rtr_pref" = false;
+        "net.ipv6.conf.default.accept_redirects" = false;
+        "net.ipv6.conf.default.aceept_ra_defrtr" = false;
+        "net.ipv6.conf.default.max_addresses" = 1;
+        "net.ipv6.conf.default.router_solicitations" = false;
+        "net.ipv6.conf.default.secure_redirects" = false;
 
-      "net.core.bpf_jit_harden" = 2;
-      "net.core.default_qdisc" = "cake";
-      "net.core.netdev_max_backlog" = 5000;
-      "net.core.rmem_max" = 8388608;
-      "net.core.wmem_max" = 8388608;
+        "net.core.bpf_jit_harden" = 2;
+        "net.core.default_qdisc" = "cake";
+        "net.core.netdev_max_backlog" = 5000;
+        "net.core.rmem_max" = 8388608;
+        "net.core.wmem_max" = 8388608;
 
-      "kernel.core_uses_pid" = true;
-      "kernel.kptr_restrict" = 2;
-      "kernel.printk" = "3 3 3 3";
-      "kernel.randomize_va_space" = 2;
-      "kernel.unprivileged_bpf_disabled" = true;
-      "kernel.unprivileged_userns_clone" = true;
-      "kernel.yama.ptrace_scope" = 2;
+        "kernel.core_uses_pid" = true;
+        "kernel.kptr_restrict" = 2;
+        "kernel.panic_on_oops" = true;
+        "kernel.printk" = "3 3 3 3";
+        "kernel.randomize_va_space" = 2;
+        "kernel.unprivileged_bpf_disabled" = true;
+        "kernel.unprivileged_userns_clone" = true;
+        "kernel.yama.ptrace_scope" = 2;
 
-      # Appropriate for x86
-      "vm.max_map_count" = 1048576;
-      "vm.mmap_rnd_bits" = 32;
-      "vm.mmap_rnd_compat_bits" = 16;
+        # Appropriate for x86
+        "vm.max_map_count" = 1048576;
+        "vm.mmap_rnd_bits" = 32;
+        "vm.mmap_rnd_compat_bits" = 16;
 
-      "user.max_user_namespaces" = 10000;
+        "user.max_user_namespaces" = 10000;
 
-      "fs.protected_fifos" = 2;
-      "fs.protected_hardlinks" = true;
-      "fs.protected_regular" = 2;
-      "fs.protected_symlinks" = true;
+        "fs.protected_fifos" = 2;
+        "fs.protected_hardlinks" = true;
+        "fs.protected_regular" = 2;
+        "fs.protected_symlinks" = true;
+      };
     };
 
     loader = {
@@ -175,6 +178,7 @@
     audit = {
       enable = true;
       rules = [
+        "-w /root -p rwxa -k root_home"
       ];
     };
   };
@@ -388,6 +392,7 @@
 
       "L /srv - - - - /var/srv"
       "L /tmp - - - - /run/tmp"
+      "R /root - - - - -"
       "L /root - - - - /home/root"
       "L /bin/uname - - - - /run/current-system/sw/bin/uname"
     ];

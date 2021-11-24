@@ -69,6 +69,7 @@ in
     arandr
     asciinema
     atool
+    avrdude
     caffeine-ng
     cloc
     compsize
@@ -129,6 +130,7 @@ in
     noto-fonts-emoji
     ntfs3g
     openscad
+    p7zip
     pamixer
     pandoc
     parted
