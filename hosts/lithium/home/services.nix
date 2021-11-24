@@ -30,6 +30,9 @@
     enable = true;
     enableSshSupport = true;
     pinentryFlavor = "emacs";
+    extraConfig = ''
+      homedir ${config.programs.gpg.homedir}
+    '';
   };
   
   mpd = {

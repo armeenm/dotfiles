@@ -29,68 +29,84 @@
     let
       root = ./.;
       ext = import ./ext { lib = unstable.lib; };
+
+      domain = "armeen.org";
       user = {
         login = "armeen";
         name = "Armeen Mahdian";
         email = "mahdianarmeen@gmail.com";
       };
-    in
-      utils.lib.mkFlake {
-        inherit self inputs;
+    in utils.lib.mkFlake {
+      inherit self inputs;
 
-        channelsConfig = {
-          allowUnfree = true;
-          contentAddressedByDefault = false;
-        };
+      channelsConfig = {
+        allowUnfree = true;
+        contentAddressedByDefault = false;
+      };
 
-        channels = {
-          unstable.overlaysBuilder = channels: [
-            (_: _: { stable = channels.stable; })
-            (_: _: { unstable = channels.unstable; })
-          ];
-
-          stable.overlaysBuilder = channels: [
-            (_: _: { stable = channels.stable; })
-            (_: _: { unstable = channels.unstable; })
-          ];
-        };
-
-        overlay = import ./overlays;
-        sharedOverlays = [
-          self.overlay
+      channels = {
+        unstable.overlaysBuilder = channels: [
+          (_: _: { stable = channels.stable; })
+          (_: _: { unstable = channels.unstable; })
         ];
 
-        hosts = import ./hosts;
-        hostDefaults = {
-          extraArgs = { inherit ext root user; };
-          channelName = "unstable";
+        stable.overlaysBuilder = channels: [
+          (_: _: { stable = channels.stable; })
+          (_: _: { unstable = channels.unstable; })
+        ];
+      };
 
-          modules = [
-            ./modules
-            agenix.nixosModules.age
-            home-manager.nixosModules.home-manager
+      overlay = import ./overlays;
+      sharedOverlays = [ self.overlay ];
+
+      img = {
+        basic = unstable.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules =  [
+            "${unstable}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
+            ./img/basic
           ];
         };
+      };
 
-        img = {
-          basic = unstable.lib.nixosSystem {
-            system = "x86_64-linux";
-            modules =  [
-              "${unstable}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
-              ./img/basic
-            ];
-          };
-        };
+      hosts = import ./hosts;
+      hostDefaults = {
+        channelName = "unstable";
+        extraArgs = { inherit ext root user; };
 
+        modules = [
+          home-manager.nixosModules.home-manager
+          agenix.nixosModules.age
+          ./modules
+        ];
+      };
 
-      } // utils.lib.eachDefaultSystem (system:
-        let pkgs = unstable.legacyPackages."${system}";
+      deploy.nodes = {
+        francium = let
+          config = self.nixosConfigurations.francium;
+          system = config.config.nixpkgs.system;
         in {
-          devShell = pkgs.mkShell {
-            packages = with pkgs; [
-              nixpkgs-fmt
-            ];
-          };
-        }
-      );
+          hostname = "francium.${domain}";
+            
+            profiles.system = {
+              sshUser = "nixpower";
+              user = "root";
+              path = deploy-rs.lib."${system}".activate.nixos config;
+            };
+        };
+      };
+
+      checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
+
+    } // utils.lib.eachDefaultSystem (system:
+      let pkgs = unstable.legacyPackages."${system}";
+      in {
+        devShell = pkgs.mkShell {
+          packages = with pkgs; [
+            deploy-rs.packages."${system}".deploy-rs
+            nixpkgs-fmt
+          ];
+        };
+      }
+    );
 }

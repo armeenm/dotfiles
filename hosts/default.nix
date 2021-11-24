@@ -1,4 +1,4 @@
 {
-  # TODO: automate the finding of hosts
   lithium.modules = [ ./lithium ];
+  francium.modules = [ ./francium ];
 }

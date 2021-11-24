@@ -50,6 +50,7 @@ in
     ANDROID_EMULATOR_HOME = "${config.xdg.dataHome}/android";
     CUDA_CACHE_PATH = "${config.xdg.cacheHome}/nv";
     IPFS_PATH = "${config.xdg.dataHome}/ipfs";
+    GNUPGHOME = "${config.xdg.dataHome}/gnupg";
     EDITOR = "$HOME/.local/bin/editor";
     MANPAGER = "sh -c 'col -bx | bat -l man -p'";
   };
@@ -138,6 +139,7 @@ in
     qdirstat
     qemu_full
     ranger
+    remmina
     ripgrep
     rng-tools
     rsync

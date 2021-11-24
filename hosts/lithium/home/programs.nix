@@ -8,7 +8,6 @@
   emacs.enable = true;
   feh.enable = true;
   fzf.enable = true;
-  gpg.enable = true;
   home-manager.enable = true;
   htop.enable = true;
   mpv.enable = true;
@@ -119,6 +118,11 @@
 
   gh = {
     enable = false;
+  };
+
+  gpg = {
+    enable = true;
+    homedir = "${config.xdg.dataHome}/gnupg";
   };
 
   git = {

@@ -1,11 +1,11 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 let
-  hostname = "francium";
+  hostName = "francium";
   domain = "armeen.org";
 in
 {
-  imports = [ ./hardware-configuration.nix ];
+  imports = [ ./hw-generated.nix ];
 
   system.stateVersion = "21.05"; # Don't change
 
@@ -20,8 +20,7 @@ in
   time.timeZone = "America/Denver";
 
   networking = {
-    hostName = hostname;
-    domain = domain;
+    inherit hostName domain;
     interfaces.ens3.useDHCP = true;
 
     firewall = {
@@ -35,10 +34,20 @@ in
     keyMap = "us";
   };
 
-  users.users.nixpower = {
-    isNormalUser = true;
-    shell = pkgs.zsh;
-    extraGroups = [ "wheel" ];
+  users = {
+    defaultUserShell = pkgs.zsh;
+
+    users = {
+      root = {
+        hashedPassword = null;
+        home = lib.mkForce "/home/root";
+      };
+
+      armeen = {
+        isNormalUser = true;
+        extraGroups = [ "wheel" ];
+      };
+    };
   };
 
   environment = {

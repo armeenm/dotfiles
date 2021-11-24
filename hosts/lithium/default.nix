@@ -180,6 +180,8 @@
   };
 
   virtualisation = {
+    spiceUSBRedirection.enable = true;
+    
     libvirtd = {
       enable = true;
       qemu = {
@@ -219,6 +221,7 @@
     timesyncd.enable = true;
     udisks2.enable = true;
     x2goserver.enable = true;
+    spice-vdagentd.enable = true;
 
     resolved = {
       enable = true;
