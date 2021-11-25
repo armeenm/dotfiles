@@ -178,7 +178,6 @@
     audit = {
       enable = true;
       rules = [
-        "-w /root -p rwxa -k root_home"
       ];
     };
   };
@@ -393,7 +392,6 @@
       "L /srv - - - - /var/srv"
       "L /tmp - - - - /run/tmp"
       "R /root - - - - -"
-      "L /root - - - - /home/root"
       "L /bin/uname - - - - ${pkgs.coreutils}/bin/uname"
     ];
   };
