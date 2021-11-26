@@ -29,9 +29,13 @@
   gpg-agent = {
     enable = true;
     enableSshSupport = true;
-    pinentryFlavor = "emacs";
+    pinentryFlavor = "curses";
+    sshKeys = [
+      "CBB258EB7AED9AED74E0F9126E369691F40D3371"
+    ];
     extraConfig = ''
       homedir ${config.programs.gpg.homedir}
+      allow-loopback-pinentry
     '';
   };
   

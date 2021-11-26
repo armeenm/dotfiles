@@ -1,4 +1,4 @@
-{ config, pkgs, lib, inputs, root, user, ... }:
+inputs@{ config, pkgs, lib, root, user, ... }:
 
 {
   imports = [
@@ -119,8 +119,6 @@
     };
   };
 
-  time.timeZone = "America/Chicago";
-
   networking = {
     hostName = "lithium";
     hostId = "5a656e88";
@@ -130,6 +128,7 @@
     wireguard.enable = true;
   };
 
+  time.timeZone = "America/Chicago";
   i18n.defaultLocale = "en_US.UTF-8";
 
   console = {
@@ -332,7 +331,7 @@
         home = lib.mkForce "/home/root";
       };
 
-      armeen = {
+      "${user.login}" = {
         isNormalUser = true;
         hashedPassword =
           "$6$D9bjWz87ZjX4AY3Q$vFQLpKIVHktTAdco3FW35ki5dKWtkiMH2h3uSgOUV5nYS2KVPVYBHtP2vkvbiJDbMReWF8jfHfWyw74Q/jBhs1";

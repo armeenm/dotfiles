@@ -36,6 +36,7 @@
         name = "Armeen Mahdian";
         email = "mahdianarmeen@gmail.com";
       };
+
     in utils.lib.mkFlake {
       inherit self inputs;
 
@@ -72,7 +73,7 @@
       hosts = import ./hosts;
       hostDefaults = {
         channelName = "unstable";
-        extraArgs = { inherit ext root user; };
+        extraArgs = { inherit ext root domain user; };
 
         modules = [
           home-manager.nixosModules.home-manager
@@ -89,14 +90,14 @@
           hostname = "francium.${domain}";
             
             profiles.system = {
-              sshUser = "nixpower";
               user = "root";
               path = deploy-rs.lib."${system}".activate.nixos config;
             };
         };
       };
 
-      checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
+      checks = builtins.mapAttrs
+        (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
 
     } // utils.lib.eachDefaultSystem (system:
       let pkgs = unstable.legacyPackages."${system}";

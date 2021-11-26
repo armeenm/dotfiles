@@ -1,23 +1,21 @@
-{ config, pkgs, lib, ... }:
+inputs@{ config, pkgs, lib, user, domain, ... }:
 
 let
   hostName = "francium";
-  domain = "armeen.org";
+  domain = inputs.domain;
 in
 {
   imports = [ ./hw-generated.nix ];
 
-  system.stateVersion = "21.05"; # Don't change
+  system.stateVersion = lib.mkForce "21.05";
 
-  boot = {
-    loader = {
-      grub.enable = true;
-      grub.version = 2;
-      grub.device = "/dev/vda";
-    };
+  nix.trustedUsers = [ "@wheel" ];
+
+  boot.loader.grub = {
+    enable = true;
+    version = 2;
+    device = "/dev/vda";
   };
-
-  time.timeZone = "America/Denver";
 
   networking = {
     inherit hostName domain;
@@ -28,10 +26,14 @@ in
     };
   };
 
+  time.timeZone = "America/Denver";
   i18n.defaultLocale = "en_US.UTF-8";
+
   console = {
-    font = "Lat2-Terminus16";
     keyMap = "us";
+    font = "Tamsyn7x13r";
+    packages = [ pkgs.tamsyn ];
+    earlySetup = true;
   };
 
   users = {
@@ -43,7 +45,7 @@ in
         home = lib.mkForce "/home/root";
       };
 
-      armeen = {
+      "${user.login}" = {
         isNormalUser = true;
         extraGroups = [ "wheel" ];
       };
@@ -51,20 +53,22 @@ in
   };
 
   environment = {
+    defaultPackages = lib.mkForce [];
     systemPackages = with pkgs; [
-      neovim
-      wget
-      git
       bottom
-      tmux
-      nmap
-      ldns
       fd
+      git
+      ldns
+      nmap
       ripgrep
       rxvt_unicode.terminfo
+      tmux
+      wget
     ];
 
-    variables.EDITOR = "nvim";
+    shellAliases = {
+      sudo = "doas";
+    };
   };
 
   programs = {
@@ -74,8 +78,28 @@ in
 
     neovim = {
       enable = true;
+      defaultEditor = true;
       viAlias = true;
       vimAlias = true;
+      configure = {
+        customRC = ''
+          set number
+          set hidden
+          set shell=bash
+          set cmdheight=2
+          set nocompatible
+          set shortmess+=c
+          set updatetime=300
+          set background=dark
+          set foldmethod=marker
+          set signcolumn=yes
+          set nobackup nowritebackup
+          set tabstop=2 shiftwidth=2 expandtab
+          set tagrelative
+          set tags^=./.git/tags;
+          set mouse=a
+        '';
+      };
     };
   };
 
@@ -93,14 +117,6 @@ in
         enableACME = true;
         forceSSL = true;
         locations."/".proxyPass = "http://[::1]:18089";
-      };
-
-      virtualHosts."natrium.${domain}" = {
-        enableACME = true;
-        forceSSL = true;
-
-        locations."/".extraConfig = "return 404;";
-        locations."/_matrix".proxyPass = "http://[::1]:8008";
       };
     };
 
@@ -122,43 +138,30 @@ in
         public-node=1
       '';
     };
-
-    postgresql = {
-      enable = false;
-      initialScript = pkgs.writeText "synapse-init.sql" ''
-        CREATE ROLE "matrix-synapse" WITH LOGIN PASSWORD 'synapse';
-        CREATE DATABASE "matrix-synapse" WITH OWNER "matrix-synapse"
-          TEMPLATE template0
-          LC_COLLATE = "C"
-          LC_CTYPE = "C";
-      '';
-    };
-
-    matrix-synapse = {
-      enable = false;
-      server_name = "natrium.${domain}";
-      dataDir = "/tank/matrix";
-      listeners = [
-        {
-          port = 8008;
-          bind_address = "127.0.0.1";
-          type = "http";
-          tls = false;
-          x_forwarded = true;
-          resources = [
-            {
-              names = [ "client" "federation" ];
-              compress = false;
-            }
-          ];
-        }
-      ];
-    };
   };
 
-  security.acme = {
-    acceptTerms = true;
-    email = "mahdianarmeen@gmail.com";
+  security = {
+    auditd.enable = true;
+    sudo.enable = true;
+    sudo.wheelNeedsPassword = false;
+
+    protectKernelImage = true;
+    unprivilegedUsernsClone = false;
+    allowUserNamespaces = true;
+
+    acme = {
+      acceptTerms = true;
+      email = user.email;
+    };
+
+    doas = {
+      enable = true;
+      extraRules = [{
+        groups = [ "wheel" ];
+        keepEnv = true;
+        noPass = true;
+      }];
+    };
   };
 }
 
