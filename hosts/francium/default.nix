@@ -22,7 +22,7 @@ in
     interfaces.ens3.useDHCP = true;
 
     firewall = {
-      allowedTCPPorts = [ 22 80 443 ];
+      allowedTCPPorts = [ 22 80 443 5222 5269 5280 ];
     };
   };
 
@@ -106,6 +106,37 @@ in
   services = {
     openssh.enable = true;
 
+    prosody = {
+      enable = true;
+      admins = [ "${user.login}@${domain}" ];
+      allowRegistration = true;
+
+      httpInterfaces = [ "::1" ];
+      httpsInterfaces = [ ];
+
+      modules = {
+        announce = true;
+        websocket = true;
+      };
+
+      virtualHosts."krypton.${domain}" = {
+        enabled = true;
+        domain = "krypton.${domain}";
+      };
+
+      muc = [ {
+        domain = "muc.krypton.${domain}";
+      } ];
+
+      uploadHttp = {
+        domain = "upload.krypton.${domain}";
+      };
+
+      extraConfig = ''
+        consider_websocket_secure = true
+      '';
+    };
+
     nginx = {
       enable = true;
       recommendedTlsSettings = true;
@@ -113,10 +144,34 @@ in
       recommendedGzipSettings = true;
       recommendedProxySettings = true;
 
-      virtualHosts."aurum.${domain}" = {
+      #virtualHosts."aurum.${domain}" = {
+      #  enableACME = true;
+      #  forceSSL = true;
+      #  locations."/".proxyPass = "http://[::1]:18089";
+      #};
+
+      virtualHosts."krypton.${domain}" = {
         enableACME = true;
         forceSSL = true;
-        locations."/".proxyPass = "http://[::1]:18089";
+
+        serverAliases = [
+          "muc.krypton.${domain}"
+          "upload.krypton.${domain}"
+        ];
+
+        locations."/xmpp-websocket" = {
+          proxyPass = "http://[::1]:5280/xmpp-websocket";
+          extraConfig = ''
+            proxy_http_version 1.1;
+            proxy_set_header Upgrade $http_upgrade;
+            proxy_set_header Connection $connection_upgrade;
+
+            proxy_set_header Host $host;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+            proxy_read_timeout 900s;
+          '';
+        };
       };
     };
 
@@ -152,6 +207,14 @@ in
     acme = {
       acceptTerms = true;
       email = user.email;
+
+      #certs = {
+      #  "krypton.${domain}" = {
+      #    email = user.email;
+      #    webroot = "/var/lib/acme/krypton.${domain}";
+      #    extraDomainNames = [ "muc.krypton.${domain}" "upload.krypton.${domain}" ];
+      #  };
+      #};
     };
 
     doas = {

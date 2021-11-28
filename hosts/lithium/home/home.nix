@@ -90,6 +90,7 @@ in
     fira-code-symbols
     font-awesome-ttf
     fortune
+    gajim
     gh
     gimp-with-plugins
     gnome.gtk

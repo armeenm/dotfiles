@@ -95,7 +95,7 @@ pkgs.linuxPackagesFor (pkgs.linux_5_14_hardened.override {
     STACKPROTECTOR_STRONG = yes;
     STAGING = lib.mkForce no;
     SYSFS_SYSCALL = no;
-    TLS = yes;
+    TLS = lib.mkForce yes;
     TLS_DEVICE = yes;
     TRUSTED_KEYS = yes;
     UBSAN = no;
