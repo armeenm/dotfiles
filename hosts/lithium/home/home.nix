@@ -32,6 +32,11 @@ in
       executable = true;
     };
 
+    profanity = {
+      source = "${root}/conf/profanity/profrc";
+      target = "${config.xdg.configHome}/profanity/profrc";
+    };
+
     editor = {
       target = ".local/bin/editor";
       executable = true;
@@ -139,6 +144,7 @@ in
     pavucontrol
     pciutils
     playerctl
+    profanity
     qdirstat
     qemu_full
     ranger
@@ -160,6 +166,7 @@ in
     tcpdump
     tdesktop
     texlive.combined.scheme-full
+    tmux
     toilet
     torbrowser
     tpm-tools

@@ -2,6 +2,7 @@ inputs@{ config, pkgs, lib, user, domain, ... }:
 
 let
   hostName = "francium";
+  ip4 = "205.185.123.206";
   domain = inputs.domain;
 in
 {
@@ -49,6 +50,9 @@ in
         isNormalUser = true;
         extraGroups = [ "wheel" ];
       };
+
+      nginx.extraGroups = [ "acme" ];
+      prosody.extraGroups = [ "acme" ];
     };
   };
 
@@ -64,6 +68,8 @@ in
       rxvt_unicode.terminfo
       tmux
       wget
+      profanity
+      tree
     ];
 
     shellAliases = {
@@ -109,19 +115,28 @@ in
     prosody = {
       enable = true;
       admins = [ "${user.login}@${domain}" ];
-      allowRegistration = true;
 
-      httpInterfaces = [ "::1" ];
-      httpsInterfaces = [ ];
+      ssl = {
+        cert = "/var/lib/acme/${domain}/fullchain.pem";
+        key = "/var/lib/acme/${domain}/key.pem";
+      };
+
+      #httpInterfaces = [ "::" ];
+      #httpsInterfaces = [ ];
 
       modules = {
         announce = true;
         websocket = true;
       };
 
-      virtualHosts."krypton.${domain}" = {
+      virtualHosts."${domain}" = {
         enabled = true;
-        domain = "krypton.${domain}";
+        domain = "${domain}";
+
+        ssl = {
+          cert = "/var/lib/acme/${domain}/fullchain.pem";
+          key = "/var/lib/acme/${domain}/key.pem";
+        };
       };
 
       muc = [ {
@@ -132,9 +147,9 @@ in
         domain = "upload.krypton.${domain}";
       };
 
-      extraConfig = ''
-        consider_websocket_secure = true
-      '';
+      #extraConfig = ''
+      #  consider_websocket_secure = true
+      #'';
     };
 
     nginx = {
@@ -144,35 +159,57 @@ in
       recommendedGzipSettings = true;
       recommendedProxySettings = true;
 
-      #virtualHosts."aurum.${domain}" = {
+      virtualHosts = {
+        "acmechallenge.${domain}" = {
+          serverAliases = [ "*.${domain}" ];
+
+          locations = {
+            "/".return = "301 https://$host$request_uri";
+            "/.well-known/acme-challenge".root = "/var/lib/acme/.challenges";
+          };
+        };
+      };
+
+      #virtualHosts."${domain}" = {
       #  enableACME = true;
-      #  forceSSL = true;
+
+      #  listen = [ {
+      #    addr = ip4;
+      #    port = 18089;
+      #    ssl = true;
+      #  } ];
+
       #  locations."/".proxyPass = "http://[::1]:18089";
       #};
 
-      virtualHosts."krypton.${domain}" = {
-        enableACME = true;
-        forceSSL = true;
+      #virtualHosts."${domain}" = {
+      #  enableACME = true;
 
-        serverAliases = [
-          "muc.krypton.${domain}"
-          "upload.krypton.${domain}"
-        ];
+      #  listen = [ {
+      #    addr = ip4;
+      #    port = 5280;
+      #    ssl = true;
+      #  } ];
 
-        locations."/xmpp-websocket" = {
-          proxyPass = "http://[::1]:5280/xmpp-websocket";
-          extraConfig = ''
-            proxy_http_version 1.1;
-            proxy_set_header Upgrade $http_upgrade;
-            proxy_set_header Connection $connection_upgrade;
+      #  serverAliases = [
+      #    "muc.krypton.${domain}"
+      #    "upload.krypton.${domain}"
+      #  ];
 
-            proxy_set_header Host $host;
-            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-            proxy_set_header X-Forwarded-Proto $scheme;
-            proxy_read_timeout 900s;
-          '';
-        };
-      };
+      #  locations."/xmpp-websocket" = {
+      #    proxyPass = "http://[::1]:5280/xmpp-websocket";
+      #    extraConfig = ''
+      #      proxy_http_version 1.1;
+      #      proxy_set_header Upgrade $http_upgrade;
+      #      proxy_set_header Connection "Upgrade";
+
+      #      proxy_set_header Host $host;
+      #      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      #      proxy_set_header X-Forwarded-Proto $scheme;
+      #      proxy_read_timeout 900s;
+      #    '';
+      #  };
+      #};
     };
 
     monero = {
@@ -197,9 +234,7 @@ in
 
   security = {
     auditd.enable = true;
-    sudo.enable = true;
     sudo.wheelNeedsPassword = false;
-
     protectKernelImage = true;
     unprivilegedUsernsClone = false;
     allowUserNamespaces = true;
@@ -208,13 +243,16 @@ in
       acceptTerms = true;
       email = user.email;
 
-      #certs = {
-      #  "krypton.${domain}" = {
-      #    email = user.email;
-      #    webroot = "/var/lib/acme/krypton.${domain}";
-      #    extraDomainNames = [ "muc.krypton.${domain}" "upload.krypton.${domain}" ];
-      #  };
-      #};
+      certs = {
+        "${domain}" = {
+          email = user.email;
+          webroot = "/var/lib/acme/.challenges";
+          extraDomainNames = [
+            "xmpp.krypton.${domain}"
+            "upload.krypton.${domain}"
+          ];
+        };
+      };
     };
 
     doas = {

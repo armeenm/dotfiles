@@ -1,0 +1,11 @@
+[ui]
+theme=gruvbox
+
+[connection]
+reconnect=5
+
+[notifications]
+invite=true
+sub=true
+message=true
+room=mention

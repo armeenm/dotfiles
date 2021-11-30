@@ -144,6 +144,13 @@
     includes = [ { path = "${root}/conf/git/general.inc"; } ];
   };
 
+  readline = {
+    enable = true;
+    extraConfig = ''
+      set editing-mode vi
+    '';
+  };
+
   urxvt =
     let
       font = "Tamsyn";
@@ -202,6 +209,7 @@
       bindkey -M vicmd v edit-command-line
 
       setopt globdots
+      setopt autopushd
     '';
 
     shellAliases = {

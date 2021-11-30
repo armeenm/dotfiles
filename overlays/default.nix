@@ -8,6 +8,7 @@ final: prev: {
   seafile-shared = prev.callPackage ./seafile-shared { pkgs = prev; };
   whatsapp-for-linux = prev.callPackage ./whatsapp-for-linux { pkgs = prev; };
   swtpm = prev.callPackage ./swtpm { pkgs = prev; };
+  profanity = prev.callPackage ./profanity { pkgs = prev; };
 
   # FIXME
   linuxPackages_latest = prev.linuxPackages_latest.extend (kfinal: kprev: {
