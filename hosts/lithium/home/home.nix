@@ -121,6 +121,7 @@ in
     mediainfo
     miraclecast
     monero
+    monero-gui
     mosh
     mpc_cli
     mtools

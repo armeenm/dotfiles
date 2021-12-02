@@ -121,9 +121,6 @@ in
         key = "/var/lib/acme/${domain}/key.pem";
       };
 
-      #httpInterfaces = [ "::" ];
-      #httpsInterfaces = [ ];
-
       modules = {
         announce = true;
         websocket = true;
@@ -146,10 +143,6 @@ in
       uploadHttp = {
         domain = "upload.krypton.${domain}";
       };
-
-      #extraConfig = ''
-      #  consider_websocket_secure = true
-      #'';
     };
 
     nginx = {

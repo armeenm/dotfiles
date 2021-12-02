@@ -13,6 +13,10 @@ pkgs.profanity.overrideAttrs (old: {
     hash = "sha256-dyR+uUEe6pjZH0+7XCse/JC8/69vTXkYqrPBKBSXTzc=";
   };
 
-  patches = [ ./packagestatus.patch ];
+  patches = [
+    ./packagestatus.patch
+    ./pubsub.patch
+  ];
+
   buildInputs = old.buildInputs ++ [ libstrophe ];
 })
