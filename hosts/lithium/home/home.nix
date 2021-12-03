@@ -15,6 +15,16 @@ in
   stateVersion = lib.mkForce "21.05";
 
   file = {
+    shared.source = symlink shared;
+    files.source = symlink files;
+    dl.source = symlink "${files}/dl";
+    media.source = symlink "${files}/media";
+    music.source = symlink "${files}/music";
+    docs.source = symlink "${files}/docs";
+    desktop.source = symlink "${files}/desktop";
+    templates.source = symlink "${files}/templates";
+    ss.source = symlink "${files}/ss";
+
     lock = {
       target = ".local/bin/lock";
       executable = true;
@@ -60,16 +70,6 @@ in
     MANPAGER = "sh -c 'col -bx | bat -l man -p'";
   };
 
-  file.shared.source = symlink shared;
-  file.files.source = symlink files;
-  file.dl.source = symlink "${files}/dl";
-  file.media.source = symlink "${files}/media";
-  file.music.source = symlink "${files}/music";
-  file.docs.source = symlink "${files}/docs";
-  file.desktop.source = symlink "${files}/desktop";
-  file.templates.source = symlink "${files}/templates";
-  file.ss.source = symlink "${files}/ss";
-
   packages = with pkgs; [
     arandr
     asciinema
@@ -93,6 +93,7 @@ in
     file
     fira-code
     fira-code-symbols
+    firefox
     font-awesome-ttf
     fortune
     gajim
