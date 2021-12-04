@@ -1,0 +1,3 @@
+#!/bin/sh
+
+doas nixos-rebuild --flake . switch
