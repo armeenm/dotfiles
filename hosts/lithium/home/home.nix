@@ -25,6 +25,17 @@ in
     templates.source = symlink "${files}/templates";
     ss.source = symlink "${files}/ss";
 
+    lesskey = {
+      target = ".lesskey";
+      text = ''
+        #env
+        LESSHISTFILE=${config.xdg.cacheHome}/less/history
+
+        #command
+        / forw-search ^W
+      '';
+    };
+
     lock = {
       target = ".local/bin/lock";
       executable = true;
@@ -59,7 +70,6 @@ in
 
   sessionVariables = {
     PATH = "$PATH:$HOME/.local/bin";
-    LESSHISTFILE = "${config.xdg.cacheHome}/less/history";
     ANDROID_SDK_ROOT = "${config.xdg.dataHome}/android";
     ANDROID_SDK_HOME = "${config.xdg.dataHome}/android";
     ANDROID_EMULATOR_HOME = "${config.xdg.dataHome}/android";
@@ -146,6 +156,7 @@ in
     pavucontrol
     pciutils
     playerctl
+    procs
     profanity
     qdirstat
     qemu_full
