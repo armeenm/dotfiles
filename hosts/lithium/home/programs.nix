@@ -3,7 +3,7 @@
 {
   aria2.enable = true;
   autojump.enable = true;
-  command-not-found.enable = true;
+  command-not-found.enable = false;
   dircolors.enable = true;
   emacs.enable = true;
   feh.enable = true;
@@ -11,6 +11,7 @@
   home-manager.enable = true;
   htop.enable = true;
   mpv.enable = true;
+  nix-index.enable = true;
   noti.enable = true;
 
   autorandr = {
