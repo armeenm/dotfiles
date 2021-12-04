@@ -382,7 +382,6 @@ inputs@{ config, pkgs, lib, root, user, ... }:
 
   systemd = {
     tmpfiles.rules = [
-
       "d /var/srv 0755 - - -"
       "d /var/etc 0755 - - -"
       "d /run/cache 0755 - - -"
@@ -392,6 +391,10 @@ inputs@{ config, pkgs, lib, root, user, ... }:
       "L /tmp - - - - /run/tmp"
       "R /root - - - - -"
       "L /bin/uname - - - - ${pkgs.coreutils}/bin/uname"
+    ];
+
+    suppressedSystemUnits = [
+      "sys-kernel-debug.mount"
     ];
   };
 
