@@ -297,7 +297,7 @@ inputs@{ config, pkgs, lib, root, user, ... }:
     };
 
     xserver = {
-      enable = true;
+      enable = false;
       custom.noAccelInput.enable = true;
       custom.userXsession.enable = true;
       custom.autoLoginUser = user.login;

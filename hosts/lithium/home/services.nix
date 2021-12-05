@@ -5,7 +5,7 @@
   playerctld.enable = true;
 
   emacs = {
-    enable = false;
+    enable = true;
     client.enable = true;
     client.arguments = [ "-c" "-n" ];
   };

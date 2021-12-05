@@ -15,7 +15,7 @@ mod="Mod4"
 riverctl map normal $mod+Shift Return spawn foot
 
 # Mod+Q to close the focused view
-riverctl map normal $mod+Shift Q close
+riverctl map normal $mod Q close
 
 # Mod+Shift+E to exit river
 riverctl map normal $mod+Shift Backspace exit
