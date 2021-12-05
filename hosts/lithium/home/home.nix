@@ -87,6 +87,7 @@ in
   };
 
   packages = with pkgs; [
+    wlr-randr
     arandr
     asciinema
     atool
