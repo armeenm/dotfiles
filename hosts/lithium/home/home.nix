@@ -158,6 +158,7 @@ in
     playerctl
     procs
     profanity
+    pstree
     qdirstat
     qemu_full
     ranger
