@@ -7,7 +7,7 @@ let
 
   seafile = "${config.xdg.dataHome}/seafile/Seafile";
   files = "${seafile}/mylib";
-  shared = "${seafile}/common";
+  common = "${seafile}/common";
 in
 {
   username = user.login;
@@ -15,7 +15,7 @@ in
   stateVersion = lib.mkForce "21.05";
 
   file = {
-    shared.source = symlink shared;
+    common.source = symlink common;
     files.source = symlink files;
     dl.source = symlink "${files}/dl";
     media.source = symlink "${files}/media";

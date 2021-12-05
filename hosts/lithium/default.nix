@@ -227,7 +227,7 @@ inputs@{ config, pkgs, lib, root, user, ... }:
 
     resolved = {
       enable = true;
-      dnssec = "true";
+      dnssec = "false";
       fallbackDns = [ "" ];
     };
 
@@ -391,6 +391,8 @@ inputs@{ config, pkgs, lib, root, user, ... }:
       "L /tmp - - - - /run/tmp"
       "R /root - - - - -"
       "L /bin/uname - - - - ${pkgs.coreutils}/bin/uname"
+
+      "w- /sys/module/hid_apple/parameters/fnmode - - - - 1"
     ];
 
     suppressedSystemUnits = [

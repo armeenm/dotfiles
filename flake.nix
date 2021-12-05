@@ -2,7 +2,7 @@
   description = "Nix-based config";
 
   inputs = {
-    stable.url = github:nixos/nixpkgs/release-21.05;
+    stable.url = github:nixos/nixpkgs/release-21.11;
     unstable.url = github:nixos/nixpkgs/nixos-unstable;
 
     agenix.url = github:ryantm/agenix;
