@@ -25,6 +25,21 @@ in
     templates.source = symlink "${files}/templates";
     ss.source = symlink "${files}/ss";
 
+    dnsCheck = {
+      source = "${root}/conf/bin/dnscheck.sh";
+      target = ".local/bin/dnscheck";
+      executable = true;
+    };
+
+    editor = {
+      target = ".local/bin/editor";
+      executable = true;
+      text = ''
+        #!/bin/sh
+        emacsclient -c -t "$@"
+      '';
+    };
+
     lesskey = {
       target = ".lesskey";
       text = ''
@@ -47,24 +62,15 @@ in
     '';
     };
 
-    dnsCheck = {
-      source = "${root}/conf/bin/dnscheck.sh";
-      target = ".local/bin/dnscheck";
-      executable = true;
-    };
-
     profanity = {
       source = "${root}/conf/profanity/profrc";
       target = "${config.xdg.configHome}/profanity/profrc";
     };
 
-    editor = {
-      target = ".local/bin/editor";
+    river = {
+      source = "${root}/conf/river/init";
+      target = "${config.xdg.configHome}/river/init";
       executable = true;
-      text = ''
-        #!/bin/sh
-        emacsclient -c -t "$@"
-      '';
     };
   };
 
@@ -105,6 +111,7 @@ in
     fira-code-symbols
     firefox
     font-awesome-ttf
+    foot
     fortune
     gajim
     gh
@@ -164,6 +171,7 @@ in
     ranger
     remmina
     ripgrep
+    river
     rng-tools
     rsync
     scrcpy
