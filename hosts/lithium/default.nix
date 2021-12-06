@@ -12,7 +12,7 @@ inputs@{ config, pkgs, lib, root, user, ... }:
     package = pkgs.nixUnstable;
     allowedUsers = lib.mkForce [ "@wheel" "arash" ];
     extraOptions = lib.mkForce ''
-      experimental-features = nix-command ca-derivations
+      experimental-features = flakes nix-command ca-derivations
     '';
 
     binaryCaches = [
@@ -25,7 +25,7 @@ inputs@{ config, pkgs, lib, root, user, ... }:
   };
 
   boot = {
-    initrd.includeDefaultModules= false;
+    initrd.includeDefaultModules = false;
     
     supportedFilesystems = [ "zfs" ];
 
@@ -214,7 +214,7 @@ inputs@{ config, pkgs, lib, root, user, ... }:
     haveged.enable = true;
     mullvad-vpn.enable = true;
     nix-serve.enable = true;
-    pcscd.enable = true;
+    pcscd.enable = false;
     physlock.enable = true;
     redshift.enable = true;
     saned.enable = true;
