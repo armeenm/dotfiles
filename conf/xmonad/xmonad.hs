@@ -244,7 +244,7 @@ myLayouts =
     . BW.boringWindows
     . avoidStruts
     . spacingRaw True (Border 0 0 0 0) False (Border 5 5 5 5) True
-    $ Mag.magnifiercz 1.25 (Tall nmaster delta ratio) 
+    $ Mag.magnifiercz' 1.25 (Tall nmaster delta ratio) 
       ||| reflectHoriz (noBorders $ tabbed shrinkText $ myThemeSize 9)
       ||| Mag.magnifiercz 1.25 emptyBSP
       ||| reflectHoriz (multiCol [1] 1 0.01 (-0.5))
