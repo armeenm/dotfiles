@@ -11,8 +11,8 @@ inputs@{ config, pkgs, lib, root, user, ... }:
   nix = {
     package = pkgs.nixUnstable;
     allowedUsers = lib.mkForce [ "@wheel" "arash" ];
-    extraOptions = ''
-      experimental-features = nix-command flakes ca-derivations
+    extraOptions = lib.mkForce ''
+      experimental-features = nix-command ca-derivations
     '';
 
     binaryCaches = [
