@@ -1,2 +1,2 @@
 #!/bin/sh
-nixos-rebuild --flake . build
+nixos-rebuild --flake . build "$@"

@@ -1,2 +1,2 @@
 #!/bin/sh
-doas nixos-rebuild --flake . switch
+doas nixos-rebuild --flake . switch "$@"
