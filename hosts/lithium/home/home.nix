@@ -75,23 +75,26 @@ in
   };
 
   sessionVariables = {
-    PATH = "$PATH:$HOME/.local/bin";
-    ANDROID_SDK_ROOT = "${config.xdg.dataHome}/android";
-    ANDROID_SDK_HOME = "${config.xdg.dataHome}/android";
     ANDROID_EMULATOR_HOME = "${config.xdg.dataHome}/android";
+    ANDROID_SDK_HOME = "${config.xdg.dataHome}/android";
+    ANDROID_SDK_ROOT = "${config.xdg.dataHome}/android";
     CUDA_CACHE_PATH = "${config.xdg.cacheHome}/nv";
-    IPFS_PATH = "${config.xdg.dataHome}/ipfs";
-    GNUPGHOME = "${config.xdg.dataHome}/gnupg";
     EDITOR = "$HOME/.local/bin/editor";
+    GNUPGHOME = "${config.xdg.dataHome}/gnupg";
+    IPFS_PATH = "${config.xdg.dataHome}/ipfs";
     MANPAGER = "sh -c 'col -bx | bat -l man -p'";
+    PATH = "$PATH:$HOME/.local/bin";
     WLR_NO_HARDWARE_CURSORS = "1";
+    MOZ_ENABLE_WAYLAND = "0";
   };
 
   packages = with pkgs; [
+    alacritty
     arandr
     asciinema
     atool
     avrdude
+    bemenu
     caffeine-ng
     cloc
     compsize
@@ -101,6 +104,7 @@ in
     discord
     dosfstools
     efibootmgr
+    electron
     element-desktop
     evince
     exfatprogs
@@ -219,6 +223,7 @@ in
     xmobar
     xorg.xdpyinfo
     xorg.xev
+    xorg.xeyes
     xorg.xinit
     xorg.xkill
     yubico-pam

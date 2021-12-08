@@ -1,15 +1,12 @@
 #!/bin/sh
 
-# This is the example configuration file for river.
-#
-# If you wish to edit this, you will probably want to copy it to
-# $XDG_CONFIG_HOME/river/init or $HOME/.config/river/init first.
-#
-# See the river(1), riverctl(1), and rivertile(1) man pages for complete
-# documentation.
+wlr-randr --output DP-1 --pos 0,0 --output DP-2 --pos 3840,0
+mako &
 
 # Use the "logo" key as the primary modifier
 mod="Mod4"
+
+riverctl focus-follows-cursor normal
 
 # Mod+Shift+Return to start an instance of foot (https://codeberg.org/dnkl/foot)
 riverctl map normal $mod+Shift Return spawn foot
@@ -140,7 +137,8 @@ do
     riverctl map $mode None XF86MonBrightnessDown spawn 'light -U 5'
 done
 
-riverctl map normal $mod D spawn 'rofi -show run'
+riverctl map normal $mod D spawn 'bemenu-run -b'
+riverctl map normal $mod P spawn 'emacsclient -c -n'
 
 # Set background and border color
 riverctl background-color 0x002b36
@@ -152,7 +150,6 @@ riverctl set-repeat 50 300
 
 # Make certain views start floating
 riverctl float-filter-add app-id float
-riverctl float-filter-add title "popup title with spaces"
 
 # Set app-ids and titles of views which should use client side decorations
 riverctl csd-filter-add app-id "gedit"
@@ -162,4 +159,3 @@ riverctl csd-filter-add app-id "gedit"
 riverctl default-layout rivertile
 exec rivertile -view-padding 6 -outer-padding 6
 
-wlr-randr --output DP-1 --pos 0,0 --output DP-2 --pos 3840,0

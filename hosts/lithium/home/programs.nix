@@ -144,6 +144,10 @@
     includes = [ { path = "${root}/conf/git/general.inc"; } ];
   };
 
+  mako = {
+    enable = true;
+  };
+
   ncmpcpp = {
     enable = true;
     bindings = [
@@ -195,6 +199,10 @@
           url-launcher = "chromium";
         };
       };
+
+  waybar = {
+    enable = true;
+  };
 
   zsh = {
     enable = true;

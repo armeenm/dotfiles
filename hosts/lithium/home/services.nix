@@ -11,7 +11,7 @@
   };
 
   dunst = {
-    enable = true;
+    enable = false;
     configFile = "${root}/conf/dunst/dunstrc";
   };
 
