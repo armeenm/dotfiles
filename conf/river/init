@@ -144,9 +144,9 @@ riverctl map normal $mod W spawn 'makoctl dismiss'
 riverctl map normal $mod Grave spawn 'grim -g "$(slurp)" - | swappy -f -'
 
 # Set background and border color
-riverctl background-color 0x002b36
-riverctl border-color-focused 0x93a1a1
-riverctl border-color-unfocused 0x586e75
+riverctl background-color 0x000000
+riverctl border-color-focused 0xa5ab00
+riverctl border-color-unfocused 0x0f8cf2
 
 # Set keyboard repeat rate
 riverctl set-repeat 50 300
