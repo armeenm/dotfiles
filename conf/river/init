@@ -139,6 +139,7 @@ done
 
 riverctl map normal $mod D spawn 'bemenu-run -b'
 riverctl map normal $mod P spawn 'emacsclient -c -n'
+riverctl map normal $mod W spawn 'makoctl dismiss'
 
 # Set background and border color
 riverctl background-color 0x002b36
