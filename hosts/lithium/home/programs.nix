@@ -161,6 +161,10 @@
     '';
   };
 
+  rofi = {
+    enable = true;
+  };
+
   urxvt =
     let
       font = "Tamsyn";

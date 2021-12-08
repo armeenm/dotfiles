@@ -84,10 +84,10 @@ in
     GNUPGHOME = "${config.xdg.dataHome}/gnupg";
     EDITOR = "$HOME/.local/bin/editor";
     MANPAGER = "sh -c 'col -bx | bat -l man -p'";
+    WLR_NO_HARDWARE_CURSORS = "1";
   };
 
   packages = with pkgs; [
-    wlr-randr
     arandr
     asciinema
     atool
@@ -212,6 +212,7 @@ in
     whois
     wineWowPackages.stable
     wireshark
+    wlr-randr
     xautolock
     xclip
     xdg-user-dirs

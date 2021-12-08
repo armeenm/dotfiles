@@ -140,6 +140,8 @@ do
     riverctl map $mode None XF86MonBrightnessDown spawn 'light -U 5'
 done
 
+riverctl map normal $mod D spawn 'rofi -show run'
+
 # Set background and border color
 riverctl background-color 0x002b36
 riverctl border-color-focused 0x93a1a1
@@ -159,3 +161,5 @@ riverctl csd-filter-add app-id "gedit"
 # River will send the process group of the init executable SIGTERM on exit.
 riverctl default-layout rivertile
 exec rivertile -view-padding 6 -outer-padding 6
+
+wlr-randr --output DP-1 --pos 0,0 --output DP-2 --pos 3840,0
