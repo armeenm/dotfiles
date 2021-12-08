@@ -7,6 +7,7 @@ mako &
 mod="Mod4"
 
 riverctl focus-follows-cursor normal
+riverctl set-cursor-warp on-output-change
 
 # Mod+Shift+Return to start an instance of foot (https://codeberg.org/dnkl/foot)
 riverctl map normal $mod+Shift Return spawn foot
@@ -140,6 +141,7 @@ done
 riverctl map normal $mod D spawn 'bemenu-run -b'
 riverctl map normal $mod P spawn 'emacsclient -c -n'
 riverctl map normal $mod W spawn 'makoctl dismiss'
+riverctl map normal $mod Grave spawn 'grim -g "$(slurp)" - | swappy -f -'
 
 # Set background and border color
 riverctl background-color 0x002b36

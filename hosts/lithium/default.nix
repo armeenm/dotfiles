@@ -280,6 +280,7 @@ inputs@{ config, pkgs, lib, root, user, ... }:
     udev = {
       packages = with pkgs; [
         ledger-udev-rules
+        platformio
         yubikey-personalization
       ];
 

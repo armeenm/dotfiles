@@ -229,6 +229,7 @@ pkgs.linuxPackagesFor (pkgs.linux_5_14_hardened.override {
     PCI_STUB = yes;
     TYPEC = yes;
     USB = yes;
+    USB_ACM = yes;
     USB_EHCI_FSL = yes;
     USB_EHCI_HCD = yes;
     USB_EHCI_PCI = yes;
@@ -1452,7 +1453,6 @@ pkgs.linuxPackagesFor (pkgs.linux_5_14_hardened.override {
     ULI526X = no;
     UNISYS_VISORBUS = no;
     USBPCWATCHDOG = no;
-    USB_ACM = no;
     USB_ADUTUX = no;
     USB_AMD5536UDC = no;
     USB_APPLEDISPLAY = no;

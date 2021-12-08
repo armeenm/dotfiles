@@ -124,7 +124,9 @@ in
     gnome.gtk
     gparted
     gqrx
+    grim
     hdparm
+    hicolor-icon-theme
     highlight
     home-manager
     iperf
@@ -185,9 +187,11 @@ in
     simple-scan
     sl
     slack-dark
+    slurp
     speedtest-cli
     strace
     streamlink
+    swappy
     swtpm
     tamsyn
     tcpdump
@@ -216,6 +220,7 @@ in
     whois
     wineWowPackages.stable
     wireshark
+    wl-clipboard
     wlr-randr
     xautolock
     xclip
