@@ -1,7 +1,6 @@
 { config, pkgs, lib, root, user, misc, ... }:
 
 {
-  flameshot.enable = true;
   playerctld.enable = true;
 
   emacs = {
@@ -10,20 +9,16 @@
     client.arguments = [ "-c" "-n" ];
   };
 
-  dunst = {
-    enable = false;
-    configFile = "${root}/conf/dunst/dunstrc";
-  };
-
   screen-locker = {
     enable = true;
     inactiveInterval = 5;
     lockCmd = with config.home; "${homeDirectory}/${file.lock.target}";
   };
 
-  grobi = {
+  gammastep = {
     enable = false;
-    executeAfter = [ misc.restart-wm ];
+    latitude = 40.1019564;
+    longitude = -88.2293502;
   };
 
   gpg-agent = {

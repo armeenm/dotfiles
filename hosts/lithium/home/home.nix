@@ -84,8 +84,13 @@ in
     IPFS_PATH = "${config.xdg.dataHome}/ipfs";
     MANPAGER = "sh -c 'col -bx | bat -l man -p'";
     PATH = "$PATH:$HOME/.local/bin";
+
     WLR_NO_HARDWARE_CURSORS = "1";
-    MOZ_ENABLE_WAYLAND = "0";
+    MOZ_ENABLE_WAYLAND = "1";
+
+    CUDA_PATH = "${pkgs.cudaPackages.cudatoolkit_11_5}";
+    NVIDIA_DRIVER_LIBRARY_PATH = "/run/opengl-driver/lib/libnvidia-tls.so";
+    CUDA_LIBRARY_PATH = "/run/opengl-driver/lib/libcuda.so";
   };
 
   packages = with pkgs; [
@@ -99,6 +104,7 @@ in
     cloc
     compsize
     cowsay
+    cudaPackages.cudatoolkit_11_5
     cura
     direnv
     discord
@@ -119,6 +125,7 @@ in
     foot
     fortune
     gajim
+    gammastep
     gh
     gimp-with-plugins
     gnome.gtk

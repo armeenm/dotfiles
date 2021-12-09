@@ -201,12 +201,6 @@ inputs@{ config, pkgs, lib, root, user, ... }:
 
   zramSwap.enable = true;
 
-  location = {
-    provider = "manual";
-    latitude = 40.1019564;
-    longitude = -88.2293502;
-  };
-
   services = {
     autorandr.enable = true;
     blueman.enable = true;
@@ -216,13 +210,11 @@ inputs@{ config, pkgs, lib, root, user, ... }:
     nix-serve.enable = true;
     pcscd.enable = false;
     physlock.enable = true;
-    redshift.enable = true;
     saned.enable = true;
     smartd.enable = true;
     tcsd.enable = false;
     timesyncd.enable = true;
     udisks2.enable = true;
-    x2goserver.enable = true;
     spice-vdagentd.enable = true;
 
     resolved = {

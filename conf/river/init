@@ -2,6 +2,7 @@
 
 wlr-randr --output DP-1 --pos 0,0 --output DP-2 --pos 3840,0
 mako &
+#gammastep &
 
 # Use the "logo" key as the primary modifier
 mod="Mod4"
