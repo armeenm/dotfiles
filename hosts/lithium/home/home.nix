@@ -210,11 +210,6 @@ in
     WLR_NO_HARDWARE_CURSORS = "1";
     MOZ_ENABLE_WAYLAND = "1";
 
-    # Mathematica
-    CUDA_PATH = "${pkgs.cudaPackages.cudatoolkit_11_5}";
-    NVIDIA_DRIVER_LIBRARY_PATH = "/run/opengl-driver/lib/libnvidia-tls.so";
-    CUDA_LIBRARY_PATH = "/run/opengl-driver/lib/libcuda.so";
-
     # Cleaning up home dir
     ANDROID_EMULATOR_HOME = "${config.xdg.dataHome}/android";
     ANDROID_SDK_HOME = "${config.xdg.dataHome}/android";

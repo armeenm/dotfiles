@@ -293,13 +293,9 @@ inputs@{ config, pkgs, lib, root, user, ... }:
   hardware = {
     bluetooth.enable = true;
     cpu.amd.updateMicrocode = true;
+    opengl.enable = true;
     rtl-sdr.enable = true;
     custom.nvidia.enable = true;
-
-    opengl = {
-      enable = true;
-      setLdLibraryPath = true;
-    };
 
     sane = {
       enable = true;
