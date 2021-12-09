@@ -28,6 +28,7 @@ inputs@{ config, pkgs, lib, root, user, ... }:
     initrd.includeDefaultModules = false;
     
     supportedFilesystems = [ "zfs" ];
+    zfs.enableUnstable = true;
 
     kernelPackages = pkgs.callPackage ./kernel.nix {};
 

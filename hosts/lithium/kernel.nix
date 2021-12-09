@@ -1,6 +1,6 @@
 { config, pkgs, lib, ... }:
 
-pkgs.linuxPackagesFor (pkgs.linux_5_14_hardened.override {
+pkgs.linuxPackagesFor (pkgs.linux_5_15_hardened.override {
   features = {
     ia32Emulation = false;
     needsCifsUtils = false;
@@ -341,6 +341,7 @@ pkgs.linuxPackagesFor (pkgs.linux_5_14_hardened.override {
     MMC = yes;
     MMC_BLOCK = yes;
     NETWORK_FILESYSTEMS = no;
+    NTFS_FS = yes;
     NVME_CORE = yes;
     QFMT_v2 = yes;
     SATA_AHCI = yes;
@@ -984,7 +985,6 @@ pkgs.linuxPackagesFor (pkgs.linux_5_14_hardened.override {
     NI_XGE_MANAGEMENT_ENET = no;
     NS83820 = no;
     NTB = no;
-    NTFS_FS = no; # NOTE: Consider enabling in 5.15+
     NVME_FC = no;
     NVME_TARGET = no;
     NVME_TCP = no;
