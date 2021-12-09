@@ -1,6 +1,11 @@
 { config, pkgs, lib, ... }:
 
 pkgs.linuxPackagesFor (pkgs.linux_5_14_hardened.override {
+  features = {
+    ia32Emulation = false;
+    needsCifsUtils = false;
+  };
+  
   structuredExtraConfig = with lib.kernel; {
 
     ## General ##

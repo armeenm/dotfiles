@@ -288,24 +288,18 @@ inputs@{ config, pkgs, lib, root, user, ... }:
       enable = true;
       client.enable = true;
     };
-
-    xserver = {
-      enable = false;
-      custom.noAccelInput.enable = true;
-      custom.userXsession.enable = true;
-      custom.autoLoginUser = user.login;
-
-      layout = "us";
-      xkbOptions = "caps:ctrl_modifier";
-    };
   };
 
   hardware = {
     bluetooth.enable = true;
     cpu.amd.updateMicrocode = true;
     rtl-sdr.enable = true;
-    opengl.enable = true;
     custom.nvidia.enable = true;
+
+    opengl = {
+      enable = true;
+      setLdLibraryPath = true;
+    };
 
     sane = {
       enable = true;
@@ -357,7 +351,6 @@ inputs@{ config, pkgs, lib, root, user, ... }:
     systemPackages = with pkgs; [
       git
       mathematica
-      rxvt_unicode.terminfo
     ];
 
     etc = {

@@ -19,8 +19,12 @@ in
   };
   
   configFile = {
-    "xmobar".source = "${conf}/xmobar";
-    "flameshot".source = "${conf}/flameshot";
+    "profanity/profrc".source = "${conf}/profanity/profrc";
     "zsh/.p10k.zsh".source = "${conf}/zsh/p10k.zsh";
+
+    "river/init" = {
+      source = "${conf}/river/init";
+      executable = true;
+    };
   };
 }

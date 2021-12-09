@@ -13,12 +13,11 @@ in
 {
   home-manager.users."${user.login}" = {
     home = import ./home.nix args;
+    programs = import ./programs.nix args;
+    services = import ./services.nix args;
+    systemd = import ./systemd.nix args;
     xdg = import ./xdg.nix args;
     xsession = import ./xsession.nix args;
-    xresources = import ./xresources.nix args;
-    services = import ./services.nix args;
-    programs = import ./programs.nix args;
-    systemd = import ./systemd.nix args;
 
     fonts.fontconfig.enable = lib.mkForce true;
   };

@@ -14,6 +14,143 @@ in
   homeDirectory = home;
   stateVersion = lib.mkForce "21.05";
 
+  packages = with pkgs; [
+    alacritty
+    asciinema
+    atool
+    bemenu
+    cloc
+    cowsay
+    cudaPackages.cudatoolkit_11_5
+    cura
+    direnv
+    discord
+    dosfstools
+    efibootmgr
+    electron
+    element-desktop
+    evince
+    exfatprogs
+    fasd
+    fd
+    figlet
+    file
+    fira-code
+    fira-code-symbols
+    firefox
+    font-awesome-ttf
+    foot
+    fortune
+    gajim
+    gh
+    gimp-with-plugins
+    gnome.gtk
+    gparted
+    gqrx
+    grim
+    hdparm
+    hicolor-icon-theme
+    highlight
+    iperf
+    ipfs
+    jq
+    keepassxc
+    killall
+    ldns
+    ledger-live-desktop
+    libnotify
+    libreoffice-fresh
+    lm_sensors
+    lolcat
+    lshw
+    lsof
+    mediainfo
+    miraclecast
+    monero
+    monero-gui
+    mosh
+    mpc_cli
+    mtools
+    mtr
+    mullvad-vpn
+    neofetch
+    niv
+    nix-tree
+    nmap
+    noto-fonts
+    noto-fonts-cjk
+    noto-fonts-emoji
+    ntfs3g
+    openscad
+    p7zip
+    pamixer
+    pandoc
+    parted
+    patchutils
+    pavucontrol
+    pciutils
+    playerctl
+    procs
+    profanity
+    pstree
+    qdirstat
+    qemu_full
+    ranger
+    remmina
+    ripgrep
+    river
+    rng-tools
+    rsync
+    scrcpy
+    seafile-client
+    seafile-shared
+    simple-scan
+    sl
+    slack-dark
+    slurp
+    speedtest-cli
+    strace
+    streamlink
+    swappy
+    swtpm
+    tamsyn
+    tcpdump
+    tdesktop
+    tmux
+    toilet
+    torbrowser
+    tpm-tools
+    trash-cli
+    unrar
+    unzip
+    usbguard
+    usbutils
+    vbetool
+    virt-manager
+    virt-manager
+    vlc
+    vulkan-loader
+    vulkan-tools
+    w3m
+    weechat
+    wget
+    whatsapp-for-linux
+    whois
+    wineWowPackages.stable
+    wireshark
+    wl-clipboard
+    wlr-randr
+    xdg-user-dirs
+    xorg.xeyes
+    xorg.xkill
+    yubico-pam
+    yubikey-manager-qt
+    yubikey-personalization
+    yubikey-personalization-gui
+    yubioath-desktop
+    zoom-us
+  ];
+
   file = {
     common.source = symlink common;
     files.source = symlink files;
@@ -61,188 +198,29 @@ in
       #${pkgs.vbetool}/bin/vbetool dpms off
     '';
     };
-
-    profanity = {
-      source = "${root}/conf/profanity/profrc";
-      target = "${config.xdg.configHome}/profanity/profrc";
-    };
-
-    river = {
-      source = "${root}/conf/river/init";
-      target = "${config.xdg.configHome}/river/init";
-      executable = true;
-    };
   };
 
   sessionVariables = {
+    # General
+    PATH = "$PATH:$HOME/.local/bin";
+    EDITOR = "$HOME/.local/bin/editor";
+    MANPAGER = "sh -c 'col -bx | bat -l man -p'";
+
+    # Wayland
+    WLR_NO_HARDWARE_CURSORS = "1";
+    MOZ_ENABLE_WAYLAND = "1";
+
+    # Mathematica
+    CUDA_PATH = "${pkgs.cudaPackages.cudatoolkit_11_5}";
+    NVIDIA_DRIVER_LIBRARY_PATH = "/run/opengl-driver/lib/libnvidia-tls.so";
+    CUDA_LIBRARY_PATH = "/run/opengl-driver/lib/libcuda.so";
+
+    # Cleaning up home dir
     ANDROID_EMULATOR_HOME = "${config.xdg.dataHome}/android";
     ANDROID_SDK_HOME = "${config.xdg.dataHome}/android";
     ANDROID_SDK_ROOT = "${config.xdg.dataHome}/android";
     CUDA_CACHE_PATH = "${config.xdg.cacheHome}/nv";
-    EDITOR = "$HOME/.local/bin/editor";
     GNUPGHOME = "${config.xdg.dataHome}/gnupg";
     IPFS_PATH = "${config.xdg.dataHome}/ipfs";
-    MANPAGER = "sh -c 'col -bx | bat -l man -p'";
-    PATH = "$PATH:$HOME/.local/bin";
-
-    WLR_NO_HARDWARE_CURSORS = "1";
-    MOZ_ENABLE_WAYLAND = "1";
-
-    CUDA_PATH = "${pkgs.cudaPackages.cudatoolkit_11_5}";
-    NVIDIA_DRIVER_LIBRARY_PATH = "/run/opengl-driver/lib/libnvidia-tls.so";
-    CUDA_LIBRARY_PATH = "/run/opengl-driver/lib/libcuda.so";
   };
-
-  packages = with pkgs; [
-    alacritty
-    arandr
-    asciinema
-    atool
-    avrdude
-    bemenu
-    caffeine-ng
-    cloc
-    compsize
-    cowsay
-    cudaPackages.cudatoolkit_11_5
-    cura
-    direnv
-    discord
-    dosfstools
-    efibootmgr
-    electron
-    element-desktop
-    evince
-    exfatprogs
-    fasd
-    fd
-    figlet
-    file
-    fira-code
-    fira-code-symbols
-    firefox
-    font-awesome-ttf
-    foot
-    fortune
-    gajim
-    gammastep
-    gh
-    gimp-with-plugins
-    gnome.gtk
-    gparted
-    gqrx
-    grim
-    hdparm
-    hicolor-icon-theme
-    highlight
-    home-manager
-    iperf
-    ipfs
-    jq
-    keepassxc
-    killall
-    ldns
-    ledger-live-desktop
-    libnotify
-    libreoffice-fresh
-    linuxPackages.cpupower
-    lm_sensors
-    lolcat
-    lshw
-    lsof
-    mediainfo
-    miraclecast
-    monero
-    monero-gui
-    mosh
-    mpc_cli
-    mtools
-    mtr
-    mullvad-vpn
-    neofetch
-    niv
-    nix-tree
-    nixopsUnstable
-    nmap
-    noto-fonts
-    noto-fonts-cjk
-    noto-fonts-emoji
-    ntfs3g
-    openscad
-    p7zip
-    pamixer
-    pandoc
-    parted
-    patchutils
-    pavucontrol
-    pciutils
-    playerctl
-    procs
-    profanity
-    pstree
-    qdirstat
-    qemu_full
-    ranger
-    remmina
-    ripgrep
-    river
-    rng-tools
-    rsync
-    scrcpy
-    seafile-client
-    seafile-shared
-    simple-scan
-    sl
-    slack-dark
-    slurp
-    speedtest-cli
-    strace
-    streamlink
-    swappy
-    swtpm
-    tamsyn
-    tcpdump
-    tdesktop
-    texlive.combined.scheme-full
-    tmux
-    toilet
-    torbrowser
-    tpm-tools
-    trash-cli
-    trousers # TODO
-    unrar
-    unzip
-    usbguard
-    usbutils
-    vbetool
-    virt-manager
-    virt-manager
-    vlc
-    vulkan-loader
-    vulkan-tools
-    w3m
-    weechat
-    wget
-    whatsapp-for-linux
-    whois
-    wineWowPackages.stable
-    wireshark
-    wl-clipboard
-    wlr-randr
-    xautolock
-    xclip
-    xdg-user-dirs
-    xmobar
-    xorg.xdpyinfo
-    xorg.xev
-    xorg.xeyes
-    xorg.xinit
-    xorg.xkill
-    yubico-pam
-    yubikey-manager-qt
-    yubikey-personalization
-    yubikey-personalization-gui
-    yubioath-desktop
-    zoom-us
-  ];
 }
