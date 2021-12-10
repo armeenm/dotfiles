@@ -208,7 +208,7 @@ in
 
     # Wayland
     WLR_NO_HARDWARE_CURSORS = "1";
-    MOZ_ENABLE_WAYLAND = "1";
+    #MOZ_ENABLE_WAYLAND = "1";
 
     # Cleaning up home dir
     ANDROID_EMULATOR_HOME = "${config.xdg.dataHome}/android";
