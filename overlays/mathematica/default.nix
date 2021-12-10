@@ -19,7 +19,7 @@
 , llvmPackages_12
 , matio
 , mpfr
-, nvidia_x11 ? pkgs.linuxPackages_5_14_hardened.nvidia_x11_beta
+, nvidia_x11 ? pkgs.linuxPackages_5_15_hardened.nvidia_x11_beta
 , openjdk11
 , pciutils
 , tre
