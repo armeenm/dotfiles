@@ -1,4 +1,8 @@
 {
   lithium.modules = [ ./lithium ];
-  francium.modules = [ ./francium ];
+
+  francium = {
+    channelName = "stable";
+    modules = [ ./francium ];
+  };
 }
