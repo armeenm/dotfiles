@@ -11,7 +11,8 @@ inputs@{ config, pkgs, lib, root, user, ... }:
   nix = {
     package = pkgs.nixUnstable;
     allowedUsers = lib.mkForce [ "@wheel" "arash" ];
-    extraOptions = lib.mkForce ''
+    extraOptions = ''
+      #extra-platforms = x86_64-v1-linux x86_64-v2-linux x86_64-v3-linux
       experimental-features = flakes nix-command ca-derivations
     '';
 
@@ -203,7 +204,6 @@ inputs@{ config, pkgs, lib, root, user, ... }:
   zramSwap.enable = true;
 
   services = {
-    autorandr.enable = true;
     blueman.enable = true;
     fstrim.enable = true;
     haveged.enable = true;
@@ -386,8 +386,8 @@ inputs@{ config, pkgs, lib, root, user, ... }:
 
   programs = {
     adb.enable = true;
-    zsh.enable = true;
     dconf.enable = true;
+    zsh.enable = true;
 
     custom.ddcutil = {
       enable = true;
