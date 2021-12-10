@@ -13,7 +13,7 @@
 
     deploy-rs.url = github:serokell/deploy-rs;
     emacs-overlay.url = github:nix-community/emacs-overlay;
-    utils.url = github:gytis-ivaskevicius/flake-utils-plus/1.3.0;
+    utils.url = github:gytis-ivaskevicius/flake-utils-plus/v1.3.1;
   };
 
   outputs =
@@ -74,6 +74,7 @@
       hosts = import ./hosts;
       hostDefaults = {
         channelName = "unstable";
+        system = "x86_64-linux";
         extraArgs = { inherit ext root domain user; };
 
         modules = [
