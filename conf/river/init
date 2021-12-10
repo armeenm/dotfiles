@@ -1,6 +1,8 @@
 #!/bin/sh
 
-wlr-randr --output DP-1 --pos 0,0 --output DP-2 --pos 3840,0
+wlr-randr \
+    --output DP-1 --pos 0,0 --scale 1 \
+    --output DP-2 --pos 3840,0 --scale 1
 mako &
 #gammastep &
 
