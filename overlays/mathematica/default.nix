@@ -1,9 +1,10 @@
 { pkgs
 , lib
 , stdenv
-, buildEnv
-, requireFile
 , autoPatchelfHook
+, buildEnv
+, makeWrapper
+, requireFile
 , R
 , alsa-lib
 , bash
@@ -19,7 +20,7 @@
 , llvmPackages_12
 , matio
 , mpfr
-, nvidia_x11 ? pkgs.linuxPackages_5_15_hardened.nvidia_x11_beta
+, nvidia_x11 ? pkgs.linuxKernel.packages.linux_5_15_hardened.nvidiaPackages.stable
 , openjdk11
 , pciutils
 , tre
@@ -33,11 +34,12 @@ let
   cuda = buildEnv {
     name = "mathematica-cuda";
     paths = [
-      nvidia_x11
+      (nvidia_x11.override { libsOnly = true; })
       cudaPackages.cudatoolkit_11_5
       cudaPackages.cudatoolkit_11_5.lib
     ];
-    pathsToLink = [ "/lib" "/bin" ];
+    pathsToLink = [ "/lib" "/bin" "/include" ];
+    postBuild = "ln -s $out/lib $out/lib64";
   };
 
 in pkgs.mathematica.overrideAttrs (old: rec {
@@ -51,16 +53,15 @@ in pkgs.mathematica.overrideAttrs (old: rec {
     name = "Mathematica_${version}" + lib.optionalString (lang != "en") "_${language}" + "_LINUX.sh";
     sha256 = "d34e02440d96f4f80804db08475aa3d5f22d7cb68ad37eafb3c8ea4ec0a268ba";
     message = ''
-              This nix expression requires that ${name} is
-              already part of the store. Find the file on your Mathematica CD
-              and add it to the nix store with nix store add-file <FILE>.
-            '';
+      This nix expression requires that ${name} is
+      already part of the store. Find the file on your Mathematica CD
+      and add it to the nix store with nix store add-file <FILE>.
+    '';
   };
 
   buildInputs = old.buildInputs ++ [
     R
     alsa-lib
-    autoPatchelfHook
     cudaPackages.cudatoolkit_11_5
     cups.lib
     flite
@@ -83,47 +84,42 @@ in pkgs.mathematica.overrideAttrs (old: rec {
     xz
   ];
 
-  ldpath = lib.makeLibraryPath buildInputs
-           + lib.optionalString (stdenv.hostPlatform.system == "x86_64-linux")
-             (":" + lib.makeSearchPathOutput "lib" "lib64" buildInputs);
+  nativeBuildInputs = [
+    autoPatchelfHook
+    makeWrapper
+  ];
+
+  wrapProgramFlags = [
+    "--prefix LD_LIBRARY_PATH : ${lib.makeLibraryPath [stdenv.cc.cc zlib libssh2]}"
+    "--set USE_WOLFRAM_LD_LIBRARY_PATH 1"
+    "--set QT_XKB_CONFIG_ROOT ${xkeyboard_config}/share/X11/xkb"
+    "--set CUDA_PATH ${cuda}"
+    "--set NVIDIA_DRIVER_LIBRARY_PATH ${cuda}/lib/libnvidia-tls.so"
+  ];
 
   installPhase = ''
-    cd Installer
+    runHook preInstall
 
-    # don't restrict PATH, that has already been done
-    sed -i -e 's/^PATH=/# PATH=/' MathInstaller
+    cd $TMPDIR/Unix/Installer
 
-    # Fix the installation script as follows:
-    # 1. Adjust the shebang
-    # 2. Use the wrapper in the desktop items
-    substituteInPlace MathInstaller \
-      --replace "/bin/bash" "${pkgs.bash}/bin/bash" \
-      --replace "Executables/Mathematica" "../../bin/mathematica"
+    # Fix MathInstaller shebang and PATH
+    patchShebangs MathInstaller
+    sed -i '
+      s/^PATH=/# &/
+      s/^checkSELinux_$/# &/
+      s/^checkAvahiDaemon$/# &/
+      s/^setHome$/# &/
+    ' MathInstaller
 
-    # Install the desktop items
-    export XDG_DATA_HOME="$out/share"
+    XDG_DATA_HOME="$out/share" DEBUG=true wolframScript=n \
+      ./MathInstaller -auto -createdir=y -execdir="$out/bin" -targetdir="$out/libexec/Mathematica"
 
-    echo "=== Running MathInstaller ==="
-    ./MathInstaller -auto -createdir=y -execdir=$out/bin -targetdir=$out/libexec/Mathematica -silent
+    errLog="$out/libexec/Mathematica/InstallErrors"
+    [ -f "$errLog" ] && cat "$errLog" && rm "$errLog"
 
-    # Fix library paths
-    cd $out/libexec/Mathematica/Executables
-    for path in mathematica MathKernel Mathematica WolframKernel wolfram math; do
-      sed -i -e "2iexport LD_LIBRARY_PATH=${zlib}/lib:${stdenv.cc.cc.lib}/lib:${libssh2}/lib:\''${LD_LIBRARY_PATH}\n" $path
-    done
+    for bin in $out/bin/*; do wrapProgram $bin ''${wrapProgramFlags[@]}; done
 
-    # Fix xkeyboard config path for Qt
-    for path in mathematica Mathematica; do
-      sed -i -e "2iexport QT_XKB_CONFIG_ROOT=\"${xkeyboard_config}/share/X11/xkb\"\n" $path
-    done
-
-    # Remove some broken libraries
-    rm -f $out/libexec/Mathematica/SystemFiles/Libraries/Linux-x86-64/libz.so*
-
-    # Set environment variable to fix libQt errors - see https://github.com/NixOS/nixpkgs/issues/96490
-    wrapProgram $out/bin/mathematica \
-      --set USE_WOLFRAM_LD_LIBRARY_PATH 1 \
-      --set CUDA_PATH ${cuda}
+    runHook postInstall
   '';
 
   preFixup = "";
