@@ -12,7 +12,7 @@ inputs@{ config, pkgs, lib, root, user, ... }:
     package = pkgs.nixUnstable;
     allowedUsers = lib.mkForce [ "@wheel" "arash" ];
     extraOptions = ''
-      #extra-platforms = x86_64-v1-linux x86_64-v2-linux x86_64-v3-linux
+      warn-dirty = false
       experimental-features = flakes nix-command ca-derivations
     '';
 
