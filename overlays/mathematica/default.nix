@@ -102,20 +102,23 @@ in pkgs.mathematica.overrideAttrs (old: rec {
 
     cd $TMPDIR/Unix/Installer
 
-    # Fix MathInstaller shebang and PATH
+    mkdir -p $out/usr/share $out/lib/udev/rules.d
+
     patchShebangs MathInstaller
     sed -i '
-      s/^PATH=/# &/
-      s/^checkSELinux_$/# &/
-      s/^checkAvahiDaemon$/# &/
-      s/^setHome$/# &/
+      s|^PATH=|# &|
+      s|`hostname`|""|
+      s|isRoot="false"|# &|
+      s|^checkAvahiDaemon$|# &|
+      s|/etc/udev/rules.d|$out/lib/udev/rules.d|
+      s|/usr|$out/usr|
     ' MathInstaller
 
-    XDG_DATA_HOME="$out/share" DEBUG=true wolframScript=n \
-      ./MathInstaller -auto -createdir=y -execdir="$out/bin" -targetdir="$out/libexec/Mathematica"
+    XDG_DATA_HOME="$out/share" HOME=$out/home vernierLink=y \
+    ./MathInstaller -execdir="$out/bin" -targetdir="$out/libexec/Mathematica" -auto -createdir=y
 
     errLog="$out/libexec/Mathematica/InstallErrors"
-    [ -f "$errLog" ] && cat "$errLog" && rm "$errLog"
+    [ -f "$errLog" ] && echo "Installation errors:" && cat "$errLog" && rm "$errLog"
 
     for bin in $out/bin/*; do wrapProgram $bin ''${wrapProgramFlags[@]}; done
 
