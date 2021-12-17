@@ -348,6 +348,7 @@ inputs@{ config, pkgs, lib, root, user, ... }:
     systemPackages = with pkgs; [
       git
       mathematica
+      rsync
     ];
 
     etc = {

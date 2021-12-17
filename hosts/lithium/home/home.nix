@@ -100,7 +100,6 @@ in
     ripgrep
     river
     rng-tools
-    rsync
     scrcpy
     seafile-client
     seafile-shared
@@ -207,8 +206,9 @@ in
     MANPAGER = "sh -c 'col -bx | bat -l man -p'";
 
     # Wayland
+    GBM_BACKEND = "nvidia-drm";
+    MOZ_ENABLE_WAYLAND = "1";
     WLR_NO_HARDWARE_CURSORS = "1";
-    #MOZ_ENABLE_WAYLAND = "1";
 
     # Cleaning up home dir
     ANDROID_EMULATOR_HOME = "${config.xdg.dataHome}/android";
