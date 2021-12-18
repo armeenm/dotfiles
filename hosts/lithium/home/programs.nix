@@ -156,6 +156,7 @@
 
       zle -N edit-command-line
       bindkey -M vicmd v edit-command-line
+      bindkey -v '^?' backward-delete-char
 
       setopt globdots
       setopt autopushd
