@@ -105,8 +105,12 @@
   mpv = {
     enable = true;
     config = {
-      hwdec = "nvdec";
+      gpu-api = "vulkan";
+      #gpu-context = "wayland";
       gpu-context = "x11vk";
+      hwdec = "nvdec-copy";
+      profile = "gpu-hq";
+      spirv-compiler = "shaderc";
     };
   };
 
