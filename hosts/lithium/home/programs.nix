@@ -10,7 +10,6 @@
   feh.enable = true;
   fzf.enable = true;
   home-manager.enable = true;
-  mpv.enable = true;
   nix-index.enable = true;
   noti.enable = true;
 
@@ -101,6 +100,14 @@
 
   mako = {
     enable = true;
+  };
+
+  mpv = {
+    enable = true;
+    config = {
+      hwdec = "nvdec";
+      gpu-context = "x11vk";
+    };
   };
 
   ncmpcpp = {

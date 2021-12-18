@@ -1,0 +1,1 @@
+--downloader aria2c --downloader-args aria2c:'-c -j16 -x16 -s16 -k1M'
