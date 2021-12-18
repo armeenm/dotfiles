@@ -347,8 +347,12 @@ inputs@{ config, pkgs, lib, root, user, ... }:
     defaultPackages = lib.mkForce [];
     systemPackages = with pkgs; [
       git
-      mathematica
       rsync
+      (mathematica.override {
+        cudaSupport = true;
+        nvidia_x11 = config.boot.kernelPackages.nvidiaPackages.stable;
+        cudatoolkit = cudaPackages.cudatoolkit_11_5;
+      })
     ];
 
     etc = {

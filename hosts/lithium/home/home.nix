@@ -142,6 +142,7 @@ in
     xdg-user-dirs
     xorg.xeyes
     xorg.xkill
+    yt-dlp
     yubico-pam
     yubikey-manager-qt
     yubikey-personalization

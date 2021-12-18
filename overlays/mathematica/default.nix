@@ -7,7 +7,6 @@
 , requireFile
 , R
 , alsa-lib
-, bash
 , cudaPackages
 , cups
 , flite
@@ -20,7 +19,9 @@
 , llvmPackages_12
 , matio
 , mpfr
-, nvidia_x11 ? pkgs.linuxKernel.packages.linux_5_15_hardened.nvidiaPackages.stable
+, cudaSupport ? false
+, nvidia_x11 ? null
+, cudatoolkit ? null
 , openjdk11
 , pciutils
 , tre
@@ -31,14 +32,16 @@
 }:
 
 let
-  cuda = buildEnv {
+  cudaDeps = lib.optional cudaSupport [
+    nvidia_x11
+    cudatoolkit
+    cudatoolkit.lib
+  ];
+  
+  cudaEnv = buildEnv {
     name = "mathematica-cuda";
-    paths = [
-      (nvidia_x11.override { libsOnly = true; })
-      cudaPackages.cudatoolkit_11_5
-      cudaPackages.cudatoolkit_11_5.lib
-    ];
-    pathsToLink = [ "/lib" "/bin" "/include" ];
+    paths = cudaDeps;
+    pathsToLink = [ "/bin" "/include" "/lib" ];
     postBuild = "ln -s $out/lib $out/lib64";
   };
 
@@ -59,10 +62,8 @@ in pkgs.mathematica.overrideAttrs (old: rec {
     '';
   };
 
-  buildInputs = old.buildInputs ++ [
-    R
+  buildInputs = old.buildInputs ++ cudaDeps ++ [
     alsa-lib
-    cudaPackages.cudatoolkit_11_5
     cups.lib
     flite
     gmpxx
@@ -73,7 +74,6 @@ in pkgs.mathematica.overrideAttrs (old: rec {
     llvmPackages_12.libllvm.lib
     matio
     mpfr
-    nvidia_x11
     openjdk11
     pciutils
     tre
@@ -81,7 +81,6 @@ in pkgs.mathematica.overrideAttrs (old: rec {
     xorg.libXcomposite
     xorg.libXdamage
     xorg.libXinerama
-    xz
   ];
 
   nativeBuildInputs = [
@@ -93,8 +92,9 @@ in pkgs.mathematica.overrideAttrs (old: rec {
     "--prefix LD_LIBRARY_PATH : ${lib.makeLibraryPath [stdenv.cc.cc zlib libssh2]}"
     "--set USE_WOLFRAM_LD_LIBRARY_PATH 1"
     "--set QT_XKB_CONFIG_ROOT ${xkeyboard_config}/share/X11/xkb"
-    "--set CUDA_PATH ${cuda}"
-    "--set NVIDIA_DRIVER_LIBRARY_PATH ${cuda}/lib/libnvidia-tls.so"
+  ] ++ lib.optional cudaSupport [
+    "--set CUDA_PATH ${cudaEnv}"
+    "--set NVIDIA_DRIVER_LIBRARY_PATH ${cudaEnv}/lib/libnvidia-tls.so"
   ];
 
   installPhase = ''
@@ -114,8 +114,8 @@ in pkgs.mathematica.overrideAttrs (old: rec {
       s|/usr|$out/usr|
     ' MathInstaller
 
-    XDG_DATA_HOME="$out/share" HOME=$out/home vernierLink=y \
-    ./MathInstaller -execdir="$out/bin" -targetdir="$out/libexec/Mathematica" -auto -createdir=y
+    XDG_DATA_HOME="$out/share" HOME="$out/home" vernierLink=y \
+      ./MathInstaller -execdir="$out/bin" -targetdir="$out/libexec/Mathematica" -auto -createdir=y
 
     errLog="$out/libexec/Mathematica/InstallErrors"
     [ -f "$errLog" ] && echo "Installation errors:" && cat "$errLog" && rm "$errLog"
