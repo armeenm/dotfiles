@@ -45,6 +45,7 @@ in
     gh
     gimp-with-plugins
     gnome.gtk
+    google-chrome-dev
     gparted
     gqrx
     grim
