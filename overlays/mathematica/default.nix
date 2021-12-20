@@ -32,8 +32,8 @@
 }:
 
 let
-  cudaDeps = lib.optional cudaSupport [
-    nvidia_x11
+  cudaDeps = lib.optionals cudaSupport [
+    (nvidia_x11.override { libsOnly = true; })
     cudatoolkit
     cudatoolkit.lib
   ];
@@ -90,9 +90,9 @@ in pkgs.mathematica.overrideAttrs (old: rec {
 
   wrapProgramFlags = [
     "--prefix LD_LIBRARY_PATH : ${lib.makeLibraryPath [stdenv.cc.cc zlib libssh2]}"
-    "--set USE_WOLFRAM_LD_LIBRARY_PATH 1"
     "--set QT_XKB_CONFIG_ROOT ${xkeyboard_config}/share/X11/xkb"
-  ] ++ lib.optional cudaSupport [
+    "--set USE_WOLFRAM_LD_LIBRARY_PATH 1"
+  ] ++ lib.optionals cudaSupport [
     "--set CUDA_PATH ${cudaEnv}"
     "--set NVIDIA_DRIVER_LIBRARY_PATH ${cudaEnv}/lib/libnvidia-tls.so"
   ];
@@ -100,9 +100,9 @@ in pkgs.mathematica.overrideAttrs (old: rec {
   installPhase = ''
     runHook preInstall
 
-    cd $TMPDIR/Unix/Installer
+    cd "$TMPDIR/Unix/Installer"
 
-    mkdir -p $out/usr/share $out/lib/udev/rules.d
+    mkdir -p "$out/lib/udev/rules.d"
 
     patchShebangs MathInstaller
     sed -i '
@@ -111,16 +111,15 @@ in pkgs.mathematica.overrideAttrs (old: rec {
       s|isRoot="false"|# &|
       s|^checkAvahiDaemon$|# &|
       s|/etc/udev/rules.d|$out/lib/udev/rules.d|
-      s|/usr|$out/usr|
     ' MathInstaller
 
-    XDG_DATA_HOME="$out/share" HOME="$out/home" vernierLink=y \
+    XDG_DATA_HOME="$out/share" HOME="$TMPDIR/home" vernierLink=y \
       ./MathInstaller -execdir="$out/bin" -targetdir="$out/libexec/Mathematica" -auto -createdir=y
 
     errLog="$out/libexec/Mathematica/InstallErrors"
     [ -f "$errLog" ] && echo "Installation errors:" && cat "$errLog" && rm "$errLog"
 
-    for bin in $out/bin/*; do wrapProgram $bin ''${wrapProgramFlags[@]}; done
+    for bin in $out/bin/*; do wrapProgram "$bin" ''${wrapProgramFlags[@]}; done
 
     runHook postInstall
   '';
