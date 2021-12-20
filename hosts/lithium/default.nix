@@ -1,9 +1,9 @@
-inputs@{ config, pkgs, lib, root, user, ... }:
+inputs@{ config, pkgs, lib, modulesPath, root, user, ... }:
 
 {
   imports = [
+    (modulesPath + "/installer/scan/not-detected.nix")
     ./home
-    ./hw-generated.nix
   ];
   
   system.stateVersion = lib.mkForce "21.11";
@@ -25,8 +25,31 @@ inputs@{ config, pkgs, lib, root, user, ... }:
     ];
   };
 
+  fileSystems = {
+    "/" = {
+      device = "rpool/root/nixos";
+      fsType = "zfs";
+    };
+
+    "/home" = {
+      device = "rpool/root/home";
+      fsType = "zfs";
+    };
+
+    "/boot" = {
+      device = "/dev/disk/by-uuid/4CDA-FEA2";
+      fsType = "vfat";
+    };
+  };
+
   boot = {
-    initrd.includeDefaultModules = false;
+    kernelModules = [ "kvm-amd" ];
+    extraModulePackages = [ ];
+
+    initrd = {
+      includeDefaultModules = false;
+      availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
+    };
     
     supportedFilesystems = [ "zfs" ];
     zfs.enableUnstable = true;
@@ -34,11 +57,11 @@ inputs@{ config, pkgs, lib, root, user, ... }:
     kernelPackages = pkgs.callPackage ./kernel.nix {};
 
     kernelParams = [
-      "quiet"
-      "loglevel=0"
       "kvm.nx_huge_pages=force"
-      "slub_debug=FZ"
       "lockdown=confidentiality"
+      "loglevel=0"
+      "quiet"
+      "slub_debug=FZ"
     ];
 
     kernel = {
@@ -289,6 +312,8 @@ inputs@{ config, pkgs, lib, root, user, ... }:
       enable = true;
       client.enable = true;
     };
+
+    xserver.videoDrivers = [ "nvidia" ];
   };
 
   hardware = {
@@ -296,7 +321,13 @@ inputs@{ config, pkgs, lib, root, user, ... }:
     cpu.amd.updateMicrocode = true;
     opengl.enable = true;
     rtl-sdr.enable = true;
-    custom.nvidia.enable = true;
+    video.hidpi.enable = true;
+
+    nvidia = {
+      package = config.boot.kernelPackages.nvidiaPackages.stable;
+      modesetting.enable = true;
+      powerManagement.enable = true;
+    };
 
     sane = {
       enable = true;
