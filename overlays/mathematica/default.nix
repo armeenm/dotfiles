@@ -5,34 +5,45 @@
 , buildEnv
 , makeWrapper
 , requireFile
-, R
 , alsa-lib
-, cudaPackages
+, coreutils
 , cups
+, dbus
 , flite
+, fontconfig
+, freetype
+, glib
 , gmpxx
 , keyutils
+, libGL
+, libGLU
 , libpcap
 , libssh2
 , libtins
+, libuuid
 , libxkbcommon
+, libxml2
 , llvmPackages_12
 , matio
 , mpfr
+, ncurses
+, opencv4
+, openjdk11
+, openssl
+, pciutils
+, tre
+, unixODBC
+, xkeyboard_config
+, xorg
+, zlib
+, installer ? "Mathematica_13.0.0_LINUX.sh"
 , cudaSupport ? false
 , nvidia_x11 ? null
 , cudatoolkit ? null
-, openjdk11
-, pciutils
-, tre
-, xkeyboard_config
-, xorg
-, xz
-, zlib
 }:
 
 let
-  cudaDeps = lib.optionals cudaSupport [
+  cudaDeps = [
     (nvidia_x11.override { libsOnly = true; })
     cudatoolkit
     cudatoolkit.lib
@@ -45,15 +56,13 @@ let
     postBuild = "ln -s $out/lib $out/lib64";
   };
 
-in pkgs.mathematica.overrideAttrs (old: rec {
+in stdenv.mkDerivation rec {
 
   version = "13.0.0";
-  lang = "en";
-  language = "English";
-  name = "mathematica-${version}" + lib.optionalString (lang != "en") "-${lang}";
+  name = "mathematica-${version}";
 
   src = requireFile rec {
-    name = "Mathematica_${version}" + lib.optionalString (lang != "en") "_${language}" + "_LINUX.sh";
+    name = installer;
     sha256 = "d34e02440d96f4f80804db08475aa3d5f22d7cb68ad37eafb3c8ea4ec0a268ba";
     message = ''
       This nix expression requires that ${name} is
@@ -62,26 +71,52 @@ in pkgs.mathematica.overrideAttrs (old: rec {
     '';
   };
 
-  buildInputs = old.buildInputs ++ cudaDeps ++ [
+  buildInputs = [
     alsa-lib
     cups.lib
+    dbus
     flite
+    fontconfig
+    freetype
+    glib
     gmpxx
     keyutils.lib
+    libGL
+    libGLU
     libpcap
     libtins
+    libuuid
     libxkbcommon
+    libxml2
     llvmPackages_12.libllvm.lib
     matio
     mpfr
+    ncurses
+    opencv4
     openjdk11
+    openssl
     pciutils
     tre
-    xorg.libXScrnSaver
-    xorg.libXcomposite
-    xorg.libXdamage
-    xorg.libXinerama
-  ];
+    unixODBC
+    xkeyboard_config
+  ] ++ (with xorg; [
+    libICE
+    libSM
+    libX11
+    libXScrnSaver
+    libXcomposite
+    libXcursor
+    libXdamage
+    libXext
+    libXfixes
+    libXi
+    libXinerama
+    libXmu
+    libXrandr
+    libXrender
+    libXtst
+    libxcb
+  ]) ++ lib.optionals cudaSupport cudaDeps;
 
   nativeBuildInputs = [
     autoPatchelfHook
@@ -97,6 +132,15 @@ in pkgs.mathematica.overrideAttrs (old: rec {
     "--set NVIDIA_DRIVER_LIBRARY_PATH ${cudaEnv}/lib/libnvidia-tls.so"
   ];
 
+  unpackPhase = ''
+    runHook preUnpack
+
+    offset=$(${stdenv.shell} -c "$(grep -axm1 -e 'offset=.*' $src); echo \$((\$offset + 1))" $src)
+    tail -c +$offset $src | tar -xf -
+
+    runHook postUnpack
+  '';
+
   installPhase = ''
     runHook preInstall
 
@@ -107,25 +151,30 @@ in pkgs.mathematica.overrideAttrs (old: rec {
     patchShebangs MathInstaller
     sed -i '
       s|^PATH=|# &|
-      s|`hostname`|""|
       s|isRoot="false"|# &|
       s|^checkAvahiDaemon$|# &|
+      s|`hostname`|""|
       s|/etc/udev/rules.d|$out/lib/udev/rules.d|
     ' MathInstaller
 
     XDG_DATA_HOME="$out/share" HOME="$TMPDIR/home" vernierLink=y \
-      ./MathInstaller -execdir="$out/bin" -targetdir="$out/libexec/Mathematica" -auto -createdir=y
+      ./MathInstaller -execdir="$out/bin" -targetdir="$out/libexec/Mathematica" -auto -verbose -createdir=y
 
     errLog="$out/libexec/Mathematica/InstallErrors"
-    [ -f "$errLog" ] && echo "Installation errors:" && cat "$errLog" && rm "$errLog"
+    if [ -f "$errLog" ]; then
+      echo "Installation errors:"
+      cat "$errLog"
+      return 1
+    fi
 
     for bin in $out/bin/*; do wrapProgram "$bin" ''${wrapProgramFlags[@]}; done
 
     runHook postInstall
   '';
 
-  preFixup = "";
-
-  dontPatchELF = false;
   autoPatchelfIgnoreMissingDeps = true;
-})
+  dontConfigure = true;
+  dontBuild = true;
+  dontStrip = true;
+  preferLocalBuild = true;
+}
