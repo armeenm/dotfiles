@@ -42,11 +42,11 @@
     },
     "emacs-overlay": {
       "locked": {
-        "lastModified": 1639564610,
-        "narHash": "sha256-RFjUXevBBqFMf++vIDsn5O8sh/AO+l+4yjIutn3aaq4=",
+        "lastModified": 1640021600,
+        "narHash": "sha256-Qi6j942SpdXuigcY2e9yhiksuYzAcuiKJ1hXu67sFo8=",
         "owner": "nix-community",
         "repo": "emacs-overlay",
-        "rev": "814b13b4ac9fd9e8aacfcd72c04aeb17643d9f76",
+        "rev": "83b82b876fb2c7d0a30befedb980f1088931ddfa",
         "type": "github"
       },
       "original": {
@@ -93,11 +93,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1639506187,
-        "narHash": "sha256-6wcFhEaA14bHbbr7xgpMv2QEXOEp1vleW7pB6siJXrQ=",
+        "lastModified": 1640037534,
+        "narHash": "sha256-lbD5EEqu2tXq3qo6UN3cZkWZA0hEWQkhluctivMtLZY=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "c61fc1c288bd1fdf96261ba5574a12cf8f9be70b",
+        "rev": "aef97988dac0541747de8bcc85c7e27726eea4af",
         "type": "github"
       },
       "original": {
@@ -135,11 +135,11 @@
     },
     "stable": {
       "locked": {
-        "lastModified": 1639578933,
-        "narHash": "sha256-oqkvNlSRdouN5gxpP6wtE911t5HqMZiiv/cI4nRUhl8=",
+        "lastModified": 1640053457,
+        "narHash": "sha256-oEW6t3pAA+ka8nEof4aOce4UtF7GhGSvKpeuKRcEyqM=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "c94176b78d29194bd9d63dd1b55c57526e0eb0c2",
+        "rev": "9aeb6f081840e084d7d9f612dc8182c19bed1e92",
         "type": "github"
       },
       "original": {
@@ -151,11 +151,11 @@
     },
     "unstable": {
       "locked": {
-        "lastModified": 1639435656,
-        "narHash": "sha256-wy29523wQL5M45lOAhHmr2Fprr2BpB6AV8AnwRmyO6c=",
+        "lastModified": 1639966735,
+        "narHash": "sha256-FmVGFiyqE+pjQUTCTY0H75hqrnBnbEf3VVRB4dsd4KI=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "cfdb99fe18ac0c01872c5fbebfae6202d7a75ab2",
+        "rev": "d87b72206aadebe6722944f541f55d33fd7046fb",
         "type": "github"
       },
       "original": {
