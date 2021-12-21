@@ -6,7 +6,6 @@
 , makeWrapper
 , requireFile
 , alsa-lib
-, coreutils
 , cups
 , dbus
 , flite
