@@ -5,9 +5,6 @@ let
     inherit pkgs lib root user;
     sys = config;
     config = config.home-manager.users."${user.login}";
-    misc = {
-      restart-wm = "${pkgs.xmonad-with-packages}/bin/xmonad --restart";
-    };
   };
 in
 {

@@ -1,4 +1,4 @@
-{ config, pkgs, lib, root, user, misc, ... }:
+{ config, pkgs, lib, root, user, ... }:
 
 {
   user = {
