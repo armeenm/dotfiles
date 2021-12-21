@@ -127,7 +127,6 @@ in
     usbutils
     vbetool
     virt-manager
-    virt-manager
     vlc
     vulkan-loader
     vulkan-tools
