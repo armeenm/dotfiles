@@ -172,20 +172,6 @@
       setopt autopushd
     '';
 
-    shellAliases = {
-      "doas" = "doas ";
-      "hm" = "home-manager";
-      "noti" = "noti ";
-      "open" = "xdg-open";
-      "sudo" = "doas ";
-      "userctl" = "systemctl --user";
-      "vi" = "$EDITOR";
-      "vim" = "$EDITOR";
-      "zc" = "zcalc -r";
-      "cat" = "bat";
-      "diff" = "delta";
-    };
-
     plugins = [
       {
         name = "zsh-nix-shell";

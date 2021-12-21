@@ -200,9 +200,12 @@ in
     };
   };
 
+  sessionPath = [
+    "$HOME/.local/bin"
+  ];
+
   sessionVariables = {
     # General
-    PATH = "$PATH:$HOME/.local/bin";
     EDITOR = "$HOME/.local/bin/editor";
     MANPAGER = "sh -c 'col -bx | bat -l man -p'";
 
@@ -216,7 +219,20 @@ in
     ANDROID_SDK_HOME = "${config.xdg.dataHome}/android";
     ANDROID_SDK_ROOT = "${config.xdg.dataHome}/android";
     CUDA_CACHE_PATH = "${config.xdg.cacheHome}/nv";
-    GNUPGHOME = "${config.xdg.dataHome}/gnupg";
     IPFS_PATH = "${config.xdg.dataHome}/ipfs";
+  };
+
+  shellAliases = {
+    doas = "doas ";
+    sudo = "doas ";
+    noti = "noti ";
+    cat = "bat";
+    diff = "delta";
+    g = "git";
+    open = "xdg-open";
+    userctl = "systemctl --user";
+    vi = "$EDITOR";
+    vim = "$EDITOR";
+    zc = "zcalc -r";
   };
 }
