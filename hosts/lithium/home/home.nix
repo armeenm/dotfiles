@@ -39,7 +39,6 @@ in
     fira-code-symbols
     firefox
     font-awesome-ttf
-    foot
     fortune
     gajim
     gh
@@ -200,9 +199,7 @@ in
     };
   };
 
-  sessionPath = [
-    "$HOME/.local/bin"
-  ];
+  sessionPath = [ "$HOME/.local/bin" ];
 
   sessionVariables = {
     # General
