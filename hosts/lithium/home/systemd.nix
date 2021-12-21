@@ -2,11 +2,16 @@
 
 {
   user = {
+    sessionVariables = {
+      PATH = "$PATH:$HOME/.local/bin";
+      EDITOR = "editor";
+    };
+    
     services = {
       ipfs = {
         Unit = {
           Description = "InterPlanetary File System (IPFS) daemon";
-          Documentation = "https://docs.ipfs.io/";
+          Documentation = "https://docs.ipfs.io";
           After = "network.target";
         };
 
@@ -21,6 +26,17 @@
 
         Install = {
           WantedBy = [ "default.target" ];
+        };
+      };
+
+      river = {
+        Unit = {
+          Description = "A dynamic tiling Wayland compositor";
+          Documentation = "https://github.com/riverwm/river/wiki";
+        };
+
+        Service = {
+          ExecStart = "${pkgs.river}/bin/river";
         };
       };
     };
