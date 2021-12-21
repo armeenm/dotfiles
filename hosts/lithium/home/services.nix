@@ -5,8 +5,12 @@
 
   emacs = {
     enable = true;
-    client.enable = true;
-    client.arguments = [ "-c" "-n" ];
+    package = config.programs.emacs.package;
+
+    client = {
+      enable = true;
+      arguments = [ "-c" "-n" ];
+    };
   };
 
   screen-locker = {

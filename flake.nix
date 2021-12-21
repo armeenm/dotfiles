@@ -59,7 +59,10 @@
       };
 
       overlay = import ./overlays;
-      sharedOverlays = [ self.overlay ];
+      sharedOverlays = [
+        self.overlay
+        emacs-overlay.overlay
+      ];
 
       img = {
         basic = unstable.lib.nixosSystem {

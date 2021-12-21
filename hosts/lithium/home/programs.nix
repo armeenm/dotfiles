@@ -6,7 +6,6 @@
   bottom.enable = true;
   command-not-found.enable = false;
   dircolors.enable = true;
-  emacs.enable = true;
   feh.enable = true;
   fzf.enable = true;
   home-manager.enable = true;
@@ -65,6 +64,11 @@
   direnv = {
     enable = true;
     nix-direnv.enable = true;
+  };
+
+  emacs = {
+    enable = true;
+    package = pkgs.emacsPgtk;
   };
 
   exa = {
