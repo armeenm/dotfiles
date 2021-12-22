@@ -33,7 +33,6 @@ inputs@{ config, pkgs, lib, modulesPath, root, user, domain, ... }:
     };
     
     supportedFilesystems = [ "zfs" ];
-    zfs.enableUnstable = true;
 
     kernelPackages = pkgs.callPackage ./kernel.nix {};
 

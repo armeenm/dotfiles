@@ -53,7 +53,6 @@
 
       channelsConfig = {
         allowUnfree = true;
-        allowBroken = true;
         contentAddressedByDefault = false;
       };
 
