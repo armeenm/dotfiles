@@ -1,31 +1,10 @@
-inputs@{ config, pkgs, lib, modulesPath, root, user, ... }:
+inputs@{ config, pkgs, lib, modulesPath, root, user, domain, ... }:
 
 {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
     ./home
   ];
-  
-  system.stateVersion = lib.mkForce "21.11";
-
-  nix = {
-    package = pkgs.nixUnstable;
-    allowedUsers = lib.mkForce [ "@wheel" "arash" ];
-    extraOptions = ''
-      warn-dirty = false
-      experimental-features = flakes nix-command ca-derivations
-    '';
-
-    binaryCaches = [
-      "https://cache.ngi0.nixos.org"
-      "https://nix-community.cachix.org"
-    ];
-
-    binaryCachePublicKeys = [
-      "cache.ngi0.nixos.org-1:KqH5CBLNSyX184S9BKZJo1LxrxJ9ltnY2uAs5c/f1MA="
-      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-    ];
-  };
 
   fileSystems = {
     "/" = {
@@ -46,10 +25,10 @@ inputs@{ config, pkgs, lib, modulesPath, root, user, ... }:
 
   boot = {
     kernelModules = [ "kvm-amd" ];
-    extraModulePackages = [ ];
 
     initrd = {
       includeDefaultModules = false;
+      verbose = false;
       availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
     };
     
@@ -58,12 +37,14 @@ inputs@{ config, pkgs, lib, modulesPath, root, user, ... }:
 
     kernelPackages = pkgs.callPackage ./kernel.nix {};
 
+    consoleLogLevel = 0;
+
     kernelParams = [
       "kvm.nx_huge_pages=force"
       "lockdown=confidentiality"
-      "loglevel=0"
       "quiet"
       "slub_debug=FZ"
+      "udev.log_priority=3"
     ];
 
     kernel = {
@@ -141,14 +122,35 @@ inputs@{ config, pkgs, lib, modulesPath, root, user, ... }:
 
       systemd-boot = {
         enable = true;
-        editor = true;
+        editor = false;
       };
     };
   };
 
+  nix = {
+    package = pkgs.nixUnstable;
+    allowedUsers = lib.mkForce [ "@wheel" "arash" ];
+    extraOptions = ''
+      warn-dirty = false
+      experimental-features = flakes nix-command ca-derivations
+    '';
+
+    binaryCaches = [
+      "https://cache.ngi0.nixos.org"
+      "https://nix-community.cachix.org"
+    ];
+
+    binaryCachePublicKeys = [
+      "cache.ngi0.nixos.org-1:KqH5CBLNSyX184S9BKZJo1LxrxJ9ltnY2uAs5c/f1MA="
+      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+    ];
+  };
+
   networking = {
+    inherit domain;
     hostName = "lithium";
     hostId = "5a656e88";
+
     firewall.checkReversePath = "loose";
 
     networkmanager.enable = true;
@@ -202,9 +204,8 @@ inputs@{ config, pkgs, lib, modulesPath, root, user, ... }:
     };
 
     audit = {
-      enable = true;
-      rules = [
-      ];
+      enable = false;
+      rules = [ ];
     };
   };
 
@@ -420,6 +421,8 @@ inputs@{ config, pkgs, lib, modulesPath, root, user, ... }:
     suppressedSystemUnits = [
       "sys-kernel-debug.mount"
     ];
+
+    watchdog.rebootTime = "30s";
   };
 
   programs = {
@@ -456,4 +459,6 @@ inputs@{ config, pkgs, lib, modulesPath, root, user, ... }:
       };
     };
   };
+
+  system.stateVersion = lib.mkForce "21.11";
 }

@@ -15,7 +15,6 @@ in
   stateVersion = lib.mkForce "21.05";
 
   packages = with pkgs; [
-    alacritty
     asciinema
     atool
     bemenu
@@ -129,6 +128,7 @@ in
     vlc
     vulkan-loader
     vulkan-tools
+    vulnix
     w3m
     weechat
     wget

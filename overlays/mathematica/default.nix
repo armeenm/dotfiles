@@ -62,7 +62,7 @@ in stdenv.mkDerivation rec {
 
   src = requireFile rec {
     name = installer;
-    sha256 = "d34e02440d96f4f80804db08475aa3d5f22d7cb68ad37eafb3c8ea4ec0a268ba";
+    sha256 = "15bbad39a5995031325d1d178f63b00e71706d3ec9001eba6d1681fbc991d3e1";
     message = ''
       This nix expression requires that ${name} is
       already part of the store. Find the file on your Mathematica CD

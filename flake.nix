@@ -37,6 +37,17 @@
         email = "mahdianarmeen@gmail.com";
       };
 
+      deployNode = hostname: let
+        config = self.nixosConfigurations."${hostname}";
+        system = config.config.nixpkgs.system;
+      in {
+        hostname = "${hostname}.${domain}";
+        profiles.system = {
+          user = "root";
+          path = deploy-rs.lib."${system}".activate.nixos config;
+        };
+      };
+
     in utils.lib.mkFlake {
       inherit self inputs;
 
@@ -88,17 +99,8 @@
       };
 
       deploy.nodes = {
-        francium = let
-          config = self.nixosConfigurations.francium;
-          system = config.config.nixpkgs.system;
-        in {
-          hostname = "francium.${domain}";
-            
-            profiles.system = {
-              user = "root";
-              path = deploy-rs.lib."${system}".activate.nixos config;
-            };
-        };
+        francium = deployNode "francium";
+        cesium = deployNode "cesium";
       };
 
       checks = builtins.mapAttrs
