@@ -3,8 +3,11 @@
 
 {
   nixpkgs.config.allowUnfree = true;
-  networking.wireless.enable = false;
-  networking.networkmanager.enable = true;
+
+  networking = {
+    wireless.enable = false;
+    networkmanager.enable = true;
+  };
 
   nix = {
     package = pkgs.nixUnstable;
@@ -19,18 +22,10 @@
       viAlias = true;
       vimAlias = true;
     };
-
-    bash.shellInit = builtins.readFile ./crypt.sh;
   };
 
   environment.systemPackages = with pkgs; [
-    git
-    sudo
     bottom
-    networkmanager
-    neovim
-    gcc
-    openssl
-    yubikey-personalization
+    git
   ];
 }
