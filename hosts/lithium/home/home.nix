@@ -115,7 +115,6 @@ in
     tcpdump
     tdesktop
     tmux
-    toilet
     torbrowser
     tpm-tools
     trash-cli
@@ -124,6 +123,7 @@ in
     usbguard
     usbutils
     vbetool
+    veracrypt
     virt-manager
     vlc
     vulkan-loader
