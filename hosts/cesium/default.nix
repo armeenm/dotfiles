@@ -19,7 +19,7 @@
   boot = {
     kernelModules = [ "kvm-intel" ];
 
-    initrd.availableKernelModules = [ "ehci_pci" "ahci" "usb_storage" "sd_mode" "sdhci_pci" ];
+    initrd.availableKernelModules = [ "ehci_pci" "ahci" "usb_storage" "sd_mod" "sdhci_pci" ];
     
     loader = {
       systemd-boot.enable = true;
