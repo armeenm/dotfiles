@@ -1,4 +1,4 @@
-inputs@{ config, pkgs, lib, user, domain, ... }:
+inputs@{ config, pkgs, lib, modulesPath, user, domain, ... }:
 
 let
   hostName = "francium";
@@ -6,17 +6,32 @@ let
   domain = inputs.domain;
 in
 {
-  imports = [ ./hw-generated.nix ];
+  imports = [ (modulesPath + "/profiles/qemu-guest.nix") ];
 
-  system.stateVersion = lib.mkForce "21.05";
+  boot = {
+    initrd.availableKernelModules = [ "ata_piix" "uhci_hcd" "virtio_pci" "virtio_scsi" "sd_mod" "sr_mod" "virtio_blk" ];
+    kernelModules = [ "kvm-amd" ];
+
+    loader.grub = {
+      enable = true;
+      version = 2;
+      device = "/dev/vda";
+    };
+  };
+
+  fileSystems = {
+    "/" = {
+      device = "/dev/disk/by-uuid/e7ea314b-eed4-4e5c-862d-044893fead95";
+      fsType = "ext4";
+    };
+
+    "/tank" = {
+      device = "/dev/disk/by-uuid/d7fa6066-d6ab-4203-babc-b73a21d35874";
+      fsType = "ext4";
+    };
+  };
 
   nix.trustedUsers = [ "@wheel" ];
-
-  boot.loader.grub = {
-    enable = true;
-    version = 2;
-    device = "/dev/vda";
-  };
 
   networking = {
     inherit hostName domain;
@@ -78,9 +93,9 @@ in
   };
 
   programs = {
+    mosh.enable = true;
     mtr.enable = true;
     zsh.enable = true;
-    mosh.enable = true;
 
     neovim = {
       enable = true;
@@ -228,6 +243,7 @@ in
   security = {
     auditd.enable = true;
     sudo.wheelNeedsPassword = false;
+
     protectKernelImage = true;
     unprivilegedUsernsClone = false;
     allowUserNamespaces = true;
@@ -257,5 +273,7 @@ in
       }];
     };
   };
+
+  system.stateVersion = lib.mkForce "21.05";
 }
 
