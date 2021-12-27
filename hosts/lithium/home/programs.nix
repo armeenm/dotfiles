@@ -109,6 +109,14 @@
     userEmail = user.email;
     userName = user.name;
 
+    aliases = {
+      aa = "add -A";
+      br = "branch";
+      ci = "commit";
+      co = "checkout";
+      st = "status";
+    };
+
     delta = {
       enable = true;
       options = {
