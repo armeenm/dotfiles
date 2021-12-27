@@ -118,7 +118,6 @@ inputs@{ config, pkgs, lib, modulesPath, root, user, domain, ... }:
 
     loader = {
       efi.canTouchEfiVariables = true;
-
       systemd-boot = {
         enable = true;
         editor = false;
@@ -163,7 +162,7 @@ inputs@{ config, pkgs, lib, modulesPath, root, user, domain, ... }:
     keyMap = "us";
     font = "Tamsyn7x13r";
     packages = [ pkgs.tamsyn ];
-    earlySetup = true;
+    earlySetup = false;
   };
 
   security = {
@@ -238,10 +237,10 @@ inputs@{ config, pkgs, lib, modulesPath, root, user, domain, ... }:
     physlock.enable = true;
     saned.enable = true;
     smartd.enable = true;
+    spice-vdagentd.enable = true;
     tcsd.enable = false;
     timesyncd.enable = true;
     udisks2.enable = true;
-    spice-vdagentd.enable = true;
 
     resolved = {
       enable = true;
