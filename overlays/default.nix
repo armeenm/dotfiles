@@ -7,4 +7,14 @@ final: prev: {
   seafile-shared = prev.callPackage ./seafile-shared { pkgs = prev; };
   swtpm = prev.callPackage ./swtpm { pkgs = prev; };
   whatsapp-for-linux = prev.callPackage ./whatsapp-for-linux { pkgs = prev; };
+
+  elfutils = prev.elfutils.overrideAttrs (_: {
+    doCheck = false;
+    doInstallCheck = false;
+  });
+
+  go = prev.go.overrideAttrs (_: {
+    doCheck = false;
+    checkPhase = "";
+  });
 }

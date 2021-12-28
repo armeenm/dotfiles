@@ -2,7 +2,7 @@
 
 pkgs.linuxPackagesFor (pkgs.linux_5_15_hardened.override {
   features = {
-    ia32Emulation = false;
+    ia32Emulation = true;
     needsCifsUtils = false;
   };
   
@@ -118,7 +118,7 @@ pkgs.linuxPackagesFor (pkgs.linux_5_15_hardened.override {
 
     ## X86_64 ##
     DEFAULT_MMAP_MIN_ADDR = freeform "65536";
-    IA32_EMULATION = no;
+    IA32_EMULATION = yes;
     LEGACY_VSYSCALL_NONE = yes;
     MODIFY_LDT_SYSCALL = no;
     X86_INTEL_UMIP = yes;
@@ -127,7 +127,7 @@ pkgs.linuxPackagesFor (pkgs.linux_5_15_hardened.override {
     X86_IOPL_IOPERM = no;
     X86_MCE_INJECT = no;
     X86_MSR = yes;
-    X86_X32 = no;
+    X86_X32 = yes;
 
     ## Hardware ##
     ACPI_APEI = yes;
