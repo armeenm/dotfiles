@@ -28,9 +28,9 @@
   gpg-agent = {
     enable = true;
     enableSshSupport = true;
-    pinentryFlavor = "curses";
+    pinentryFlavor = "gnome3";
     sshKeys = [
-      "CBB258EB7AED9AED74E0F9126E369691F40D3371"
+      "0C855A22D96790A9B1BEFFD4F4BDB31E141F67FF"
     ];
     extraConfig = ''
       homedir ${config.programs.gpg.homedir}

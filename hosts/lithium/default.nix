@@ -233,7 +233,7 @@ inputs@{ config, pkgs, lib, modulesPath, root, user, domain, ... }:
     haveged.enable = true;
     mullvad-vpn.enable = true;
     nix-serve.enable = true;
-    pcscd.enable = false;
+    pcscd.enable = true;
     physlock.enable = true;
     saned.enable = true;
     smartd.enable = true;

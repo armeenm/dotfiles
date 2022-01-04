@@ -94,6 +94,7 @@ in
     pstree
     qdirstat
     qemu_full
+    rage
     ranger
     remmina
     ripgrep
@@ -143,10 +144,12 @@ in
     xorg.xkill
     yt-dlp
     yubico-pam
+    yubikey-manager
     yubikey-manager-qt
     yubikey-personalization
     yubikey-personalization-gui
     yubioath-desktop
+    zip
     zoom-us
   ];
 
