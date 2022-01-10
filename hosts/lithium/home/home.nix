@@ -18,6 +18,8 @@ in
     asciinema
     atool
     bemenu
+    btop
+    bubblewrap
     cloc
     cowsay
     cudaPackages.cudatoolkit_11_5
@@ -94,7 +96,6 @@ in
     pstree
     qdirstat
     qemu_full
-    rage
     ranger
     remmina
     ripgrep
@@ -107,6 +108,7 @@ in
     sl
     slack-dark
     slurp
+    sops
     speedtest-cli
     strace
     streamlink

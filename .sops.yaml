@@ -3,13 +3,13 @@ keys:
   - &lithium age1w284qj7mvpgu433yervradrkt6fg9spfkklx97547tlld0qeev3qxtc2c7
   - &hydrogen age1uhy9t0nltpt20gw3pvwmf0t4avrt2qmp6gyc5gyjyuzklkmd930qyq6tfc
 creation_rules:
-  - path_regex: hosts/lithium/secrets/[^/]+\.yaml$
+  - path_regex: hosts/lithium/secrets/[^/]+\..*$
     key_groups:
     - pgp:
       - *armeen
       age:
       - *lithium
-  - path_regex: hosts/hydrogen/secrets/[^/]+\.yaml$
+  - path_regex: hosts/hydrogen/secrets/[^/]+\..*$
     key_groups:
     - pgp:
       - *armeen

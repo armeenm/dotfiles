@@ -149,10 +149,10 @@ inputs@{ config, pkgs, lib, modulesPath, root, user, domain, ... }:
     hostName = "lithium";
     hostId = "5a656e88";
 
-    firewall.checkReversePath = "loose";
-
     networkmanager.enable = true;
     wireguard.enable = true;
+
+    firewall.checkReversePath = "loose";
   };
 
   time.timeZone = "America/Chicago";
@@ -172,10 +172,10 @@ inputs@{ config, pkgs, lib, modulesPath, root, user, domain, ... }:
 
     protectKernelImage = true;
     unprivilegedUsernsClone = false;
-    forcePageTableIsolation = true;
+    forcePageTableIsolation = false;
     allowUserNamespaces = true;
 
-    virtualisation.flushL1DataCache = "cond";
+    virtualisation.flushL1DataCache = null;
 
     tpm2 = {
       enable = true;
@@ -231,7 +231,7 @@ inputs@{ config, pkgs, lib, modulesPath, root, user, domain, ... }:
     blueman.enable = true;
     fstrim.enable = true;
     haveged.enable = true;
-    mullvad-vpn.enable = true;
+    mullvad-vpn.enable = false;
     nix-serve.enable = true;
     pcscd.enable = true;
     physlock.enable = true;
@@ -327,7 +327,7 @@ inputs@{ config, pkgs, lib, modulesPath, root, user, domain, ... }:
     nvidia = {
       package = config.boot.kernelPackages.nvidiaPackages.stable;
       modesetting.enable = true;
-      powerManagement.enable = true;
+      #powerManagement.enable = true;
     };
 
     sane = {
@@ -350,8 +350,7 @@ inputs@{ config, pkgs, lib, modulesPath, root, user, domain, ... }:
 
       "${user.login}" = {
         isNormalUser = true;
-        hashedPassword =
-          "$6$D9bjWz87ZjX4AY3Q$vFQLpKIVHktTAdco3FW35ki5dKWtkiMH2h3uSgOUV5nYS2KVPVYBHtP2vkvbiJDbMReWF8jfHfWyw74Q/jBhs1";
+        passwordFile = config.sops.secrets.armeen-pw.path;
         extraGroups = [
           "adbusers"
           "i2c"
@@ -366,8 +365,7 @@ inputs@{ config, pkgs, lib, modulesPath, root, user, domain, ... }:
 
       arash = {
         isNormalUser = true;
-        hashedPassword =
-          "$6$JfszfwIeN4wDyj$xSU.exwiolO9FVVQHYBbma/xbxkrTRQoJ8cyvNfbrYhtybe28B0KVngXCALsxv8q2pe4mrouj1/2OwSRRi/po1";
+        passwordFile = config.sops.secrets.arash-pw.path;
       };
     };
   };
@@ -393,7 +391,6 @@ inputs@{ config, pkgs, lib, modulesPath, root, user, domain, ... }:
       "zfs/zpool.cache".source = "/run/zpool.cache";
       "NetworkManager/system-connections".source = "/var/etc/NetworkManager/system-connections";
 
-      # TODO: Move these into the config (with sops/age)
       "ssh/ssh_host_ed25519_key".source = "/var/etc/ssh/ssh_host_ed25519_key";
       "ssh/ssh_host_ed25519_key.pub".source = "/var/etc/ssh/ssh_host_ed25519_key.pub";
       "ssh/ssh_host_rsa_key".source = "/var/etc/ssh/ssh_host_rsa_key";
@@ -458,5 +455,15 @@ inputs@{ config, pkgs, lib, modulesPath, root, user, domain, ... }:
     };
   };
 
+  sops = {
+    defaultSopsFile = ./secrets/secrets.yaml;
+    age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+
+    secrets = {
+      armeen-pw.neededForUsers = true;
+      arash-pw.neededForUsers = true;
+    };
+  };
+  
   system.stateVersion = lib.mkForce "21.11";
 }

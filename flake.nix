@@ -5,22 +5,24 @@
     stable.url = github:nixos/nixpkgs/release-21.11;
     unstable.url = github:nixos/nixpkgs/nixos-unstable;
 
-    agenix.url = github:ryantm/agenix;
-    agenix.inputs.nixpkgs.follows = "unstable";
+    sops-nix.url = github:Mic92/sops-nix;
+    sops-nix.inputs.nixpkgs.follows = "unstable";
 
     home-manager.url = github:nix-community/home-manager;
     home-manager.inputs.nixpkgs.follows = "unstable";
 
     deploy-rs.url = github:serokell/deploy-rs;
+    deploy-rs.inputs.nixpkgs.follows = "unstable";
+
     emacs-overlay.url = github:nix-community/emacs-overlay;
-    utils.url = github:gytis-ivaskevicius/flake-utils-plus/v1.3.1;
+    utils.url = github:gytis-ivaskevicius/flake-utils-plus;
   };
 
   outputs =
     { self
     , stable
     , unstable
-    , agenix
+    , sops-nix
     , home-manager
     , deploy-rs
     , emacs-overlay
@@ -92,14 +94,15 @@
 
         modules = [
           home-manager.nixosModules.home-manager
-          agenix.nixosModules.age
+          sops-nix.nixosModules.sops
           ./modules
         ];
       };
 
       deploy.nodes = {
-        francium = deployNode "francium";
         cesium = deployNode "cesium";
+        francium = deployNode "francium";
+        hydrogen = deployNode "hydrogen";
       };
 
       checks = builtins.mapAttrs

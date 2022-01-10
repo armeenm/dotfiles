@@ -3,7 +3,6 @@
 {
   aria2.enable = true;
   autojump.enable = true;
-  bottom.enable = true;
   command-not-found.enable = false;
   dircolors.enable = true;
   feh.enable = true;
