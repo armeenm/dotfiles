@@ -1,0 +1,12 @@
+diff --git a/src/libutil/util.cc b/src/libutil/util.cc
+index e18648557..4f79c4cd4 100644
+--- a/src/libutil/util.cc
++++ b/src/libutil/util.cc
+@@ -791,6 +791,7 @@ int AutoCloseFD::get() const
+ void AutoCloseFD::close()
+ {
+     if (fd != -1) {
++      printError("FD: %1%", fd);
+         if (::close(fd) == -1)
+             /* This should never happen. */
+             throw SysError("closing file descriptor %1%", fd);
