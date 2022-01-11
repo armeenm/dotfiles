@@ -400,7 +400,6 @@ pkgs.linuxPackagesFor (pkgs.linux_5_15_hardened.override {
     AMD_PMC = no;
     AMD_XGBE = no;
     AMD_XGBE_HAVE_ECC = no;
-    ANDROID = no;
     APDS9802ALS = no;
     APPLE_GMUX = no;
     APPLE_MFI_FASTCHARGE = no;
