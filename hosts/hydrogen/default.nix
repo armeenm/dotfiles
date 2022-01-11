@@ -92,188 +92,182 @@ let
     "--add-host=seafile:127.0.0.1"
   ];
 in
-  {
-    imports = [
-      (modulesPath + "/installer/scan/not-detected.nix")
-      ./nftables.nix
-    ];
+{
+  imports = [
+    (modulesPath + "/installer/scan/not-detected.nix")
+    ./nftables.nix
+  ];
 
-    disabledModules = [ "services/networking/nftables.nix" ];
+  disabledModules = [ "services/networking/nftables.nix" ];
 
-    fileSystems = {
-      "/" = {
-        device = "/dev/disk/by-uuid/e07a94c0-425f-4ee5-ba23-7a209120d704";
-        fsType = "ext4";
-      };
-
-      "/boot" = {
-        device = "/dev/disk/by-uuid/22B4-DF31";
-        fsType = "vfat";
-      };
-
-      "/tank" = {
-        device = "tank";
-        fsType = "zfs";
-      };
-
-      "/tank/seafile" = {
-        device = "tank/seafile";
-        fsType = "zfs";
-      };
-
-      "/tank/arash" = {
-        device = "tank/arash";
-        fsType = "zfs";
-      };
+  fileSystems = {
+    "/" = {
+      device = "/dev/disk/by-uuid/e07a94c0-425f-4ee5-ba23-7a209120d704";
+      fsType = "ext4";
     };
 
-    boot = {
-      initrd.availableKernelModules = [ "ehci_pci" "ahci" "sd_mod" ];
-      kernelModules = [ "kvm-intel" ];
-
-      tmpOnTmpfs = true;
-
-      loader.systemd-boot.enable = true;
-      loader.efi.canTouchEfiVariables = true;
-
-      initrd.supportedFilesystems = [ "zfs" ];
-      supportedFilesystems = [ "zfs" ];
-
-      kernel.sysctl = {
-        "net.ipv4.conf.all.forwarding" = true;
-
-        "net.ipv6.conf.all.forwarding" = true;
-        "net.ipv6.conf.all.accept_ra" = 0;
-        "net.ipv6.conf.all.autoconf" = 0;
-        "net.ipv6.conf.all.use_tempaddr" = 0;
-
-        "net.ipv6.conf.${wan}.accept_ra" = 2;
-        "net.ipv6.conf.${wan}.autoconf" = 1;
-      };
+    "/boot" = {
+      device = "/dev/disk/by-uuid/22B4-DF31";
+      fsType = "vfat";
     };
 
-    i18n.defaultLocale = "en_US.UTF-8";
-    time.timeZone = "America/Chicago";
+    "/tank" = {
+      device = "tank";
+      fsType = "zfs";
+    };
 
-    console = {
-      keyMap = "us";
-      font = "Tamsyn7x13r";
-      packages = [ pkgs.tamsyn ];
-      earlySetup = false;
+    "/tank/seafile" = {
+      device = "tank/seafile";
+      fsType = "zfs";
+    };
+
+    "/tank/arash" = {
+      device = "tank/arash";
+      fsType = "zfs";
+    };
+  };
+
+  boot = {
+    initrd.availableKernelModules = [ "ehci_pci" "ahci" "sd_mod" ];
+    kernelModules = [ "kvm-intel" ];
+
+    tmpOnTmpfs = true;
+
+    loader.systemd-boot.enable = true;
+    loader.efi.canTouchEfiVariables = true;
+
+    initrd.supportedFilesystems = [ "zfs" ];
+    supportedFilesystems = [ "zfs" ];
+
+    kernel.sysctl = {
+      "net.ipv4.conf.all.forwarding" = true;
+
+      "net.ipv6.conf.all.forwarding" = true;
+      "net.ipv6.conf.all.accept_ra" = 0;
+      "net.ipv6.conf.all.autoconf" = 0;
+      "net.ipv6.conf.all.use_tempaddr" = 0;
+
+      "net.ipv6.conf.${wan}.accept_ra" = 2;
+      "net.ipv6.conf.${wan}.autoconf" = 1;
+    };
+  };
+
+  i18n.defaultLocale = "en_US.UTF-8";
+  time.timeZone = "America/Chicago";
+
+  console = {
+    keyMap = "us";
+    font = "Tamsyn7x13r";
+    packages = [ pkgs.tamsyn ];
+    earlySetup = false;
+  };
+
+  users = {
+    defaultUserShell = pkgs.zsh;
+    
+    groups = {
+      seafile = {};
     };
 
     users = {
-      defaultUserShell = pkgs.zsh;
-      
-      groups = {
-        seafile = {};
+      armeen = {
+        isNormalUser = true;
+        extraGroups = [ "wheel" "tank" "audio" ];
       };
 
-      users = {
-        armeen = {
-          isNormalUser = true;
-          extraGroups = [ "wheel" "tank" "audio" ];
-        };
+      arash = {
+        isNormalUser = true;
+        extraGroups = [ "wheel" "tank" ];
+      };
 
-        arash = {
-          isNormalUser = true;
-          extraGroups = [ "wheel" "tank" ];
-        };
+      seafile = {
+        isSystemUser = true;
+        group = "seafile";
+        subUidRanges = [ { count = 65534; startUid = 100001; } ];
+        subGidRanges = [ { count = 65534; startGid = 100001; } ];
+      };
 
-        seafile = {
-          isSystemUser = true;
-          group = "seafile";
-          subUidRanges = [ { count = 65534; startUid = 100001; } ];
-          subGidRanges = [ { count = 65534; startGid = 100001; } ];
-        };
+      mpd.extraGroups = [ "audio" ];
+    };
+  };
+
+  environment = {
+    defaultPackages = lib.mkForce [];
+
+    systemPackages = with pkgs; [
+      bottom
+      conntrack-tools
+      docker-compose
+      efibootmgr
+      file
+      foot.terminfo
+      fuse-overlayfs
+      fzf
+      git
+      htop
+      iperf
+      killall
+      ldns
+      lsof
+      mailutils
+      mpc_cli
+      ncmpcpp
+      nmap
+      ntfs3g
+      openssl
+      pamixer
+      podman-compose
+      ripgrep
+      rng-tools
+      seafile-shared
+      smartmontools
+      tcpdump
+      tmux
+      tree
+      unrar
+      unzip
+      wget
+      whois
+    ];
+
+    etc."podman/compose/seafile/docker-compose.yml".text = seafile-docker-compose;
+  };
+
+  # TODO: Switch to systemd-networkd
+  networking = {
+    hostName = hostname;
+    hostId = "cc04ee17";
+    domain = domain;
+
+    nameservers = [ "127.0.0.1" ];
+
+    interfaces = {
+      enp3s0.useDHCP = true;
+      "${wan}".useDHCP = true;
+
+      lo = {
+        ipv4.addresses = [
+          { address = "127.0.0.1"; prefixLength = 8; }
+          { address = "127.0.0.2"; prefixLength = 8; }
+        ];
+      };
+
+      "${lan}" = {
+        useDHCP = false;
+        ipv4.addresses = [{
+          address = ip;
+          prefixLength = 24;
+        }];
       };
     };
 
-    environment = {
-      defaultPackages = lib.mkForce [];
+    # Handled by nftables
+    nat.enable = false;
+    firewall.enable = false;
 
-      systemPackages = with pkgs; [
-        bottom
-        byobu
-        conntrack-tools
-        docker-compose
-        efibootmgr
-        ethtool
-        fasd
-        file
-        foot.terminfo
-        fuse-overlayfs
-        fzf
-        git
-        git-annex
-        htop
-        iperf
-        iptables-nftables-compat
-        killall
-        ldns
-        lsof
-        mailutils
-        mpc_cli
-        ncmpcpp
-        nmap
-        nodejs
-        ntfs3g
-        openssl
-        pamixer
-        patchelf
-        podman-compose
-        ripgrep
-        rng-tools
-        seafile-shared
-        smartmontools
-        sqlite
-        tcpdump
-        tmux
-        tree
-        unrar
-        unzip
-        wget
-        whois
-      ];
-
-      etc."podman/compose/seafile/docker-compose.yml".text = seafile-docker-compose;
-    };
-
-    # TODO: Switch to systemd-networkd
-    networking = {
-      hostName = hostname;
-      hostId = "cc04ee17";
-      domain = domain;
-
-      nameservers = [ "127.0.0.1" ];
-
-      interfaces = {
-        enp3s0.useDHCP = true;
-        "${wan}".useDHCP = true;
-
-        lo = {
-          ipv4.addresses = [
-            { address = "127.0.0.1"; prefixLength = 8; }
-            { address = "127.0.0.2"; prefixLength = 8; }
-          ];
-        };
-
-        "${lan}" = {
-          useDHCP = false;
-          ipv4.addresses = [{
-            address = ip;
-            prefixLength = 24;
-          }];
-        };
-      };
-
-      # Handled by nftables
-      nat.enable = false;
-      firewall.enable = false;
-
-      nftables = {
-        enable = true;
-        ruleset = ''
+    nftables = {
+      enable = true;
+      ruleset = ''
         table ip nft_filter {
           # Enable flow offloading for better throughput
           flowtable f {
@@ -335,66 +329,66 @@ in
           } 
         }
       '';
-      };
+    };
+  };
+
+  virtualisation = {
+    podman = {
+      enable = true;
+      dockerCompat = true;
+      dockerSocket.enable = true;
+      defaultNetwork.dnsname.enable = true;
+    };
+  };
+
+  programs = {
+    mtr.enable = true;
+    zsh.enable = true;
+
+    gnupg.agent = {
+      enable = true;
+      enableSSHSupport = true;
     };
 
-    virtualisation = {
-      podman = {
-        enable = true;
-        dockerCompat = true;
-        dockerSocket.enable = true;
-        defaultNetwork.dnsname.enable = true;
-      };
+    neovim = {
+      enable = true;
+      defaultEditor = true;
+      viAlias = true;
+      vimAlias = true;
     };
+  };
 
-    programs = {
-      mtr.enable = true;
-      zsh.enable = true;
+  services = {
+    iperf3.enable = true;
+    openssh.enable = true;
 
-      gnupg.agent = {
-        enable = true;
-        enableSSHSupport = true;
-      };
+    bind = {
+      enable = true;
 
-      neovim = {
-        enable = true;
-        defaultEditor = true;
-        viAlias = true;
-        vimAlias = true;
-      };
-    };
+      listenOn = [];
+      listenOnIpv6 = [];
+      forwarders = [];
+      cacheNetworks = [ "127.0.0.0/8" ];
 
-    services = {
-      iperf3.enable = true;
-      openssh.enable = true;
-
-      bind = {
-        enable = true;
-
-        listenOn = [];
-        listenOnIpv6 = [];
-        forwarders = [];
-        cacheNetworks = [ "127.0.0.0/8" ];
-
-        zones = {
-          "${domain}" = {
-            master = true;
-            file = "/var/lib/bind/db.${domain}";
-            extraConfig = ''
+      zones = {
+        "${domain}" = {
+          master = true;
+          file = "/var/lib/bind/db.${domain}";
+          extraConfig = ''
           allow-update { key rndc-key; };
         '';
-          };
-
-          "${subnet-rev-domain}" = {
-            master = true;
-            file = "/var/lib/bind/db.192.168.0";
-            extraConfig = ''
-          allow-update { key rndc-key; };
-        '';
-          };
         };
 
-        extraOptions = ''
+        "${subnet-rev-domain}" = {
+          master = true;
+          file = "/var/lib/bind/db.192.168.0";
+          extraConfig = ''
+          allow-update { key rndc-key; };
+        '';
+        };
+      };
+
+      extraOptions = ''
       listen-on port 53 { 127.0.0.2; };
       recursion no;
       allow-transfer { none; };
@@ -403,13 +397,13 @@ in
       dnssec-lookaside auto;
       auth-nxdomain no;
     '';
-      };
+    };
 
-      dhcpd4 = {
-        enable = true;
-        interfaces = [ lan ];
+    dhcpd4 = {
+      enable = true;
+      interfaces = [ lan ];
 
-        extraConfig = ''
+      extraConfig = ''
           include "/etc/bind/rndc.key";
 
           option domain-name "${domain}";
@@ -442,178 +436,186 @@ in
             max-lease-time 2592000;
           }
         '';
-      };
+    };
 
-      mpd = {
-        enable = true;
-        musicDirectory = builtins.readFile config.sops.secrets.music_directory.path;
-        extraConfig = ''
+    mpd = {
+      enable = true;
+      extraConfig = ''
           audio_output {
             type "pulse"
             name "Pulseaudio"
             server "127.0.0.1"
           }
         '';
-      };
-
-      nginx = {
-        enable = true;
-        recommendedTlsSettings = true;
-        recommendedProxySettings = true;
-
-        virtualHosts."nixpower.net" = {
-          enableACME = true;
-          forceSSL = true;
-          root = "/var/www/nixpower.net";
-        };
-
-        virtualHosts."carbon.nixpower.net" = {
-          enableACME = true;
-          forceSSL = true;
-          locations."/".proxyPass = "http://127.0.0.1:8080";
-        };
-      };
-
-      restic = {
-        backups.b2backup = {
-          passwordFile = "/etc/nixos/secrets/restic-pw";
-          paths = [ "/tank/seafile" ];
-          repository = "b2:Nixnet-Backup";
-          s3CredentialsFile = "/etc/nixos/secrets/b2-env";
-        };
-      };
-
-      # TODO: Mail
-      smartd = {
-        enable = true;
-      };
-
-      unbound = {
-        enable = true;
-        resolveLocalQueries = false;
-        localControlSocketPath = "/run/unbound/unbound.ctl";
-
-        settings = {
-          server = {
-            hide-identity = true;
-            hide-version = true;
-            use-caps-for-id = true;
-            do-not-query-localhost = false;
-            so-reuseport = true;
-            verbosity = 2;
-
-            interface = [ ip "127.0.0.1" ];
-            access-control = [ "127.0.0.0/8 allow" "192.168.0.0/24 allow" ];
-
-            tls-cert-bundle = "/etc/ssl/certs/ca-certificates.crt";
-
-            domain-insecure = [ domain subnet-rev-domain ];
-            local-zone = [
-              "${domain}.            nodefault"
-              "168.192.in-addr.arpa. nodefault"
-            ];
-          };
-
-          stub-zone = [
-            { name = domain; stub-addr = "127.0.0.2"; }
-            { name = subnet-rev-domain; stub-addr = "127.0.0.2"; }
-          ];
-
-          forward-zone = [{
-            name = ".";
-            forward-addr = [
-              "9.9.9.9@853#dns.quad9.net"
-              "149.112.112.112@853#dns.quad9.net"
-              "1.1.1.1@853#cloudflare-dns.com"
-              "1.0.0.1@853#cloudflare-dns.com"
-            ];
-            forward-tls-upstream = true;
-          }];
-        };
-      };
-
-      ympd = {
-        enable = true;
-        webPort = 8081;
-      };
-
-      zfs = {
-        trim.enable = true;
-        autoScrub.enable = true;
-        autoSnapshot.enable = true;
-      };
     };
 
-    systemd = {
-      tmpfiles.rules = [
-        "d /var/lib/bind 0755 named nogroup"
-        "f+ /var/lib/bind/db.${domain} 0644 named nogroup - ${esc-nl zone-lanthanum}"
-        "f+ /var/lib/bind/db.192.168.0 0644 named nogroup - ${esc-nl zone-192-168-0}"
-      ];
-
-      targets.seafile = {
-        description = "Seafile fileserver";
-        wantedBy = [ "multi-user.target" ];
-      };
-
-      services = {
-        mpd.serviceConfig.LimitMEMLOCK = "infinity";
-
-        "podman-compose@" = {
-          description = "%i service with Podman Compose";
-          after = [ "network.target" ];
-          wantedBy = [ "seafile.target" ];
-          path = with pkgs; [ podman slirp4netns fuse-overlayfs ];
-
-          serviceConfig = {
-            Type = "oneshot";
-            RemainAfterExit = true;
-            WorkingDirectory = "/etc/podman/compose/%i";
-            ExecStart = "${pkgs.podman-compose}/bin/podman-compose up -d --remove-orphans";
-            ExecStop = "${pkgs.podman-compose}/bin/podman-compose down";
-            #User = "seafile";
-            #Group = "nogroup";
-          };
-        };
-      };
-
-    };
-
-    security = {
-      rtkit.enable = true;
-      
-      acme = {
-        acceptTerms = true;
-        email = "mahdianarmeen@gmail.com";
-      };
-    };
-
-    sound.enable = true;
-    hardware.pulseaudio = {
+    nginx = {
       enable = true;
-      tcp = {
-        enable = true;
-        anonymousClients.allowedIpRanges = [ "127.0.0.1" ];
+      recommendedTlsSettings = true;
+      recommendedProxySettings = true;
+
+      virtualHosts."nixpower.net" = {
+        enableACME = true;
+        forceSSL = true;
+        root = "/var/www/nixpower.net";
+      };
+
+      virtualHosts."carbon.nixpower.net" = {
+        enableACME = true;
+        forceSSL = true;
+        locations."/".proxyPass = "http://127.0.0.1:8080";
       };
     };
 
-    #services.pipewire = {
-    #  enable = true;
-    #  alsa.enable = true;
-    #  pulse.enable = true;
-    #  jack.enable = true;
-
-    #  config.pipewire-pulse.context.modules.libpipewire-module-protocol-pulse.args.server.address = [
-    #    "unix:native"
-    #    "tcp:[::1]:4712"
-    #  ];
-    #};
-
-    sops = {
-      defaultSopsFile = ./secrets/secrets.yaml;
-      age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
-      secrets.music_directory = {};
+    restic = {
+      backups.b2backup = {
+        paths = [ "/tank/seafile" ];
+        repository = "b2:Nixnet-Backup";
+        passwordFile = config.sops.secrets.b2_pw.path;
+        environmentFile = config.sops.secrets.b2_env.path;
+      };
     };
 
-    system.stateVersion = lib.mkForce "21.05";
-  }
+    # TODO: Mail
+    smartd = {
+      enable = true;
+    };
+
+    unbound = {
+      enable = true;
+      resolveLocalQueries = false;
+      localControlSocketPath = "/run/unbound/unbound.ctl";
+
+      settings = {
+        server = {
+          hide-identity = true;
+          hide-version = true;
+          use-caps-for-id = true;
+          do-not-query-localhost = false;
+          so-reuseport = true;
+          verbosity = 2;
+
+          interface = [ ip "127.0.0.1" ];
+          access-control = [ "127.0.0.0/8 allow" "192.168.0.0/24 allow" ];
+
+          tls-cert-bundle = "/etc/ssl/certs/ca-certificates.crt";
+
+          domain-insecure = [ domain subnet-rev-domain ];
+          local-zone = [
+            "${domain}.            nodefault"
+            "168.192.in-addr.arpa. nodefault"
+          ];
+        };
+
+        stub-zone = [
+          { name = domain; stub-addr = "127.0.0.2"; }
+          { name = subnet-rev-domain; stub-addr = "127.0.0.2"; }
+        ];
+
+        forward-zone = [{
+          name = ".";
+          forward-addr = [
+            "9.9.9.9@853#dns.quad9.net"
+            "149.112.112.112@853#dns.quad9.net"
+            "1.1.1.1@853#cloudflare-dns.com"
+            "1.0.0.1@853#cloudflare-dns.com"
+          ];
+          forward-tls-upstream = true;
+        }];
+      };
+    };
+
+    ympd = {
+      enable = true;
+      webPort = 8081;
+    };
+
+    zfs = {
+      trim.enable = true;
+      autoScrub.enable = true;
+      autoSnapshot.enable = true;
+    };
+  };
+
+  systemd = {
+    tmpfiles.rules = [
+      "d /var/lib/bind 0755 named nogroup"
+      "f+ /var/lib/bind/db.${domain} 0644 named nogroup - ${esc-nl zone-lanthanum}"
+      "f+ /var/lib/bind/db.192.168.0 0644 named nogroup - ${esc-nl zone-192-168-0}"
+    ];
+
+    targets.seafile = {
+      description = "Seafile fileserver";
+      wantedBy = [ "multi-user.target" ];
+    };
+
+    services = {
+      mpd.serviceConfig.LimitMEMLOCK = "infinity";
+
+      "podman-compose@" = {
+        description = "%i service with Podman Compose";
+        after = [ "network.target" ];
+        wantedBy = [ "seafile.target" ];
+        path = with pkgs; [ podman slirp4netns fuse-overlayfs ];
+
+        serviceConfig = {
+          Type = "oneshot";
+          RemainAfterExit = true;
+          WorkingDirectory = "/etc/podman/compose/%i";
+          ExecStart = "${pkgs.podman-compose}/bin/podman-compose up -d --remove-orphans";
+          ExecStop = "${pkgs.podman-compose}/bin/podman-compose down";
+          #User = "seafile";
+          #Group = "nogroup";
+        };
+      };
+    };
+  };
+
+  security = {
+    rtkit.enable = true;
+    
+    acme = {
+      acceptTerms = true;
+      email = "mahdianarmeen@gmail.com";
+    };
+  };
+
+  sound.enable = true;
+  hardware.pulseaudio = {
+    enable = true;
+    systemWide = true;
+
+    tcp = {
+      enable = true;
+      anonymousClients.allowedIpRanges = [ "127.0.0.1" ];
+    };
+  };
+
+  #services.pipewire = {
+  #  enable = true;
+  #  alsa.enable = true;
+  #  pulse.enable = true;
+  #  jack.enable = true;
+
+  #  config.pipewire-pulse.context.modules.libpipewire-module-protocol-pulse.args.server.address = [
+  #    "unix:native"
+  #    "tcp:[::1]:4712"
+  #  ];
+  #};
+
+  sops = {
+    defaultSopsFile = ./secrets/secrets.yaml;
+    age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+
+    secrets = {
+      b2_pw = {};
+
+      b2_env = {
+        format = "binary";
+        sopsFile = ./secrets/b2.env;
+      };
+    };
+  };
+
+  system.stateVersion = lib.mkForce "21.05";
+}
