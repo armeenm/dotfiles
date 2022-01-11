@@ -123,6 +123,8 @@
       ci = "commit";
       co = "checkout";
       st = "status";
+      sw = "switch";
+      wt = "worktree";
     };
 
     delta = {
