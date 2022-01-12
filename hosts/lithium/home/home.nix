@@ -52,6 +52,7 @@ in
     hdparm
     hicolor-icon-theme
     highlight
+    htop
     iperf
     ipfs
     jq

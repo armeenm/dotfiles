@@ -40,7 +40,7 @@ inputs@{ config, pkgs, lib, modulesPath, root, user, domain, ... }:
 
     kernelParams = [
       "kvm.nx_huge_pages=force"
-      "lockdown=confidentiality"
+      "lsm=yama,apparmor,bpf"
       "quiet"
       "slub_debug=FZ"
       "udev.log_priority=3"
@@ -194,6 +194,13 @@ inputs@{ config, pkgs, lib, modulesPath, root, user, domain, ... }:
     };
 
     pam = {
+      loginLimits = [ {
+        domain = "*";
+        type = "soft";
+        item = "nofile";
+        value = "16384";
+      } ];
+      
       yubico = {
         enable = true;
         debug = false;
@@ -209,6 +216,7 @@ inputs@{ config, pkgs, lib, modulesPath, root, user, domain, ... }:
 
   virtualisation = {
     spiceUSBRedirection.enable = true;
+    waydroid.enable = true;
     
     libvirtd = {
       enable = true;

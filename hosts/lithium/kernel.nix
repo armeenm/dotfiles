@@ -89,7 +89,6 @@ pkgs.linuxPackagesFor (pkgs.linux_5_15_hardened.override {
     SECURITY_NETWORK_XFRM = yes;
     SECURITY_PATH = yes;
     SECURITY_PERF_EVENTS_RESTRICT = yes;
-    SECURITY_SELINUX_DISABLE = no;
     SECURITY_TIOCSTI_RESTIRCT = yes;
     SHUFFLE_PAGE_ALLOCATOR = yes;
     SLAB_FREELIST_HARDENED = yes;
