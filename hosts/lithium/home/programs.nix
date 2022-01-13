@@ -173,6 +173,32 @@
 
   waybar = {
     enable = true;
+
+    settings = {
+      mainBar = {
+        output = [ "DP-2" ];
+        
+        modules-right = [
+          "idle_inhibitor"
+          "pulseaudio"
+          "network"
+          "cpu"
+          "memory"
+          "temperature"
+          "backlight"
+          "keyboard-state"
+          "sway/language"
+          "clock"
+          "tray"
+        ];
+      };
+    };
+
+    #style = ''
+    #  * {
+    #    font-family: Tamsyn;
+    #  }
+    #'';
   };
 
   zsh = {
