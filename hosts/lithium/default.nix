@@ -198,7 +198,7 @@ inputs@{ config, pkgs, lib, modulesPath, root, user, domain, ... }:
         domain = "*";
         type = "soft";
         item = "nofile";
-        value = "16384";
+        value = "65536";
       } ];
       
       yubico = {
