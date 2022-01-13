@@ -1,10 +1,12 @@
 { pkgs, fetchFromGitHub, ... }:
 
-pkgs.nixUnstable.override {
+pkgs.nixUnstable.overrideAttrs (_: {
   src = fetchFromGitHub {
     owner = "NixOS";
     repo = "nix";
-    rev = "0e90b13ab1df925e549b5d55853b65911b4b40d3";
-    hash = "sha256-YlfeZ+dV73B7kQo7NIjhQNHgUHFBG80zOJLxD161yxU=";
+    rev = "a2811f8499c8fa6e4da5b8b67940423fe269e974";
+    hash = "sha256-kkLZ+8Nvm+hTxkN3Sq+FE8QcJpdvwHq9SydnY1rK3As=";
   };
-}
+
+  patches = [];
+})
