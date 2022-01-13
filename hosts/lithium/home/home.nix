@@ -226,16 +226,20 @@ in
   };
 
   shellAliases = {
-    doas = "doas ";
-    sudo = "doas ";
-    noti = "noti ";
     cat = "bat";
     diff = "delta";
     g = "git";
     open = "xdg-open";
-    userctl = "systemctl --user";
+    zc = "zcalc -r";
+
+    noti = "noti ";
+    doas = "doas ";
+    sudo = "doas ";
+
+    sc = "systemctl";
+    uc = "systemctl --user";
+
     vi = "$EDITOR";
     vim = "$EDITOR";
-    zc = "zcalc -r";
   };
 }
