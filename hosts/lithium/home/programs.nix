@@ -118,6 +118,7 @@
     userName = user.name;
 
     aliases = {
+      a = "add";
       aa = "add -A";
       br = "branch";
       ci = "commit";
