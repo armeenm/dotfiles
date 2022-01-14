@@ -8,5 +8,5 @@ pkgs.nixUnstable.overrideAttrs (_: {
     hash = "sha256-kkLZ+8Nvm+hTxkN3Sq+FE8QcJpdvwHq9SydnY1rK3As=";
   };
 
-  patches = [];
+  patches = [ ./pb.patch ];
 })
