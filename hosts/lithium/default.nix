@@ -1,3 +1,4 @@
+
 inputs@{ config, pkgs, lib, modulesPath, root, user, domain, ... }:
 
 {
@@ -11,7 +12,6 @@ inputs@{ config, pkgs, lib, modulesPath, root, user, domain, ... }:
       device = "rpool/root/nixos";
       fsType = "zfs";
     };
-
     "/home" = {
       device = "rpool/root/home";
       fsType = "zfs";
@@ -194,20 +194,16 @@ inputs@{ config, pkgs, lib, modulesPath, root, user, domain, ... }:
     };
 
     pam = {
+      u2f.enable = true;
+      
       loginLimits = [ {
         domain = "*";
         type = "soft";
         item = "nofile";
         value = "65536";
       } ];
-      
-      yubico = {
-        enable = true;
-        debug = false;
-        mode = "challenge-response";
-      };
     };
-
+      
     audit = {
       enable = false;
       rules = [ ];
