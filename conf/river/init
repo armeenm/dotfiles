@@ -112,7 +112,7 @@ riverctl map normal $mod Grave spawn 'grim -g "$(slurp)" - | swappy -f -'
 
 riverctl background-color 0x000000
 riverctl border-color-focused 0xa5ab00
-riverctl border-color-unfocused 0x0f8cf2
+riverctl border-color-unfocused 0x000000 #0x0f8cf2
 
 # Set keyboard repeat rate
 riverctl set-repeat 50 300
