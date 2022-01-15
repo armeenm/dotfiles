@@ -468,6 +468,11 @@ inputs@{ config, pkgs, lib, modulesPath, root, user, domain, ... }:
       arash-pw.neededForUsers = true;
     };
   };
+
+  documentation = {
+    dev.enable = true;
+    man.generateCaches = true;
+  };
   
   system.stateVersion = lib.mkForce "21.11";
 }
