@@ -15,4 +15,20 @@ final: prev: {
   go = prev.go.overrideAttrs (_: {
     doCheck = false;
   });
+
+  python39Packages.aniso8601 = prev.python39Packages.aniso8601.overrideAttrs (_: {
+    __contentAddressed = false;
+  });
+
+  python39Packages.websockets = prev.python39Packages.websockets.overrideAttrs (_: {
+    doInstallCheck = false;
+  });
+
+  git = prev.git.overrideAttrs (_: {
+    doInstallCheck = false;
+  });
+
+  fd = prev.fd.overrideAttrs (_: {
+    doCheck = false;
+  });
 }

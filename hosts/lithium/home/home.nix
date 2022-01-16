@@ -132,7 +132,7 @@ in
     vlc
     vulkan-loader
     vulkan-tools
-    vulnix
+    #vulnix
     w3m
     weechat
     wget
@@ -146,12 +146,11 @@ in
     xorg.xeyes
     xorg.xkill
     yt-dlp
-    yubico-pam
-    yubikey-manager
-    yubikey-manager-qt
-    yubikey-personalization
-    yubikey-personalization-gui
-    yubioath-desktop
+    #yubikey-manager
+    #yubikey-manager-qt
+    #yubikey-personalization
+    #yubikey-personalization-gui
+    #yubioath-desktop
     zip
     zoom-us
   ];
