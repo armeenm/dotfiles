@@ -61,7 +61,7 @@
     avahi.enable = true;
     blueman.enable = true;
     ipfs.enable = false;
-    mullvad-vpn.enable = true;
+    #mullvad-vpn.enable = true;
     openssh.enable = true;
     pcscd.enable = true;
     upower.enable = true;
