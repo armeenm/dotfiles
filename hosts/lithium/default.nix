@@ -24,8 +24,6 @@ inputs@{ config, pkgs, lib, modulesPath, root, user, domain, ... }:
   };
 
   boot = {
-    kernelModules = [ "kvm-amd" ];
-
     initrd = {
       includeDefaultModules = false;
       verbose = false;
@@ -96,10 +94,10 @@ inputs@{ config, pkgs, lib, modulesPath, root, user, domain, ... }:
         "kernel.core_uses_pid" = true;
         "kernel.kptr_restrict" = 2;
         "kernel.panic_on_oops" = true;
+        "kernel.perf_event_paranoid" = 3;
         "kernel.printk" = "3 3 3 3";
         "kernel.randomize_va_space" = 2;
         "kernel.unprivileged_bpf_disabled" = true;
-        "kernel.unprivileged_userns_clone" = true;
         "kernel.yama.ptrace_scope" = 2;
 
         # Appropriate for x86
@@ -171,17 +169,19 @@ inputs@{ config, pkgs, lib, modulesPath, root, user, domain, ... }:
     sudo.enable = false;
 
     protectKernelImage = true;
-    unprivilegedUsernsClone = false;
+    unprivilegedUsernsClone = true;
     forcePageTableIsolation = false;
     allowUserNamespaces = true;
 
     virtualisation.flushL1DataCache = null;
 
-    tpm2 = {
+    apparmor = {
       enable = true;
-      abrmd.enable = true;
-      pkcs11.enable = true;
-      tctiEnvironment.enable = true;
+    };
+
+    audit = {
+      enable = false;
+      rules = [ ];
     };
 
     doas = {
@@ -203,10 +203,12 @@ inputs@{ config, pkgs, lib, modulesPath, root, user, domain, ... }:
         value = "65536";
       } ];
     };
-      
-    audit = {
-      enable = false;
-      rules = [ ];
+
+    tpm2 = {
+      enable = true;
+      abrmd.enable = true;
+      pkcs11.enable = true;
+      tctiEnvironment.enable = true;
     };
   };
 
