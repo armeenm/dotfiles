@@ -45,8 +45,6 @@ inputs@{ config, pkgs, lib, modulesPath, root, user, domain, ... }:
     ];
 
     kernel = {
-      randstructSeed = "aaaaa";
-
       sysctl = {
         "net.ipv4.conf.all.accept_redirects" = false;
         "net.ipv4.conf.all.accept_source_route" = false;

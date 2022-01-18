@@ -114,7 +114,9 @@
         devShell = pkgs.mkShell {
           packages = with pkgs; [
             deploy-rs.packages."${system}".deploy-rs
+            git-crypt
             nixpkgs-fmt
+            openssl
           ];
         };
       }
