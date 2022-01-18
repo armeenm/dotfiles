@@ -19,9 +19,9 @@ in
       patch = ./secrets/gc/kernel_key.patch;
     } ] ++ kernel.kernelPatches;
   
-    argsOverride = {
-      dontStrip = true;
-    };
+    #argsOverride = {
+    #  dontStrip = true;
+    #};
   
     structuredExtraConfig = with lib.kernel; {
       ## General ##
@@ -40,6 +40,7 @@ in
       CONNECTOR = yes;
       COREDUMP = no;
       CRASH_DUMP = no;
+      CRYPTO_CMAC = yes;
       CRYPTO_CRYPTD = yes;
       CRYPTO_JITTERENTROPY = yes;
       DEBUG_ATOMIC_SLEEP = yes;
@@ -101,7 +102,7 @@ in
       RANDOM_TRUST_CPU = yes;
       RESET_ATTACK_MITIGATION = yes;
       SECURITY_DMESG_RESTRICT = yes;
-      SECURITY_LOCKDOWN_LSM = no; # NOTE: depends on sigs
+      SECURITY_LOCKDOWN_LSM = lib.mkForce yes;
       SECURITY_NETWORK_XFRM = yes;
       SECURITY_PATH = yes;
       SECURITY_PERF_EVENTS_RESTRICT = yes;
@@ -129,7 +130,6 @@ in
       ZRAM_DEF_COMP = freeform "zstd";
       ZSMALLOC = module;
       ZSMALLOC_STAT = yes;
-      CRYPTO_CMAC = yes;
   
       ## X86_64 ##
       DEFAULT_MMAP_MIN_ADDR = freeform "65536";
@@ -476,6 +476,7 @@ in
       BNXT_FLOWER_OFFLOAD = no;
       BNXT_HWMON = no;
       BNXT_SRIOV = no;
+      BOARD_TPCI200 = no;
       BRIDGE_NETFILTER = no;
       BROADCOM_PHY = no;
       BT_BCM = no;
@@ -867,6 +868,7 @@ in
       MACB_USE_HWSTAMP = no;
       MACHZ_WDT = no;
       MACINTOSH_DRIVERS = no;
+      MADERA_IRQ = no;
       MARVELL_10G_PHY = no;
       MARVELL_88X2222_PHY = no;
       MARVELL_PHY = no;
@@ -1056,6 +1058,7 @@ in
       RDS = no;
       REISERFS_FS = no;
       RENESAS_PHY = no;
+      RESET_CONTROLLER = no;
       RETU_WATCHDOG = no;
       RFKILL_GPIO = no;
       RFKLL_GPIO = no;
@@ -1358,6 +1361,7 @@ in
       SENSORS_XDPE122 = no;
       SENSORS_XGENE = no;
       SENSORS_ZL6100 = no;
+      SERIAL_IPOCTAL = no;
       SERIO = no;
       SFC = no;
       SFC_FALCON = no;
@@ -1584,10 +1588,6 @@ in
       XILLYUSB = no;
       YELLOWFIN = no;
       ZIIRAVE_WATCHDOG = no;
-      MADERA_IRQ = no;
-      BOARD_TPCI200 = no;
-      SERIAL_IPOCTAL = no;
-      RESET_CONTROLLER = no;
   
       # NOTE: generate our own key for r13y
       MODULE_SIG = lib.mkForce yes;

@@ -27,7 +27,6 @@ inputs@{ config, pkgs, lib, modulesPath, root, user, domain, ... }:
     initrd = {
       includeDefaultModules = false;
       verbose = false;
-      availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
     };
     
     supportedFilesystems = [ "zfs" ];

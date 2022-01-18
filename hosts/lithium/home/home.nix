@@ -15,6 +15,12 @@ in
   stateVersion = lib.mkForce "21.05";
 
   packages = with pkgs; [
+    #vulnix
+    #yubikey-manager
+    #yubikey-manager-qt
+    #yubikey-personalization
+    #yubikey-personalization-gui
+    #yubioath-desktop
     asciinema
     atool
     bemenu
@@ -44,11 +50,11 @@ in
     gajim
     gh
     gimp-with-plugins
-    gnome.gtk
     google-chrome-dev
     gparted
     gqrx
     grim
+    gtk3
     hdparm
     hicolor-icon-theme
     highlight
@@ -132,7 +138,6 @@ in
     vlc
     vulkan-loader
     vulkan-tools
-    #vulnix
     w3m
     weechat
     wget
@@ -146,11 +151,6 @@ in
     xorg.xeyes
     xorg.xkill
     yt-dlp
-    #yubikey-manager
-    #yubikey-manager-qt
-    #yubikey-personalization
-    #yubikey-personalization-gui
-    #yubioath-desktop
     zip
     zoom-us
   ];
