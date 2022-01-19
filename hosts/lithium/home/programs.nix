@@ -37,7 +37,7 @@
 
   chromium = {
     enable = true;
-    package = pkgs.chromiumDev;
+    package = pkgs.chromiumBeta;
     extensions = [
       { id = "gfapcejdoghpoidkfodoiiffaaibpaem"; } # Dracula Theme
       { id = "nkbihfbeogaeaoehlefnkodbefgpgknn"; } # MetaMask
