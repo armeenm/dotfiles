@@ -16,91 +16,43 @@ in
 
   packages = with pkgs; [
     #vulnix
-    #yubikey-manager
-    #yubikey-manager-qt
-    #yubikey-personalization
-    #yubikey-personalization-gui
-    #yubioath-desktop
-    asciinema
-    atool
-    bemenu
-    btop
-    bubblewrap
-    cloc
-    cowsay
-    cudaPackages.cudatoolkit_11_5
     cura
     direnv
     discord
-    dosfstools
-    efibootmgr
-    electron
     element-desktop
     evince
-    exfatprogs
-    fasd
     fd
-    figlet
-    file
-    fira-code
-    fira-code-symbols
     firefox
-    font-awesome-ttf
-    fortune
     gajim
     gh
     gimp-with-plugins
     google-chrome-dev
     gparted
     gqrx
-    grim
     gtk3
-    hdparm
-    hicolor-icon-theme
-    highlight
     htop
     iperf
     ipfs
-    jq
     keepassxc
-    killall
-    ldns
     ledger-live-desktop
-    libnotify
     libreoffice-fresh
-    lm_sensors
-    lolcat
     lshw
-    lsof
-    mediainfo
     miraclecast
     monero
     monero-gui
     mosh
     mpc_cli
-    mtools
     mtr
     mullvad-vpn
     neofetch
-    niv
-    nix-tree
-    nmap
-    noto-fonts
-    noto-fonts-cjk
     noto-fonts-emoji
     ntfs3g
     openscad
-    p7zip
     pamixer
-    pandoc
     parted
-    patchutils
     pavucontrol
-    pciutils
-    playerctl
     procs
     profanity
-    pstree
     qdirstat
     qemu_full
     ranger
@@ -110,50 +62,95 @@ in
     rng-tools
     scrcpy
     seafile-client
-    seafile-shared
     simple-scan
-    sl
     slack-dark
-    slurp
     sops
-    speedtest-cli
-    strace
     streamlink
     swappy
-    swtpm
-    tamsyn
-    tcpdump
     tdesktop
-    tmux
     torbrowser
     tpm-tools
-    trash-cli
-    unrar
-    unzip
     usbguard
     usbutils
-    vbetool
     veracrypt
     virt-manager
     vlc
+    whatsapp-for-linux
+    wineWowPackages.stable
+    wireshark
+    yt-dlp
+    yubikey-manager
+    yubikey-manager-qt
+    yubikey-personalization
+    yubikey-personalization-gui
+    yubioath-desktop
+    zoom-us
+  ] ++ (with pkgs.pkgsMusl; [
+    asciinema
+    atool
+    bemenu
+    btop
+    bubblewrap
+    cloc
+    cowsay
+    dosfstools
+    efibootmgr
+    exfatprogs
+    fasd
+    figlet
+    file
+    fira-code
+    fira-code-symbols
+    font-awesome-ttf
+    fortune
+    grim
+    hdparm
+    hicolor-icon-theme
+    highlight
+    jq
+    killall
+    ldns
+    libnotify
+    lm_sensors
+    lolcat
+    lsof
+    mediainfo
+    nix-tree
+    nmap
+    noto-fonts
+    noto-fonts-cjk
+    p7zip
+    pandoc
+    patchutils
+    pciutils
+    playerctl
+    pstree
+    seafile-shared
+    sl
+    slurp
+    speedtest-cli
+    strace
+    swtpm
+    tamsyn
+    tcpdump
+    tmux
+    trash-cli
+    unrar
+    unzip
+    vbetool
     vulkan-loader
     vulkan-tools
     w3m
     weechat
     wget
-    whatsapp-for-linux
     whois
-    wineWowPackages.stable
-    wireshark
     wl-clipboard
     wlr-randr
     xdg-user-dirs
     xorg.xeyes
     xorg.xkill
-    yt-dlp
     zip
-    zoom-us
-  ];
+  ]);
 
   file = {
     common.source = symlink common;

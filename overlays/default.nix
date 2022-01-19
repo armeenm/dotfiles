@@ -29,4 +29,12 @@ final: prev: {
   fd = prev.fd.overrideAttrs (_: {
     doCheck = false;
   });
+
+  gfortran = prev.gfortran.overrideAttrs (_: {
+    doCheck = false;
+  });
+
+  gdb = prev.gdb.overrideAttrs (old: {
+    NIX_CFLAGS_COMPILE = old.NIX_CFLAGS_COMPILE + " -Wno-error";
+  });
 }
