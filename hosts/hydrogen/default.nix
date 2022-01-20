@@ -591,18 +591,6 @@ in
     };
   };
 
-  #services.pipewire = {
-  #  enable = true;
-  #  alsa.enable = true;
-  #  pulse.enable = true;
-  #  jack.enable = true;
-
-  #  config.pipewire-pulse.context.modules.libpipewire-module-protocol-pulse.args.server.address = [
-  #    "unix:native"
-  #    "tcp:[::1]:4712"
-  #  ];
-  #};
-
   sops = {
     defaultSopsFile = ./secrets/secrets.yaml;
     age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
