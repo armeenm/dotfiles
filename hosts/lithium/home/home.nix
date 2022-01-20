@@ -60,6 +60,7 @@ in
     ripgrep
     river
     rng-tools
+    rxvt_unicode.terminfo
     scrcpy
     seafile-client
     simple-scan
@@ -75,6 +76,7 @@ in
     veracrypt
     virt-manager
     vlc
+    wayvnc
     whatsapp-for-linux
     wineWowPackages.stable
     wireshark
