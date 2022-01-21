@@ -119,6 +119,8 @@
             openssl
           ];
         };
+
+        packages."${system}" = import ./packages;
       }
     );
 }
