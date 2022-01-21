@@ -95,6 +95,7 @@
         "home-manager": "home-manager",
         "sops-nix": "sops-nix",
         "stable": "stable",
+        "temp": "temp",
         "unstable": "unstable",
         "utils": "utils_2"
       }
@@ -132,6 +133,22 @@
         "owner": "nixos",
         "ref": "release-21.11",
         "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "temp": {
+      "locked": {
+        "lastModified": 1642127101,
+        "narHash": "sha256-6F0Upas7cHhIEdaXcE67EP5eZ26tega7YAWKEHbxmRk=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "ead5545be3916a68d69a6a1095ea8b750d43f3fb",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "ead5545be3916a68d69a6a1095ea8b750d43f3fb",
         "type": "github"
       }
     },

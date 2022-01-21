@@ -4,6 +4,7 @@
   inputs = {
     stable.url = github:nixos/nixpkgs/release-21.11;
     unstable.url = github:nixos/nixpkgs/nixos-unstable;
+    temp.url = github:nixos/nixpkgs/ead5545be3916a68d69a6a1095ea8b750d43f3fb;
 
     sops-nix.url = github:Mic92/sops-nix;
     sops-nix.inputs.nixpkgs.follows = "unstable";
@@ -22,6 +23,7 @@
     { self
     , stable
     , unstable
+    , temp
     , sops-nix
     , home-manager
     , deploy-rs
@@ -30,7 +32,6 @@
     , ... } @ inputs:
     let
       root = ./.;
-      ext = import ./ext { lib = unstable.lib; };
 
       domain = "armeen.org";
       user = {
@@ -62,6 +63,7 @@
         unstable.overlaysBuilder = channels: [
           (_: _: { stable = channels.stable; })
           (_: _: { unstable = channels.unstable; })
+          (_: _: { temp = channels.temp; })
         ];
 
         stable.overlaysBuilder = channels: [
@@ -90,7 +92,7 @@
       hostDefaults = {
         channelName = "unstable";
         system = "x86_64-linux";
-        extraArgs = { inherit ext root domain user; };
+        extraArgs = { inherit root domain user; };
 
         modules = [
           home-manager.nixosModules.home-manager

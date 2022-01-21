@@ -1,12 +1,12 @@
 {
   config,
   lib,
-  linuxKernel,
+  temp,
   linuxPackagesFor
 }:
 
 let
-  kernel = linuxKernel.kernels.linux_5_15_hardened;
+  kernel = temp.linuxKernel.kernels.linux_5_15_hardened;
 in
   linuxPackagesFor (kernel.override {
     features = {
