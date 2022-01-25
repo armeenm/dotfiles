@@ -212,6 +212,11 @@ inputs@{ config, pkgs, lib, modulesPath, root, user, domain, ... }:
   virtualisation = {
     spiceUSBRedirection.enable = true;
     waydroid.enable = true;
+
+    docker = {
+      enable = true;
+      storageDriver = "zfs";
+    };
     
     libvirtd = {
       enable = true;
@@ -356,6 +361,7 @@ inputs@{ config, pkgs, lib, modulesPath, root, user, domain, ... }:
         passwordFile = config.sops.secrets.armeen-pw.path;
         extraGroups = [
           "adbusers"
+          "docker"
           "i2c"
           "libvirtd"
           "lp"

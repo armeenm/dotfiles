@@ -15,6 +15,7 @@ in
   stateVersion = lib.mkForce "21.05";
 
   packages = with pkgs; [
+    swtpm
     #vulnix
     cura
     direnv
@@ -132,7 +133,6 @@ in
     slurp
     speedtest-cli
     strace
-    swtpm
     tamsyn
     tcpdump
     tmux
@@ -214,6 +214,7 @@ in
     GBM_BACKEND = "nvidia-drm";
     MOZ_ENABLE_WAYLAND = "1";
     WLR_NO_HARDWARE_CURSORS = "1";
+    XKB_DEFAULT_OPTIONS="caps:escape";
 
     # Cleaning up home dir
     ANDROID_EMULATOR_HOME = "${config.xdg.dataHome}/android";
@@ -236,6 +237,7 @@ in
 
     sc = "systemctl";
     uc = "systemctl --user";
+    udc = "udisksctl";
 
     vi = "$EDITOR";
     vim = "$EDITOR";

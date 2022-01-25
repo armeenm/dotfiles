@@ -32,7 +32,7 @@ in
       AIO = lib.mkForce no;
       BIG_KEYS = yes;
       BINFMT_MISC = lib.mkForce no;
-      BPF_SYSCALL = lib.mkForce no;
+      #BPF_SYSCALL = lib.mkForce no; # NOTE: runc
       BUG_ON_DATA_CORRUPTION = yes;
       COMPAT_BRK = no;
       COMPAT_VDSO = no;
