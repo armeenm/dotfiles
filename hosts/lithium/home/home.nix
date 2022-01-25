@@ -241,5 +241,7 @@ in
 
     vi = "$EDITOR";
     vim = "$EDITOR";
+
+    rscp = "rsync -ahvP";
   };
 }
