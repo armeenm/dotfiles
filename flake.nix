@@ -79,10 +79,10 @@
       ];
 
       img = {
-        basic = unstable.lib.nixosSystem {
+        basic = stable.lib.nixosSystem {
           system = "x86_64-linux";
           modules =  [
-            "${unstable}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
+            "${stable}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
             ./img/basic
           ];
         };

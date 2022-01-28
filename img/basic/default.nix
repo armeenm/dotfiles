@@ -25,7 +25,8 @@
   };
 
   environment.systemPackages = with pkgs; [
-    bottom
+    btop
     git
+    htop
   ];
 }
