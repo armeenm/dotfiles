@@ -264,7 +264,10 @@ in
       USB_XHCI_PLATFORM = yes;
   
       ## Networking ##
+      BRIDGE = yes;
       DEFAULT_TCP_CONG = freeform "bbr";
+      E1000E = yes;
+      E1000E_HWTS = yes;
       HOSTAP = no;
       INET6_AH = yes;
       INET6_ESP = yes;
@@ -320,7 +323,6 @@ in
       XFRM_STATISTICS = yes;
       XFRM_SUB_POLICY = yes;
       XFRM_USER = yes;
-      BRIDGE = yes;
   
       ## Storage ##
       AUTOFS_FS = yes;
@@ -572,8 +574,6 @@ in
       DW_WATCHDOG = no;
       E100 = no;
       E1000 = no;
-      E1000E = no;
-      E1000E_HWTS = no;
       EBC_C384_WDT = no;
       EDAC = no;
       EDAC_SUPPORT = no;
