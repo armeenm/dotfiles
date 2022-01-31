@@ -86,6 +86,13 @@
             ./img/basic
           ];
         };
+
+        gui = stable.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules =  [
+            "${stable}/nixos/modules/installer/cd-dvd/installation-cd-graphical-plasma5.nix"
+          ];
+        };
       };
 
       hosts = import ./hosts;
