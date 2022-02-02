@@ -22,6 +22,10 @@ final: prev: {
     doInstallCheck = false;
   });
 
+  python39Packages.fakeredis = prev.python39Packages.websockets.overrideAttrs (_: {
+    doInstallCheck = false;
+  });
+
   git = prev.git.overrideAttrs (_: {
     doInstallCheck = false;
   });

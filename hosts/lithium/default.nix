@@ -333,7 +333,7 @@ inputs@{ config, pkgs, lib, modulesPath, root, user, domain, ... }:
     video.hidpi.enable = true;
 
     nvidia = {
-      package = config.boot.kernelPackages.nvidiaPackages.stable;
+      package = config.boot.kernelPackages.nvidiaPackages.beta;
       modesetting.enable = true;
       #powerManagement.enable = true;
     };
