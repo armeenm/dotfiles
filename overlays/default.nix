@@ -42,7 +42,7 @@ final: prev: {
     NIX_CFLAGS_COMPILE = old.NIX_CFLAGS_COMPILE + " -Wno-error";
   });
 
-  ddclient = prev.ddclient.overrideAttrs (_: {
+  ddclient = prev.ddclient.overrideAttrs (old: rec {
     src = prev.fetchFromGitHub {
       owner = "ddclient";
       repo = "ddclient";
@@ -50,20 +50,28 @@ final: prev: {
       hash = "sha256-nvuWyCJPe7yBxwDhUpNSevY+T3pFwA10xsjIG9y0/Aw=";
     };
 
+    propagatedBuildInputs = old.buildInputs ++ (with prev.perlPackages; [
+      TestMockModule
+      TestTCP
+      TestWarnings
+      URI
+    ]);
+
     nativeBuildInputs = [ prev.autoreconfHook ];
 
-    preConfigure = ''
-      touch Makefile.PL
-      substituteInPlace ddclient.in \
-        --replace 'in the output of ifconfig' 'in the output of ip addr show' \
-        --replace 'ifconfig -a' '${prev.iproute2}/sbin/ip addr show' \
-        --replace 'ifconfig $arg' '${prev.iproute2}/sbin/ip addr show $arg' \
-        --replace '/usr/bin/perl' '${prev.perl}/bin/perl' # Until we get the patchShebangs fixed (issue #55786) we need to patch this manually
-    '';
+    preConfigure = "touch Makefile.PL";
 
     installPhase = ''
+      runHook preInstall
+
       make install
+
+      runHook postInstall
     '';
+
+    #postFixup = ''
+    #  wrapProgram "$out/bin/ddclient" --prefix PERL5LIB : "${prev.perlPackages.makePerlPath propagatedBuildInputs}"
+    #'';
 
     doCheck = false;
 
