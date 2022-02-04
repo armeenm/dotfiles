@@ -17,7 +17,7 @@ in
   packages = with pkgs; [
     swtpm
     #vulnix
-    #cura
+    cura
     direnv
     discord
     element-desktop
@@ -215,7 +215,7 @@ in
     MOZ_ENABLE_WAYLAND = "1";
     WLR_NO_HARDWARE_CURSORS = "1";
     XKB_DEFAULT_OPTIONS = "caps:escape";
-    NIXOS_OZONE_WL = "1";
+    #NIXOS_OZONE_WL = "1";
 
     # Cleaning up home dir
     ANDROID_EMULATOR_HOME = "${config.xdg.dataHome}/android";

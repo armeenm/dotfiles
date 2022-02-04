@@ -1,5 +1,4 @@
-
-inputs@{ config, pkgs, lib, modulesPath, root, user, domain, ... }:
+{ config, pkgs, lib, modulesPath, root, user, domain, ... }:
 
 {
   imports = [
@@ -122,21 +121,24 @@ inputs@{ config, pkgs, lib, modulesPath, root, user, domain, ... }:
 
   nix = {
     package = pkgs.nixUnstable;
-    allowedUsers = lib.mkForce [ "@wheel" "arash" ];
     extraOptions = ''
       warn-dirty = false
       experimental-features = flakes nix-command ca-derivations
     '';
 
-    binaryCaches = [
-      "https://cache.ngi0.nixos.org"
-      "https://nix-community.cachix.org"
-    ];
+    settings = {
+      allowed-users = lib.mkForce [ "@wheel" "arash" ];
 
-    binaryCachePublicKeys = [
-      "cache.ngi0.nixos.org-1:KqH5CBLNSyX184S9BKZJo1LxrxJ9ltnY2uAs5c/f1MA="
-      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-    ];
+      substituters = [
+        "https://cache.ngi0.nixos.org"
+        "https://nix-community.cachix.org"
+      ];
+
+      trusted-public-keys = [
+        "cache.ngi0.nixos.org-1:KqH5CBLNSyX184S9BKZJo1LxrxJ9ltnY2uAs5c/f1MA="
+        "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+      ];
+    };
   };
 
   networking = {
@@ -144,10 +146,10 @@ inputs@{ config, pkgs, lib, modulesPath, root, user, domain, ... }:
     hostName = "lithium";
     hostId = "5a656e88";
 
+    firewall.checkReversePath = "loose";
+
     networkmanager.enable = true;
     wireguard.enable = true;
-
-    firewall.checkReversePath = "loose";
   };
 
   time.timeZone = "America/Chicago";
@@ -161,16 +163,19 @@ inputs@{ config, pkgs, lib, modulesPath, root, user, domain, ... }:
   };
 
   security = {
+    allowUserNamespaces = true;
+    forcePageTableIsolation = false;
+    protectKernelImage = true;
+    unprivilegedUsernsClone = true;
+
     auditd.enable = true;
     rtkit.enable = true;
     sudo.enable = false;
 
-    protectKernelImage = true;
-    unprivilegedUsernsClone = true;
-    forcePageTableIsolation = false;
-    allowUserNamespaces = true;
-
-    virtualisation.flushL1DataCache = null;
+    acme = {
+      acceptTerms = true;
+      defaults.email = user.email;
+    };
 
     apparmor = {
       enable = true;
@@ -207,6 +212,8 @@ inputs@{ config, pkgs, lib, modulesPath, root, user, domain, ... }:
       pkcs11.enable = true;
       tctiEnvironment.enable = true;
     };
+
+    virtualisation.flushL1DataCache = null;
   };
 
   virtualisation = {
@@ -239,6 +246,7 @@ inputs@{ config, pkgs, lib, modulesPath, root, user, domain, ... }:
     blueman.enable = true;
     fstrim.enable = true;
     haveged.enable = true;
+    i2pd.enable = true;
     mullvad-vpn.enable = false;
     nix-serve.enable = true;
     pcscd.enable = true;
@@ -250,29 +258,34 @@ inputs@{ config, pkgs, lib, modulesPath, root, user, domain, ... }:
     timesyncd.enable = true;
     udisks2.enable = true;
 
-    resolved = {
-      enable = true;
-      dnssec = "false";
-      fallbackDns = [ "" ];
-    };
-
-    zfs = {
-      trim.enable = true;
-      autoScrub.enable = true;
-      autoSnapshot.enable = true;
-    };
-
     avahi = {
       enable = true;
       nssmdns = true;
     };
 
-    chrony = {
-      enable = false;
-      enableNTS = true;
-      servers = [
-        "time.cloudflare.com"
-      ];
+    ddclient = {
+      enable = true;
+      protocol = "cloudflare";
+      username = "nixpower@nuke.africa";
+      passwordFile = config.sops.secrets.cf-dns-apikey.path;
+      zone = "armeen.org";
+      domains = [ "lanthanum.armeen.org" ];
+    };
+
+    nginx = {
+      enable = true;
+      recommendedTlsSettings = true;
+      recommendedOptimisation = true;
+      recommendedGzipSettings = true;
+      recommendedProxySettings = true;
+
+      virtualHosts = {
+        "carbon.armeen.org" = {
+          enableACME = true;
+          forceSSL = true;
+          locations."/".proxyPass = "http://unix:/run/seahub/gunicorn.sock:";
+        };
+      };
     };
 
     openssh = {
@@ -280,11 +293,6 @@ inputs@{ config, pkgs, lib, modulesPath, root, user, domain, ... }:
       forwardX11 = true;
     };
 
-    usbguard = {
-      enable = false;
-      rules = builtins.readFile ./conf/usbguard/rules.conf;
-    };
-    
     pipewire = {
       enable = true;
       alsa.enable = true;
@@ -302,6 +310,25 @@ inputs@{ config, pkgs, lib, modulesPath, root, user, domain, ... }:
       ];
     };
 
+    resolved = {
+      enable = true;
+      dnssec = "false";
+      fallbackDns = [ "" ];
+    };
+
+    seafile = {
+      enable = true;
+      adminEmail = "armeen@armeen.org";
+      initialAdminPassword = "temppwd!!!";
+      #seafileSettings.fileserver.host = "0.0.0.0";
+      ccnetSettings.General.SERVICE_URL = "https://carbon.armeen.org";
+    };
+
+    tor = {
+      enable = true;
+      client.enable = true;
+    };
+
     udev = {
       packages = with pkgs; [
         ledger-udev-rules
@@ -317,12 +344,18 @@ inputs@{ config, pkgs, lib, modulesPath, root, user, domain, ... }:
       '';
     };
 
-    tor = {
-      enable = true;
-      client.enable = true;
+    usbguard = {
+      enable = false;
+      rules = builtins.readFile ./conf/usbguard/rules.conf;
     };
 
     xserver.videoDrivers = [ "nvidia" ];
+
+    zfs = {
+      trim.enable = true;
+      autoScrub.enable = true;
+      autoSnapshot.enable = true;
+    };
   };
 
   hardware = {
@@ -473,6 +506,7 @@ inputs@{ config, pkgs, lib, modulesPath, root, user, domain, ... }:
     secrets = {
       armeen-pw.neededForUsers = true;
       arash-pw.neededForUsers = true;
+      cf-dns-apikey = {};
     };
   };
 

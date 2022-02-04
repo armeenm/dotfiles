@@ -41,4 +41,43 @@ final: prev: {
   gdb = prev.gdb.overrideAttrs (old: {
     NIX_CFLAGS_COMPILE = old.NIX_CFLAGS_COMPILE + " -Wno-error";
   });
+
+  ddclient = prev.ddclient.overrideAttrs (old: {
+    src = prev.fetchFromGitHub {
+      owner = "ddclient";
+      repo = "ddclient";
+      rev = "c29919bb0fb61eecbb7a9e02a8555fa9785f9b0a";
+      hash = "sha256-nvuWyCJPe7yBxwDhUpNSevY+T3pFwA10xsjIG9y0/Aw=";
+    };
+
+    nativeBuildInputs = [ prev.autoreconfHook ];
+
+    preConfigure = ''
+      touch Makefile.PL
+      substituteInPlace ddclient.in \
+        --replace 'in the output of ifconfig' 'in the output of ip addr show' \
+        --replace 'ifconfig -a' '${prev.iproute2}/sbin/ip addr show' \
+        --replace 'ifconfig $arg' '${prev.iproute2}/sbin/ip addr show $arg' \
+        --replace '/usr/bin/perl' '${prev.perl}/bin/perl' # Until we get the patchShebangs fixed (issue #55786) we need to patch this manually
+    '';
+
+    installPhase = ''
+      make install
+    '';
+
+    doCheck = false;
+
+    checkPhase = "make VERBOSE=1 check";
+  });
+
+  wlroots = prev.wlroots.overrideAttrs (old: rec {
+    version = "0.15.1";
+    src = prev.fetchFromGitLab {
+      domain = "gitlab.freedesktop.org";
+      owner = "wlroots";
+      repo = "wlroots";
+      rev = version;
+      sha256 = "sha256-MFR38UuB/wW7J9ODDUOfgTzKLse0SSMIRYTpEaEdRwM=";
+    };
+  });
 }
