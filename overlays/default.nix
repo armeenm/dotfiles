@@ -1,5 +1,5 @@
 final: prev: {
-  discord = prev.callPackage ./discord { pkgs = prev; };
+  discord-ptb = prev.callPackage ./discord-ptb { pkgs = prev; };
   mathematica = prev.callPackage ./mathematica { pkgs = prev; };
   mdadm = prev.callPackage ./mdadm { pkgs = prev; };
   nixUnstable = prev.callPackage ./nixUnstable { pkgs = prev; };

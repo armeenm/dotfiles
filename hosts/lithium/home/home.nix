@@ -19,7 +19,7 @@ in
     #vulnix
     cura
     direnv
-    discord
+    discord-ptb
     element-desktop
     evince
     fd
