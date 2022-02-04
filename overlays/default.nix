@@ -42,7 +42,7 @@ final: prev: {
     NIX_CFLAGS_COMPILE = old.NIX_CFLAGS_COMPILE + " -Wno-error";
   });
 
-  ddclient = prev.ddclient.overrideAttrs (old: {
+  ddclient = prev.ddclient.overrideAttrs (_: {
     src = prev.fetchFromGitHub {
       owner = "ddclient";
       repo = "ddclient";
@@ -70,14 +70,24 @@ final: prev: {
     checkPhase = "make VERBOSE=1 check";
   });
 
-  wlroots = prev.wlroots.overrideAttrs (old: rec {
+  wlroots = prev.wlroots.overrideAttrs (_: rec {
     version = "0.15.1";
     src = prev.fetchFromGitLab {
       domain = "gitlab.freedesktop.org";
       owner = "wlroots";
       repo = "wlroots";
       rev = version;
-      sha256 = "sha256-MFR38UuB/wW7J9ODDUOfgTzKLse0SSMIRYTpEaEdRwM=";
+      hash = "sha256-MFR38UuB/wW7J9ODDUOfgTzKLse0SSMIRYTpEaEdRwM=";
+    };
+  });
+
+  grim = prev.grim.overrideAttrs (_: {
+    version = "master";
+    src = prev.fetchFromGitHub {
+      owner = "emersion";
+      repo = "grim";
+      rev = "20c7c47a0aac09371c570c060f5f52f7e165e67a";
+      hash = "sha256-93QlKnj3/l3rTo9Ta7NqjKlPW6x43zZUBs01PaRXgig=";
     };
   });
 }
