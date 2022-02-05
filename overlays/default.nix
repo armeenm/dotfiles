@@ -60,14 +60,32 @@ final: prev: {
     nativeBuildInputs = [ prev.autoreconfHook ];
 
     preConfigure = "touch Makefile.PL";
+    
+    buildPhase = ''
+      runHook preBuild
+
+      mkdir -p $out/bin
+      touch $out/bin/what5
+      make -j $NIX_BUILD_CORES
+
+      runHook postBuild
+    '';
 
     installPhase = ''
       runHook preInstall
+
+      perlFlags=$(head -n1 ddclient.in)
+      perlFlags=''${perlFlags#* }
+      sed -i "1s|$| $perlFlags|" ddclient
 
       make install
 
       runHook postInstall
     '';
+
+    dontFixup = true;
+    
+    #fixupPhase = "";
 
     #postFixup = ''
     #  wrapProgram "$out/bin/ddclient" --prefix PERL5LIB : "${prev.perlPackages.makePerlPath propagatedBuildInputs}"

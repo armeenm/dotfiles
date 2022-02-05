@@ -7,18 +7,34 @@
   ];
 
   fileSystems = {
+    "/boot" = {
+      device = "/dev/disk/by-uuid/4CDA-FEA2";
+      fsType = "vfat";
+    };
+
     "/" = {
       device = "rpool/root/nixos";
       fsType = "zfs";
     };
+
     "/home" = {
       device = "rpool/root/home";
       fsType = "zfs";
     };
 
-    "/boot" = {
-      device = "/dev/disk/by-uuid/4CDA-FEA2";
-      fsType = "vfat";
+    "/var/srv/tank" = {
+      device = "tank";
+      fsType = "zfs";
+    };
+
+    "/var/srv/tank/seafile" = {
+      device = "tank/seafile";
+      fsType = "zfs";
+    };
+
+    "/var/srv/tank/arash" = {
+      device = "tank/arash";
+      fsType = "zfs";
     };
   };
 
@@ -264,16 +280,15 @@
     };
 
     ddclient = {
-      enable = true;
+      enable = false;
       protocol = "cloudflare";
-      username = "nixpower@nuke.africa";
       passwordFile = config.sops.secrets.cf-dns-apikey.path;
       zone = "armeen.org";
       domains = [ "lanthanum.armeen.org" ];
     };
 
     nginx = {
-      enable = true;
+      enable = false;
       recommendedTlsSettings = true;
       recommendedOptimisation = true;
       recommendedGzipSettings = true;
@@ -281,7 +296,7 @@
 
       virtualHosts = {
         "carbon.armeen.org" = {
-          enableACME = true;
+          enableACME = false;
           forceSSL = true;
           locations."/".proxyPass = "http://unix:/run/seahub/gunicorn.sock:";
         };
@@ -320,8 +335,7 @@
       enable = true;
       adminEmail = "armeen@armeen.org";
       initialAdminPassword = "temppwd!!!";
-      #seafileSettings.fileserver.host = "0.0.0.0";
-      ccnetSettings.General.SERVICE_URL = "https://carbon.armeen.org";
+      ccnetSettings.General.SERVICE_URL = "https://lithium";
     };
 
     tor = {
