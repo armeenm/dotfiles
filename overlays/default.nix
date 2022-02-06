@@ -10,38 +10,6 @@ final: prev: {
     doInstallCheck = false;
   });
 
-  go = prev.go.overrideAttrs (_: {
-    doCheck = false;
-  });
-
-  python39Packages.aniso8601 = prev.python39Packages.aniso8601.overrideAttrs (_: {
-    __contentAddressed = false;
-  });
-
-  python39Packages.websockets = prev.python39Packages.websockets.overrideAttrs (_: {
-    doInstallCheck = false;
-  });
-
-  python39Packages.fakeredis = prev.python39Packages.websockets.overrideAttrs (_: {
-    doInstallCheck = false;
-  });
-
-  git = prev.git.overrideAttrs (_: {
-    doInstallCheck = false;
-  });
-
-  fd = prev.fd.overrideAttrs (_: {
-    doCheck = false;
-  });
-
-  gfortran = prev.gfortran.overrideAttrs (_: {
-    doCheck = false;
-  });
-
-  gdb = prev.gdb.overrideAttrs (old: {
-    NIX_CFLAGS_COMPILE = old.NIX_CFLAGS_COMPILE + " -Wno-error";
-  });
-
   ddclient = prev.ddclient.overrideAttrs (old: rec {
     src = prev.fetchFromGitHub {
       owner = "ddclient";

@@ -288,7 +288,7 @@
     };
 
     nginx = {
-      enable = false;
+      enable = true;
       recommendedTlsSettings = true;
       recommendedOptimisation = true;
       recommendedGzipSettings = true;
@@ -296,7 +296,7 @@
 
       virtualHosts = {
         "carbon.armeen.org" = {
-          enableACME = false;
+          enableACME = true;
           forceSSL = true;
           locations."/".proxyPass = "http://unix:/run/seahub/gunicorn.sock:";
         };
@@ -335,7 +335,7 @@
       enable = true;
       adminEmail = "armeen@armeen.org";
       initialAdminPassword = "temppwd!!!";
-      ccnetSettings.General.SERVICE_URL = "https://lithium";
+      ccnetSettings.General.SERVICE_URL = "https://carbon.armeen.org";
     };
 
     tor = {

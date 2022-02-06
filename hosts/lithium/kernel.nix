@@ -171,7 +171,6 @@ in
       HW_RANDOM = yes;
       HW_RANDOM_AMD = yes;
       HW_RANDOM_TPM = yes;
-      IGB = yes;
       IWLWIFI = module;
       KVM = yes;
       KVM_AMD = yes;
@@ -266,8 +265,6 @@ in
       ## Networking ##
       BRIDGE = yes;
       DEFAULT_TCP_CONG = freeform "bbr";
-      E1000E = yes;
-      E1000E_HWTS = yes;
       HOSTAP = no;
       INET6_AH = yes;
       INET6_ESP = yes;
@@ -955,8 +952,6 @@ in
       NET_VENDOR_EZCHIP = no;
       NET_VENDOR_GOOGLE = no;
       NET_VENDOR_HUAWEI = no;
-      NET_VENDOR_I825XX = no;
-      NET_VENDOR_INTEL = no;
       NET_VENDOR_MARVELL = no;
       NET_VENDOR_MELLANOX = no;
       NET_VENDOR_MICREL = no;
