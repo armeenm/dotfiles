@@ -40,6 +40,7 @@ let
 
     ns1 A ${ip}
     ${hostname} A ${ip}
+    carbon A ${ip}
   '';
 
   zone-subnet = ''
@@ -60,6 +61,11 @@ in {
     firewall = {
       interfaces.${lan} = {
         allowedUDPPorts = [ 53 ];
+        allowedTCPPorts = [ 80 443 ];
+      };
+
+      interfaces.${wan} = {
+        allowedTCPPorts = [ 80 443 ];
       };
     };
 
@@ -135,6 +141,20 @@ in {
       };
     };
 
+    nsd = {
+      enable = true;
+      port = 10053;
+      zones = {
+        "${domain}." = {
+          data = zone-domain;
+        };
+
+        "${subnetRevDomain}." = {
+          data = zone-subnet;
+        };
+      };
+    };
+
     unbound = {
       enable = true;
       resolveLocalQueries = false;
@@ -154,17 +174,17 @@ in {
 
           tls-cert-bundle = "/etc/ssl/certs/ca-certificates.crt";
 
-          #domain-insecure = [ domain subnetRevDomain ];
-          #local-zone = [
-          #  "${domain}.          nodefault"
-          #  "${subnetRevDomain}. nodefault"
-          #];
+          domain-insecure = [ domain subnetRevDomain ];
+          local-zone = [
+            "${domain}.          nodefault"
+            "${subnetRevDomain}. nodefault"
+          ];
         };
 
-        #stub-zone = [
-        #  { name = domain; stub-addr = "127.0.0.2"; }
-        #  { name = subnetRevDomain; stub-addr = "127.0.0.2"; }
-        #];
+        stub-zone = [
+          { name = domain; stub-addr = "::1@10053"; }
+          { name = subnetRevDomain; stub-addr = "::1@10053"; }
+        ];
 
         forward-zone = [{
           forward-addr = upstreamDns;
@@ -173,7 +193,6 @@ in {
         }];
       };
     };
-  };
 
     bind = {
       enable = false;
@@ -258,6 +277,7 @@ in {
         }
       '';
     };
+  };
 
   #systemd.tmpfiles.rules = [ 
   #  "d /var/lib/bind 0755 named nogroup"

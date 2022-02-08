@@ -5,9 +5,8 @@ let
 
   home = "/home/${user.login}";
 
-  seafile = "${config.xdg.dataHome}/seafile/Seafile";
-  files = "${seafile}/mylib";
-  common = "${seafile}/common";
+  files = "${home}/files";
+  common = "${home}/common";
 in
 {
   username = user.login;
@@ -15,7 +14,6 @@ in
   stateVersion = lib.mkForce "21.05";
 
   packages = with pkgs; [
-    swtpm
     #vulnix
     cura
     direnv
@@ -69,6 +67,7 @@ in
     sops
     streamlink
     swappy
+    swtpm
     tdesktop
     torbrowser
     tpm-tools
@@ -155,15 +154,13 @@ in
   ]);
 
   file = {
-    common.source = symlink common;
-    files.source = symlink files;
+    desktop.source = symlink "${files}/desktop";
     dl.source = symlink "${files}/dl";
+    docs.source = symlink "${files}/docs";
     media.source = symlink "${files}/media";
     music.source = symlink "${files}/music";
-    docs.source = symlink "${files}/docs";
-    desktop.source = symlink "${files}/desktop";
-    templates.source = symlink "${files}/templates";
     ss.source = symlink "${files}/ss";
+    templates.source = symlink "${files}/templates";
 
     dnsCheck = {
       source = "${root}/conf/bin/dnscheck.sh";
@@ -203,11 +200,11 @@ in
     };
   };
 
-  sessionPath = [ "$HOME/.local/bin" ];
+  sessionPath = [ "${home}/.local/bin" ];
 
   sessionVariables = {
     # General
-    EDITOR = "$HOME/.local/bin/editor";
+    EDITOR = "${home}/.local/bin/editor";
     MANPAGER = "sh -c 'col -bx | bat -l man -p'";
 
     # Wayland
