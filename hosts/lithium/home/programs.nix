@@ -123,6 +123,7 @@
       br = "branch";
       ci = "commit";
       co = "checkout";
+      d = "diff";
       st = "status";
       sw = "switch";
       wt = "worktree";

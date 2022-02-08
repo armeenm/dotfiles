@@ -280,16 +280,6 @@ in
       INET_IPCOMP = yes;
       INET_RAW_DIAG = yes;
       INET_UDP_DIAG = yes;
-      IPV6_FOU = yes;
-      IPV6_FOU_TUNNEL = lib.mkForce yes;
-      IPV6_GRE = yes;
-      IPV6_ILA = yes;
-      IPV6_TUNNEL = yes;
-      IPV6_VTI = yes;
-      IPVLAN = yes;
-      IPVTAP = yes;
-      MACVLAN = yes;
-      MACVTAP = yes;
       NETFILTER_NETLINK = yes;
       NETFILTER_NETLINK_ACCT = yes;
       NETFILTER_NETLINK_HOOK = no;
@@ -301,7 +291,6 @@ in
       NET_FOU = yes;
       NET_IPGRE = yes;
       NET_IPGRE_DEMUX = yes;
-      NET_IPVTI = yes;
       NF_CONNTRACK = yes;
       PACKET = yes;
       PACKET_DIAG = yes;

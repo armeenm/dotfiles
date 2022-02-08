@@ -24,9 +24,9 @@
           KillSignal = "SIGINT";
         };
 
-        Install = {
-          WantedBy = [ "default.target" ];
-        };
+        #Install = {
+        #  WantedBy = [ "default.target" ];
+        #};
       };
 
       river = {
