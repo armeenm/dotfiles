@@ -3,6 +3,7 @@
 let
   adminEmail = "armeen@armeen.org";
   initialAdminPassword = "temppwd!!!";
+  siteName = "Carbon";
 
   seafileDomain = "carbon.${domain}";
 
@@ -12,6 +13,7 @@ let
     port = 8082;
     socket = "${host}:${builtins.toString port}";
   };
+
 in {
   services = {
     nginx.virtualHosts.${seafileDomain} = {
@@ -19,12 +21,11 @@ in {
       forceSSL = true;
 
       locations = {
-
         "/" = {
           proxyPass = "http://${seahub.socket}";
           extraConfig = ''
             client_max_body_size 0;
-            proxy_read_timeout 1200s;
+            proxy_read_timeout 20m;
           '';
         };
 
@@ -33,10 +34,10 @@ in {
           extraConfig = ''
             rewrite ^/seafhttp(.*)$ $1 break;
             client_max_body_size 0;
-            proxy_connect_timeout 36000s;
-            proxy_read_timeout 36000s;
-            proxy_send_timeout 36000s;
-            send_timeout 36000s;
+            proxy_connect_timeout 10h;
+            proxy_read_timeout 10h;
+            proxy_send_timeout 10h;
+            send_timeout 10h;
           '';
         };
       };
@@ -57,6 +58,10 @@ in {
 
       seahubExtraConf = ''
         FILE_SERVER_ROOT = 'https://${seafileDomain}/seafhttp'
+        ALLOWED_HOSTS = ['.${seafileDomain}']
+        ENABLE_SETTINGS_VIA_WEB = False
+        SITE_NAME = '${siteName}'
+        SITE_TITLE = '${siteName}'
       '';
     };
   };
