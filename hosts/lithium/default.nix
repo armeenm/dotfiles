@@ -42,7 +42,7 @@ in {
       fsType = "zfs";
     };
 
-    "/var/srv/tank/seafile" = {
+    "/var/lib/private/seafile" = {
       device = "tank/seafile";
       fsType = "zfs";
     };
