@@ -42,6 +42,14 @@ in {
         };
       };
     };
+
+    restic.backups.b2backup = {
+      paths = [ "/var/lib/private/seafile" ];
+      user = "seafile";
+      repository = "b2:Nixnet-Backup";
+      passwordFile = config.sops.secrets.restic-seafile-pw.path;
+      environmentFile = config.sops.secrets.b2-env.path;
+    };
     
     seafile = {
       enable = true;
@@ -63,6 +71,14 @@ in {
         SITE_NAME = '${siteName}'
         SITE_TITLE = '${siteName}'
       '';
+    };
+  };
+
+  sops.secrets = {
+    restic-seafile-pw = {};
+    b2-env = {
+      format = "binary"; # TODO: Add .env support to sops-nix
+      sopsFile = ./secrets/b2.env.bin;
     };
   };
 }
