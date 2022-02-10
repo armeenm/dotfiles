@@ -45,7 +45,7 @@ in {
 
     restic.backups.b2backup = {
       paths = [ "/var/lib/private/seafile" ];
-      user = "seafile";
+      #user = "seafile";
       repository = "b2:Nixnet-Backup";
       passwordFile = config.sops.secrets.restic-seafile-pw.path;
       environmentFile = config.sops.secrets.b2-env.path;
@@ -75,8 +75,14 @@ in {
   };
 
   sops.secrets = {
-    restic-seafile-pw = {};
+    # Restic backup encryption key
+    restic-seafile-pw = {
+      #group = "seafile";
+    };
+
+    # Backblaze B2 credentials
     b2-env = {
+      #group = "seafile";
       format = "binary"; # TODO: Add .env support to sops-nix
       sopsFile = ./secrets/b2.env.bin;
     };

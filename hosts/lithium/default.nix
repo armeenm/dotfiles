@@ -152,10 +152,10 @@ in {
 
       "user.max_user_namespaces" = 10000;
 
-      "fs.protected_fifos" = 2;
       "fs.protected_hardlinks" = true;
-      "fs.protected_regular" = 2;
       "fs.protected_symlinks" = true;
+      "fs.protected_fifos" = 2;
+      "fs.protected_regular" = 2;
     };
 
     loader = {
