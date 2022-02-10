@@ -1,6 +1,6 @@
 #!/bin/sh
 
-wlr-randr
+wlr-randr \
     --output HDMI-A-1 --pos 0,0    --scale 1 --mode 3840x2160@29.969999 \
     --output DP-2     --pos 3840,0 --scale 1
 mako &
