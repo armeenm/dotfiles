@@ -29,7 +29,7 @@ in
       #PROVE_LOCKING = yes;
       #SCHED_STACK_END_CHECK = yes;
       ACCESSIBILITY = lib.mkForce no;
-      AIO = lib.mkForce no;
+      #AIO = lib.mkForce no;
       BIG_KEYS = yes;
       BINFMT_MISC = lib.mkForce no;
       #BPF_SYSCALL = lib.mkForce no; # NOTE: runc
