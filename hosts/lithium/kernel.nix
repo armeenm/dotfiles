@@ -1455,7 +1455,6 @@ in
       TULIP = no;
       TYPHOON = no;
       UBIFS_FS = no;
-      UDF_FS = lib.mkForce no;
       UFS_FS = no;
       ULI526X = no;
       UNISYS_VISORBUS = no;

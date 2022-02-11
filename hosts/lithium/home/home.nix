@@ -17,7 +17,7 @@ in
     #vulnix
     cura
     direnv
-    discord-ptb
+    discord-canary
     element-desktop
     evince
     fd
@@ -32,6 +32,7 @@ in
     htop
     iperf
     ipfs
+    joshuto
     keepassxc
     ledger-live-desktop
     libreoffice-fresh
@@ -53,8 +54,6 @@ in
     procs
     profanity
     qdirstat
-    qemu_full
-    ranger
     remmina
     ripgrep
     river
@@ -80,6 +79,7 @@ in
     whatsapp-for-linux
     wineWowPackages.stable
     wireshark
+    xplr
     yt-dlp
     yubikey-manager
     yubikey-manager-qt
