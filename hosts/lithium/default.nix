@@ -200,6 +200,7 @@ in {
     mullvad-vpn.enable = false;
     pcscd.enable = true;
     physlock.enable = true;
+    saned.enable = true;
     smartd.enable = true;
     spice-vdagentd.enable = true;
     tcsd.enable = false;
