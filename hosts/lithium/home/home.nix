@@ -25,6 +25,7 @@ in
     gajim
     gh
     gimp-with-plugins
+    git-crypt
     google-chrome-dev
     gparted
     gqrx
