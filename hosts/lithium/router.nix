@@ -61,7 +61,7 @@ in {
     firewall = {
       interfaces.${lan} = {
         allowedUDPPorts = [ 53 ];
-        allowedTCPPorts = [ 80 443 ];
+        allowedTCPPorts = [ 80 443 6566 ];
       };
 
       interfaces.${wan} = {

@@ -208,7 +208,7 @@ in {
     udisks2.enable = true;
 
     avahi = {
-      enable = false;
+      enable = true;
       nssmdns = true;
     };
 
