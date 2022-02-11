@@ -4,8 +4,8 @@ pkgs.nixUnstable.overrideAttrs (_: {
   src = fetchFromGitHub {
     owner = "NixOS";
     repo = "nix";
-    rev = "a2811f8499c8fa6e4da5b8b67940423fe269e974";
-    hash = "sha256-kkLZ+8Nvm+hTxkN3Sq+FE8QcJpdvwHq9SydnY1rK3As=";
+    rev = "4d67ecbbb2a00b22b1b23073f5853bcb5b100b75";
+    hash = "sha256-wce8M8AAFilvENjojAHZd62blCqvoGZcN5yUPB65g6A=";
   };
 
   patches = [ ./pb.patch ];
