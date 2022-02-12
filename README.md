@@ -1,3 +1,5 @@
+[![NixOS Unstable](https://img.shields.io/badge/NixOS-unstable-blue.svg?style=flat-square&logo=NixOS&logoColor=white)](https://nixos.org)
+
 # Overview
 
 This repo contains NixOS configurations for all the machines I currently manage.
