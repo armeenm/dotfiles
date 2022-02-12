@@ -30,7 +30,7 @@
     enableSshSupport = true;
     pinentryFlavor = "gnome3";
     sshKeys = [
-      "0C855A22D96790A9B1BEFFD4F4BDB31E141F67FF"
+      "04D42E929F2A312225856CD740A092BEE315D631"
     ];
     extraConfig = ''
       homedir ${config.programs.gpg.homedir}
