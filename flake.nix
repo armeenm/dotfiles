@@ -16,6 +16,8 @@
     deploy-rs.inputs.nixpkgs.follows = "unstable";
 
     emacs-overlay.url = github:nix-community/emacs-overlay;
+    emacs-overlay.inputs.nixpkgs.follows = "unstable";
+
     utils.url = github:gytis-ivaskevicius/flake-utils-plus;
   };
 
@@ -24,10 +26,6 @@
     , stable
     , unstable
     , temp
-    , sops-nix
-    , home-manager
-    , deploy-rs
-    , emacs-overlay
     , utils
     , ... } @ inputs:
     let
@@ -47,7 +45,7 @@
         hostname = "${hostname}.${domain}";
         profiles.system = {
           user = "root";
-          path = deploy-rs.lib."${system}".activate.nixos config;
+          path = inputs.deploy-rs.lib."${system}".activate.nixos config;
         };
       };
 
@@ -75,7 +73,7 @@
       overlay = import ./overlays;
       sharedOverlays = [
         self.overlay
-        emacs-overlay.overlay
+        inputs.emacs-overlay.overlay
       ];
 
       img = {
@@ -102,8 +100,8 @@
         extraArgs = { inherit root domain user; };
 
         modules = [
-          home-manager.nixosModules.home-manager
-          sops-nix.nixosModules.sops
+          inputs.home-manager.nixosModules.home-manager
+          inputs.sops-nix.nixosModules.sops
           ./modules
         ];
       };
@@ -115,18 +113,19 @@
       };
 
       checks = builtins.mapAttrs
-        (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
+        (system: deployLib: deployLib.deployChecks self.deploy) inputs.deploy-rs.lib;
 
     } // utils.lib.eachDefaultSystem (system:
       let pkgs = unstable.legacyPackages."${system}";
       in {
         devShell = pkgs.mkShell {
-          packages = with pkgs; [
-            deploy-rs.packages."${system}".deploy-rs
+          packages = [
+            inputs.deploy-rs.packages."${system}".deploy-rs
+          ] ++ (with pkgs; [
             git-crypt
             nixpkgs-fmt
             openssl
-          ];
+          ]);
         };
 
         packages."${system}" = import ./packages;
