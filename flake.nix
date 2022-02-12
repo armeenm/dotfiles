@@ -108,10 +108,10 @@
         ];
       };
 
+      # TODO: Fix `nix eval` + CA for these to work
       deploy.nodes = {
         cesium = deployNode "cesium";
         francium = deployNode "francium";
-        hydrogen = deployNode "hydrogen";
       };
 
       checks = builtins.mapAttrs
