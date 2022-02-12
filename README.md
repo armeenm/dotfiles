@@ -1,4 +1,4 @@
-# Drive Setup
+# Lithium Drive Setup
 
 ```
 DISK=/dev/disk/by-id/...
