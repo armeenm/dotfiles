@@ -169,14 +169,14 @@ in
       executable = true;
     };
 
-    editor = {
-      target = ".local/bin/editor";
-      executable = true;
-      text = ''
-        #!/bin/sh
-        emacsclient -c -t "$@"
-      '';
-    };
+    #editor = {
+    #  target = ".local/bin/editor";
+    #  executable = true;
+    #  text = ''
+    #    #!/bin/sh
+    #    emacsclient -c -t "$@"
+    #  '';
+    #};
 
     lesskey = {
       target = ".lesskey";
@@ -205,7 +205,7 @@ in
 
   sessionVariables = {
     # General
-    EDITOR = "${home}/.local/bin/editor";
+    #EDITOR = "${home}/.local/bin/editor";
     MANPAGER = "sh -c 'col -bx | bat -l man -p'";
 
     # Wayland
@@ -228,6 +228,7 @@ in
     diff = "delta";
     g = "git";
     open = "xdg-open";
+    rlf = "readlink -f";
     zc = "zcalc -r";
 
     noti = "noti ";

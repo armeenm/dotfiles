@@ -5,7 +5,7 @@
 
   emacs = {
     enable = true;
-    package = config.programs.emacs.package;
+    defaultEditor = true;
 
     client = {
       enable = true;
