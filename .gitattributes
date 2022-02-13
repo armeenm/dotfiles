@@ -1,2 +1,2 @@
 **/secrets/gc/** filter=git-crypt diff=git-crypt
-conf/zsh/p10k.zsh -linguist-vendored
+conf/zsh/p10k.zsh linguist-vendored
