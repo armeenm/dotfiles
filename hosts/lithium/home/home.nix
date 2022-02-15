@@ -14,7 +14,6 @@ in
   stateVersion = lib.mkForce "21.05";
 
   packages = with pkgs; [
-    #vulnix
     cura
     direnv
     discord-canary
@@ -149,6 +148,7 @@ in
     wl-clipboard
     wlr-randr
     xdg-user-dirs
+    xdg_utils
     xorg.xeyes
     xorg.xkill
     zip

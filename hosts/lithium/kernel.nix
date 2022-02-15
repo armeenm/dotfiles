@@ -468,7 +468,6 @@ in
       BRIDGE_NETFILTER = no;
       BROADCOM_PHY = no;
       BT_BCM = no;
-      BT_HCIUART = lib.mkForce no;
       BT_MRVL = no;
       BT_RTL = no;
       CADENCE_WATCHDOG = no;
