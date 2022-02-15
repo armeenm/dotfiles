@@ -91,55 +91,52 @@
 ;(straight-use-package 'use-package)
 ;(require 'use-package-ensure)
 ;
-;;; general.el ;;
-;(use-package general
-;  :config
-;  (general-create-definer my-leader-def
-;    :prefix my-leader)
-;
-;  (general-create-definer my-local-leader-def
-;    :prefix my-local-leader)
-;
-;  (my-leader-def
-;    :states 'motion
-;    :keymaps 'override
-;    "SPC" 'save-buffer
-;    "g" 'magit
-;    "w" 'evil-window-map
-;    "l" 'lsp-command-map
-;    "r" 'ivy-resume
-;    "c" 'counsel-git
-;    "p" 'projectile-command-map
-;    "b b" 'ivy-switch-buffer
-;    "b e" 'eval-buffer
-;    "b k" 'kill-buffer
-;    "b l" 'list-buffers
-;    "t i" 'ivy-mode
-;    "/ c" 'avy-goto-char-2
-;    "/ f" 'find-file
-;    "/ l" 'find-library
-;    "/ a" 'counsel-ag
-;    "/ g" 'counsel-git-grep
-;    "k f" 'describe-function
-;    "k v" 'describe-variable
-;    "k s" 'describe-symbol
-;    "x m" 'lsp-ui-imenu)
-;  
-;  (general-define-key
-;   "M-/" 'avy-goto-char)
-;  
-;  (general-def 'normal
-;    "u" 'undo-fu-only-undo
-;    "C-r" 'undo-fu-only-redo
-;    "/" 'swiper)
-;
-;  (general-def 'normal lsp-mode-map
-;    "K" 'lsp-describe-thing-at-point))
-;
-;(use-package frames-only-mode
-;  :config
-;  (frames-only-mode))
-;
+
+;; general.el ;;
+(general-create-definer my-leader-def
+  :prefix my-leader)
+
+(general-create-definer my-local-leader-def
+  :prefix my-local-leader)
+
+(my-leader-def
+  :states 'motion
+  :keymaps 'override
+  "SPC" 'save-buffer
+  "g" 'magit
+  "w" 'evil-window-map
+  "l" 'lsp-command-map
+  "r" 'ivy-resume
+  "c" 'counsel-git
+  "p" 'projectile-command-map
+  "b b" 'ivy-switch-buffer
+  "b e" 'eval-buffer
+  "b k" 'kill-buffer
+  "b l" 'list-buffers
+  "t i" 'ivy-mode
+  "/ c" 'avy-goto-char-2
+  "/ f" 'find-file
+  "/ l" 'find-library
+  "/ a" 'counsel-ag
+  "/ g" 'counsel-git-grep
+  "k f" 'describe-function
+  "k v" 'describe-variable
+  "k s" 'describe-symbol
+  "x m" 'lsp-ui-imenu)
+
+(general-define-key
+ "M-/" 'avy-goto-char)
+
+(general-def 'normal
+  "u" 'undo-fu-only-undo
+  "C-r" 'undo-fu-only-redo
+  "/" 'swiper)
+
+(general-def 'normal lsp-mode-map
+  "K" 'lsp-describe-thing-at-point)
+
+(frames-only-mode)
+
 ;;; swiper/ivy/counsel ;;
 ;(use-package ivy
 ;  :diminish

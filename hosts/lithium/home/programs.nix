@@ -70,6 +70,7 @@
     extraConfig = builtins.readFile "${root}/conf/emacs/default.el";
     extraPackages = epkgs: with epkgs; [
       evil
+      general
     ];
   };
 
