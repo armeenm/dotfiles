@@ -212,6 +212,24 @@ in {
       nssmdns = true;
     };
 
+    monero = {
+      enable = true;
+
+      rpc = {
+        address = "127.0.0.1";
+        port = 18081;
+      };
+
+      extraConfig = ''
+        rpc-restricted-bind-port=18089
+        enforce-dns-checkpointing=1
+        enable-dns-blocklist=1
+        no-igd=1
+        no-zmq=1
+        public-node=1
+      '';
+    };
+
     nginx = {
       enable = true;
       recommendedGzipSettings = true;
