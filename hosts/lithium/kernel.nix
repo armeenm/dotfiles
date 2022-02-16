@@ -714,7 +714,6 @@ in
       IGB_HWMON = no;
       IGC = no;
       IIO = no;
-      INFINIBAND = no;
       INPUT_88PM80X_ONKEY = no;
       INPUT_AD714X = no;
       INPUT_AD714X_I2C = no;
