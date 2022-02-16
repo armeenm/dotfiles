@@ -69,8 +69,52 @@
     package = pkgs.emacsPgtkGcc;
     extraConfig = builtins.readFile "${root}/conf/emacs/default.el";
     extraPackages = epkgs: with epkgs; [
-      evil
+      avy
+      cloc
+      company
+      counsel
+      dap-mode
+      deadgrep
+      direnv
+      frames-only-mode
       general
+      hl-todo
+      ivy
+      projectile
+      smooth-scrolling
+      swiper
+      which-key
+
+      clojure-mode
+      haskell-mode
+      meson-mode
+      nix-mode
+      rust-mode
+      solidity-mode
+      typescript-mode
+
+      evil
+      evil-collection
+
+      lsp-haskell
+      lsp-ivy
+      lsp-mode
+      lsp-treemacs
+      lsp-ui
+
+      magit
+      magit-delta
+      magit-todos
+
+      treemacs
+      treemacs-evil
+      treemacs-projectile
+
+      undo-fu-session
+      undo-fu
+
+      yasnippet
+      yasnippet-snippets
     ];
   };
 
