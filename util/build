@@ -1,2 +1,2 @@
 #!/bin/sh
-nixos-rebuild --flake . build "$@"
+nix build .#nixosConfigurations.$(hostname).config.system.build.toplevel "$@"

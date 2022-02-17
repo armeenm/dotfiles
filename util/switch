@@ -3,4 +3,4 @@ set -e
 # Build first so as to not place root-owned objects in Nix cache
 SCRIPT_DIR=$(dirname "$0")
 "$SCRIPT_DIR"/build "$@"
-doas nixos-rebuild --flake . switch "$@"
+"$SCRIPT_DIR"/build --profile /nix/var/nix/profiles/system "$@"
