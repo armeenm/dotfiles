@@ -2,11 +2,12 @@
   config,
   lib,
   temp,
+  linuxKernel,
   linuxPackagesFor
 }:
 
 let
-  kernel = temp.linuxKernel.kernels.linux_5_15_hardened;
+  kernel = linuxKernel.kernels.linux_5_15_hardened;
 in
   linuxPackagesFor (kernel.override {
     features = {
@@ -438,13 +439,6 @@ in
       BCMA = no;
       BCMGENET = no;
       BCM_NET_PHYLIB = no;
-      BE2ISCSI = no;
-      BE2NET = no;
-      BE2NET_BE2 = no;
-      BE2NET_BE3 = no;
-      BE2NET_HWMON = no;
-      BE2NET_LANCER = no;
-      BE2NET_SKYHAWK = no;
       BEFS_FS = no;
       BFS_FS = no;
       BLK_DEV_3W_XXXX_RAID = no;
@@ -804,9 +798,6 @@ in
       IP_SCTP = no;
       IP_VS = no;
       ISA_BUS = no;
-      ISCSI_BOOT_SYSFS = no;
-      ISCSI_IBFT = no;
-      ISCSI_TCP = no;
       ISL29003 = no;
       ISL29020 = no;
       IT8712F_WDT = no;
@@ -884,10 +875,6 @@ in
       MLX4_CORE_GEN2 = no;
       MLX4_DEBUG = no;
       MLX4_EN = no;
-      MLX5_CORE = no;
-      MLXFW = no;
-      MLXSW_CORE = no;
-      MLX_PLATFORM = no;
       MMC_CB710 = no;
       MMC_SDHCI = no;
       MMC_TIFM_SD = no;
@@ -1115,8 +1102,6 @@ in
       SCSI_INITIO = no;
       SCSI_IPR = no;
       SCSI_IPS = no;
-      SCSI_ISCI = no;
-      SCSI_ISCSI_ATTRS = no;
       SCSI_LPFC = no;
       SCSI_MPI3MR = no;
       SCSI_MPT2SAS = no;
@@ -1131,12 +1116,8 @@ in
       SCSI_PROC_FS = no;
       SCSI_QLA_ISCSI = no;
       SCSI_QLOGIC_1280 = no;
-      SCSI_SAS_ATTRS = no;
-      SCSI_SAS_LIBSAS = no;
       SCSI_SMARTPQI = no;
       SCSI_SNIC = no;
-      SCSI_SPI_ATTRS = no;
-      SCSI_SRP_ATTRS = no;
       SCSI_STEX = no;
       SCSI_SYM53C8XX_2 = no;
       SCSI_UFSHCD = no;
