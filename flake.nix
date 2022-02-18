@@ -128,7 +128,7 @@
           ]);
         };
 
-        packages."${system}" = import ./packages;
+        #packages."${system}" = import ./packages;
       }
     );
 }
