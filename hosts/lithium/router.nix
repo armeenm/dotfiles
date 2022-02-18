@@ -1,4 +1,4 @@
-{ config, pkgs, lib, domain, ... }:
+{ config, lib, domain, ... }:
 
 let
   esc-nl = str: builtins.replaceStrings [ "\n" ] [ "\\n" ] str;
