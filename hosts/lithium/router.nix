@@ -59,6 +59,8 @@ in {
     hostName = hostname;
 
     firewall = {
+      allowPing = false;
+      
       interfaces.${lan} = {
         allowedUDPPorts = [ 53 ];
         allowedTCPPorts = [ 80 443 6566 ];
@@ -67,6 +69,10 @@ in {
       interfaces.${wan} = {
         allowedTCPPorts = [ 80 443 ];
       };
+
+      extraCommands = ''
+        iptables -A nixos-fw -i ${lan} -p icmp -j nixos-fw-accept
+      '';
     };
 
     nameservers = lib.mkForce [ "127.0.0.1" ];
