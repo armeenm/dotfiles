@@ -15,7 +15,34 @@ let
   };
 
 in {
+  environment.etc."fail2ban/filter.d/seafile-auth.conf".text = ''
+    # Fail2Ban filter for seafile
+    #
+    
+    [INCLUDES]
+    
+    # Read common prefixes. If any customizations available -- read them from
+    # common.local
+    before = common.conf
+    
+    [Definition]
+    
+    _daemon = seaf-server
+    
+    failregex = Login attempt limit reached.*, ip: <HOST>
+    
+    ignoreregex = 
+  '';
+  
   services = {
+    fail2ban.jails.seafile = ''
+      enable   = true
+      port     = http,https
+      filter   = seafile-auth
+      logpath  = /var/log/seafile/seahub.log
+      maxretry = 3
+    '';
+    
     nginx.virtualHosts.${seafileDomain} = {
       enableACME = true;
       forceSSL = true;
@@ -70,6 +97,7 @@ in {
         ENABLE_SETTINGS_VIA_WEB = False
         SITE_NAME = '${siteName}'
         SITE_TITLE = '${siteName}'
+        TIME_ZONE = 'America/Chicago'
       '';
     };
   };
