@@ -4,8 +4,8 @@ let
   esc-nl = str: builtins.replaceStrings [ "\n" ] [ "\\n" ] str;
   rev-ip4 = with lib; ip4: "${concatStringsSep "." (reverseList (splitString "." ip4))}.in-addr.arpa";
 
-  wan = "enp5s0";
-  lan = "enp6s0";
+  wan = "enp4s0f1";
+  lan = "enp4s0f0";
 
   subnet = "192.168.0";
   subnetRevDomain = rev-ip4 subnet;
