@@ -7,6 +7,7 @@ in {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
     ./home
+    ./auth.nix
     ./router.nix
     ./seafile.nix
   ];
@@ -87,6 +88,7 @@ in {
     kernelPackages = pkgs.callPackage ./kernel.nix {};
 
     kernelParams = [
+      "elevator=none"
       "kvm.nx_huge_pages=force"
       "lsm=yama,apparmor,bpf"
       "quiet"
@@ -212,6 +214,13 @@ in {
       nssmdns = true;
     };
 
+    fail2ban = {
+      enable = true;
+      bantime-increment.enable = true;
+      ignoreIP = [ "192.168.0.0/16" ];
+      maxretry = 5;
+    };
+
     monero = {
       enable = true;
 
@@ -241,6 +250,7 @@ in {
     openssh = {
       enable = true;
       forwardX11 = true;
+      logLevel = "VERBOSE";
     };
 
     pipewire = {
