@@ -312,6 +312,8 @@ in {
   };
 
   systemd = {
+    watchdog.rebootTime = "15s";
+
     tmpfiles.rules = [
       "d /run/cache 0755 - - -"
       "d /var/etc 0755 - - -"
@@ -332,7 +334,9 @@ in {
       "sys-kernel-debug.mount"
     ];
 
-    watchdog.rebootTime = "15s";
+    services.nix-daemon.serviceConfig = {
+      LimitNOFILE = lib.mkForce "infinity";
+    };
   };
 
   security = {
