@@ -8,14 +8,6 @@ final: prev: {
     doInstallCheck = false;
   });
 
-  #libuv = prev.libuv.overrideAttrs (_: {
-  #  doCheck = false;
-  #});
-
-  gnutls = prev.gnutls.overrideAttrs (_: {
-    doCheck = false;
-  });
-
   wlroots = prev.wlroots.overrideAttrs (_: rec {
     version = "0.15.1";
     src = prev.fetchFromGitLab {
