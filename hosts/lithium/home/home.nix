@@ -1,4 +1,4 @@
-{ config, sys, pkgs, lib, root, user, ... }:
+{ config, sys, pkgs, lib, root, user, inputs, ... }:
 
 let
   symlink = config.lib.file.mkOutOfStoreSymlink;
@@ -21,6 +21,7 @@ in
       gh
       git-crypt
       htop
+      hyperfine
       joshuto
       procs
       ripgrep
@@ -59,6 +60,7 @@ in
     (with pkgs; [
       curlie
       dog
+      gping
       iperf
       ipfs
       miraclecast

@@ -1,8 +1,8 @@
-{ config, pkgs, lib, root, user, ... }:
+{ config, pkgs, lib, root, user, domain, inputs, ... }:
 
 let
   args = {
-    inherit pkgs lib root user;
+    inherit pkgs lib root user domain inputs;
     sys = config;
     config = config.home-manager.users."${user.login}";
   };
