@@ -335,7 +335,7 @@ in {
     ];
 
     services.nix-daemon.serviceConfig = {
-      LimitNOFILE = lib.mkForce "infinity";
+      LimitNOFILE = lib.mkForce 131072;
     };
   };
 
@@ -478,6 +478,7 @@ in {
     adb.enable = true;
     dconf.enable = true;
     mtr.enable = true;
+    steam.enable = true;
     zsh.enable = true;
 
     custom.ddcutil = {
