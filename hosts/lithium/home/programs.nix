@@ -2,13 +2,14 @@
 
 {
   aria2.enable = true;
-  autojump.enable = true;
   command-not-found.enable = false;
   dircolors.enable = true;
   fzf.enable = true;
   home-manager.enable = true;
   nix-index.enable = true;
   noti.enable = true;
+  zathura.enable = true;
+  zoxide.enable = true;
 
   bash = {
     enable = true;
@@ -121,16 +122,6 @@
   exa = {
     enable = true;
     enableAliases = true;
-  };
-
-  feh = {
-    enable = true;
-    keybindings = {
-      prev_img = "h";
-      next_img = "l";
-      zoom_in = "k";
-      zoom_out = "j";
-    };
   };
 
   foot = {

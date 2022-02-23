@@ -13,146 +13,198 @@ in
   homeDirectory = home;
   stateVersion = lib.mkForce "21.05";
 
-  packages = with pkgs; [
-    cura
-    direnv
-    discord-canary
-    element-desktop
-    evince
-    fd
-    firefox
-    gajim
-    gh
-    gimp-with-plugins
-    git-crypt
-    google-chrome-dev
-    gparted
-    gqrx
-    gtk3
-    htop
-    iperf
-    ipfs
-    joshuto
-    keepassxc
-    ledger-live-desktop
-    libreoffice-fresh
-    lshw
-    miraclecast
-    monero
-    monero-gui
-    mosh
-    mpc_cli
-    mtr
-    mullvad-vpn
-    neofetch
-    noto-fonts-emoji
-    ntfs3g
-    openscad
-    pamixer
-    parted
-    pavucontrol
-    procs
-    profanity
-    qdirstat
-    remmina
-    ripgrep
-    river
-    rng-tools
-    rxvt_unicode.terminfo
-    scrcpy
-    seafile-client
-    simple-scan
-    slack-dark
-    sops
-    streamlink
-    swappy
-    swtpm
-    tdesktop
-    torbrowser
-    tpm-tools
-    usbguard
-    usbutils
-    veracrypt
-    virt-manager
-    vlc
-    wayvnc
-    whatsapp-for-linux
-    wineWowPackages.stable
-    wireshark
-    xplr
-    yt-dlp
-    yubikey-manager
-    yubikey-manager-qt
-    yubikey-personalization
-    yubikey-personalization-gui
-    yubioath-desktop
-    zoom-us
-  ] ++ (with pkgs.pkgsMusl; [
-    asciinema
-    atool
-    bemenu
-    btop
-    bubblewrap
-    cloc
-    cowsay
-    dosfstools
-    efibootmgr
-    exfatprogs
-    fasd
-    figlet
-    file
-    fira-code
-    fira-code-symbols
-    font-awesome-ttf
-    fortune
-    grim
-    hdparm
-    hicolor-icon-theme
-    highlight
-    jq
-    killall
-    ldns
-    libnotify
-    lm_sensors
-    lolcat
-    lsof
-    mediainfo
-    nix-tree
-    nmap
-    noto-fonts
-    noto-fonts-cjk
-    p7zip
-    pandoc
-    patchutils
-    pciutils
-    playerctl
-    pstree
-    seafile-shared
-    sl
-    slurp
-    speedtest-cli
-    strace
-    tamsyn
-    tcpdump
-    tmux
-    trash-cli
-    unrar
-    unzip
-    vbetool
-    vulkan-loader
-    vulkan-tools
-    w3m
-    weechat
-    wget
-    whois
-    wl-clipboard
-    wlr-randr
-    xdg-user-dirs
-    xdg_utils
-    xorg.xeyes
-    xorg.xkill
-    zip
-  ]);
+  packages =
+    ## CLI Utils ##
+    (with pkgs; [
+      direnv
+      fd
+      gh
+      git-crypt
+      htop
+      joshuto
+      procs
+      ripgrep
+      sd
+      sops
+      tldr
+      xplr
+    ])
+    ++
+    (with pkgs.pkgsMusl; [
+      btop
+      cloc
+      fasd
+      file
+      jq
+      killall
+      lsof
+      mediainfo
+      nix-tree
+      p7zip
+      pandoc
+      patchutils
+      pstree
+      sl
+      strace
+      tcpdump
+      tmux
+      trash-cli
+      unrar
+      unzip
+      zip
+    ])
+    ++
+
+    ## Networking ##
+    (with pkgs; [
+      curlie
+      dog
+      iperf
+      ipfs
+      miraclecast
+      mosh
+      remmina
+      scrcpy
+      wayvnc
+      wireshark
+      xh
+    ])
+    ++
+    (with pkgs.pkgsMusl; [
+      ldns
+      nmap
+      speedtest-cli
+      w3m
+      wget
+      whois
+    ])
+    ++
+
+    ## Hardware ##
+    (with pkgs; [
+      lshw
+      usbutils
+    ])
+    ++
+    (with pkgs.pkgsMusl; [
+      hdparm
+      lm_sensors
+      pciutils
+    ])
+    ++
+
+    ## Privacy and Security ##
+    (with pkgs; [
+      keepassxc
+      ledger-live-desktop
+      monero
+      monero-gui
+      torbrowser
+      usbguard
+      veracrypt
+      yubikey-manager
+      yubikey-manager-qt
+      yubikey-personalization
+      yubikey-personalization-gui
+      yubioath-desktop
+    ])
+    ++
+    (with pkgs.pkgsMusl; [
+      bubblewrap
+    ])
+    ++
+
+    ## Desktop Environment ##
+    (with pkgs; [
+      firefox
+      gimp-with-plugins
+      google-chrome-dev
+      gtk3
+      imv
+      libreoffice-fresh
+      noto-fonts-emoji
+      river
+      simple-scan
+      swappy
+
+      breeze-icons
+      gnome3.adwaita-icon-theme
+    ])
+    ++
+    (with pkgs.pkgsMusl; [
+      bemenu
+      grim
+      slurp
+      tamsyn
+      wl-clipboard
+      wlr-randr
+      xdg-user-dirs
+      xdg_utils
+      xorg.xeyes
+      xorg.xkill
+
+      fira-code
+      fira-code-symbols
+      font-awesome-ttf
+      hicolor-icon-theme
+      noto-fonts
+      noto-fonts-cjk
+    ])
+    ++
+
+    ## Windows ##
+    (with pkgs; [
+      ntfs3g
+      wineWowPackages.stable
+    ])
+    ++
+    (with pkgs.pkgsMusl; [
+      dosfstools
+      efibootmgr
+      exfatprogs
+    ])
+    ++
+
+    ## Media ##
+    (with pkgs; [
+      mpc_cli
+      pamixer
+      pavucontrol
+      streamlink
+      vlc
+    ])
+    ++
+    (with pkgs.pkgsMusl; [
+      playerctl
+      yt-dlp
+    ])
+    ++
+
+    ## Communication ##
+    (with pkgs; [
+      discord-canary
+      element-desktop
+      gajim
+      profanity
+      slack-dark
+      tdesktop
+      whatsapp-for-linux
+      zoom-us
+    ])
+    ++
+    (with pkgs.pkgsMusl; [
+      weechat
+    ])
+    ++
+
+    ## Filesync/Backup ##
+    (with pkgs; [
+      seafile-client
+    ])
+    ++
+    (with pkgs.pkgsMusl; [
+      seafile-shared
+    ]);
 
   file = {
     desktop.source = symlink "${files}/desktop";
@@ -168,15 +220,6 @@ in
       target = ".local/bin/dnscheck";
       executable = true;
     };
-
-    #editor = {
-    #  target = ".local/bin/editor";
-    #  executable = true;
-    #  text = ''
-    #    #!/bin/sh
-    #    emacsclient -c -t "$@"
-    #  '';
-    #};
 
     lesskey = {
       target = ".lesskey";
@@ -205,7 +248,6 @@ in
 
   sessionVariables = {
     # General
-    #EDITOR = "${home}/.local/bin/editor";
     MANPAGER = "sh -c 'col -bx | bat -l man -p'";
 
     # Wayland
