@@ -239,12 +239,6 @@
         ];
       };
     };
-
-    #style = ''
-    #  * {
-    #    font-family: Tamsyn;
-    #  }
-    #'';
   };
 
   zsh = {
