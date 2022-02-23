@@ -102,6 +102,10 @@ done
 riverctl map normal $mod D spawn 'bemenu-run -b'
 riverctl map normal $mod P spawn 'emacsclient -c -n'
 riverctl map normal $mod A spawn 'makoctl dismiss'
+riverctl map normal $mod+Shift A spawn 'makoctl dismiss -a'
+riverctl map normal $mod A spawn 'makoctl set-mode do-not-disturb'
+riverctl map normal $mod S spawn 'makoctl set-mode do-not-disturb'
+riverctl map normal $mod+Shift S spawn 'makoctl set-mode default'
 riverctl map normal $mod Grave spawn 'grim -g "$(slurp)" - | swappy -f -'
 
 riverctl background-color 0x000000
@@ -123,9 +127,8 @@ riverctl default-layout rivertile
 
 wlr-randr \
     --output HDMI-A-1 --pos 0,0 \
-    --output DP-2 --pos 3840,0 --mode 2560x1440@143.998001
+    --output DP-1 --pos 3840,0 --mode 2560x1440@143.998001
 
 mako &
-#gammastep &
 
 exec rivertile -view-padding 6 -outer-padding 6
