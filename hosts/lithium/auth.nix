@@ -7,7 +7,7 @@ let
 in {
   services = {
     openldap = {
-      enable = true;
+      enable = false;
       urlList = [ "ldap:///" ];
       settings = {
         attrs.olcLogLevel = [ "stats" ];
