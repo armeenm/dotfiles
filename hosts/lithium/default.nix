@@ -199,7 +199,6 @@ in {
     haveged.enable = true;
     i2pd.enable = false;
     iperf3.enable = true;
-    mullvad-vpn.enable = false;
     pcscd.enable = true;
     physlock.enable = true;
     saned.enable = true;
@@ -212,13 +211,6 @@ in {
     avahi = {
       enable = true;
       nssmdns = true;
-    };
-
-    fail2ban = {
-      enable = true;
-      bantime-increment.enable = true;
-      ignoreIP = [ "192.168.0.0/16" ];
-      maxretry = 5;
     };
 
     monero = {
@@ -251,6 +243,7 @@ in {
       enable = true;
       forwardX11 = true;
       logLevel = "VERBOSE";
+      passwordAuthentication = false;
     };
 
     pipewire = {
@@ -268,13 +261,6 @@ in {
         gutenprintBin
         cnijfilter2
       ];
-    };
-
-    resolved = {
-      enable = false;
-      dnssec = "true";
-      domains = [ domain ];
-      fallbackDns = [ "" ];
     };
 
     tor = {
@@ -341,7 +327,6 @@ in {
 
   security = {
     allowUserNamespaces = true;
-    forcePageTableIsolation = false;
     protectKernelImage = true;
     unprivilegedUsernsClone = true;
     virtualisation.flushL1DataCache = null;
@@ -447,9 +432,6 @@ in {
   };
 
   environment = {
-    # TODO: Not really a good idea; find a better solution
-    #memoryAllocator.provider = "graphene-hardened";
-
     defaultPackages = lib.mkForce [];
     systemPackages = with pkgs; [
       git

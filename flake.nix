@@ -4,6 +4,7 @@
   inputs = {
     stable.url = github:nixos/nixpkgs/release-21.11;
     unstable.url = github:nixos/nixpkgs/nixos-unstable;
+    master.url = github:nixos/nixpkgs;
     temp.url = github:nixos/nixpkgs/ead5545be3916a68d69a6a1095ea8b750d43f3fb;
 
     sops-nix.url = github:Mic92/sops-nix;
@@ -64,6 +65,7 @@
         unstable.overlaysBuilder = channels: [
           (_: _: { stable = channels.stable; })
           (_: _: { unstable = channels.unstable; })
+          (_: _: { master = channels.master; })
           (_: _: { temp = channels.temp; })
         ];
 

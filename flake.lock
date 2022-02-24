@@ -120,6 +120,21 @@
         "type": "github"
       }
     },
+    "master": {
+      "locked": {
+        "lastModified": 1645701858,
+        "narHash": "sha256-6ieDyLuISgtmjoUTRrCpX61JumdwDFh37dAvbHPB+hY=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "dbe9b1b37b091dec36d83424de053cad608d68f1",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs-wayland": {
       "inputs": {
         "cachix": "cachix",
@@ -147,6 +162,7 @@
         "deploy-rs": "deploy-rs",
         "emacs-overlay": "emacs-overlay",
         "home-manager": "home-manager",
+        "master": "master",
         "nixpkgs-wayland": "nixpkgs-wayland",
         "sops-nix": "sops-nix",
         "stable": "stable",

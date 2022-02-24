@@ -2,7 +2,6 @@
 
 {
   aria2.enable = true;
-  command-not-found.enable = false;
   dircolors.enable = true;
   fzf.enable = true;
   home-manager.enable = true;

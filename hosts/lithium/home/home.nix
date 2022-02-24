@@ -125,7 +125,9 @@ in
       imv
       libreoffice-fresh
       noto-fonts-emoji
-      river
+      (river.override {
+        wlroots = inputs.master.legacyPackages.x86_64-linux.wlroots;
+      })
       simple-scan
       swappy
 
@@ -135,7 +137,7 @@ in
     ++
     (with pkgs.pkgsMusl; [
       bemenu
-      grim
+      master.grim
       slurp
       tamsyn
       wl-clipboard
