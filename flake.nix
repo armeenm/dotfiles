@@ -5,7 +5,6 @@
     stable.url = github:nixos/nixpkgs/release-21.11;
     unstable.url = github:nixos/nixpkgs/nixos-unstable;
     master.url = github:nixos/nixpkgs;
-    temp.url = github:nixos/nixpkgs/ead5545be3916a68d69a6a1095ea8b750d43f3fb;
 
     sops-nix.url = github:Mic92/sops-nix;
     sops-nix.inputs.nixpkgs.follows = "unstable";
@@ -29,7 +28,6 @@
     { self
     , stable
     , unstable
-    , temp
     , utils
     , ... } @ inputs:
     let
