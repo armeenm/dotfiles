@@ -18,6 +18,9 @@
     emacs-overlay.url = github:nix-community/emacs-overlay;
     emacs-overlay.inputs.nixpkgs.follows = "unstable";
 
+    nixpkgs-wayland.url = github:nix-community/nixpkgs-wayland;
+    nixpkgs-wayland.inputs.nixpkgs.follows = "unstable";
+
     utils.url = github:gytis-ivaskevicius/flake-utils-plus;
   };
 
