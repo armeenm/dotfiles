@@ -1,9 +1,6 @@
 { config, pkgs, lib, modulesPath, root, user, domain, ... }:
 
-let
-  wan = "enp5s0";
-  lan = "enp6s0";
-in {
+{
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
     ./home
@@ -11,16 +8,6 @@ in {
     ./router.nix
     ./seafile.nix
   ];
-
-  i18n.defaultLocale = "en_US.UTF-8";
-  time.timeZone = "America/Chicago";
-
-  console = {
-    keyMap = "us";
-    font = "Tamsyn7x13r";
-    packages = [ pkgs.tamsyn ];
-    earlySetup = false;
-  };
 
   fileSystems = {
     "/boot" = {
@@ -54,27 +41,6 @@ in {
     };
   };
 
-  hardware = {
-    bluetooth.enable = true;
-    cpu.amd.updateMicrocode = true;
-    opengl.enable = true;
-    rtl-sdr.enable = true;
-    video.hidpi.enable = true;
-
-    nvidia = {
-      package = config.boot.kernelPackages.nvidiaPackages.stable;
-      modesetting.enable = true;
-      #powerManagement.enable = true;
-    };
-
-    sane = {
-      enable = true;
-      extraBackends = with pkgs; [
-        sane-airscan
-      ];
-    };
-  };
-
   boot = {
     initrd = {
       includeDefaultModules = false;
@@ -84,6 +50,11 @@ in {
     supportedFilesystems = [ "zfs" ];
 
     consoleLogLevel = 0;
+
+    kernelModules = [
+      "ib_umad"
+      "ib_ipoib"
+    ];
 
     kernelPackages = pkgs.callPackage ./kernel.nix {};
 
@@ -168,6 +139,47 @@ in {
         editor = false;
       };
     };
+  };
+
+  networking = {
+    interfaces."ibp12s0" = {
+      useDHCP = false;
+      ipv4.addresses = [{
+        address = "192.168.1.1";
+        prefixLength = 24;
+      }];
+    };
+  };
+
+  hardware = {
+    bluetooth.enable = true;
+    cpu.amd.updateMicrocode = true;
+    opengl.enable = true;
+    rtl-sdr.enable = true;
+    video.hidpi.enable = true;
+
+    nvidia = {
+      package = config.boot.kernelPackages.nvidiaPackages.stable;
+      modesetting.enable = true;
+      #powerManagement.enable = true;
+    };
+
+    sane = {
+      enable = true;
+      extraBackends = with pkgs; [
+        sane-airscan
+      ];
+    };
+  };
+
+  i18n.defaultLocale = "en_US.UTF-8";
+  time.timeZone = "America/Chicago";
+
+  console = {
+    keyMap = "us";
+    font = "Tamsyn7x13r";
+    packages = [ pkgs.tamsyn ];
+    earlySetup = false;
   };
 
   nix = {
@@ -437,8 +449,12 @@ in {
     systemPackages = (with pkgs; [
       lshw
       usbutils
+      infiniband-diags
+      opensm
+
       git
       rsync
+
       (mathematica.override {
         cudaSupport = true;
         nvidia_x11 = config.boot.kernelPackages.nvidiaPackages.stable;
