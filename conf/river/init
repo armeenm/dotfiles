@@ -107,6 +107,7 @@ riverctl map normal $mod A spawn 'makoctl set-mode do-not-disturb'
 riverctl map normal $mod S spawn 'makoctl set-mode do-not-disturb'
 riverctl map normal $mod+Shift S spawn 'makoctl set-mode default'
 riverctl map normal $mod Grave spawn 'grim -g "$(slurp)" - | swappy -f -'
+riverctl map normal $mod X spawn 'lock'
 
 riverctl background-color 0x000000
 riverctl border-color-focused 0xa5ab00
