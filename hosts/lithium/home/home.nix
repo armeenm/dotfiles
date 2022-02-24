@@ -82,19 +82,6 @@ in
     ])
     ++
 
-    ## Hardware ##
-    (with pkgs; [
-      lshw
-      usbutils
-    ])
-    ++
-    (with pkgs.pkgsMusl; [
-      hdparm
-      lm_sensors
-      pciutils
-    ])
-    ++
-
     ## Privacy and Security ##
     (with pkgs; [
       keepassxc

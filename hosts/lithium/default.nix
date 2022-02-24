@@ -433,7 +433,10 @@ in {
 
   environment = {
     defaultPackages = lib.mkForce [];
-    systemPackages = with pkgs; [
+
+    systemPackages = (with pkgs; [
+      lshw
+      usbutils
       git
       rsync
       (mathematica.override {
@@ -441,9 +444,14 @@ in {
         nvidia_x11 = config.boot.kernelPackages.nvidiaPackages.stable;
         cudatoolkit = cudaPackages.cudatoolkit_11_5;
       })
-
       #(lkrg.override { kernel = config.boot.kernelPackages.kernel; })
-    ];
+    ])
+    ++
+    (with pkgs.pkgsMusl; [
+      hdparm
+      lm_sensors
+      pciutils
+    ]);
 
     etc = {
       adjtime.source = "/var/etc/adjtime";
