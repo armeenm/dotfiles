@@ -9,11 +9,13 @@ let
   wan = "enp4s0f1";
   lan = "enp4s0f0";
 
-  subnet = "192.168.0";
-  subnetRevDomain = rev-ip4 subnet;
+  prefix = "192.168.0";
+  prefixRev = rev-ip4 prefix;
 
+  subnet = "${prefix}.0/24";
+
+  ip = "${prefix}.1";
   hostName = "lithium";
-  ip = "${subnet}.1";
   wanDomain = "lanthanum.${domain}";
 
   upstreamDns = [
@@ -46,7 +48,7 @@ let
   '';
 
   zone-subnet = ''
-    $ORIGIN ${subnetRevDomain}.
+    $ORIGIN ${prefixRev}.
     $TTL 5m
     ${soa}
     @ NS ns1.${domain}.
@@ -75,7 +77,7 @@ in {
       '';
     };
 
-    nameservers = lib.mkForce [ "127.0.0.1" ];
+    nameservers = lib.mkForce [ "::1" ];
 
     interfaces = {
       ${wan}.useDHCP = true;
@@ -91,14 +93,13 @@ in {
       lo = {
         ipv4.addresses = [
           { address = "127.0.0.1"; prefixLength = 8; }
-          { address = "127.0.0.2"; prefixLength = 8; }
         ];
       };
     };
 
     nat = {
       enable = true;
-      internalIPs = [ "${subnet}.0/24" ];
+      internalIPs = [ subnet ];
       externalInterface = wan;
     };
   };
@@ -113,9 +114,9 @@ in {
           valid-lifetime = 4000;
 
           subnet4 = [{
-            subnet = "${subnet}.0/24";
+            inherit subnet;
             pools = [{
-              pool = "${subnet}.128 - ${subnet}.254";
+              pool = "${prefix}.128 - ${prefix}.254";
             }];
           }];
 
@@ -145,13 +146,15 @@ in {
 
     nsd = {
       enable = true;
+      interfaces = [ "::1" ];
       port = 10053;
+
       zones = {
         "${domain}." = {
           data = zone-domain;
         };
 
-        "${subnetRevDomain}." = {
+        "${prefixRev}." = {
           data = zone-subnet;
         };
       };
@@ -171,21 +174,21 @@ in {
           use-caps-for-id = false;
           verbosity = 2;
 
-          interface = [ "${subnet}.1" "127.0.0.1" ];
-          access-control = [ "${subnet}.0/24 allow" "127.0.0.0/8 allow" ];
+          interface = [ ip "::1" ];
+          access-control = [ "${subnet} allow" "::1 allow" ];
 
           tls-cert-bundle = "/etc/ssl/certs/ca-certificates.crt";
 
-          domain-insecure = [ domain subnetRevDomain ];
+          domain-insecure = [ domain prefixRev ];
           local-zone = [
-            "${domain}.          nodefault"
-            "${subnetRevDomain}. nodefault"
+            "${domain}.    nodefault"
+            "${prefixRev}. nodefault"
           ];
         };
 
         stub-zone = [
           { name = domain; stub-addr = "::1@10053"; }
-          { name = subnetRevDomain; stub-addr = "::1@10053"; }
+          { name = prefixRev; stub-addr = "::1@10053"; }
         ];
 
         forward-zone = [{
