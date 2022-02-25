@@ -221,25 +221,30 @@
     udisks2.enable = true;
 
     avahi = {
-      enable = true;
+      enable = false;
       nssmdns = true;
+      interfaces = [ "enp4s0f0" ];
     };
 
     monero = {
       enable = true;
 
       rpc = {
-        address = "127.0.0.1";
-        port = 18081;
       };
 
       extraConfig = ''
+        rpc-use-ipv6=1
+        rpc-ignore-ipv4=1
+        rpc-bind-ipv6-address=::1
+        rpc-restricted-bind-ipv6-address=::1
         rpc-restricted-bind-port=18089
-        enforce-dns-checkpointing=1
-        enable-dns-blocklist=1
+
+        p2p-use-ipv6=1
+        p2p-ignore-ipv4=1
+        p2p-bind-ipv6-address=::
         no-igd=1
         no-zmq=1
-        public-node=1
+        enforce-dns-checkpointing=1
       '';
     };
 
