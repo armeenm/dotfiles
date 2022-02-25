@@ -35,14 +35,6 @@ in {
   '';
   
   services = {
-    fail2ban.jails.seafile = ''
-      enable   = true
-      port     = http,https
-      filter   = seafile-auth
-      logpath  = /var/log/seafile/seahub.log
-      maxretry = 3
-    '';
-    
     nginx.virtualHosts.${seafileDomain} = {
       enableACME = true;
       forceSSL = true;
