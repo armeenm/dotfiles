@@ -4,13 +4,15 @@ let
   esc-nl = str: builtins.replaceStrings [ "\n" ] [ "\\n" ] str;
   rev-ip4 = with lib; ip4: "${concatStringsSep "." (reverseList (splitString "." ip4))}.in-addr.arpa";
 
+  hostId = "5a656e88";
+
   wan = "enp4s0f1";
   lan = "enp4s0f0";
 
   subnet = "192.168.0";
   subnetRevDomain = rev-ip4 subnet;
 
-  hostname = "lithium";
+  hostName = "lithium";
   ip = "${subnet}.1";
   wanDomain = "lanthanum.${domain}";
 
@@ -39,7 +41,7 @@ let
     @ A ${ip} 
 
     ns1 A ${ip}
-    ${hostname} A ${ip}
+    ${hostName} A ${ip}
     carbon A ${ip}
   '';
 
@@ -49,14 +51,12 @@ let
     ${soa}
     @ NS ns1.${domain}.
 
-    ${rev-ip4 ip}. PTR ${hostname}.${domain}.
+    ${rev-ip4 ip}. PTR ${hostName}.${domain}.
   '';
 
 in {
   networking = {
-    inherit domain;
-    hostId = "5a656e88";
-    hostName = hostname;
+    inherit hostName domain hostId;
 
     firewall = {
       allowPing = false;
