@@ -461,10 +461,11 @@
       rsync
 
       (mathematica.override {
-        cudaSupport = true;
+        cudaSupport = false;
         nvidia_x11 = config.boot.kernelPackages.nvidiaPackages.stable;
         cudatoolkit = cudaPackages.cudatoolkit_11_5;
       })
+
       #(lkrg.override { kernel = config.boot.kernelPackages.kernel; })
     ])
     ++
