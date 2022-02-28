@@ -39,6 +39,11 @@
       device = "tank/arash";
       fsType = "zfs";
     };
+
+    "/var/srv/testing" = {
+      device = "rpool/testing";
+      fsType = "zfs";
+    };
   };
 
   boot = {
