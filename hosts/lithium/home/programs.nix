@@ -38,23 +38,18 @@
   chromium = {
     enable = true;
     extensions = [
-      { id = "gfapcejdoghpoidkfodoiiffaaibpaem"; } # Dracula Theme
-      { id = "nkbihfbeogaeaoehlefnkodbefgpgknn"; } # MetaMask
-      { id = "dmkamcknogkgcdfhhbddcghachkejeap"; } # Keplr
+      { id = "aapbdbdomjkkjkaonfhkkikfgjllcleb"; } # Google Translate
       { id = "cjpalhdlnbpafiamejdnhcphjbkeiagm"; } # uBlock Origin
-      { id = "ohnjgmpcibpbafdlkimncjhflgedgpam"; } # 4chanX
-      { id = "hfjbmagddngcpeloejdejnfgbamkjaeg"; } # Vimium-C
       { id = "cledppeceojodgghbbkaciochldmpdfk"; } # Twitter Media Assist
+      { id = "dmkamcknogkgcdfhhbddcghachkejeap"; } # Keplr
       { id = "dneaehbmnbhcippjikoajpoabadpodje"; } # Old Reddit Redirect
+      { id = "gebbhagfogifgggkldgodflihgfeippi"; } # Return YouTube Dislike
+      { id = "hfjbmagddngcpeloejdejnfgbamkjaeg"; } # Vimium C
       { id = "kbmfpngjjgdllneeigpgjifpgocmfgmb"; } # RES
       { id = "kcgpggonjhmeaejebeoeomdlohicfhce"; } # Cookie Remover
       { id = "nibjojkomfdiaoajekhjakgkdhaomnch"; } # IPFS Companion
-      { id = "aapbdbdomjkkjkaonfhkkikfgjllcleb"; } # Google Translate
-      { id = "gebbhagfogifgggkldgodflihgfeippi"; } # Return YouTube Dislike
-      { 
-        id = "dcpihecpambacapedldabdbpakmachpb";
-        updateUrl = "https://raw.githubusercontent.com/iamadamdev/bypass-paywalls-chrome/master/manifest.json";
-      } # Bypass Paywalls
+      { id = "nkbihfbeogaeaoehlefnkodbefgpgknn"; } # MetaMask
+      { id = "ohnjgmpcibpbafdlkimncjhflgedgpam"; } # 4chanX
     ];
   };
 
