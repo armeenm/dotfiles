@@ -88,7 +88,7 @@ in
       ledger-live-desktop
       monero
       monero-gui
-      torbrowser
+      tor-browser-bundle-bin
       usbguard
       veracrypt
       yubikey-manager
@@ -136,7 +136,7 @@ in
 
       fira-code
       fira-code-symbols
-      font-awesome-ttf
+      font-awesome
       hicolor-icon-theme
       noto-fonts
       noto-fonts-cjk
