@@ -401,7 +401,7 @@
     waydroid.enable = true;
 
     libvirtd = {
-      enable = false;
+      enable = true;
       qemu = {
         swtpm.enable = true;
         ovmf = {
