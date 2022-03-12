@@ -8,15 +8,20 @@ in
   
   userDirs = {
     enable = true;
-    desktop = "\$HOME/desktop";
-    documents = "\$HOME/docs";
-    download = "\$HOME/dl";
-    music = "\$HOME/music";
-    pictures = "\$HOME/media";
-    publicShare = "\$HOME/shared";
-    templates = "\$HOME/templates";
-    videos = "\$HOME/media";
+    desktop = "~/desktop";
+    documents = "~/docs";
+    download = "~/dl";
+    music = "~/music";
+    pictures = "~/media";
+    publicShare = "~/shared";
+    templates = "~/templates";
+    videos = "~/media";
   };
+
+  systemDirs.data = [
+    "/var/lib/flatpak/exports/share"
+    "~/.local/share/flatpak/exports/share"
+  ];
   
   configFile = {
     "profanity/profrc".source = "${conf}/profanity/profrc";

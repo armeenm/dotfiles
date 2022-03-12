@@ -210,8 +210,14 @@
     '';
   };
 
+  xdg.portal = {
+    enable = true;
+    wlr.enable = true;
+  };
+
   services = {
     blueman.enable = true;
+    flatpak.enable = true;
     fstrim.enable = true;
     haveged.enable = true;
     i2pd.enable = false;
@@ -495,7 +501,6 @@
     adb.enable = true;
     dconf.enable = true;
     mtr.enable = true;
-    steam.enable = true;
     zsh.enable = true;
 
     custom.ddcutil = {
