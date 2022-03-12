@@ -16,6 +16,7 @@ in
   packages =
     ## CLI Utils ##
     (with pkgs; [
+      bottom
       direnv
       fd
       gh
