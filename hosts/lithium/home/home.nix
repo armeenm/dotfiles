@@ -246,6 +246,8 @@ in
     MOZ_ENABLE_WAYLAND = "1";
     WLR_NO_HARDWARE_CURSORS = "1";
     XKB_DEFAULT_OPTIONS = "caps:escape";
+    #WLR_DRM_NO_ATOMIC = "1";
+    #WLR_DRM_NO_MODIFIERS = "1";
     #NIXOS_OZONE_WL = "1";
 
     # Cleaning up home dir
