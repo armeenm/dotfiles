@@ -348,9 +348,9 @@
       "sys-kernel-debug.mount"
     ];
 
-    services.nix-daemon.serviceConfig = {
-      LimitNOFILE = lib.mkForce 131072;
-    };
+    #services.nix-daemon.serviceConfig = {
+    #  LimitNOFILE = lib.mkForce 131072;
+    #};
   };
 
   security = {
@@ -407,7 +407,7 @@
     waydroid.enable = true;
 
     libvirtd = {
-      enable = true;
+      enable = false;
       qemu = {
         swtpm.enable = true;
         ovmf = {
@@ -501,6 +501,7 @@
     adb.enable = true;
     dconf.enable = true;
     mtr.enable = true;
+    steam.enable = true;
     zsh.enable = true;
 
     custom.ddcutil = {
