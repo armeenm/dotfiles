@@ -477,6 +477,8 @@
         cudatoolkit = cudaPackages.cudatoolkit_11_5;
       })
 
+      (hunspellWithDicts [ hunspellDicts.en_US hunspellDicts.en_US-large ])
+
       #(lkrg.override { kernel = config.boot.kernelPackages.kernel; })
     ])
     ++
