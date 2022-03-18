@@ -14,7 +14,7 @@ in
     services = import ./services.nix args;
     systemd = import ./systemd.nix args;
     xdg = import ./xdg.nix args;
-    xsession = import ./xsession.nix args;
+    gtk = import ./gtk.nix args;
 
     fonts.fontconfig.enable = lib.mkForce true;
   };
