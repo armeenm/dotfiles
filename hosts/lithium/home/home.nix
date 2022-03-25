@@ -164,11 +164,11 @@ in
       pavucontrol
       streamlink
       vlc
+      yt-dlp
     ])
     ++
     (with pkgs.pkgsMusl; [
       playerctl
-      yt-dlp
     ])
     ++
 
