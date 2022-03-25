@@ -116,7 +116,7 @@
 
       "kernel.core_uses_pid" = true;
       "kernel.kptr_restrict" = 2;
-      "kernel.panic_on_oops" = true;
+      "kernel.panic_on_oops" = false;
       "kernel.perf_event_paranoid" = 3;
       "kernel.printk" = "3 3 3 3";
       "kernel.randomize_va_space" = 2;
