@@ -2,11 +2,6 @@
 
 {
   user = {
-    sessionVariables = {
-      PATH = "$PATH:$HOME/.local/bin";
-      EDITOR = "editor";
-    };
-    
     services = {
       ipfs = {
         Unit = {
