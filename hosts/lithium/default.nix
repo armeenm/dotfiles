@@ -51,7 +51,7 @@
       includeDefaultModules = false;
       verbose = false;
     };
-    
+
     supportedFilesystems = [ "zfs" ];
 
     consoleLogLevel = 0;
@@ -61,7 +61,7 @@
       "ib_ipoib"
     ];
 
-    kernelPackages = pkgs.callPackage ./kernel.nix {};
+    kernelPackages = pkgs.callPackage ./kernel.nix { };
 
     kernelParams = [
       "elevator=none"
@@ -240,8 +240,7 @@
     monero = {
       enable = true;
 
-      rpc = {
-      };
+      rpc = { };
 
       extraConfig = ''
         rpc-use-ipv6=1
@@ -385,13 +384,13 @@
 
     pam = {
       u2f.enable = true;
-      
-      loginLimits = [ {
+
+      loginLimits = [{
         domain = "*";
         type = "soft";
         item = "nofile";
         value = "65536";
-      } ];
+      }];
     };
 
     tpm2 = {
@@ -460,7 +459,7 @@
   };
 
   environment = {
-    defaultPackages = lib.mkForce [];
+    defaultPackages = lib.mkForce [ ];
 
     systemPackages = (with pkgs; [
       lshw
@@ -548,11 +547,11 @@
     secrets = {
       armeen-pw.neededForUsers = true;
       arash-pw.neededForUsers = true;
-      cf-dns-apikey = {};
+      cf-dns-apikey = { };
     };
   };
 
   zramSwap.enable = true;
-  
+
   system.stateVersion = lib.mkForce "21.11";
 }

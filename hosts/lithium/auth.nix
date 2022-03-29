@@ -4,7 +4,8 @@ let
   openldap = config.services.openldap.package;
   dbDir = "/var/db/ldap";
   suffix = "dc=armeen,dc=org";
-in {
+in
+{
   services = {
     openldap = {
       enable = false;

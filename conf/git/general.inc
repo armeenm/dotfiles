@@ -1,5 +1,5 @@
-[init]
+[ init ]
   defaultBranch = "master"
 
 [credential]
-  helper = "store"
+helper = "store"

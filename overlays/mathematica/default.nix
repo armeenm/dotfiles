@@ -47,7 +47,7 @@ let
     cudatoolkit
     cudatoolkit.lib
   ];
-  
+
   cudaEnv = buildEnv {
     name = "mathematica-cuda";
     paths = cudaDeps;
@@ -55,7 +55,8 @@ let
     postBuild = "ln -s $out/lib $out/lib64";
   };
 
-in stdenv.mkDerivation rec {
+in
+stdenv.mkDerivation rec {
 
   version = "13.0.0";
   name = "mathematica-${version}";

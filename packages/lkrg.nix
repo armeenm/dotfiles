@@ -10,7 +10,7 @@ stdenv.mkDerivation rec {
     rev = version;
     hash = "";
   };
-  
+
   hardeningDisable = [ "pic" ];
   nativeBuildInputs = kernel.moduleBuildDependencies;
 

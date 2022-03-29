@@ -5,7 +5,7 @@ let
 in
 {
   enable = true;
-  
+
   userDirs = {
     enable = true;
     desktop = "~/desktop";
@@ -22,7 +22,7 @@ in
     "/var/lib/flatpak/exports/share"
     "~/.local/share/flatpak/exports/share"
   ];
-  
+
   configFile = {
     "profanity/profrc".source = "${conf}/profanity/profrc";
     "zsh/.p10k.zsh".source = "${conf}/zsh/p10k.zsh";

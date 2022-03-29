@@ -20,7 +20,7 @@
     kernelModules = [ "kvm-intel" ];
 
     initrd.availableKernelModules = [ "ehci_pci" "ahci" "usb_storage" "sd_mod" "sdhci_pci" ];
-    
+
     loader = {
       systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
@@ -69,7 +69,9 @@
     printing = {
       enable = true;
       drivers = with pkgs; [
-        gutenprint gutenprintBin cnijfilter2
+        gutenprint
+        gutenprintBin
+        cnijfilter2
       ];
     };
 
@@ -102,7 +104,7 @@
     xserver = {
       enable = true;
       layout = "us";
-      
+
       libinput = {
         enable = true;
         mouse.accelProfile = "flat";
@@ -153,8 +155,8 @@
   };
 
   environment = {
-    defaultPackages = lib.mkForce [];
-    
+    defaultPackages = lib.mkForce [ ];
+
     variables.EDITOR = "nvim";
     pathsToLink = [ "/share/zsh" ];
   };

@@ -37,7 +37,7 @@
       allow-loopback-pinentry
     '';
   };
-  
+
   mpd = {
     enable = true;
     network.startWhenNeeded = true;

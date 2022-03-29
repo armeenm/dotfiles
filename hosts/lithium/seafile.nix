@@ -14,7 +14,8 @@ let
     socket = "${host}:${builtins.toString port}";
   };
 
-in {
+in
+{
   environment.etc."fail2ban/filter.d/seafile-auth.conf".text = ''
     # Fail2Ban filter for seafile
     #
@@ -33,7 +34,7 @@ in {
     
     ignoreregex = 
   '';
-  
+
   services = {
     nginx.virtualHosts.${seafileDomain} = {
       enableACME = true;
@@ -69,7 +70,7 @@ in {
       passwordFile = config.sops.secrets.restic-seafile-pw.path;
       environmentFile = config.sops.secrets.b2-env.path;
     };
-    
+
     seafile = {
       enable = true;
       inherit adminEmail initialAdminPassword;

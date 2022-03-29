@@ -56,13 +56,14 @@ let
     ${rev-ip4 ip}. PTR ${hostName}.${domain}.
   '';
 
-in {
+in
+{
   networking = {
     inherit hostName domain hostId;
 
     firewall = {
       allowPing = false;
-      
+
       interfaces.${lan} = {
         allowedUDPPorts = [ 53 ];
         allowedTCPPorts = [ 80 443 6566 ];

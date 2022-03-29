@@ -80,7 +80,7 @@ in
   };
 
   environment = {
-    defaultPackages = lib.mkForce [];
+    defaultPackages = lib.mkForce [ ];
     systemPackages = with pkgs; [
       bottom
       fd
@@ -159,9 +159,9 @@ in
         };
       };
 
-      muc = [ {
+      muc = [{
         domain = "muc.krypton.${domain}";
-      } ];
+      }];
 
       uploadHttp = {
         domain = "upload.krypton.${domain}";

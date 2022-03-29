@@ -6,6 +6,9 @@
     unstable.url = github:nixos/nixpkgs/nixos-unstable;
     master.url = github:nixos/nixpkgs;
 
+    nur.url = github:nix-community/nur;
+    nur.inputs.nixpkgs.follows = "unstable";
+
     sops-nix.url = github:Mic92/sops-nix;
     sops-nix.inputs.nixpkgs.follows = "unstable";
 
@@ -63,8 +66,6 @@
         unstable.overlaysBuilder = channels: [
           (_: _: { stable = channels.stable; })
           (_: _: { unstable = channels.unstable; })
-          (_: _: { master = channels.master; })
-          (_: _: { temp = channels.temp; })
         ];
 
         stable.overlaysBuilder = channels: [
@@ -96,7 +97,6 @@
         };
       };
 
-      hosts = import ./hosts;
       hostDefaults = {
         channelName = "unstable";
         system = "x86_64-linux";
@@ -108,6 +108,7 @@
           ./modules
         ];
       };
+      hosts = import ./hosts;
 
       # TODO: Fix `nix eval` + CA for these to work
       deploy.nodes = {
@@ -118,20 +119,25 @@
       checks = builtins.mapAttrs
         (system: deployLib: deployLib.deployChecks self.deploy) inputs.deploy-rs.lib;
 
-    } // utils.lib.eachDefaultSystem (system:
-      let pkgs = unstable.legacyPackages."${system}";
+    }
+    //
+    utils.lib.eachDefaultSystem (system:
+      let
+        pkgs = {
+          nix = unstable.legacyPackages.${system};
+          deploy-rs = inputs.deploy-rs.packages.${system};
+        };
+
       in {
-        devShell = pkgs.mkShell {
-          packages = [
-            inputs.deploy-rs.packages."${system}".deploy-rs
-          ] ++ (with pkgs; [
+        devShell = pkgs.nix.mkShell {
+          packages = with pkgs.nix; [
             git-crypt
             nixpkgs-fmt
             openssl
+          ] ++ (with pkgs.deploy-rs; [
+            deploy-rs
           ]);
         };
-
-        #packages."${system}" = import ./packages;
       }
     );
 }

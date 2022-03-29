@@ -3,7 +3,8 @@
 let
   inherit (lib) mkOption mkIf types;
   cfg = config.programs.custom.ddcutil;
-in {
+in
+{
   options.programs.custom.ddcutil = {
     enable = mkOption {
       default = false;
@@ -12,7 +13,7 @@ in {
     };
 
     users = mkOption {
-      default = [];
+      default = [ ];
       type = types.list;
       example = [ "myusername" ];
     };

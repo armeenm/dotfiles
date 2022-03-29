@@ -125,7 +125,7 @@ in
     ++
     (with pkgs.pkgsMusl; [
       bemenu
-      master.grim
+      grim
       slurp
       tamsyn
       wl-clipboard
@@ -228,11 +228,11 @@ in
       target = ".local/bin/lock";
       executable = true;
       text = ''
-      #!${pkgs.bash}/bin/bash
-      ${pkgs.playerctl}/bin/playerctl -a pause
-      ${sys.security.wrapperDir}/doas ${pkgs.physlock}/bin/physlock
-      #${pkgs.vbetool}/bin/vbetool dpms off
-    '';
+        #!${pkgs.bash}/bin/bash
+        ${pkgs.playerctl}/bin/playerctl -a pause
+        ${sys.security.wrapperDir}/doas ${pkgs.physlock}/bin/physlock
+        #${pkgs.vbetool}/bin/vbetool dpms off
+      '';
     };
   };
 

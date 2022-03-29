@@ -21,12 +21,13 @@
       theme = "Dracula";
     };
     themes = {
-      dracula = builtins.readFile (pkgs.fetchFromGitHub {
-        owner = "dracula";
-        repo = "sublime";
-        rev = "26c57ec282abcaa76e57e055f38432bd827ac34e";
-        sha256 = "019hfl4zbn4vm4154hh3bwk6hm7bdxbr1hdww83nabxwjn99ndhv";
-      } + "/Dracula.tmTheme");
+      dracula = builtins.readFile (pkgs.fetchFromGitHub
+        {
+          owner = "dracula";
+          repo = "sublime";
+          rev = "26c57ec282abcaa76e57e055f38432bd827ac34e";
+          sha256 = "019hfl4zbn4vm4154hh3bwk6hm7bdxbr1hdww83nabxwjn99ndhv";
+        } + "/Dracula.tmTheme");
     };
   };
 
@@ -86,6 +87,8 @@
       rust-mode
       solidity-mode
       typescript-mode
+
+      gruvbox-theme
 
       evil
       evil-collection
@@ -170,7 +173,7 @@
       };
     };
 
-    includes = [ { path = "${root}/conf/git/general.inc"; } ];
+    includes = [{ path = "${root}/conf/git/general.inc"; }];
   };
 
   mako = {
@@ -216,7 +219,7 @@
     settings = {
       mainBar = {
         output = [ "DP-2" ];
-        
+
         modules-right = [
           "idle_inhibitor"
           "pulseaudio"
@@ -251,7 +254,7 @@
         source "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh"
       fi
       [[ ! -f ~/.config/zsh/.p10k.zsh ]] || source ~/.config/zsh/.p10k.zsh
-      '';
+    '';
 
     initExtraBeforeCompInit = ''
       autoload -Uz zcalc
