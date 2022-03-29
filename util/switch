@@ -1,5 +1,5 @@
 #!/bin/sh
-set - e
+set -e
   # Build first so as to not place root-owned objects in Nix cache
   SCRIPT_DIR=$(dirname "$0")
 "$SCRIPT_DIR"/build "$@"

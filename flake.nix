@@ -32,7 +32,8 @@
     , stable
     , unstable
     , utils
-    , ... } @ inputs:
+    , ...
+    } @ inputs:
     let
       root = ./.;
 
@@ -43,101 +44,106 @@
         email = "mahdianarmeen@gmail.com";
       };
 
-      deployNode = hostname: let
-        config = self.nixosConfigurations."${hostname}";
-        system = config.config.nixpkgs.system;
-      in {
-        hostname = "${hostname}.${domain}";
-        profiles.system = {
-          user = "root";
-          path = inputs.deploy-rs.lib."${system}".activate.nixos config;
+      deployNode = hostname:
+        let
+          config = self.nixosConfigurations."${hostname}";
+          system = config.config.nixpkgs.system;
+        in
+        {
+          hostname = "${hostname}.${domain}";
+          profiles.system = {
+            user = "root";
+            path = inputs.deploy-rs.lib."${system}".activate.nixos config;
+          };
         };
-      };
 
-    in utils.lib.mkFlake {
-      inherit self inputs;
+    in
+    utils.lib.mkFlake
+      {
+        inherit self inputs;
 
-      channelsConfig = {
-        allowUnfree = true;
-        contentAddressedByDefault = true;
-      };
+        channelsConfig = {
+          allowUnfree = true;
+          contentAddressedByDefault = true;
+        };
 
-      channels = {
-        unstable.overlaysBuilder = channels: [
-          (_: _: { stable = channels.stable; })
-          (_: _: { unstable = channels.unstable; })
-        ];
+        channels = {
+          unstable.overlaysBuilder = channels: [
+            (_: _: { stable = channels.stable; })
+            (_: _: { unstable = channels.unstable; })
+          ];
 
-        stable.overlaysBuilder = channels: [
-          (_: _: { stable = channels.stable; })
-          (_: _: { unstable = channels.unstable; })
-        ];
-      };
-
-      overlay = import ./overlays;
-      sharedOverlays = [
-        self.overlay
-        inputs.emacs-overlay.overlay
-      ];
-
-      img = {
-        basic = stable.lib.nixosSystem {
-          system = "x86_64-linux";
-          modules =  [
-            "${stable}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
-            ./img/basic
+          stable.overlaysBuilder = channels: [
+            (_: _: { stable = channels.stable; })
+            (_: _: { unstable = channels.unstable; })
           ];
         };
 
-        gui = stable.lib.nixosSystem {
+        overlay = import ./overlays;
+        sharedOverlays = [
+          self.overlay
+          inputs.emacs-overlay.overlay
+        ];
+
+        img = {
+          basic = stable.lib.nixosSystem {
+            system = "x86_64-linux";
+            modules = [
+              "${stable}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
+              ./img/basic
+            ];
+          };
+
+          gui = stable.lib.nixosSystem {
+            system = "x86_64-linux";
+            modules = [
+              "${stable}/nixos/modules/installer/cd-dvd/installation-cd-graphical-plasma5.nix"
+            ];
+          };
+        };
+
+        hostDefaults = {
+          channelName = "unstable";
           system = "x86_64-linux";
-          modules =  [
-            "${stable}/nixos/modules/installer/cd-dvd/installation-cd-graphical-plasma5.nix"
+          extraArgs = { inherit root domain user; };
+
+          modules = [
+            inputs.home-manager.nixosModules.home-manager
+            inputs.sops-nix.nixosModules.sops
+            ./modules
           ];
         };
-      };
+        hosts = import ./hosts;
 
-      hostDefaults = {
-        channelName = "unstable";
-        system = "x86_64-linux";
-        extraArgs = { inherit root domain user; };
+        # TODO: Fix `nix eval` + CA for these to work
+        deploy.nodes = {
+          cesium = deployNode "cesium";
+          francium = deployNode "francium";
+        };
 
-        modules = [
-          inputs.home-manager.nixosModules.home-manager
-          inputs.sops-nix.nixosModules.sops
-          ./modules
-        ];
-      };
-      hosts = import ./hosts;
+        checks = builtins.mapAttrs
+          (system: deployLib: deployLib.deployChecks self.deploy)
+          inputs.deploy-rs.lib;
 
-      # TODO: Fix `nix eval` + CA for these to work
-      deploy.nodes = {
-        cesium = deployNode "cesium";
-        francium = deployNode "francium";
-      };
-
-      checks = builtins.mapAttrs
-        (system: deployLib: deployLib.deployChecks self.deploy) inputs.deploy-rs.lib;
-
-    }
-    //
+      } //
     utils.lib.eachDefaultSystem (system:
-      let
-        pkgs = {
-          nix = unstable.legacyPackages.${system};
-          deploy-rs = inputs.deploy-rs.packages.${system};
-        };
+    let
+      pkgs = {
+        nix = unstable.legacyPackages.${system};
+        deploy-rs = inputs.deploy-rs.packages.${system};
+      };
 
-      in {
-        devShell = pkgs.nix.mkShell {
-          packages = with pkgs.nix; [
-            git-crypt
-            nixpkgs-fmt
-            openssl
-          ] ++ (with pkgs.deploy-rs; [
-            deploy-rs
-          ]);
-        };
-      }
+    in
+    {
+      devShell = pkgs.nix.mkShell {
+        packages = with pkgs.nix; [
+          git-crypt
+          nixpkgs-fmt
+          openssl
+        ] ++ (with pkgs.deploy-rs; [
+          deploy-rs
+        ]);
+      };
+    }
     );
 }
