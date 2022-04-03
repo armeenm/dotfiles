@@ -2,8 +2,8 @@
   description = "Nix-based config";
 
   inputs = {
-    stable.url = github:nixos/nixpkgs/release-21.11;
-    unstable.url = github:nixos/nixpkgs/nixos-unstable;
+    stable.url = github:nixos/nixpkgs/nixos-21.11-small;
+    unstable.url = github:nixos/nixpkgs/nixos-unstable-small;
     master.url = github:nixos/nixpkgs;
 
     nur.url = github:nix-community/nur;
@@ -82,6 +82,7 @@
         overlay = import ./overlays;
         sharedOverlays = [
           self.overlay
+          inputs.nur.overlay
           inputs.emacs-overlay.overlay
         ];
 
@@ -143,6 +144,10 @@
         ] ++ (with pkgs.deploy-rs; [
           deploy-rs
         ]);
+
+        shellHook = ''
+          PATH=$PATH:$PWD/util
+        '';
       };
     }
     );
