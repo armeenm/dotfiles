@@ -219,15 +219,21 @@
 
   starship = {
     enable = true;
+    settings = {
+      add_newline = false;
+      character = {
+        success_symbol = "[>](bold green)";
+        error_symbol = "[x](bold red)";
+        vicmd_symbol = "[<](bold green)";
+      };
+    };
   };
 
   waybar = {
     enable = true;
-
     settings = {
       mainBar = {
         output = [ "DP-2" ];
-
         modules-right = [
           "idle_inhibitor"
           "pulseaudio"
@@ -275,18 +281,5 @@
       setopt globdots
       setopt autopushd
     '';
-
-    plugins = [
-      {
-        name = "zsh-nix-shell";
-        file = "nix-shell.plugin.zsh";
-        src = pkgs.fetchFromGitHub {
-          owner = "chisui";
-          repo = "zsh-nix-shell";
-          rev = "v0.4.0";
-          sha256 = "037wz9fqmx0ngcwl9az55fgkipb745rymznxnssr3rx9irb6apzg";
-        };
-      }
-    ];
   };
 }
