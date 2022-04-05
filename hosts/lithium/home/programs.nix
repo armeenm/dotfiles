@@ -176,6 +176,10 @@
     includes = [{ path = "${root}/conf/git/general.inc"; }];
   };
 
+  ion = {
+    enable = true;
+  };
+
   mako = {
     enable = true;
     extraConfig = ''
@@ -211,6 +215,10 @@
     extraConfig = ''
       set editing-mode vi
     '';
+  };
+
+  starship = {
+    enable = true;
   };
 
   waybar = {

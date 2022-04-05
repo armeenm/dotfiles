@@ -43,7 +43,7 @@ in
       mediainfo
       nix-tree
       p7zip
-      pandoc
+      #pandoc
       patchutils
       pstree
       sl
