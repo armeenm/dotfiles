@@ -19,13 +19,13 @@ visible-bell t)
 (frames-only-mode)
 
 ;; code ;;
-;(setq
-;  standard-indent 2
-;  indent-line-function 'insert-tab)
-;
-;(setq-default
-;  indent-tabs-mode nil
-;  tab-width 2)
+(setq
+  standard-indent 2
+  indent-line-function 'insert-tab)
+
+(setq-default
+  indent-tabs-mode nil
+  tab-width 2)
 
 (setq
 js-indent-level 2
