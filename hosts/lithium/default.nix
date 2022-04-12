@@ -502,6 +502,7 @@
     adb.enable = true;
     dconf.enable = true;
     mtr.enable = true;
+    nix-ld.enable = true;
     steam.enable = true;
     zsh.enable = true;
 
