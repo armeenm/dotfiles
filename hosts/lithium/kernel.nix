@@ -338,7 +338,7 @@ linuxPackagesFor (kernel.override {
     FS_ENCRYPTION_ALGS = yes;
     FS_MBCACHE = yes;
     FUSE_FS = yes;
-    ISO9660_FS = yes;
+    ISO9660_FS = lib.mkForce yes;
     JBD2 = yes;
     MMC = yes;
     MMC_BLOCK = yes;

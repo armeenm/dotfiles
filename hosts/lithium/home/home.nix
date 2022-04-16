@@ -106,21 +106,25 @@ in
 
     ## Desktop Environment ##
     (with pkgs; [
-      firefox
-      gimp-with-plugins
+      firefox-wayland
       google-chrome-dev
-      gtk3
-      imv
+      librewolf-wayland
+
+      gimp-with-plugins
       libreoffice-fresh
-      noto-fonts-emoji
-      (river.override {
-        wlroots = inputs.master.legacyPackages.x86_64-linux.wlroots;
-      })
+
+      imv
+      nomacs
+      river
+      session-desktop-appimage
       simple-scan
       swappy
 
       breeze-icons
       gnome3.adwaita-icon-theme
+      noto-fonts-emoji
+
+      gtk3
     ])
     ++
     (with pkgs.pkgsMusl; [
@@ -272,6 +276,7 @@ in
     sudo = "doas ";
 
     sc = "systemctl";
+    jc = "journalctl";
     uc = "systemctl --user";
     udc = "udisksctl";
 
