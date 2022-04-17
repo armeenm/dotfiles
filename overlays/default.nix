@@ -32,24 +32,4 @@ final: prev: {
     doCheck = false;
     doInstallCheck = false;
   });
-
-  ghc = prev.ghc.overrideAttrs (_: {
-    __contentAddressed = false;
-  });
-
-  ghc-musl = prev.ghc.overrideAttrs (_: {
-    __contentAddressed = false;
-  });
-
-  gcc = prev.gcc.overrideAttrs (_: {
-    __contentAddressed = false;
-  });
-
-  gcc-wrapper = prev.gcc-wrapper.overrideAttrs (_: {
-    __contentAddressed = false;
-  });
-
-  gfortran = prev.gfortran.overrideAttrs (_: {
-    __contentAddressed = false;
-  });
 }
