@@ -466,10 +466,10 @@
     defaultPackages = lib.mkForce [ ];
 
     systemPackages = (with pkgs; [
-      lshw
-      usbutils
       infiniband-diags
+      lshw
       opensm
+      usbutils
 
       git
       rsync
