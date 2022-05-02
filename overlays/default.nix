@@ -6,4 +6,18 @@ final: prev: {
     doCheck = false;
     doInstallCheck = false;
   });
+
+  libpulseaudio = prev.libpulseaudio.overrideAttrs (_: {
+    doCheck = false;
+    doInstallCheck = false;
+  });
+
+  pulseaudio = prev.pulseaudio.overrideAttrs (_: {
+    doCheck = false;
+    doInstallCheck = false;
+  });
+
+  #wlroots = prev.wlroots.overrideAttrs (old: {
+  #  buildInputs = old.buildInputs ++ [ prev.vulkan-headers ];
+  #});
 }

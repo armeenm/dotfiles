@@ -64,7 +64,7 @@
 
         channelsConfig = {
           allowUnfree = true;
-          contentAddressedByDefault = true;
+          contentAddressedByDefault = false;
         };
 
         channels = {

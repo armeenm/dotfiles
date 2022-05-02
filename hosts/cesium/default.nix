@@ -3,40 +3,35 @@
 {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
+    ./home
   ];
-
-  system.stateVersion = lib.mkForce "21.05";
 
   nix = {
     package = pkgs.nixUnstable;
     extraOptions = ''
-      keep-outputs = true
-      keep-derivations = true
-      experimental-features = nix-command flakes
+      experimental-features = nix-command flakes ca-derivations
     '';
   };
 
   boot = {
-    kernelModules = [ "kvm-intel" ];
-
     initrd.availableKernelModules = [ "ehci_pci" "ahci" "usb_storage" "sd_mod" "sdhci_pci" ];
+
+    kernelModules = [ "kvm-intel" ];
 
     loader = {
       systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
     };
-
-    kernel.sysctl."user.max_user_namespaces" = 28633;
   };
 
   fileSystems = {
     "/" = {
-      device = "/dev/disk/by-uuid/990c3938-5b91-47e4-adb9-d5104e58b616";
+      device = "/dev/disk/by-uuid/5e1e6d38-5164-417e-b69d-1b538521839a";
       fsType = "ext4";
     };
 
     "/boot" = {
-      device = "/dev/disk/by-uuid/EFA4-F842";
+      device = "/dev/disk/by-uuid/1B30-BFD7";
       fsType = "vfat";
     };
   };
@@ -57,11 +52,20 @@
     earlySetup = true;
   };
 
+  security = {
+    sudo.enable = false;
+    doas = {
+      enable = true;
+      extraRules = [{
+        groups = [ "wheel" ];
+	keepEnv = true;
+      }];
+    };
+  };
+
   services = {
     avahi.enable = true;
     blueman.enable = true;
-    ipfs.enable = false;
-    #mullvad-vpn.enable = true;
     openssh.enable = true;
     pcscd.enable = true;
     upower.enable = true;
@@ -69,9 +73,9 @@
     printing = {
       enable = true;
       drivers = with pkgs; [
+        cnijfilter2
         gutenprint
         gutenprintBin
-        cnijfilter2
       ];
     };
 
@@ -120,15 +124,18 @@
   };
 
   hardware = {
-    bluetooth.enable = true;
+    bluetooth.enable = false;
+    cpu.intel.updateMicrocode = true;
     pulseaudio.enable = true;
 
     opengl = {
       enable = true;
       driSupport32Bit = true;
       extraPackages = with pkgs; [
-        vaapiVdpau
+        intel-media-driver
         libvdpau-va-gl
+        vaapiIntel
+        vaapiVdpau
       ];
     };
 
@@ -148,7 +155,7 @@
     };
   };
 
-  users.users.nixpower = {
+  users.users.armeen = {
     isNormalUser = true;
     shell = pkgs.zsh;
     extraGroups = [ "wheel" "networkmanager" "adbusers" ];
@@ -156,14 +163,24 @@
 
   environment = {
     defaultPackages = lib.mkForce [ ];
+    systemPackages = with pkgs; [
+      hdparm
+      lm_sensors
+      lshw
+      pciutils
+      usbutils
+
+      git
+      rsync
+    ];
 
     variables.EDITOR = "nvim";
     pathsToLink = [ "/share/zsh" ];
   };
 
   programs = {
-    light.enable = true;
     adb.enable = true;
+    light.enable = true;
 
     neovim = {
       enable = true;
@@ -171,4 +188,6 @@
       vimAlias = true;
     };
   };
+
+  system.stateVersion = lib.mkForce "21.11";
 }
