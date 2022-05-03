@@ -21,6 +21,7 @@ in
       fd
       gh
       git-crypt
+      google-cloud-sdk
       htop
       hyperfine
       joshuto

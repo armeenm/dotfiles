@@ -71,11 +71,13 @@
           unstable.overlaysBuilder = channels: [
             (_: _: { stable = channels.stable; })
             (_: _: { unstable = channels.unstable; })
+            (_: _: { master = channels.master; })
           ];
 
           stable.overlaysBuilder = channels: [
             (_: _: { stable = channels.stable; })
             (_: _: { unstable = channels.unstable; })
+            (_: _: { master = channels.master; })
           ];
         };
 
@@ -101,6 +103,13 @@
               "${stable}/nixos/modules/installer/cd-dvd/installation-cd-graphical-plasma5.nix"
             ];
           };
+
+	  gce = unstable.lib.nixosSystem {
+	    system = "x86_64-linux";
+	    modules = [
+              "${unstable}/nixos/modules/virtualisation/google-compute-image.nix"
+	    ];
+	  };
         };
 
         hostDefaults = {
@@ -133,11 +142,10 @@
         nix = unstable.legacyPackages.${system};
         deploy-rs = inputs.deploy-rs.packages.${system};
       };
-
-    in
-    {
+    in {
       devShell = pkgs.nix.mkShell {
         packages = with pkgs.nix; [
+	  google-cloud-sdk
           git-crypt
           nixpkgs-fmt
           openssl
@@ -146,9 +154,8 @@
         ]);
 
         shellHook = ''
-          PATH=$PATH:$PWD/util
+          export PATH="$PWD/util:$PATH"
         '';
       };
-    }
-    );
+    });
 }
