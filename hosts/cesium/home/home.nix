@@ -74,15 +74,15 @@ in
   #    xh
   #  ])
   #  ++
-  #  (with pkgs.pkgsMusl; [
-  #    ldns
-  #    nmap
-  #    speedtest-cli
-  #    w3m
-  #    wget
-  #    whois
-  #  ])
-  #  ++
+    (with pkgs.pkgsMusl; [
+      ldns
+      nmap
+      speedtest-cli
+      #w3m
+      wget
+      whois
+    ])
+    ++
 
   #  ## Privacy and Security ##
   #  (with pkgs; [
