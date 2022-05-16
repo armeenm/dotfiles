@@ -58,22 +58,22 @@ in
     ])
     ++
 
-  #  ## Networking ##
-  #  (with pkgs; [
-  #    curlie
-  #    dog
-  #    gping
-  #    iperf
-  #    ipfs
-  #    miraclecast
-  #    mosh
-  #    remmina
-  #    scrcpy
-  #    wayvnc
-  #    wireshark
-  #    xh
-  #  ])
-  #  ++
+    ## Networking ##
+    (with pkgs; [
+      curlie
+      dog
+      gping
+      iperf
+      #ipfs
+      #miraclecast
+      mosh
+      #remmina
+      scrcpy
+      #wayvnc
+      wireshark
+      xh
+    ])
+    ++
     (with pkgs.pkgsMusl; [
       ldns
       nmap
