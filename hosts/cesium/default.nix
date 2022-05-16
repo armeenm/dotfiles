@@ -70,6 +70,10 @@
     pcscd.enable = true;
     upower.enable = true;
 
+    openvpn.servers = {
+      wolfram = { config = '' config /home/armeen/.config/openvpn/wolfram.conf ''; };
+    };
+
     printing = {
       enable = true;
       drivers = with pkgs; [
