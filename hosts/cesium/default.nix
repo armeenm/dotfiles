@@ -41,6 +41,7 @@
   networking = {
     hostName = "cesium";
     interfaces.enp0s25.useDHCP = true;
+    wireless.iwd.enable = true;
   };
 
   i18n.defaultLocale = "en_US.UTF-8";
