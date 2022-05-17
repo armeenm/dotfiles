@@ -247,6 +247,8 @@ in
     open = "xdg-open";
     rlf = "readlink -f";
     zc = "zcalc -r";
+    rscp = "rsync -ahvP";
+    mma = "mathematica";
 
     noti = "noti ";
     doas = "doas ";
@@ -259,7 +261,5 @@ in
 
     vi = "$EDITOR";
     vim = "$EDITOR";
-
-    rscp = "rsync -ahvP";
   };
 }
