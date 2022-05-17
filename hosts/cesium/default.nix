@@ -40,10 +40,7 @@
 
   networking = {
     hostName = "cesium";
-    networkmanager = {
-      enable = true;
-      plugins = with pkgs; [ networkmanager-openvpn ];
-    };
+    interfaces.enp0s25.useDHCP = true;
   };
 
   i18n.defaultLocale = "en_US.UTF-8";
@@ -64,6 +61,7 @@
 	keepEnv = true;
       }];
     };
+    pki.certificateFiles = [ ./secrets/gc/WolframCA3.crt ];
   };
 
   services = {
@@ -72,6 +70,10 @@
     openssh.enable = true;
     pcscd.enable = true;
     upower.enable = true;
+
+    openvpn.servers = {
+      wolfram = { config = '' config /home/armeen/.config/openvpn/wolfram.conf ''; };
+    };
 
     printing = {
       enable = true;
@@ -179,6 +181,8 @@
 
     variables.EDITOR = "nvim";
     pathsToLink = [ "/share/zsh" ];
+
+    etc.openvpn.source = "${pkgs.update-resolv-conf}/libexec/openvpn";
   };
 
   programs = {
