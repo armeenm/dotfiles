@@ -53,14 +53,17 @@
   };
 
   security = {
+    rtkit.enable = true;
     sudo.enable = false;
+
     doas = {
       enable = true;
       extraRules = [{
         groups = [ "wheel" ];
-	keepEnv = true;
+	      keepEnv = true;
       }];
     };
+
     pki.certificateFiles = [ ./secrets/gc/WolframCA3.crt ];
   };
 
@@ -87,6 +90,14 @@
     physlock = {
       enable = true;
       allowAnyUser = true;
+    };
+
+    pipewire = {
+      enable = true;
+      alsa.enable = true;
+      alsa.support32Bit = true;
+      pulse.enable = true;
+      jack.enable = true;
     };
 
     udev.packages = with pkgs; [
@@ -131,7 +142,6 @@
   hardware = {
     bluetooth.enable = false;
     cpu.intel.updateMicrocode = true;
-    pulseaudio.enable = true;
 
     opengl = {
       enable = true;
@@ -153,7 +163,7 @@
   };
 
   sound = {
-    enable = true;
+    enable = false;
     mediaKeys = {
       enable = true;
       volumeStep = "5%";
@@ -214,6 +224,15 @@
         '';
       };
     };
+  };
+
+  xdg.portal = {
+    enable = true;
+    wlr.enable = true;
+    gtkUsePortal = true;
+    extraPortals = with pkgs; [
+      xdg-desktop-portal-gtk
+    ];
   };
 
   system.stateVersion = lib.mkForce "21.11";

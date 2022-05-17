@@ -27,6 +27,7 @@ in
     "profanity/profrc".source = "${conf}/profanity/profrc";
     "zsh/.p10k.zsh".source = "${conf}/zsh/p10k.zsh";
     "yt-dlp/config".source = "${conf}/yt-dlp/config";
+    "xdg-desktop-portal-wlr/river".source = "${conf}/river/xdg-desktop-portal-wlr";
 
     "river/init" = {
       source = "${conf}/river/init";

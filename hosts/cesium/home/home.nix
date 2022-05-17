@@ -227,10 +227,12 @@ in
 
     # Wayland
     MOZ_ENABLE_WAYLAND = "1";
-    #NIXOS_OZONE_WL = "1";
-    XKB_DEFAULT_OPTIONS = "caps:escape";
+    MOZ_GTK_TITLEBAR_DECORATION = "none";
+    NIXOS_OZONE_WL = "1";
+    XDG_SESSION_TYPE = "wayland";
+    XDG_CURRENT_DESKTOP = "river";
 
-    MOZ_GTK_TITLEBAR_DECORATION = "client";
+    XKB_DEFAULT_OPTIONS = "caps:escape";
 
     # Cleaning up home dir
     ANDROID_EMULATOR_HOME = "${config.xdg.dataHome}/android";
