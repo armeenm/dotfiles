@@ -40,7 +40,10 @@
 
   networking = {
     hostName = "cesium";
-    networkmanager.enable = true;
+    networkmanager = {
+      enable = true;
+      plugins = with pkgs; [ networkmanager-openvpn ];
+    };
   };
 
   i18n.defaultLocale = "en_US.UTF-8";
@@ -69,10 +72,6 @@
     openssh.enable = true;
     pcscd.enable = true;
     upower.enable = true;
-
-    openvpn.servers = {
-      wolfram = { config = '' config /home/armeen/.config/openvpn/wolfram.conf ''; };
-    };
 
     printing = {
       enable = true;
