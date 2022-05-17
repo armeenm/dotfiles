@@ -154,7 +154,7 @@ in
       pavucontrol
       streamlink
       vlc
-      #yt-dlp
+      yt-dlp
       playerctl
     ])
     ++
