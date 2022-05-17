@@ -134,6 +134,8 @@ in
       hicolor-icon-theme
       noto-fonts
       noto-fonts-cjk
+
+      mathematica
     ])
     ++
 
