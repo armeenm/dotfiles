@@ -3,7 +3,8 @@
 
   inputs = {
     stable.url = github:nixos/nixpkgs/nixos-21.11-small;
-    unstable.url = github:nixos/nixpkgs/nixos-unstable-small;
+    unstable-small.url = github:nixos/nixpkgs/nixos-unstable-small;
+    unstable.url = github:nixos/nixpkgs/nixos-unstable;
     master.url = github:nixos/nixpkgs;
 
     nur.url = github:nix-community/nur;

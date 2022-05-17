@@ -31,9 +31,6 @@ in
       sops
       tldr
       xplr
-    ])
-    ++
-    (with pkgs.pkgsMusl; [
       btop
       cloc
       fasd
@@ -64,144 +61,123 @@ in
       dog
       gping
       iperf
-      #ipfs
-      #miraclecast
+      ipfs
+      miraclecast
       mosh
       #remmina
       scrcpy
-      #wayvnc
+      wayvnc
       wireshark
       xh
-    ])
-    ++
-    (with pkgs.pkgsMusl; [
       ldns
       nmap
       speedtest-cli
-      #w3m
+      w3m
       wget
       whois
     ])
     ++
 
-  #  ## Privacy and Security ##
-  #  (with pkgs; [
-  #    keepassxc
-  #    ledger-live-desktop
-  #    monero
-  #    monero-gui
-  #    tor-browser-bundle-bin
-  #    usbguard
-  #    veracrypt
-  #    yubikey-manager
-  #    yubikey-manager-qt
-  #    yubikey-personalization
-  #    yubikey-personalization-gui
-  #    yubioath-desktop
-  #  ])
-  #  ++
-  #  (with pkgs.pkgsMusl; [
-  #    bubblewrap
-  #  ])
-  #  ++
-
-  #  ## Desktop Environment ##
+    ## Privacy and Security ##
     (with pkgs; [
-  #    firefox-wayland
-  #    google-chrome-dev
-  #    librewolf-wayland
+      keepassxc
+      ledger-live-desktop
+      monero
+      monero-gui
+      tor-browser-bundle-bin
+      usbguard
+      veracrypt
+      yubikey-manager
+      yubikey-manager-qt
+      yubikey-personalization
+      yubikey-personalization-gui
+      yubioath-desktop
+      bubblewrap
+    ])
+    ++
 
-  #    gimp-with-plugins
-  #    libreoffice-fresh
+    ## Desktop Environment ##
+   (with pkgs; [
+      firefox-wayland
+      google-chrome-dev
+      #librewolf-wayland
 
-  #    imv
-  #    nomacs
-       inputs.master.legacyPackages.x86_64-linux.river
-  #    session-desktop-appimage
-  #    simple-scan
-  #    swappy
+      gimp-with-plugins
+      libreoffice-fresh
 
-  #    breeze-icons
-  #    gnome3.adwaita-icon-theme
-  #    noto-fonts-emoji
+      imv
+      nomacs
+      inputs.master.legacyPackages.x86_64-linux.river
+      session-desktop-appimage
+      simple-scan
+      swappy
 
-  #    gtk3
+      breeze-icons
+      gnome3.adwaita-icon-theme
+      noto-fonts-emoji
+
+      gtk3
+      bemenu
+      grim
+      slurp
+      tamsyn
+      wl-clipboard
+      wlr-randr
+      xdg-user-dirs
+      xdg_utils
+      xorg.xeyes
+      xorg.xkill
+
+      fira-code
+      fira-code-symbols
+      font-awesome
+      hicolor-icon-theme
+      noto-fonts
+      noto-fonts-cjk
+    ])
+    ++
+
+    ## Windows ##
+    (with pkgs; [
+      ntfs3g
+      wineWowPackages.stable
+      dosfstools
+      efibootmgr
+      exfatprogs
+    ])
+    ++
+
+    ## Media ##
+    (with pkgs; [
+      mpc_cli
+      pamixer
+      pavucontrol
+      streamlink
+      vlc
+      #yt-dlp
+      playerctl
+    ])
+    ++
+
+    ## Communication ##
+    (with pkgs; [
+      discord-canary
+      element-desktop
+      gajim
+      profanity
+      slack-dark
+      tdesktop
+      whatsapp-for-linux
+      zoom-us
+      weechat
+    ])
+    ++
+
+    ## Filesync/Backup ##
+    (with pkgs; [
+      seafile-client
+      seafile-shared
     ]);
-  #  ++
-  #  (with pkgs.pkgsMusl; [
-  #    bemenu
-  #    grim
-  #    slurp
-  #    tamsyn
-  #    wl-clipboard
-  #    wlr-randr
-  #    xdg-user-dirs
-  #    xdg_utils
-  #    xorg.xeyes
-  #    xorg.xkill
-
-  #    fira-code
-  #    fira-code-symbols
-  #    font-awesome
-  #    hicolor-icon-theme
-  #    noto-fonts
-  #    noto-fonts-cjk
-  #  ])
-  #  ++
-
-  #  ## Windows ##
-  #  (with pkgs; [
-  #    ntfs3g
-  #    wineWowPackages.stable
-  #  ])
-  #  ++
-  #  (with pkgs.pkgsMusl; [
-  #    dosfstools
-  #    efibootmgr
-  #    exfatprogs
-  #  ])
-  #  ++
-
-  #  ## Media ##
-  #  (with pkgs; [
-  #    mpc_cli
-  #    pamixer
-  #    pavucontrol
-  #    streamlink
-  #    vlc
-  #    #yt-dlp
-  #  ])
-  #  ++
-  #  (with pkgs.pkgsMusl; [
-  #    playerctl
-  #  ])
-  #  ++
-
-  #  ## Communication ##
-  #  (with pkgs; [
-  #    discord-canary
-  #    element-desktop
-  #    gajim
-  #    profanity
-  #    slack-dark
-  #    tdesktop
-  #    whatsapp-for-linux
-  #    zoom-us
-  #  ])
-  #  ++
-  #  (with pkgs.pkgsMusl; [
-  #    weechat
-  #  ])
-  #  ++
-
-  #  ## Filesync/Backup ##
-  #  (with pkgs; [
-  #    seafile-client
-  #  ])
-  #  ++
-  #  (with pkgs.pkgsMusl; [
-  #    seafile-shared
-  #  ]);
 
   file = {
     desktop.source = symlink "${files}/desktop";
