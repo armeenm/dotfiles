@@ -227,6 +227,15 @@
     };
   };
 
+  virtualisation = {
+    podman = {
+      enable = true;
+      dockerCompat = true;
+      dockerSocket.enable = true;
+      defaultNetwork.dnsname.enable = true;
+    };
+  };
+
   xdg.portal = {
     enable = true;
     wlr.enable = true;
