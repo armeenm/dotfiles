@@ -14,9 +14,12 @@
   };
 
   boot = {
+    extraModulePackages = with config.boot.kernelPackages; [ tp_smapi ];
     initrd.availableKernelModules = [ "ehci_pci" "ahci" "usb_storage" "sd_mod" "sdhci_pci" ];
 
-    kernelModules = [ "kvm-intel" ];
+    kernelModules = [ "kvm-intel" "tp_smapi" ];
+
+    kernelParams = [ "i915.enable_rc6=7" ];
 
     loader = {
       systemd-boot.enable = true;
@@ -71,8 +74,10 @@
   services = {
     avahi.enable = true;
     blueman.enable = true;
+    fstrim.enable = true;
     openssh.enable = true;
     pcscd.enable = true;
+    tlp.enable = true;
     upower.enable = true;
 
     openvpn.servers = {
@@ -199,6 +204,7 @@
   programs = {
     adb.enable = true;
     light.enable = true;
+    nix-ld.enable = true;
 
     neovim = {
       enable = true;
