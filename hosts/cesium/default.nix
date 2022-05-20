@@ -191,6 +191,8 @@
       pciutils
       usbutils
 
+      pcsctools
+
       git
       rsync
     ];
