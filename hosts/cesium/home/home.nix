@@ -18,6 +18,7 @@ in
     (with pkgs; [
       bottom
       direnv
+      du-dust
       fd
       gh
       git-crypt
@@ -39,6 +40,7 @@ in
       killall
       lsof
       mediainfo
+      ncdu
       nix-tree
       p7zip
       #pandoc
