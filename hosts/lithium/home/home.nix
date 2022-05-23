@@ -258,6 +258,8 @@ in
     #WLR_DRM_NO_ATOMIC = "1";
     #WLR_DRM_NO_MODIFIERS = "1";
     #NIXOS_OZONE_WL = "1";
+    XDG_SESSION_TYPE = "wayland";
+    XDG_CURRENT_DESKTOP = "river";
 
     # Cleaning up home dir
     ANDROID_EMULATOR_HOME = "${config.xdg.dataHome}/android";
