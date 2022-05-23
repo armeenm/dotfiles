@@ -68,6 +68,7 @@ in
       mosh
       remmina
       scrcpy
+      w3m
       wayvnc
       wireshark
       xh
@@ -77,7 +78,6 @@ in
       ldns
       nmap
       speedtest-cli
-      w3m
       wget
       whois
     ])

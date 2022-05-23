@@ -61,7 +61,7 @@
 
   emacs = {
     enable = true;
-    package = pkgs.emacsPgtkGcc;
+    package = pkgs.emacsPgtkNativeComp;
     extraConfig = builtins.readFile "${root}/conf/emacs/default.el";
     extraPackages = epkgs: with epkgs; [
       avy
@@ -127,6 +127,7 @@
     settings = {
       main = {
         term = "xterm-256color";
+        font = "Fira Code:size=9";
         dpi-aware = "yes";
       };
 

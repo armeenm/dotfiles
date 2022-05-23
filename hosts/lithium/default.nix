@@ -469,16 +469,13 @@
       infiniband-diags
       lshw
       opensm
+      smartmontools
       usbutils
 
       git
       rsync
 
-      (mathematica.override {
-        cudaSupport = false;
-        nvidia_x11 = config.boot.kernelPackages.nvidiaPackages.stable;
-        cudatoolkit = cudaPackages.cudatoolkit_11_5;
-      })
+      mathematica
 
       (hunspellWithDicts [ hunspellDicts.en_US hunspellDicts.en_US-large ])
 
