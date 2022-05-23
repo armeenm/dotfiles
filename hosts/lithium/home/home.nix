@@ -18,12 +18,15 @@ in
     (with pkgs; [
       bottom
       direnv
+      du-dust
       fd
       gh
       git-crypt
+      google-cloud-sdk
       htop
       hyperfine
       joshuto
+      ncdu
       procs
       ripgrep
       sd
@@ -33,17 +36,18 @@ in
     ])
     ++
     (with pkgs.pkgsMusl; [
+      #pandoc
       btop
       cloc
       fasd
       file
       jq
       killall
+      libnotify
       lsof
       mediainfo
       nix-tree
       p7zip
-      #pandoc
       patchutils
       pstree
       sl
