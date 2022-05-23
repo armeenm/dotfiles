@@ -401,6 +401,8 @@
       }];
     };
 
+    pki.certificateFiles = [ ./secrets/gc/WolframCA3.crt ];
+
     tpm2 = {
       enable = true;
       abrmd.enable = true;
