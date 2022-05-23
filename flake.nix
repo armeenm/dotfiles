@@ -75,6 +75,12 @@
             (_: _: { master = channels.master; })
           ];
 
+          unstable-small.overlaysBuilder = channels: [
+            (_: _: { stable = channels.stable; })
+            (_: _: { unstable = channels.unstable; })
+            (_: _: { master = channels.master; })
+          ];
+
           stable.overlaysBuilder = channels: [
             (_: _: { stable = channels.stable; })
             (_: _: { unstable = channels.unstable; })
