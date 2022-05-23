@@ -277,6 +277,10 @@
       passwordAuthentication = false;
     };
 
+    openvpn.servers = {
+      wolfram = { config = '' config /home/armeen/.config/openvpn/wolfram.conf ''; };
+    };
+
     pipewire = {
       enable = true;
       alsa.enable = true;
@@ -496,6 +500,8 @@
       "ssh/ssh_host_ed25519_key.pub".source = "/var/etc/ssh/ssh_host_ed25519_key.pub";
       "ssh/ssh_host_rsa_key".source = "/var/etc/ssh/ssh_host_rsa_key";
       "ssh/ssh_host_rsa_key.pub".source = "/var/etc/ssh/ssh_host_rsa_key.pub";
+
+      openvpn.source = "${pkgs.update-resolv-conf}/libexec/openvpn";
     };
   };
 
