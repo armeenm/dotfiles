@@ -16,25 +16,6 @@ let
 
 in
 {
-  environment.etc."fail2ban/filter.d/seafile-auth.conf".text = ''
-    # Fail2Ban filter for seafile
-    #
-    
-    [INCLUDES]
-    
-    # Read common prefixes. If any customizations available -- read them from
-    # common.local
-    before = common.conf
-    
-    [Definition]
-    
-    _daemon = seaf-server
-    
-    failregex = Login attempt limit reached.*, ip: <HOST>
-    
-    ignoreregex = 
-  '';
-
   services = {
     nginx.virtualHosts.${seafileDomain} = {
       enableACME = true;
