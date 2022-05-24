@@ -126,6 +126,12 @@ in
 
       breeze-icons
       gnome3.adwaita-icon-theme
+
+      fira-code
+      fira-code-symbols
+      hicolor-icon-theme
+      noto-fonts
+      noto-fonts-cjk
       noto-fonts-emoji
 
       gtk3
@@ -142,13 +148,6 @@ in
       xdg_utils
       xorg.xeyes
       xorg.xkill
-
-      fira-code
-      fira-code-symbols
-      font-awesome
-      hicolor-icon-theme
-      noto-fonts
-      noto-fonts-cjk
     ])
     ++
 
