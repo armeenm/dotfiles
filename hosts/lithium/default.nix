@@ -226,7 +226,6 @@
     haveged.enable = true;
     i2pd.enable = false;
     iperf3.enable = true;
-    pcscd.enable = true;
     physlock.enable = true;
     saned.enable = true;
     smartd.enable = true;
