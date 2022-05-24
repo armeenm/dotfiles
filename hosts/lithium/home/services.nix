@@ -28,7 +28,7 @@
   gpg-agent = {
     enable = true;
     enableSshSupport = true;
-    pinentryFlavor = "gnome3";
+    pinentryFlavor = "curses";
     sshKeys = [
       "04D42E929F2A312225856CD740A092BEE315D631"
     ];
