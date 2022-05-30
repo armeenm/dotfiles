@@ -153,7 +153,7 @@
     in {
       devShell = pkgs.nix.mkShell {
         packages = with pkgs.nix; [
-	  google-cloud-sdk
+          google-cloud-sdk
           git-crypt
           nixpkgs-fmt
           openssl
