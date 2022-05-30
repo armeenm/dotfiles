@@ -111,12 +111,12 @@
             ];
           };
 
-	  gce = unstable.lib.nixosSystem {
-	    system = "x86_64-linux";
-	    modules = [
+          gce = unstable.lib.nixosSystem {
+            system = "x86_64-linux";
+            modules = [
               "${unstable}/nixos/modules/virtualisation/google-compute-image.nix"
-	    ];
-	  };
+            ];
+          };
         };
 
         hostDefaults = {
@@ -127,6 +127,7 @@
           modules = [
             inputs.home-manager.nixosModules.home-manager
             inputs.sops-nix.nixosModules.sops
+            { nix.nixPath = [ "nixpkgs=${unstable}" ]; }
             ./modules
           ];
         };

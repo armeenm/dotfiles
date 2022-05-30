@@ -259,11 +259,9 @@ in
     #NIXOS_OZONE_WL = "1";
     XDG_SESSION_TYPE = "wayland";
     XDG_CURRENT_DESKTOP = "river";
+    _JAVA_AWT_WM_NONREPARENTING = "1";
 
     # Cleaning up home dir
-    ANDROID_EMULATOR_HOME = "${config.xdg.dataHome}/android";
-    ANDROID_SDK_HOME = "${config.xdg.dataHome}/android";
-    ANDROID_SDK_ROOT = "${config.xdg.dataHome}/android";
     CUDA_CACHE_PATH = "${config.xdg.cacheHome}/nv";
     IPFS_PATH = "${config.xdg.dataHome}/ipfs";
   };
