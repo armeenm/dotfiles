@@ -6,7 +6,7 @@
     ./home
     ./auth.nix
     ./router.nix
-    ./seafile.nix
+    #./seafile.nix
   ];
 
   fileSystems = {
@@ -226,6 +226,7 @@
     haveged.enable = true;
     i2pd.enable = false;
     iperf3.enable = true;
+    onedrive.enable = true;
     physlock.enable = true;
     saned.enable = true;
     smartd.enable = true;
@@ -277,7 +278,10 @@
     };
 
     openvpn.servers = {
-      wolfram = { config = '' config /home/armeen/.config/openvpn/wolfram.conf ''; };
+      wolfram = {
+        autoStart = false;
+        config = '' config /home/armeen/.config/openvpn/wolfram.conf '';
+      };
     };
 
     pipewire = {
