@@ -1,40 +1,24 @@
-inputs@{ config, pkgs, lib, modulesPath, user, domain, ... }:
+inputs@{ config, pkgs, lib, user, domain, ... }:
 
 let
   hostName = "francium";
-  ip4 = "205.185.123.206";
   domain = inputs.domain;
+
+  root = "";
+  nic = "";
 in
 {
-  imports = [ (modulesPath + "/profiles/qemu-guest.nix") ];
-
   boot = {
-    initrd.availableKernelModules = [
-      "ata_piix"
-      "uhci_hcd"
-      "virtio_pci"
-      "virtio_scsi"
-      "sd_mod"
-      "sr_mod"
-      "virtio_blk"
-    ];
-    kernelModules = [ "kvm-amd" ];
-
     loader.grub = {
       enable = true;
       version = 2;
-      device = "/dev/vda";
+      device = root;
     };
   };
 
   fileSystems = {
     "/" = {
-      device = "/dev/disk/by-uuid/e7ea314b-eed4-4e5c-862d-044893fead95";
-      fsType = "ext4";
-    };
-
-    "/tank" = {
-      device = "/dev/disk/by-uuid/d7fa6066-d6ab-4203-babc-b73a21d35874";
+      device = root;
       fsType = "ext4";
     };
   };
@@ -43,14 +27,14 @@ in
 
   networking = {
     inherit hostName domain;
-    interfaces.ens3.useDHCP = true;
+    interfaces.${nic}.useDHCP = true;
 
     firewall = {
-      allowedTCPPorts = [ 22 80 443 5222 5269 5280 ];
+      allowedTCPPorts = [ 22 ];
     };
   };
 
-  time.timeZone = "America/Denver";
+  time.timeZone = "America/Chicago";
   i18n.defaultLocale = "en_US.UTF-8";
 
   console = {
@@ -65,7 +49,6 @@ in
 
     users = {
       root = {
-        hashedPassword = null;
         home = lib.mkForce "/home/root";
       };
 
@@ -73,9 +56,6 @@ in
         isNormalUser = true;
         extraGroups = [ "wheel" ];
       };
-
-      nginx.extraGroups = [ "acme" ];
-      prosody.extraGroups = [ "acme" ];
     };
   };
 
@@ -85,14 +65,19 @@ in
       bottom
       fd
       git
+      hdparm
       ldns
+      lm_sensors
+      lshw
       nmap
-      ripgrep
-      rxvt_unicode.terminfo
-      tmux
-      wget
+      pciutils
       profanity
+      ripgrep
+      rsync
+      tmux
       tree
+      usbutils
+      wget
     ];
 
     shellAliases = {
@@ -133,155 +118,30 @@ in
   };
 
   services = {
+    fstrim.enable = true;
+    haveged.enable = true;
     openssh.enable = true;
-
-    prosody = {
-      enable = true;
-      admins = [ "${user.login}@${domain}" ];
-
-      ssl = {
-        cert = "/var/lib/acme/${domain}/fullchain.pem";
-        key = "/var/lib/acme/${domain}/key.pem";
-      };
-
-      modules = {
-        announce = true;
-        websocket = true;
-      };
-
-      virtualHosts."${domain}" = {
-        enabled = true;
-        domain = "${domain}";
-
-        ssl = {
-          cert = "/var/lib/acme/${domain}/fullchain.pem";
-          key = "/var/lib/acme/${domain}/key.pem";
-        };
-      };
-
-      muc = [{
-        domain = "muc.krypton.${domain}";
-      }];
-
-      uploadHttp = {
-        domain = "upload.krypton.${domain}";
-      };
-    };
-
-    nginx = {
-      enable = true;
-      recommendedTlsSettings = true;
-      recommendedOptimisation = true;
-      recommendedGzipSettings = true;
-      recommendedProxySettings = true;
-
-      virtualHosts = {
-        "acmechallenge.${domain}" = {
-          serverAliases = [ "*.${domain}" ];
-
-          locations = {
-            "/".return = "301 https://$host$request_uri";
-            "/.well-known/acme-challenge".root = "/var/lib/acme/.challenges";
-          };
-        };
-      };
-
-      #virtualHosts."${domain}" = {
-      #  enableACME = true;
-
-      #  listen = [ {
-      #    addr = ip4;
-      #    port = 18089;
-      #    ssl = true;
-      #  } ];
-
-      #  locations."/".proxyPass = "http://[::1]:18089";
-      #};
-
-      #virtualHosts."${domain}" = {
-      #  enableACME = true;
-
-      #  listen = [ {
-      #    addr = ip4;
-      #    port = 5280;
-      #    ssl = true;
-      #  } ];
-
-      #  serverAliases = [
-      #    "muc.krypton.${domain}"
-      #    "upload.krypton.${domain}"
-      #  ];
-
-      #  locations."/xmpp-websocket" = {
-      #    proxyPass = "http://[::1]:5280/xmpp-websocket";
-      #    extraConfig = ''
-      #      proxy_http_version 1.1;
-      #      proxy_set_header Upgrade $http_upgrade;
-      #      proxy_set_header Connection "Upgrade";
-
-      #      proxy_set_header Host $host;
-      #      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-      #      proxy_set_header X-Forwarded-Proto $scheme;
-      #      proxy_read_timeout 900s;
-      #    '';
-      #  };
-      #};
-    };
-
-    monero = {
-      enable = false;
-      dataDir = "/tank/monero";
-
-      rpc = {
-        address = "127.0.0.1";
-        port = 18081;
-      };
-
-      extraConfig = ''
-        rpc-restricted-bind-port=18089
-        enforce-dns-checkpointing=1
-        enable-dns-blocklist=1
-        no-igd=1
-        no-zmq=1
-        public-node=1
-      '';
-    };
+    smartd.enable = true;
+    timesyncd.enable = true;
+    udisks2.enable = true;
   };
 
   security = {
     auditd.enable = true;
-    sudo.wheelNeedsPassword = false;
+    sudo.enable = false;
 
+    allowUserNamespaces = true;
     protectKernelImage = true;
     unprivilegedUsernsClone = false;
-    allowUserNamespaces = true;
-
-    acme = {
-      acceptTerms = true;
-      email = user.email;
-
-      certs = {
-        "${domain}" = {
-          email = user.email;
-          webroot = "/var/lib/acme/.challenges";
-          extraDomainNames = [
-            "xmpp.krypton.${domain}"
-            "upload.krypton.${domain}"
-          ];
-        };
-      };
-    };
 
     doas = {
       enable = true;
       extraRules = [{
         groups = [ "wheel" ];
         keepEnv = true;
-        noPass = true;
       }];
     };
   };
 
-  system.stateVersion = lib.mkForce "21.05";
+  system.stateVersion = lib.mkForce "22.05";
 }
-
