@@ -248,11 +248,12 @@ in
     cat = "bat";
     diff = "delta";
     g = "git";
+    gc = "git-crypt";
+    mma = "mathematica";
     open = "xdg-open";
     rlf = "readlink -f";
-    zc = "zcalc -r";
     rscp = "rsync -ahvP";
-    mma = "mathematica";
+    zc = "zcalc -r";
 
     noti = "noti ";
     doas = "doas ";
