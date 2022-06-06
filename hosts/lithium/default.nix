@@ -566,5 +566,5 @@
 
   zramSwap.enable = true;
 
-  system.stateVersion = lib.mkForce "21.11";
+  system.stateVersion = lib.mkForce "22.11";
 }
