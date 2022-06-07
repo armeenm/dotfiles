@@ -54,6 +54,7 @@
 
   environment.systemPackages = with pkgs; [
     btop
+    gh
     git
     hdparm
     htop
