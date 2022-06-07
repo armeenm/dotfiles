@@ -81,7 +81,10 @@
     upower.enable = true;
 
     openvpn.servers = {
-      wolfram = { config = '' config /home/armeen/.config/openvpn/wolfram.conf ''; };
+      wolfram = {
+        autoStart = false;
+        config = '' config /home/armeen/.config/openvpn/wolfram.conf '';
+      };
     };
 
     printing = {
