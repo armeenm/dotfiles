@@ -208,6 +208,17 @@ in
       '';
     };
 
+    chell = {
+      target = ".local/bin/chell";
+      executable = true;
+      text = ''
+        #!/bin/sh
+        ${pkgs.xdg-desktop-portal}/libexec/xdg-desktop-portal -r &
+        ${pkgs.xdg-desktop-portal-gtk}/libexec/xdg-desktop-portal-gtk -r &
+        ${pkgs.xdg-desktop-portal-wlr}/libexec/xdg-desktop-portal-wlr -l INFO -r &
+      '';
+    };
+
     lock = {
       target = ".local/bin/lock";
       executable = true;
