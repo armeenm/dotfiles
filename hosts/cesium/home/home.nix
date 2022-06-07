@@ -116,7 +116,7 @@ in
 
       breeze-icons
       gnome3.adwaita-icon-theme
-      noto-fonts-emoji
+      hicolor-icon-theme
 
       gtk3
       bemenu
@@ -132,10 +132,9 @@ in
 
       fira-code
       fira-code-symbols
-      font-awesome
-      hicolor-icon-theme
       noto-fonts
       noto-fonts-cjk
+      noto-fonts-emoji
 
       mathematica
     ])
