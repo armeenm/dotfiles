@@ -126,23 +126,6 @@
         }
       ];
     };
-
-    xserver = {
-      enable = true;
-      layout = "us";
-
-      libinput = {
-        enable = true;
-        mouse.accelProfile = "flat";
-        mouse.accelSpeed = "0";
-        touchpad.accelProfile = "flat";
-        touchpad.accelSpeed = "0";
-      };
-
-      displayManager.startx.enable = true;
-
-      xkbOptions = "caps:ctrl_modifier";
-    };
   };
 
   hardware = {
@@ -179,7 +162,10 @@
   users.users.armeen = {
     isNormalUser = true;
     shell = pkgs.zsh;
-    extraGroups = [ "wheel" "networkmanager" "adbusers" ];
+    extraGroups = [
+      "wheel"
+      "adbusers"
+    ];
   };
 
   environment = {
