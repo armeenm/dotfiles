@@ -130,5 +130,6 @@ wlr-randr \
   --output DP-2 --pos 0,0 &
 
 mako &
+~/.local/bin/chell
 
 exec rivertile -view-padding 6 -outer-padding 6
