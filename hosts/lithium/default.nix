@@ -11,37 +11,12 @@
 
   fileSystems = {
     "/boot" = {
-      device = "/dev/disk/by-uuid/4CDA-FEA2";
+      device = "/dev/disk/by-uuid/C3B7-6BBE";
       fsType = "vfat";
     };
 
     "/" = {
-      device = "rpool/root/nixos";
-      fsType = "zfs";
-    };
-
-    "/home" = {
-      device = "rpool/root/home";
-      fsType = "zfs";
-    };
-
-    "/var/srv/tank" = {
-      device = "tank";
-      fsType = "zfs";
-    };
-
-    "/var/lib/private/seafile" = {
-      device = "tank/seafile";
-      fsType = "zfs";
-    };
-
-    "/var/srv/tank/arash" = {
-      device = "tank/arash";
-      fsType = "zfs";
-    };
-
-    "/var/srv/testing" = {
-      device = "rpool/testing";
+      device = "astatine/root/lithium";
       fsType = "zfs";
     };
   };
@@ -484,7 +459,7 @@
       git
       rsync
 
-      mathematica
+      #mathematica
 
       (hunspellWithDicts [ hunspellDicts.en_US hunspellDicts.en_US-large ])
 
