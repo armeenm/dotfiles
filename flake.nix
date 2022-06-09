@@ -153,10 +153,13 @@
     in {
       devShell = pkgs.nix.mkShell {
         packages = with pkgs.nix; [
-          google-cloud-sdk
           git-crypt
+          gnupg
+          google-cloud-sdk
+          nixUnstable
           nixpkgs-fmt
           openssl
+          pinentry-curses
         ] ++ (with pkgs.deploy-rs; [
           deploy-rs
         ]);
