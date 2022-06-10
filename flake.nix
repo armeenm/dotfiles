@@ -2,7 +2,7 @@
   description = "Nix-based config";
 
   inputs = {
-    stable.url = github:nixos/nixpkgs/nixos-21.11-small;
+    stable.url = github:nixos/nixpkgs/nixos-22.05-small;
     unstable-small.url = github:nixos/nixpkgs/nixos-unstable-small;
     unstable.url = github:nixos/nixpkgs/nixos-unstable;
     master.url = github:nixos/nixpkgs;
