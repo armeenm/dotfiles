@@ -25,6 +25,7 @@
     initrd = {
       includeDefaultModules = false;
       verbose = false;
+      kernelModules = [ "amdgpu" ];
     };
 
     supportedFilesystems = [ "zfs" ];
@@ -134,9 +135,20 @@
   hardware = {
     bluetooth.enable = true;
     cpu.amd.updateMicrocode = true;
-    opengl.enable = true;
     rtl-sdr.enable = true;
     video.hidpi.enable = true;
+
+    opengl = {
+      enable = true;
+      driSupport = true;
+      driSupport32Bit = true;
+      extraPackages = with pkgs; [
+        amdvlk
+        rocm-opencl-icd
+        rocm-opencl-runtime
+      ];
+      extraPackages32 = with pkgs; [ driversi686Linux.amdvlk ];
+    };
 
     nvidia = {
       package = config.boot.kernelPackages.nvidiaPackages.stable;
@@ -301,7 +313,7 @@
       rules = builtins.readFile ./conf/usbguard/rules.conf;
     };
 
-    xserver.videoDrivers = [ "nvidia" ];
+    xserver.videoDrivers = [ "amdgpu" "nvidia" ];
 
     zfs = {
       trim.enable = true;
