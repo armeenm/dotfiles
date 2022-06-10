@@ -45,6 +45,8 @@
     hostName = "cesium";
     interfaces.enp0s25.useDHCP = true;
     wireless.iwd.enable = true;
+
+    openconnect.interfaces = import ./secrets/gc/openconnect.nix;
   };
 
   i18n.defaultLocale = "en_US.UTF-8";
