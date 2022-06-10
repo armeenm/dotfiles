@@ -524,8 +524,6 @@ linuxPackagesFor (kernel.override {
     DP83867_PHY = no;
     DP83869_PHY = no;
     DP83TC811_PHY = no;
-    DRM_AMDGPU = no;
-    DRM_AMD_DC = no;
     DRM_GMA500 = lib.mkForce no;
     DRM_GUD = no;
     DRM_I810 = no;
