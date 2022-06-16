@@ -229,7 +229,7 @@
     };
 
     monero = {
-      enable = true;
+      enable = false;
 
       rpc = { };
 
@@ -471,7 +471,7 @@
       git
       rsync
 
-      #mathematica
+      mathematica
 
       (hunspellWithDicts [ hunspellDicts.en_US hunspellDicts.en_US-large ])
 
