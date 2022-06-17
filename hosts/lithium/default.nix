@@ -419,10 +419,14 @@
       };
     };
 
+    docker = {
+      enable = true;
+      enableNvidia = true;
+      storageDriver = "zfs";
+    };
+
     podman = {
       enable = true;
-      dockerCompat = true;
-      dockerSocket.enable = true;
       defaultNetwork.dnsname.enable = true;
     };
   };
@@ -442,6 +446,7 @@
         passwordFile = config.sops.secrets.armeen-pw.path;
         extraGroups = [
           "adbusers"
+          "docker"
           "i2c"
           "libvirtd"
           "lp"
