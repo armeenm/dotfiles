@@ -133,6 +133,8 @@
   };
 
   hardware = {
+    enableAllFirmware = true;
+
     bluetooth.enable = true;
     cpu.amd.updateMicrocode = true;
     rtl-sdr.enable = true;
@@ -221,6 +223,7 @@
     tcsd.enable = false;
     timesyncd.enable = true;
     udisks2.enable = true;
+    fwupd.enable = true;
 
     avahi = {
       enable = false;
