@@ -181,6 +181,7 @@
 
     settings = {
       allowed-users = lib.mkForce [ "@wheel" "arash" ];
+      trusted-users = lib.mkForce [ "@wheel" ];
 
       substituters = [
         "https://cache.ngi0.nixos.org"
