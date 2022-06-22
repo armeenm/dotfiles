@@ -227,9 +227,8 @@
     fwupd.enable = true;
 
     avahi = {
-      enable = false;
+      enable = true;
       nssmdns = true;
-      interfaces = [ "enp4s0f0" ];
     };
 
     monero = {
