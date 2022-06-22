@@ -1,6 +1,7 @@
 { config, pkgs, lib, root, user, ... }:
 
 {
+  mpris-proxy.enable = true;
   playerctld.enable = true;
 
   emacs = {
