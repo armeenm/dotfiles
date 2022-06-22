@@ -213,12 +213,12 @@
   mpv = {
     enable = true;
     config = {
-      gpu-api = "vulkan";
+      #gpu-api = "vulkan";
       #gpu-context = "wayland";
-      gpu-context = "x11vk";
-      hwdec = "nvdec-copy";
-      profile = "gpu-hq";
-      spirv-compiler = "shaderc";
+      #gpu-context = "x11vk";
+      #hwdec = "vaapi";
+      #profile = "gpu-hq";
+      #spirv-compiler = "shaderc";
     };
   };
 
