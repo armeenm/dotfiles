@@ -130,6 +130,8 @@
         prefixLength = 24;
       }];
     };
+
+    wireless.iwd.enable = true;
   };
 
   hardware = {
