@@ -33,6 +33,9 @@ in
       sops
       tldr
       xplr
+
+      ffmpeg
+      libva-utils
     ])
     ++
     (with pkgs.pkgsMusl; [
