@@ -123,6 +123,9 @@
   };
 
   networking = {
+    wireless.iwd.enable = true;
+    openconnect.interfaces = import ./secrets/gc/openconnect.nix;
+
     interfaces."ibp12s0" = {
       useDHCP = false;
       ipv4.addresses = [{
@@ -130,8 +133,6 @@
         prefixLength = 24;
       }];
     };
-
-    wireless.iwd.enable = true;
   };
 
   hardware = {
