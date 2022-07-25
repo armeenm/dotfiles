@@ -138,6 +138,8 @@ in
       noto-fonts-emoji
 
       gtk3
+
+      vmware-horizon-client
     ])
     ++
     (with pkgs.pkgsMusl; [
