@@ -294,6 +294,12 @@
       ];
     };
 
+    tomcat = {
+      enable = true;
+      jdk = pkgs.jdk11;
+      webapps = [ "/srv/webKernel.war" ];
+    };
+
     tor = {
       enable = true;
       client.enable = true;
@@ -482,7 +488,7 @@
       git
       rsync
 
-      mathematica
+      #mathematica
 
       (hunspellWithDicts [ hunspellDicts.en_US hunspellDicts.en_US-large ])
 
@@ -513,7 +519,6 @@
     dconf.enable = true;
     mtr.enable = true;
     nix-ld.enable = true;
-    steam.enable = true;
     zsh.enable = true;
 
     custom.ddcutil = {

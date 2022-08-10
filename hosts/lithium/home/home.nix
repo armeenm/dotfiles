@@ -27,6 +27,7 @@ in
       hyperfine
       joshuto
       ncdu
+      pandoc
       procs
       ripgrep
       sd
@@ -39,7 +40,6 @@ in
     ])
     ++
     (with pkgs.pkgsMusl; [
-      #pandoc
       btop
       cloc
       fasd
@@ -92,6 +92,7 @@ in
 
     ## Privacy and Security ##
     (with pkgs; [
+      bubblewrap
       keepassxc
       ledger-live-desktop
       monero
@@ -107,7 +108,6 @@ in
     ])
     ++
     (with pkgs.pkgsMusl; [
-      bubblewrap
     ])
     ++
 
@@ -118,14 +118,20 @@ in
       librewolf-wayland
 
       gimp-with-plugins
+      inkscape
       libreoffice-fresh
 
+      bemenu
+      grim
       imv
       nomacs
       river
       session-desktop-appimage
       simple-scan
+      slurp
       swappy
+      wl-clipboard
+      wlr-randr
 
       breeze-icons
       gnome3.adwaita-icon-theme
@@ -143,12 +149,7 @@ in
     ])
     ++
     (with pkgs.pkgsMusl; [
-      bemenu
-      grim
-      slurp
       tamsyn
-      wl-clipboard
-      wlr-randr
       xdg-user-dirs
       xdg_utils
       xorg.xeyes
@@ -176,7 +177,7 @@ in
       pavucontrol
       streamlink
       vlc
-      #yt-dlp
+      yt-dlp
     ])
     ++
     (with pkgs.pkgsMusl; [
@@ -188,8 +189,6 @@ in
     (with pkgs; [
       discord-canary
       element-desktop
-      gajim
-      profanity
       slack-dark
       tdesktop
       whatsapp-for-linux

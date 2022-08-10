@@ -3,12 +3,6 @@ final: prev: {
 
   cryptsetup = prev.cryptsetup.overrideAttrs (_: {
     doCheck = false;
-    doInstallCheck = false;
-  });
-
-  dconf = prev.dconf.overrideAttrs (_: {
-    doCheck = false;
-    doInstallCheck = false;
   });
 
   mathematica = prev.mathematica.overrideAttrs (_: {
