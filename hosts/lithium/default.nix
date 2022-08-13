@@ -488,7 +488,10 @@
       git
       rsync
 
-      mathematica
+      (mathematica.override {
+        version = "13.0.1";
+        config.cudaSupport = true;
+      })
 
       (hunspellWithDicts [ hunspellDicts.en_US hunspellDicts.en_US-large ])
 
