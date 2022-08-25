@@ -18,14 +18,17 @@ in
     (with pkgs; [
       bottom
       direnv
+      dos2unix
       du-dust
       fd
+      ffmpeg
       gh
       git-crypt
       google-cloud-sdk
       htop
       hyperfine
       joshuto
+      libva-utils
       ncdu
       pandoc
       procs
@@ -34,9 +37,6 @@ in
       sops
       tldr
       xplr
-
-      ffmpeg
-      libva-utils
     ])
     ++
     (with pkgs.pkgsMusl; [
