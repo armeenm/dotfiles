@@ -113,13 +113,13 @@ in
 
     ## Desktop Environment ##
     (with pkgs; [
-      firefox-wayland
-      google-chrome-dev
-      librewolf-wayland
+      #firefox-wayland
+      #google-chrome-dev
+      #librewolf-wayland
 
       gimp-with-plugins
       inkscape
-      libreoffice-fresh
+      #libreoffice-fresh
 
       bemenu
       grim
@@ -197,16 +197,6 @@ in
     ++
     (with pkgs.pkgsMusl; [
       weechat
-    ])
-    ++
-
-    ## Filesync/Backup ##
-    (with pkgs; [
-      seafile-client
-    ])
-    ++
-    (with pkgs.pkgsMusl; [
-      seafile-shared
     ]);
 
   file = {

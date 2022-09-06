@@ -37,7 +37,7 @@
   };
 
   chromium = {
-    enable = true;
+    #enable = true;
     #package = pkgs.chromiumDev;
     extensions = [
       { id = "aapbdbdomjkkjkaonfhkkikfgjllcleb"; } # Google Translate

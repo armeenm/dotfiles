@@ -4,20 +4,17 @@
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
     ./home
-    ./auth.nix
-    ./router.nix
-    #./seafile.nix
   ];
 
   fileSystems = {
     "/boot" = {
-      device = "/dev/disk/by-uuid/8185-CEDE";
+      device = "/dev/disk/by-uuid/99E6-DA3E";
       fsType = "vfat";
     };
 
     "/" = {
-      device = "astatine/root/lithium";
-      fsType = "zfs";
+      device = "/dev/disk/by-uuid/9d5b84ba-b19b-46ef-9514-d275cf305ddb";
+      fsType = "ext4";
     };
   };
 
@@ -123,6 +120,11 @@
   };
 
   networking = {
+    inherit domain;
+
+    hostId = "5a656e88";
+    hostName = "lithium";
+
     wireless.iwd.enable = true;
     openconnect.interfaces = import ./secrets/gc/openconnect.nix;
 
@@ -434,7 +436,6 @@
     docker = {
       enable = true;
       enableNvidia = true;
-      storageDriver = "zfs";
     };
 
     podman = {
@@ -455,7 +456,8 @@
 
       "${user.login}" = {
         isNormalUser = true;
-        passwordFile = config.sops.secrets.armeen-pw.path;
+        hashedPassword = "$6$UjXwXeLh4Tu5uT9d$tjeYUVUep0E26bes/iucHxzOEUWtmU6R0dKolaxKZmT1eAnxgljMnWq1SxOI9j1tqchbL2bejWG88dBnqusNO0";
+        #passwordFile = config.sops.secrets.armeen-pw.path;
         extraGroups = [
           "adbusers"
           "docker"
@@ -470,7 +472,7 @@
 
       arash = {
         isNormalUser = true;
-        passwordFile = config.sops.secrets.arash-pw.path;
+        #passwordFile = config.sops.secrets.arash-pw.path;
       };
     };
   };
@@ -488,10 +490,10 @@
       git
       rsync
 
-      (mathematica.override {
-        version = "13.0.1";
-        config.cudaSupport = true;
-      })
+      #(mathematica.override {
+      #  version = "13.0.1";
+      #  config.cudaSupport = true;
+      #})
 
       (hunspellWithDicts [ hunspellDicts.en_US hunspellDicts.en_US-large ])
 
@@ -559,16 +561,15 @@
     man.generateCaches = true;
   };
 
-  sops = {
-    defaultSopsFile = ./secrets/secrets.yaml;
-    age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+  #sops = {
+  #  defaultSopsFile = ./secrets/secrets.yaml;
+  #  age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
 
-    secrets = {
-      armeen-pw.neededForUsers = true;
-      arash-pw.neededForUsers = true;
-      cf-dns-apikey = { };
-    };
-  };
+  #  secrets = {
+  #    armeen-pw.neededForUsers = true;
+  #    arash-pw.neededForUsers = true;
+  #  };
+  #};
 
   zramSwap.enable = true;
 

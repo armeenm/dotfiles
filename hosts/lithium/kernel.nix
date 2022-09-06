@@ -343,7 +343,7 @@ linuxPackagesFor (kernel.override {
     MMC = yes;
     MMC_BLOCK = yes;
     NETWORK_FILESYSTEMS = no;
-    NTFS_FS = yes;
+    NTFS_FS = lib.mkForce yes;
     NVME_CORE = yes;
     QFMT_v2 = yes;
     SATA_AHCI = yes;
