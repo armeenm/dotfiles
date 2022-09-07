@@ -15,8 +15,6 @@ let
   subnet = "${prefix}.0/24";
 
   ip = "${prefix}.1";
-  hostName = "lithium";
-  wanDomain = "lanthanum.${domain}";
 
   upstreamDns = [
     "2620:fe::11@853#dns.quad9.net"
@@ -59,8 +57,6 @@ let
 in
 {
   networking = {
-    inherit hostName domain hostId;
-
     firewall = {
       allowPing = false;
 

@@ -484,6 +484,7 @@
       infiniband-diags
       lshw
       opensm
+      radeontop
       smartmontools
       usbutils
 

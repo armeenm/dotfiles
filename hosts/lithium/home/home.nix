@@ -113,13 +113,13 @@ in
 
     ## Desktop Environment ##
     (with pkgs; [
-      #firefox-wayland
-      #google-chrome-dev
+      firefox-wayland
+      google-chrome
       #librewolf-wayland
 
       gimp-with-plugins
       inkscape
-      #libreoffice-fresh
+      libreoffice-fresh
 
       bemenu
       grim
