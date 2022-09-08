@@ -66,6 +66,8 @@ in
 
     ## Networking ##
     (with pkgs; [
+      bluetuith
+      croc
       curlie
       dog
       gping
@@ -115,8 +117,8 @@ in
     (with pkgs; [
       firefox-wayland
       google-chrome
-      #librewolf-wayland
 
+      audacity
       gimp-with-plugins
       inkscape
       libreoffice-fresh

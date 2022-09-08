@@ -183,6 +183,7 @@
 
   nix = {
     package = pkgs.nixUnstable;
+    #nixPath = config.nixpkgs.pkgs;
 
     settings = {
       allowed-users = lib.mkForce [ "@wheel" "arash" ];
@@ -203,6 +204,10 @@
       warn-dirty = false
       experimental-features = flakes nix-command ca-derivations
     '';
+  };
+
+  nixpkgs = {
+    hostPlatform = "x86_64-linux";
   };
 
   xdg.portal = {
@@ -275,7 +280,7 @@
     openvpn.servers = {
       wolfram = {
         autoStart = false;
-        config = '' config /home/armeen/.config/openvpn/wolfram.conf '';
+        config = '' config /home/${user.login}/.config/openvpn/wolfram.conf '';
       };
     };
 
@@ -358,10 +363,6 @@
     suppressedSystemUnits = [
       "sys-kernel-debug.mount"
     ];
-
-    #services.nix-daemon.serviceConfig = {
-    #  LimitNOFILE = lib.mkForce 131072;
-    #};
   };
 
   security = {

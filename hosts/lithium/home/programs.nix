@@ -36,24 +36,6 @@
     modal = true;
   };
 
-  chromium = {
-    #enable = true;
-    #package = pkgs.chromiumDev;
-    extensions = [
-      { id = "aapbdbdomjkkjkaonfhkkikfgjllcleb"; } # Google Translate
-      { id = "cjpalhdlnbpafiamejdnhcphjbkeiagm"; } # uBlock Origin
-      { id = "cledppeceojodgghbbkaciochldmpdfk"; } # Twitter Media Assist
-      { id = "dmkamcknogkgcdfhhbddcghachkejeap"; } # Keplr
-      { id = "dneaehbmnbhcippjikoajpoabadpodje"; } # Old Reddit Redirect
-      { id = "gebbhagfogifgggkldgodflihgfeippi"; } # Return YouTube Dislike
-      { id = "hfjbmagddngcpeloejdejnfgbamkjaeg"; } # Vimium C
-      { id = "kbmfpngjjgdllneeigpgjifpgocmfgmb"; } # RES
-      { id = "kcgpggonjhmeaejebeoeomdlohicfhce"; } # Cookie Remover
-      { id = "nibjojkomfdiaoajekhjakgkdhaomnch"; } # IPFS Companion
-      { id = "nkbihfbeogaeaoehlefnkodbefgpgknn"; } # MetaMask
-    ];
-  };
-
   direnv = {
     enable = true;
     nix-direnv.enable = true;
@@ -165,9 +147,6 @@
   gpg = {
     enable = true;
     homedir = "${config.xdg.dataHome}/gnupg";
-    #settings = {
-    #  pinentry-mode = "loopback";
-    #};
   };
 
   git = {
