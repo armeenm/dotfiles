@@ -136,7 +136,7 @@ in
       wlr-randr
 
       breeze-icons
-      gnome3.adwaita-icon-theme
+      gnome.adwaita-icon-theme
 
       fira-code
       fira-code-symbols
@@ -146,14 +146,12 @@ in
       noto-fonts-emoji
 
       gtk3
-
-      vmware-horizon-client
     ])
     ++
     (with pkgs.pkgsMusl; [
       tamsyn
       xdg-user-dirs
-      xdg_utils
+      xdg-utils
       xorg.xeyes
       xorg.xkill
     ])
@@ -191,7 +189,7 @@ in
     (with pkgs; [
       discord-canary
       element-desktop
-      slack-dark
+      slack
       tdesktop
       whatsapp-for-linux
       zoom-us

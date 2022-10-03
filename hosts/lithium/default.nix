@@ -25,7 +25,7 @@
       kernelModules = [ "amdgpu" ];
     };
 
-    supportedFilesystems = [ "zfs" ];
+    #supportedFilesystems = [ "zfs" ];
 
     consoleLogLevel = 0;
 
@@ -334,11 +334,11 @@
 
     xserver.videoDrivers = [ "amdgpu" "nvidia" ];
 
-    zfs = {
-      trim.enable = true;
-      autoScrub.enable = true;
-      autoSnapshot.enable = true;
-    };
+    #zfs = {
+    #  trim.enable = true;
+    #  autoScrub.enable = true;
+    #  autoSnapshot.enable = true;
+    #};
   };
 
   systemd = {
@@ -482,7 +482,7 @@
     defaultPackages = lib.mkForce [ ];
 
     systemPackages = (with pkgs; [
-      infiniband-diags
+      rdma-core
       lshw
       opensm
       radeontop
