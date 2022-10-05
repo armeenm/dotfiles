@@ -288,8 +288,8 @@ in
     uc = "systemctl --user";
     udc = "udisksctl";
 
-    vi = "$EDITOR";
-    vim = "$EDITOR";
+    vi = "$EDITOR -t";
+    vim = "$EDITOR -t";
 
     rscp = "rsync -ahvP";
   };

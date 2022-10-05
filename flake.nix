@@ -8,7 +8,6 @@
     master.url = github:nixos/nixpkgs;
 
     nur.url = github:nix-community/nur;
-    nur.inputs.nixpkgs.follows = "unstable";
 
     sops-nix.url = github:Mic92/sops-nix;
     sops-nix.inputs.nixpkgs.follows = "unstable";
@@ -57,7 +56,6 @@
             path = inputs.deploy-rs.lib."${system}".activate.nixos config;
           };
         };
-
     in
     utils.lib.mkFlake
       {
@@ -127,6 +125,7 @@
           modules = [
             inputs.home-manager.nixosModules.home-manager
             inputs.sops-nix.nixosModules.sops
+            inputs.nur.nixosModules.nur
             { nix.nixPath = [ "nixpkgs=${unstable}" ]; }
             ./modules
           ];

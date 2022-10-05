@@ -8,8 +8,6 @@ let
   };
 in
 {
-  #imports = [ pkgs.nur.repos.rycee.hmModules.emacs-init ];
-
   home-manager.users."${user.login}" = {
     home = import ./home.nix args;
     programs = import ./programs.nix args;
@@ -17,6 +15,8 @@ in
     systemd = import ./systemd.nix args;
     xdg = import ./xdg.nix args;
     gtk = import ./gtk.nix args;
+
+    imports = [ config.nur.repos.rycee.hmModules.emacs-init ];
 
     fonts.fontconfig.enable = lib.mkForce true;
   };

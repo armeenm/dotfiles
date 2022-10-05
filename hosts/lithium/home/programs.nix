@@ -33,7 +33,9 @@
 
   broot = {
     enable = true;
-    modal = true;
+    settings = {
+      modal = true;
+    };
   };
 
   direnv = {
@@ -44,57 +46,442 @@
   emacs = {
     enable = true;
     package = pkgs.emacsPgtkNativeComp;
-    extraConfig = builtins.readFile "${root}/conf/emacs/default.el";
-    extraPackages = epkgs: with epkgs; [
-      avy
-      cloc
-      company
-      counsel
-      dap-mode
-      deadgrep
-      direnv
-      frames-only-mode
-      general
-      hl-todo
-      ivy
-      projectile
-      smooth-scrolling
-      swiper
-      which-key
 
-      clojure-mode
-      haskell-mode
-      meson-mode
-      nix-mode
-      rust-mode
-      solidity-mode
-      typescript-mode
+    init = {
+      enable = true;
+      packageQuickstart = false;
+      recommendedGcSettings = true;
+      usePackageVerbose = false;
 
-      gruvbox-theme
+      earlyInit = ''
+        (auto-compression-mode 1)
+        (push '(menu-bar-lines . 0) default-frame-alist)
+        (push '(tool-bar-lines . nil) default-frame-alist)
+        (push '(vertical-scroll-bars . nil) default-frame-alist)
 
-      evil
-      evil-collection
+        (setq frame-title-format "")
 
-      lsp-haskell
-      lsp-ivy
-      lsp-mode
-      lsp-treemacs
-      lsp-ui
+        (set-face-attribute 'default nil
+                            :family "Tamsyn"
+                            :height 120
+                            :weight 'normal
+                            :width 'normal)
+      '';
 
-      magit
-      magit-delta
-      magit-todos
+      prelude = ''
+        (setq gc-cons-threshold most-positive-fixnum)
 
-      treemacs
-      treemacs-evil
-      treemacs-projectile
+        (let ((path (shell-command-to-string ". ~/.zshenv; . ~/.profile; echo -n $PATH")))
+          (setenv "PATH" path)
+          (setq exec-path
+                (append
+                 (split-string-and-unquote path ":")
+                 exec-path)))
 
-      undo-fu-session
-      undo-fu
+        (defvar --backup-directory "~/.cache/emacs/backups")
+        (if (not (file-exists-p --backup-directory))
+            (make-directory --backup-directory t))
+        (setq backup-directory-alist `(("." . ,--backup-directory)))
+        (setq make-backup-files t
+              backup-by-copying t
+              version-control t
+              delete-old-versions t
+              delete-by-moving-to-trash t
+              kept-old-versions 6
+              kept-new-versions 9
+              auto-save-default t
+              auto-save-timeout 20
+              auto-save-interval 200)
 
-      yasnippet
-      yasnippet-snippets
-    ];
+        (setq visual-bell 1)
+
+        (setq save-place-mode t)
+
+        (setq inhibit-startup-screen t
+              inhibit-startup-echo-area-message (user-login-name))
+
+        (setq initial-major-mode 'fundamental-mode
+              initial-scratch-message nil)
+
+        (setq blink-cursor-mode nil)
+
+        (setq custom-safe-themes t)
+
+        (set-face-background 'mouse "#ffffff")
+
+        (defalias 'yes-or-no-p 'y-or-n-p)
+
+        (setq read-process-output-max (* 1024 1024))
+
+        (line-number-mode)
+        (column-number-mode)
+
+        (put 'narrow-to-region 'disabled nil)
+        (put 'upcase-region 'disabled nil)
+        (put 'downcase-region 'disabled nil)
+
+        (setq
+         js-indent-level 2
+         c-default-style "k&r"
+         c-basic-offset 2
+         verilog-auto-newline nil)
+
+        (setq-default indent-tabs-mode nil
+                      tab-width 2
+                      c-basic-offset 2)
+
+        (set-default 'semantic-case-fold t)
+
+        (setq-default show-trailing-whitespace t)
+
+        (setq sentence-end-double-space nil)
+
+        (prefer-coding-system 'utf-8)
+
+        (transient-mark-mode 1)
+
+        (setq scroll-step 1
+              scroll-conservatively 5)
+
+        (global-hl-line-mode 1)
+
+        (setq select-enable-clipboard t
+              select-enable-primary t
+              save-interprogram-paste-before-kill t)
+
+        (setq mouse-yank-at-point t)
+      '';
+
+      usePackage = {
+        evil = {
+          enable = true;
+          init = ''
+            (setq evil-want-keybinding nil
+                  evil-want-Y-yank-to-eol t
+                  evil-search-wrap t
+                  evil-regexp-search t)
+          '';
+          config = ''
+            (evil-mode)
+          '';
+        };
+
+        evil-collection = {
+          enable = true;
+          after = [ "evil" ];
+          config = ''
+            (evil-collection-init)
+          '';
+        };
+
+        gruvbox-theme = {
+          enable = true;
+          config = ''
+            (load-theme 'gruvbox-dark-medium)
+          '';
+        };
+
+        general = {
+          enable = true;
+          config = ''
+            (general-evil-setup t)
+
+            (general-define-key
+              :states 'motion
+              :prefix "SPC"
+              :keymaps 'override
+              "SPC" 'save-buffer
+              "g" 'magit
+              "w" 'evil-window-map
+              "l" 'lsp-command-map
+              "r" 'ivy-resume
+              "c" 'counsel-git
+              "p" 'projectile-command-map
+              "b b" 'ivy-switch-buffer
+              "b e" 'eval-buffer
+              "b k" 'kill-buffer
+              "b l" 'list-buffers
+              "t i" 'ivy-mode
+              "/ c" 'avy-goto-char-2
+              "/ f" 'find-file
+              "/ l" 'find-file
+              "/ a" 'counsel-ag
+              "/ g" 'counsel-git-grep
+              "k f" 'describe-function
+              "k v" 'describe-variable
+              "k s" 'describe-symbol
+              "x m" 'lsp-ui-imenu)
+
+            (general-define-key
+             "M-/" 'avy-goto-char)
+
+            (general-def 'normal
+              "u" 'undo-fu-only-undo
+              "C-r" 'undo-fu-only-redo
+              "/" 'swiper)
+
+            (general-def 'normal lsp-mode-map
+              "K" 'lsp-describe-thing-at-point)
+          '';
+        };
+
+        frames-only-mode = {
+          enable = true;
+          config = ''
+            (frames-only-mode)
+          '';
+        };
+
+        ivy = {
+          enable = true;
+          config = ''
+            (setq
+             ivy-count-format "(%d/%d) "
+             ivy-use-virtual-buffers t
+             enable-recursive-minibuffers t)
+            (ivy-mode)
+          '';
+        };
+
+        ivy-rich = {
+          enable = true;
+          after = [ "ivy" ];
+          config = ''
+            (setq
+             ivy-virtual-abbreviate 'full
+             ivy-rich-switch-buffer-align-virtual-buffer t
+             ivy-rich-path-style 'abbrev)
+            (ivy-set-display-transformer 'ivy-switch-buffer
+                                         'ivy-rich-switch-buffer-transform)
+          '';
+        };
+
+        counsel = {
+          enable = true;
+          after = [ "ivy" ];
+          config = ''
+            (counsel-mode)
+          '';
+        };
+
+        swiper = {
+          enable = true;
+          after = [ "ivy" ];
+        };
+
+        yasnippet = {
+          enable = true;
+          config = ''
+            (yas-global-mode)
+          '';
+        };
+
+        yasnippet-snippets = {
+          enable = true;
+          after = [ "yasnippet" ];
+        };
+
+        avy = {
+          enable = true;
+        };
+
+        undo-fu = {
+          enable = true;
+        };
+
+        undo-fu-session = {
+          enable = true;
+          config = ''
+            (setq undo-fu-session-incompatible-files '("/COMMIT_EDITMSG\\'" "/git-rebase-todo\\'"))
+            (global-undo-fu-session-mode)
+          '';
+        };
+
+        smooth-scrolling = {
+          enable = true;
+          config = ''
+            (setq smooth-scrolling-margin 5)
+            (smooth-scrolling-mode)
+          '';
+        };
+
+        projectile = {
+          enable = true;
+          config = ''
+            (setq projectile-completion-system 'ivy)
+            (projectile-mode)
+          '';
+        };
+
+        which-key = {
+          enable = true;
+          config = ''
+            (setq which-key-idle-delay 0.01)
+            (which-key-mode)
+          '';
+        };
+
+        deadgrep = {
+          enable = true;
+        };
+
+        smex = {
+          enable = true;
+          config = ''
+            (smex-initialize)
+          '';
+        };
+
+        company = {
+          enable = true;
+          config = ''
+            (progn
+              (add-hook 'after-init-hook 'global-company-mode))
+          '';
+        };
+
+        lsp-mode = {
+          enable = true;
+          command = [ "lsp" "lsp-deferred" ];
+          init = ''
+            (setq lsp-keymap-prefix "C-c l")
+          '';
+          after = [ "direnv" "evil" ];
+          hook = [
+            "(c++-mode . lsp-deferred)"
+            "(c-mode . lsp-deferred)"
+            "(vhdl-mode . lsp-deferred)"
+            "(verilog-mode . lsp-deferred)"
+            "(haskell-mode . lsp-deferred)"
+            "(haskell-literate-mode . lsp-deferred)"
+            "(typescript-mode . lsp-deferred)"
+            "(python-mode . lsp-deferred)"
+            "(js-mode . lsp-deferred)"
+            "(html-mode . lsp-deferred)"
+            "(rust-mode . lsp-deferred)"
+            "(lsp-mode . lsp-enable-which-key-integration)"
+          ];
+          config = ''
+            (setq lsp-eslint-package-manager "yarn")
+            (setq lsp-lens-enable t)
+            (setq lsp-modeline-code-actions-enable nil)
+            (advice-add 'lsp :before #'direnv-update-environment)
+          '';
+        };
+
+        lsp-ui = {
+          enable = true;
+          hook = [
+            "(prog-mode . lsp-ui-mode)"
+          ];
+          config = ''
+            (setq lsp-ui-doc-position :bottom)
+          '';
+        };
+
+        lsp-ivy = {
+          enable = true;
+          command = [ "lsp-ivy-workspace-symbol" ];
+        };
+
+        lsp-treemacs = {
+          enable = true;
+          command = [ "lsp-treemacs-error-list" ];
+        };
+
+        treemacs = {
+          enable = true;
+        };
+
+        treemacs-evil = {
+          enable = true;
+          after = [ "treemacs" "evil" ];
+        };
+
+        treemacs-projectile = {
+          enable = true;
+          after = [ "treemacs" "projectile" ];
+        };
+
+        treemacs-icons-dired = {
+          enable = true;
+          after = [ "treemacs" "dired" ];
+          config = ''
+            (treemacs-icons-dired-mode)
+          '';
+        };
+
+        all-the-icons = {
+          enable = true;
+        };
+
+        all-the-icons-ivy = {
+          enable = true;
+          config = ''
+            (all-the-icons-ivy-setup)
+          '';
+        };
+
+        clojure-mode = {
+          enable = true;
+        };
+
+        solidity-mode = {
+          enable = true;
+        };
+
+        haskell-mode = {
+          enable = true;
+        };
+
+        typescript-mode = {
+          enable = true;
+          mode = [ "\\.mts\\'" ];
+        };
+
+        nix-mode = {
+          enable = true;
+          mode = [ "\\.nix\\'" ];
+        };
+
+        rust-mode = {
+          enable = true;
+        };
+
+        cloc = {
+          enable = true;
+        };
+
+        hl-todo = {
+          enable = true;
+          config = ''
+            (global-hl-todo-mode)
+          '';
+        };
+
+        magit = {
+          enable = true;
+        };
+
+        magit-todos = {
+          enable = true;
+          config = ''
+            (magit-todos-mode)
+          '';
+        };
+
+        direnv = {
+          enable = true;
+          config = ''
+            (direnv-mode)
+          '';
+        };
+      };
+
+      postlude = ''
+        (setq gc-cons-threshold (* 2 1000 1000))
+      '';
+    };
   };
 
   exa = {
@@ -109,7 +496,7 @@
     settings = {
       main = {
         term = "xterm-256color";
-        font = "Fira Code:size=9";
+        font = "Tamsyn:size=10";
         dpi-aware = "yes";
       };
 
