@@ -132,6 +132,7 @@ in
       simple-scan
       slurp
       swappy
+      swaylock
       wl-clipboard
       wlr-randr
 
@@ -255,16 +256,8 @@ in
     MANPAGER = "sh -c 'col -bx | bat -l man -p'";
 
     # Wayland
-    #GBM_BACKEND = "nvidia-drm";
     MOZ_ENABLE_WAYLAND = "1";
-    #WLR_NO_HARDWARE_CURSORS = "1";
     XKB_DEFAULT_OPTIONS = "caps:escape";
-    #WLR_DRM_NO_ATOMIC = "1";
-    #WLR_DRM_NO_MODIFIERS = "1";
-    #NIXOS_OZONE_WL = "1";
-    XDG_SESSION_TYPE = "wayland";
-    XDG_CURRENT_DESKTOP = "river";
-    _JAVA_AWT_WM_NONREPARENTING = "1";
 
     # Cleaning up home dir
     CUDA_CACHE_PATH = "${config.xdg.cacheHome}/nv";

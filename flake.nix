@@ -21,6 +21,9 @@
     emacs-overlay.url = github:nix-community/emacs-overlay;
     emacs-overlay.inputs.nixpkgs.follows = "unstable";
 
+    hyprland.url = github:hyprwm/Hyprland;
+    hyprland.inputs.nixpkgs.follows = "unstable";
+
     nixpkgs-wayland.url = github:nix-community/nixpkgs-wayland;
     nixpkgs-wayland.inputs.nixpkgs.follows = "unstable";
 
@@ -126,6 +129,7 @@
             inputs.home-manager.nixosModules.home-manager
             inputs.sops-nix.nixosModules.sops
             inputs.nur.nixosModules.nur
+            inputs.hyprland.nixosModules.default
             { nix.nixPath = [ "nixpkgs=${unstable}" ]; }
             ./modules
           ];

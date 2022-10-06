@@ -210,15 +210,6 @@
     hostPlatform = "x86_64-linux";
   };
 
-  xdg.portal = {
-    enable = true;
-    wlr.enable = true;
-    gtkUsePortal = true;
-    extraPortals = with pkgs; [
-      xdg-desktop-portal-gtk
-    ];
-  };
-
   services = {
     blueman.enable = true;
     flatpak.enable = true;
@@ -404,6 +395,8 @@
         item = "nofile";
         value = "65536";
       }];
+
+      services.swaylock = {};
     };
 
     pki.certificateFiles = [ ./secrets/gc/WolframCA3.crt ];
@@ -524,6 +517,7 @@
   programs = {
     adb.enable = true;
     dconf.enable = true;
+    hyprland.enable = true;
     mtr.enable = true;
     nix-ld.enable = true;
     zsh.enable = true;
