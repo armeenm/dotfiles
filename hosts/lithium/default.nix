@@ -1,10 +1,7 @@
 { config, pkgs, lib, modulesPath, root, user, domain, ... }:
 
 {
-  imports = [
-    (modulesPath + "/installer/scan/not-detected.nix")
-    ./home
-  ];
+  imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
   fileSystems = {
     "/boot" = {
@@ -128,6 +125,7 @@
     wireless.iwd.enable = true;
     openconnect.interfaces = import ./secrets/gc/openconnect.nix;
 
+/*
     interfaces."ibp12s0" = {
       useDHCP = false;
       ipv4.addresses = [{
@@ -135,6 +133,7 @@
         prefixLength = 24;
       }];
     };
+*/
   };
 
   hardware = {
@@ -261,12 +260,14 @@
       recommendedTlsSettings = true;
     };
 
+/*
     openssh = {
       enable = true;
       forwardX11 = true;
       logLevel = "VERBOSE";
       passwordAuthentication = false;
     };
+*/
 
     openvpn.servers = {
       wolfram = {
@@ -463,11 +464,6 @@
           "wheel"
         ];
       };
-
-      arash = {
-        isNormalUser = true;
-        #passwordFile = config.sops.secrets.arash-pw.path;
-      };
     };
   };
 
@@ -502,13 +498,10 @@
     ]);
 
     etc = {
-      adjtime.source = "/var/etc/adjtime";
-      "zfs/zpool.cache".source = "/run/zpool.cache";
-
-      "ssh/ssh_host_ed25519_key".source = "/var/etc/ssh/ssh_host_ed25519_key";
-      "ssh/ssh_host_ed25519_key.pub".source = "/var/etc/ssh/ssh_host_ed25519_key.pub";
-      "ssh/ssh_host_rsa_key".source = "/var/etc/ssh/ssh_host_rsa_key";
-      "ssh/ssh_host_rsa_key.pub".source = "/var/etc/ssh/ssh_host_rsa_key.pub";
+      #"ssh/ssh_host_ed25519_key".source = "/var/etc/ssh/ssh_host_ed25519_key";
+      #"ssh/ssh_host_ed25519_key.pub".source = "/var/etc/ssh/ssh_host_ed25519_key.pub";
+      #"ssh/ssh_host_rsa_key".source = "/var/etc/ssh/ssh_host_rsa_key";
+      #"ssh/ssh_host_rsa_key.pub".source = "/var/etc/ssh/ssh_host_rsa_key.pub";
 
       openvpn.source = "${pkgs.update-resolv-conf}/libexec/openvpn";
     };
@@ -563,7 +556,6 @@
 
   #  secrets = {
   #    armeen-pw.neededForUsers = true;
-  #    arash-pw.neededForUsers = true;
   #  };
   #};
 

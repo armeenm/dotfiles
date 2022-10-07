@@ -1,7 +1,9 @@
 final: prev: {
-  river = prev.callPackage ./river { };
-
   cryptsetup = prev.cryptsetup.overrideAttrs (_: {
+    doCheck = false;
+  });
+
+  girara = prev.girara.overrideAttrs (_: {
     doCheck = false;
   });
 

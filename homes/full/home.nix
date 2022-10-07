@@ -31,6 +31,7 @@ in
       libva-utils
       ncdu
       pandoc
+      powertop
       procs
       ripgrep
       sd
@@ -190,8 +191,8 @@ in
     (with pkgs; [
       discord-canary
       element-desktop
+      kotatogram-desktop
       slack
-      tdesktop
       whatsapp-for-linux
       zoom-us
     ])
