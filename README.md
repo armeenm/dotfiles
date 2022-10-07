@@ -5,5 +5,4 @@
 This repo contains NixOS configurations for all the machines I currently manage.
 
 - Nix: CA-derivations and flakes
-- Secrets management: [sops-nix](https://github.com/Mic92/sops-nix) + [git-crypt](https://github.com/AGWA/git-crypt)
-- Remote deployment: [deploy-rs](https://github.com/serokell/deploy-rs)
+- Secrets management: [sops-nix](https://github.com/Mic92/sops-nix)

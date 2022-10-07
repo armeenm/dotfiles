@@ -1,4 +1,4 @@
-{ config, pkgs, lib, modulesPath, root, user, domain, ... }:
+{ config, pkgs, lib, modulesPath, inputs, root, user, domain, ... }:
 
 {
   imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
@@ -123,7 +123,6 @@
     hostName = "lithium";
 
     wireless.iwd.enable = true;
-    openconnect.interfaces = import ./secrets/gc/openconnect.nix;
 
 /*
     interfaces."ibp12s0" = {
@@ -159,7 +158,6 @@
     nvidia = {
       package = config.boot.kernelPackages.nvidiaPackages.stable;
       modesetting.enable = true;
-      #powerManagement.enable = true;
     };
 
     sane = {
@@ -182,10 +180,17 @@
 
   nix = {
     package = pkgs.nixUnstable;
-    #nixPath = config.nixpkgs.pkgs;
+    nixPath = lib.mkForce [ "nixpkgs=${config.nix.registry.nixpkgs.flake}" ];
+
+    registry = {
+      nixpkgs.flake = inputs.unstable;
+      ns.flake = inputs.stable;
+      nu.flake = inputs.unstable;
+      nur.flake = inputs.nur;
+    };
 
     settings = {
-      allowed-users = lib.mkForce [ "@wheel" "arash" ];
+      allowed-users = lib.mkForce [ "@wheel" ];
       trusted-users = lib.mkForce [ "@wheel" ];
 
       substituters = [
@@ -260,20 +265,11 @@
       recommendedTlsSettings = true;
     };
 
-/*
     openssh = {
       enable = true;
       forwardX11 = true;
       logLevel = "VERBOSE";
       passwordAuthentication = false;
-    };
-*/
-
-    openvpn.servers = {
-      wolfram = {
-        autoStart = false;
-        config = '' config /home/${user.login}/.config/openvpn/wolfram.conf '';
-      };
     };
 
     pipewire = {
@@ -326,11 +322,13 @@
 
     xserver.videoDrivers = [ "amdgpu" "nvidia" ];
 
-    #zfs = {
-    #  trim.enable = true;
-    #  autoScrub.enable = true;
-    #  autoSnapshot.enable = true;
-    #};
+    /*
+    zfs = {
+      trim.enable = true;
+      autoScrub.enable = true;
+      autoSnapshot.enable = true;
+    };
+    */
   };
 
   systemd = {
@@ -400,8 +398,6 @@
       services.swaylock = {};
     };
 
-    pki.certificateFiles = [ ./secrets/gc/WolframCA3.crt ];
-
     tpm2 = {
       enable = true;
       abrmd.enable = true;
@@ -451,8 +447,8 @@
 
       "${user.login}" = {
         isNormalUser = true;
-        hashedPassword = "$6$UjXwXeLh4Tu5uT9d$tjeYUVUep0E26bes/iucHxzOEUWtmU6R0dKolaxKZmT1eAnxgljMnWq1SxOI9j1tqchbL2bejWG88dBnqusNO0";
-        #passwordFile = config.sops.secrets.armeen-pw.path;
+        #hashedPassword = "$6$UjXwXeLh4Tu5uT9d$tjeYUVUep0E26bes/iucHxzOEUWtmU6R0dKolaxKZmT1eAnxgljMnWq1SxOI9j1tqchbL2bejWG88dBnqusNO0";
+        passwordFile = config.sops.secrets."${user.login}-pw".path;
         extraGroups = [
           "adbusers"
           "docker"
@@ -481,10 +477,10 @@
       git
       rsync
 
-      #(mathematica.override {
-      #  version = "13.0.1";
-      #  config.cudaSupport = true;
-      #})
+      (mathematica.override {
+        version = "13.1.0";
+        config.cudaSupport = true;
+      })
 
       (hunspellWithDicts [ hunspellDicts.en_US hunspellDicts.en_US-large ])
 
@@ -498,10 +494,12 @@
     ]);
 
     etc = {
-      #"ssh/ssh_host_ed25519_key".source = "/var/etc/ssh/ssh_host_ed25519_key";
-      #"ssh/ssh_host_ed25519_key.pub".source = "/var/etc/ssh/ssh_host_ed25519_key.pub";
-      #"ssh/ssh_host_rsa_key".source = "/var/etc/ssh/ssh_host_rsa_key";
-      #"ssh/ssh_host_rsa_key.pub".source = "/var/etc/ssh/ssh_host_rsa_key.pub";
+      /*
+      "ssh/ssh_host_ed25519_key".source = "/var/etc/ssh/ssh_host_ed25519_key";
+      "ssh/ssh_host_ed25519_key.pub".source = "/var/etc/ssh/ssh_host_ed25519_key.pub";
+      "ssh/ssh_host_rsa_key".source = "/var/etc/ssh/ssh_host_rsa_key";
+      "ssh/ssh_host_rsa_key.pub".source = "/var/etc/ssh/ssh_host_rsa_key.pub";
+      */
 
       openvpn.source = "${pkgs.update-resolv-conf}/libexec/openvpn";
     };
@@ -550,14 +548,14 @@
     man.generateCaches = true;
   };
 
-  #sops = {
-  #  defaultSopsFile = ./secrets/secrets.yaml;
-  #  age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+  sops = {
+    defaultSopsFile = "${root}/secrets/secrets.yaml";
+    age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
 
-  #  secrets = {
-  #    armeen-pw.neededForUsers = true;
-  #  };
-  #};
+    secrets = {
+      "${user.login}-pw".neededForUsers = true;
+    };
+  };
 
   zramSwap.enable = true;
 

@@ -70,8 +70,7 @@
           inputs.hyprland.nixosModules.default
           inputs.nur.nixosModules.nur
           inputs.sops-nix.nixosModules.sops
-          { nixpkgs.config = config; }
-          { nixpkgs.overlays = overlays; }
+          { nixpkgs = { inherit config overlays; }; }
           { _module.args = { inherit inputs root domain user; }; }
           ./modules
         ];
@@ -84,20 +83,15 @@
               ./hosts/lithium
               ./homes/full
             ];
-            #extraArgs = { inherit inputs root domain user; };
           };
         };
       };
 
       devShells.default = pkgs.mkShell {
         packages = with pkgs.default; [
-          git-crypt
-          gnupg
-          google-cloud-sdk
           nixUnstable
-          nixpkgs-fmt
           openssl
-          pinentry-curses
+          sops
         ];
 
         shellHook = ''

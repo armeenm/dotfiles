@@ -9,6 +9,7 @@ let
 in
 {
   home-manager.users."${user.login}" = {
+    _module.args = { sys = config; };
     home = import ./home.nix args;
     programs = import ./programs.nix args;
     services = import ./services.nix args;

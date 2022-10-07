@@ -17,6 +17,7 @@ in
     ## CLI Utils ##
     (with pkgs; [
       bottom
+      comma
       direnv
       dos2unix
       du-dust

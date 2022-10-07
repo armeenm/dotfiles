@@ -1,8 +1,8 @@
 keys:
   - &armeen 098A271A852C8A79A0DAEFB34C66EC973CCB0599
-  - &lithium age1w284qj7mvpgu433yervradrkt6fg9spfkklx97547tlld0qeev3qxtc2c7
+  - &lithium age1mx600wx8pzyvzcykjxv30dnwqp0w67wv50tp7h2pj0nwglkjhytsln36dp
 creation_rules:
-  - path_regex: hosts/lithium/secrets/[^/]+\..*$
+  - path_regex: secrets/[^/]+\..*$
     key_groups:
     - pgp:
       - *armeen
