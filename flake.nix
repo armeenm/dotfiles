@@ -7,7 +7,6 @@
     master.url = github:nixos/nixpkgs;
 
     nur.url = github:nix-community/nur;
-
     sops-nix.url = github:Mic92/sops-nix;
     home-manager.url = github:nix-community/home-manager;
 
@@ -17,7 +16,6 @@
     hyprland.url = github:hyprwm/Hyprland;
     hyprland.inputs.nixpkgs.follows = "unstable";
 
-    nixpkgs-wayland.url = github:nix-community/nixpkgs-wayland;
     utils.url = github:numtide/flake-utils;
   };
 
