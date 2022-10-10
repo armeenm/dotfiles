@@ -289,12 +289,6 @@
       ];
     };
 
-    tomcat = {
-      enable = true;
-      jdk = pkgs.jdk11;
-      webapps = [ "/srv/webKernel.war" ];
-    };
-
     tor = {
       enable = true;
       client.enable = true;
