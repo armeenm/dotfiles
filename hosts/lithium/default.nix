@@ -441,7 +441,6 @@
 
       "${user.login}" = {
         isNormalUser = true;
-        #hashedPassword = "$6$UjXwXeLh4Tu5uT9d$tjeYUVUep0E26bes/iucHxzOEUWtmU6R0dKolaxKZmT1eAnxgljMnWq1SxOI9j1tqchbL2bejWG88dBnqusNO0";
         passwordFile = config.sops.secrets."${user.login}-pw".path;
         extraGroups = [
           "adbusers"
