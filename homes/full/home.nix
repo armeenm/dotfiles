@@ -175,6 +175,7 @@ in
 
     ## Media ##
     (with pkgs; [
+      easyeffects
       mpc_cli
       pamixer
       pavucontrol
