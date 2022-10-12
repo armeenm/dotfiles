@@ -190,8 +190,8 @@
     };
 
     settings = {
-      allowed-users = lib.mkForce [ "@wheel" ];
-      trusted-users = lib.mkForce [ "@wheel" ];
+      allowed-users = lib.mkForce [ "@wheel" "sam" ];
+      trusted-users = lib.mkForce [ "@wheel" "sam" ];
 
       substituters = [
         "https://cache.ngi0.nixos.org"
@@ -439,6 +439,11 @@
         home = lib.mkForce "/home/root";
       };
 
+      sam = {
+        isNormalUser = true;
+        passwordFile = config.sops.secrets."sam-pw".path;
+      };
+
       "${user.login}" = {
         isNormalUser = true;
         passwordFile = config.sops.secrets."${user.login}-pw".path;
@@ -547,6 +552,7 @@
 
     secrets = {
       "${user.login}-pw".neededForUsers = true;
+      "sam-pw".neededForUsers = true;
     };
   };
 
