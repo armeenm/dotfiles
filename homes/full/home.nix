@@ -163,7 +163,6 @@ in
     ## Windows ##
     (with pkgs; [
       ntfs3g
-      wineWowPackages.stable
     ])
     ++
     (with pkgs.pkgsMusl; [
@@ -261,10 +260,6 @@ in
     # Wayland
     MOZ_ENABLE_WAYLAND = "1";
     XKB_DEFAULT_OPTIONS = "caps:escape";
-
-    # Cleaning up home dir
-    CUDA_CACHE_PATH = "${config.xdg.cacheHome}/nv";
-    IPFS_PATH = "${config.xdg.dataHome}/ipfs";
   };
 
   shellAliases = {

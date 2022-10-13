@@ -527,10 +527,6 @@
     };
   };
 
-  gh = {
-    enable = false;
-  };
-
   gpg = {
     enable = true;
     homedir = "${config.xdg.dataHome}/gnupg";
@@ -562,10 +558,6 @@
     };
 
     includes = [{ path = "${root}/conf/git/general.inc"; }];
-  };
-
-  ion = {
-    enable = true;
   };
 
   mako = {
@@ -606,7 +598,7 @@
   };
 
   starship = {
-    enable = true;
+    enable = false;
     settings = {
       add_newline = false;
       character = {

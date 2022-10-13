@@ -41,19 +41,6 @@
     longitude = -88.2293502;
   };
 
-  gpg-agent = {
-    enable = true;
-    enableSshSupport = true;
-    pinentryFlavor = "curses";
-    sshKeys = [
-      "04D42E929F2A312225856CD740A092BEE315D631"
-    ];
-    extraConfig = ''
-      homedir ${config.programs.gpg.homedir}
-      allow-loopback-pinentry
-    '';
-  };
-
   mpd = {
     enable = true;
     network.startWhenNeeded = true;
