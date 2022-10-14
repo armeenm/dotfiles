@@ -26,12 +26,7 @@ in
   configFile = {
     "zsh/.p10k.zsh".source = "${conf}/zsh/p10k.zsh";
     "yt-dlp/config".source = "${conf}/yt-dlp/config";
-    "xdg-desktop-portal-wlr/river".source = "${conf}/river/xdg-desktop-portal-wlr";
+    "xdg-desktop-portal-wlr/Hyprland".source = "${conf}/hypr/xdg-desktop-portal-wlr";
     "hypr/hyprland.conf".source = "${conf}/hypr/hyprland.conf";
-
-    "river/init" = {
-      source = "${conf}/river/init";
-      executable = true;
-    };
   };
 }

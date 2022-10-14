@@ -129,7 +129,6 @@ in
       grim
       imv
       nomacs
-      river
       session-desktop-appimage
       simple-scan
       slurp
