@@ -20,10 +20,6 @@ linuxPackagesFor (kernel.override {
   }] ++ kernel.kernelPatches;
   */
 
-  #argsOverride = {
-  #  dontStrip = true;
-  #};
-
   structuredExtraConfig = with lib.kernel; {
     ## General ##
     #DEBUG_KMEMLEAK = yes;
@@ -146,6 +142,12 @@ linuxPackagesFor (kernel.override {
     X86_X32 = yes;
 
     ## Hardware ##
+    #BT = yes;
+    #BT_BNEP = yes;
+    #BT_HCIBTUSB = yes;
+    #BT_INTEL = yes;
+    #BT_RFCOMM = yes;
+    #IWLWIFI = module;
     ACPI_APEI = yes;
     ACPI_APEI_GHES = yes;
     ACPI_APEI_PCIEAER = yes;
@@ -160,11 +162,6 @@ linuxPackagesFor (kernel.override {
     AMD_MEM_ENCRYPT_ACTIVE_BY_DEFAULT = yes;
     AMD_SFH_HID = yes;
     ATA = yes;
-    #BT = yes;
-    #BT_BNEP = yes;
-    #BT_HCIBTUSB = yes;
-    #BT_INTEL = yes;
-    #BT_RFCOMM = yes;
     CFG80211 = yes;
     CRC32C_INTEL = yes;
     CRYPTO_AES_NI_INTEL = yes;
@@ -172,7 +169,7 @@ linuxPackagesFor (kernel.override {
     HW_RANDOM = yes;
     HW_RANDOM_AMD = yes;
     HW_RANDOM_TPM = yes;
-    #IWLWIFI = module;
+    INTEL_WMI_THUNDERBOLT = yes;
     KVM = yes;
     KVM_AMD = yes;
     LEDS_BRIGHTNESS_HW_CHANGED = yes;
@@ -194,7 +191,9 @@ linuxPackagesFor (kernel.override {
     SP5100_TCO = yes;
     TCG_TIS = yes;
     TEE = yes;
+    THUNDERBOLT = yes;
     TPM_CRB = yes;
+    USB4 = yes;
     WMI_BMOF = yes;
     X86_5LEVEL = no;
     X86_ACPI_CPUFREQ = yes;
@@ -515,9 +514,6 @@ linuxPackagesFor (kernel.override {
     DL2K = no;
     DLM = no;
     DM9102 = no;
-    DMABUF_SELFTESTS = no;
-    DMATEST = no;
-    DMA_ENGINE = no;
     DNET = no;
     DNOTIFY = no;
     DNS_RESOLVER = no;
@@ -783,7 +779,6 @@ linuxPackagesFor (kernel.override {
     INTEL_TXT = no;
     INTEL_VBTN = no;
     INTEL_WMI_SBL_FW_UPDATE = no;
-    INTEL_WMI_THUNDERBOLT = no;
     INTEL_XWAY_PHY = no;
     IONIC = no;
     IPACK_BUS = no;
@@ -1407,7 +1402,6 @@ linuxPackagesFor (kernel.override {
     TEHUTI = no;
     TERANETICS_PHY = no;
     THINKPAD_LMI = no;
-    THUNDERBOLT = no;
     THUNDER_NIC_BGX = no;
     THUNDER_NIC_PF = no;
     THUNDER_NIC_RGX = no;

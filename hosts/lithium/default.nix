@@ -236,6 +236,10 @@
       nssmdns = true;
     };
 
+    hardware = {
+      bolt.enable = true;
+    };
+
     monero = {
       enable = false;
 
