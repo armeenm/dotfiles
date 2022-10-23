@@ -261,14 +261,6 @@
       '';
     };
 
-    nginx = {
-      enable = true;
-      recommendedGzipSettings = true;
-      recommendedOptimisation = true;
-      recommendedProxySettings = true;
-      recommendedTlsSettings = true;
-    };
-
     openssh = {
       enable = true;
       forwardX11 = true;
@@ -294,14 +286,14 @@
     };
 
     tor = {
-      enable = true;
+      enable = false;
       client.enable = true;
     };
 
     udev = {
       packages = with pkgs; [
         ledger-udev-rules
-        platformio
+        #platformio
         yubikey-personalization
       ];
 

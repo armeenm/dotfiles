@@ -77,7 +77,7 @@ in
       ipfs
       miraclecast
       mosh
-      remmina
+      #remmina
       scrcpy
       w3m
       wayvnc
@@ -193,12 +193,9 @@ in
       element-desktop
       kotatogram-desktop
       slack
+      weechat
       whatsapp-for-linux
       zoom-us
-    ])
-    ++
-    (with pkgs.pkgsMusl; [
-      weechat
     ]);
 
   file = {
