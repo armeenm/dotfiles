@@ -13,7 +13,32 @@
         };
 
         Service = {
-          Environment = [ "PATH=${lib.makeBinPath (with pkgs; [ bash coreutils gnugrep pciutils ])}" ];
+          Environment = [
+            "PATH=${lib.makeBinPath (with pkgs; [
+              bash
+              coreutils
+              gnugrep
+              pciutils
+
+              bemenu
+              grim
+              light
+              pamixer
+              slurp
+              swappy
+              swaylock
+
+              sys.systemd.package
+
+              config.programs.emacs.finalPackage
+              config.programs.foot.package
+              config.programs.mako.package
+              config.services.playerctld.package
+            ])}"
+
+            "BEMENU_BACKEND=wayland"
+          ];
+
           ExecStart = "${sys.programs.hyprland.package}/bin/Hyprland";
         };
       };

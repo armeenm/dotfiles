@@ -221,7 +221,6 @@
     haveged.enable = true;
     i2pd.enable = false;
     iperf3.enable = true;
-    onedrive.enable = true;
     physlock.enable = true;
     saned.enable = true;
     smartd.enable = true;
