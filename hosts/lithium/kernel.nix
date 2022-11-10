@@ -28,7 +28,7 @@ linuxPackagesFor (kernel.override {
     ACCESSIBILITY = lib.mkForce no;
     #AIO = lib.mkForce no;
     BIG_KEYS = yes;
-    BINFMT_MISC = lib.mkForce no;
+    #BINFMT_MISC = lib.mkForce no;
     #BPF_SYSCALL = lib.mkForce no; # NOTE: runc
     BUG_ON_DATA_CORRUPTION = yes;
     COMPAT_BRK = no;
@@ -70,7 +70,7 @@ linuxPackagesFor (kernel.override {
     HIBERNATION = no;
     INIT_ON_ALLOC_DEFAULT_ON = yes;
     INIT_ON_FREE_DEFAULT_ON = yes;
-    KCSAN = yes;
+    #KCSAN = yes;
     KEXEC = no;
     KEXEC_FILE = lib.mkForce no;
     KEYS = yes;

@@ -22,6 +22,8 @@
       kernelModules = [ "amdgpu" ];
     };
 
+    binfmt.emulatedSystems = [ "aarch64-linux" ];
+
     #supportedFilesystems = [ "zfs" ];
 
     consoleLogLevel = 0;
