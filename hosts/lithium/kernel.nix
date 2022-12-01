@@ -5,7 +5,7 @@
 }:
 
 let
-  kernel = linuxKernel.kernels.linux_5_19_hardened;
+  kernel = linuxKernel.kernels.linux_6_0_hardened;
 in
 linuxPackagesFor (kernel.override {
   features = {

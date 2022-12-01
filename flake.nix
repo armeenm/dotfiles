@@ -75,6 +75,8 @@
 
     in {
       packages = {
+        inherit pkgs;
+
         nixosConfigurations = {
           lithium = inputs.unstable.lib.nixosSystem {
             modules = modules ++ [

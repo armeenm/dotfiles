@@ -17,57 +17,55 @@ in
     ## CLI Utils ##
     (with pkgs; [
       bottom
+      btop
+      cloc
       comma
       direnv
       dos2unix
       du-dust
+      fasd
       fd
       ffmpeg
+      file
       gh
       git-crypt
       google-cloud-sdk
       htop
       hyperfine
       joshuto
-      libva-utils
-      ncdu
-      pandoc
-      powertop
-      procs
-      ripgrep
-      sd
-      sops
-      tldr
-      xplr
-    ])
-    ++
-    (with pkgs.pkgsMusl; [
-      btop
-      cloc
-      fasd
-      file
       jq
       killall
       libnotify
+      libva-utils
       lsof
       mediainfo
+      ncdu
       nix-tree
       p7zip
+      pandoc
       patchutils
+      powertop
+      procs
       pstree
+      ripgrep
+      sd
       sl
+      sops
       strace
       tcpdump
+      tldr
       tmux
       trash-cli
       unrar
       unzip
+      xplr
       zip
     ])
     ++
 
     ## Networking ##
     (with pkgs; [
+      #remmina
       bluetuith
       croc
       curlie
@@ -75,22 +73,18 @@ in
       gping
       iperf
       ipfs
+      ldns
       miraclecast
       mosh
-      #remmina
+      nmap
       scrcpy
+      speedtest-cli
       w3m
       wayvnc
-      wireshark
-      xh
-    ])
-    ++
-    (with pkgs.pkgsMusl; [
-      ldns
-      nmap
-      speedtest-cli
       wget
       whois
+      wireshark
+      xh
     ])
     ++
 
@@ -109,9 +103,6 @@ in
       yubikey-personalization
       yubikey-personalization-gui
       yubioath-desktop
-    ])
-    ++
-    (with pkgs.pkgsMusl; [
     ])
     ++
 
@@ -137,6 +128,12 @@ in
       wl-clipboard
       wlr-randr
 
+      tamsyn
+      xdg-user-dirs
+      xdg-utils
+      xorg.xeyes
+      xorg.xkill
+
       breeze-icons
       gnome.adwaita-icon-theme
 
@@ -150,21 +147,10 @@ in
       gtk3
     ])
     ++
-    (with pkgs.pkgsMusl; [
-      tamsyn
-      xdg-user-dirs
-      xdg-utils
-      xorg.xeyes
-      xorg.xkill
-    ])
-    ++
 
     ## Windows ##
     (with pkgs; [
       ntfs3g
-    ])
-    ++
-    (with pkgs.pkgsMusl; [
       dosfstools
       efibootmgr
       exfatprogs
@@ -180,9 +166,6 @@ in
       streamlink
       vlc
       yt-dlp
-    ])
-    ++
-    (with pkgs.pkgsMusl; [
       playerctl
     ])
     ++
@@ -194,7 +177,6 @@ in
       kotatogram-desktop
       slack
       weechat
-      whatsapp-for-linux
       zoom-us
     ]);
 
