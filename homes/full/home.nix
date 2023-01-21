@@ -65,7 +65,7 @@ in
 
     ## Networking ##
     (with pkgs; [
-      #remmina
+      remmina
       bluetuith
       croc
       curlie
@@ -102,7 +102,7 @@ in
       yubikey-manager-qt
       yubikey-personalization
       yubikey-personalization-gui
-      yubioath-desktop
+      yubioath-flutter
     ])
     ++
 
@@ -112,7 +112,7 @@ in
       google-chrome
 
       audacity
-      gimp-with-plugins
+      #gimp-with-plugins
       inkscape
       libreoffice-fresh
 
