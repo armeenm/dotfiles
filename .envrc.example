@@ -1,2 +1,2 @@
 use flake
-PATH_add util/
+eval "$shellHook"
