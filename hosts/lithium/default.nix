@@ -265,8 +265,10 @@
     openssh = {
       enable = true;
       forwardX11 = true;
-      logLevel = "VERBOSE";
-      passwordAuthentication = false;
+
+      settings = {
+        PasswordAuthentication = false;
+      };
     };
 
     pipewire = {
