@@ -84,6 +84,14 @@
               ./homes/full
             ];
           };
+
+          basic-img = inputs.unstable.lib.nixosSystem {
+            system = "x86_64-linux";
+            modules = [
+              "${inputs.unstable}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
+              ./img/basic
+            ];
+          };
         };
       };
 
