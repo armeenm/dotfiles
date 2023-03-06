@@ -503,8 +503,8 @@
     settings = {
       main = {
         term = "xterm-256color";
-        font = "Tamsyn:size=10";
-        dpi-aware = "yes";
+        font = "Tamsyn:size=14";
+        dpi-aware = "no";
       };
 
       mouse = {
