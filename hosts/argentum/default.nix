@@ -302,6 +302,7 @@
           "lp"
           "plugdev"
           "scanner"
+          "video"
           "wheel"
         ];
       };
@@ -351,6 +352,7 @@
     adb.enable = true;
     dconf.enable = true;
     hyprland.enable = true;
+    light.enable = true;
     mtr.enable = true;
     nix-ld.enable = true;
     zsh.enable = true;
