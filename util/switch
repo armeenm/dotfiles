@@ -1,2 +1,2 @@
 #!/bin/sh
-sudo nixos-rebuild --flake . switch
+doas nixos-rebuild --flake . switch
