@@ -16,6 +16,8 @@
     hyprland.url = github:hyprwm/Hyprland;
     hyprland.inputs.nixpkgs.follows = "unstable";
 
+    nixos-hardware.url = github:nixos/nixos-hardware;
+
     utils.url = github:numtide/flake-utils;
   };
 
@@ -82,6 +84,14 @@
             modules = modules ++ [
               ./hosts/lithium
               ./homes/full
+            ];
+          };
+
+          argentum = inputs.unstable.lib.nixosSystem {
+            modules = modules ++ [
+              ./hosts/argentum
+              ./homes/full
+	      inputs.nixos-hardware.nixosModules.framework-12th-gen-intel
             ];
           };
 

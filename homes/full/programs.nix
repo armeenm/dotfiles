@@ -45,7 +45,7 @@
 
   emacs = {
     enable = true;
-    package = pkgs.emacsPgtkNativeComp;
+    package = pkgs.emacsPgtk;
 
     init = {
       enable = true;

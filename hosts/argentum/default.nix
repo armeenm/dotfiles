@@ -1,119 +1,32 @@
-G{ config, pkgs, lib, modulesPath, inputs, root, user, domain, ... }:
+{ config, pkgs, lib, modulesPath, inputs, root, user, domain, ... }:
 
 {
   imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
   fileSystems = {
     "/boot" = {
-      device = "/dev/disk/by-uuid/99E6-DA3E";
+      device = "/dev/disk/by-uuid/BBE8-0DBE";
       fsType = "vfat";
     };
 
     "/" = {
-      device = "/dev/disk/by-uuid/9d5b84ba-b19b-46ef-9514-d275cf305ddb";
+      device = "/dev/disk/by-uuid/c8663fee-c299-4e3b-a482-6c19d4f9fcc9";
       fsType = "ext4";
     };
   };
 
   boot = {
-    initrd = {
-      includeDefaultModules = false;
-      verbose = false;
-      kernelModules = [ "amdgpu" ];
-    };
+    initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "nvme" "usb_storage" "sd_mod" ];
+    kernelModules = [ "kvm-intel" ];
 
     binfmt.emulatedSystems = [ "aarch64-linux" ];
-
-    #supportedFilesystems = [ "zfs" ];
-
-    consoleLogLevel = 0;
-
-    kernelModules = [
-      "ib_umad"
-      "ib_ipoib"
-    ];
-
-    kernelPackages = pkgs.callPackage ./kernel.nix { };
-
-    kernelParams = [
-      "elevator=none"
-      "kvm.nx_huge_pages=force"
-      "lsm=yama,apparmor,bpf"
-      "quiet"
-      "slub_debug=FZ"
-      "udev.log_priority=3"
-    ];
-
-    kernel.sysctl = {
-      # Needed for router
-      "net.ipv4.conf.all.accept_redirects" = true;
-      "net.ipv6.conf.all.accept_redirects" = true;
-      "net.ipv4.conf.all.accept_source_route" = true;
-      "net.ipv6.conf.all.accept_source_route" = true;
-      "net.ipv4.ip_forward" = true;
-      "net.ipv4.conf.all.send_redirects" = true;
-
-      "net.ipv4.conf.all.secure_redirects" = true;
-      "net.ipv6.conf.all.secure_redirects" = true;
-
-      "net.ipv4.conf.all.log_martians" = true;
-      "net.ipv4.conf.all.rp_filter" = true;
-
-      "net.ipv4.icmp_echo_ignore_all" = false;
-      "net.ipv4.icmp_echo_ignore_broadcasts" = true;
-      "net.ipv4.icmp_ignore_bogus_error_responses" = true;
-
-      "net.ipv4.tcp_congestion_control" = "bbr";
-      "net.ipv4.tcp_dsack" = false;
-      "net.ipv4.tcp_fack" = false;
-      "net.ipv4.tcp_fastopen" = 3;
-      "net.ipv4.tcp_rfc1337" = true;
-      "net.ipv4.tcp_sack" = false;
-      "net.ipv4.tcp_synack_retries" = 5;
-      "net.ipv4.tcp_timestamps" = false;
-      "net.ipv4.tcp_window_scaling" = true;
-
-      "net.ipv6.conf.default.accept_ra" = false;
-      "net.ipv6.conf.default.accept_ra_pinfo" = false;
-      "net.ipv6.conf.default.accept_ra_rtr_pref" = false;
-      "net.ipv6.conf.default.aceept_ra_defrtr" = false;
-      "net.ipv6.conf.default.max_addresses" = 1;
-      "net.ipv6.conf.default.router_solicitations" = false;
-
-      "net.core.bpf_jit_harden" = 2;
-      "net.core.default_qdisc" = "cake";
-      "net.core.netdev_max_backlog" = 5000;
-      "net.core.rmem_max" = 8388608;
-      "net.core.wmem_max" = 8388608;
-
-      "kernel.core_uses_pid" = true;
-      "kernel.kptr_restrict" = 2;
-      "kernel.panic_on_oops" = false;
-      "kernel.perf_event_paranoid" = 3;
-      "kernel.printk" = "3 3 3 3";
-      "kernel.randomize_va_space" = 2;
-      "kernel.unprivileged_bpf_disabled" = true;
-      "kernel.yama.ptrace_scope" = 2;
-
-      # Appropriate for x86
-      "vm.max_map_count" = 1048576;
-      "vm.mmap_rnd_bits" = 32;
-      "vm.mmap_rnd_compat_bits" = 16;
-
-      "user.max_user_namespaces" = 10000;
-
-      "fs.protected_hardlinks" = true;
-      "fs.protected_symlinks" = true;
-      "fs.protected_fifos" = 2;
-      "fs.protected_regular" = 2;
-    };
 
     loader = {
       efi.canTouchEfiVariables = true;
 
       systemd-boot = {
         enable = true;
-        editor = false;
+        editor = true; # XXX
       };
     };
   };
@@ -121,27 +34,16 @@ G{ config, pkgs, lib, modulesPath, inputs, root, user, domain, ... }:
   networking = {
     inherit domain;
 
-    hostId = "5a656e88";
-    hostName = "lithium";
+    hostName = "argentum";
 
     wireless.iwd.enable = true;
-
-/*
-    interfaces."ibp12s0" = {
-      useDHCP = false;
-      ipv4.addresses = [{
-        address = "192.168.1.1";
-        prefixLength = 24;
-      }];
-    };
-*/
   };
 
   hardware = {
     enableAllFirmware = true;
 
     bluetooth.enable = true;
-    cpu.amd.updateMicrocode = true;
+    cpu.intel.updateMicrocode = true;
     rtl-sdr.enable = true;
     video.hidpi.enable = true;
 
@@ -149,17 +51,6 @@ G{ config, pkgs, lib, modulesPath, inputs, root, user, domain, ... }:
       enable = true;
       driSupport = true;
       driSupport32Bit = true;
-      extraPackages = with pkgs; [
-        amdvlk
-        rocm-opencl-icd
-        rocm-opencl-runtime
-      ];
-      extraPackages32 = with pkgs; [ driversi686Linux.amdvlk ];
-    };
-
-    nvidia = {
-      package = config.boot.kernelPackages.nvidiaPackages.stable;
-      modesetting.enable = true;
     };
 
     sane = {
@@ -241,27 +132,6 @@ G{ config, pkgs, lib, modulesPath, inputs, root, user, domain, ... }:
       bolt.enable = true;
     };
 
-    monero = {
-      enable = false;
-
-      rpc = { };
-
-      extraConfig = ''
-        rpc-use-ipv6=1
-        rpc-ignore-ipv4=1
-        rpc-bind-ipv6-address=::1
-        rpc-restricted-bind-ipv6-address=::1
-        rpc-restricted-bind-port=18089
-
-        p2p-use-ipv6=1
-        p2p-ignore-ipv4=1
-        p2p-bind-ipv6-address=::
-        no-igd=1
-        no-zmq=1
-        enforce-dns-checkpointing=1
-      '';
-    };
-
     openssh = {
       enable = true;
       forwardX11 = true;
@@ -296,16 +166,8 @@ G{ config, pkgs, lib, modulesPath, inputs, root, user, domain, ... }:
     udev = {
       packages = with pkgs; [
         ledger-udev-rules
-        #platformio
         yubikey-personalization
       ];
-
-      extraRules = ''
-        ACTION=="add|change"                                                    \
-        , KERNEL=="sd[a-z]*[0-9]*|mmcblk[0-9]*p[0-9]*|nvme[0-9]*n[0-9]*p[0-9]*" \
-        , ENV{ID_FS_TYPE}=="zfs_member"                                         \
-        , ATTR{../queue/scheduler}="none"
-      '';
     };
 
     usbguard = {
@@ -313,15 +175,7 @@ G{ config, pkgs, lib, modulesPath, inputs, root, user, domain, ... }:
       rules = builtins.readFile ./conf/usbguard/rules.conf;
     };
 
-    xserver.videoDrivers = [ "amdgpu" "nvidia" ];
-
-    /*
-    zfs = {
-      trim.enable = true;
-      autoScrub.enable = true;
-      autoSnapshot.enable = true;
-    };
-    */
+    xserver.videoDrivers = [ "intel" ];
   };
 
   systemd = {
@@ -419,7 +273,6 @@ G{ config, pkgs, lib, modulesPath, inputs, root, user, domain, ... }:
 
     docker = {
       enable = true;
-      enableNvidia = true;
     };
 
     podman = {
@@ -430,22 +283,17 @@ G{ config, pkgs, lib, modulesPath, inputs, root, user, domain, ... }:
 
   users = {
     defaultUserShell = pkgs.zsh;
-    mutableUsers = false;
+    mutableUsers = true; # XXX
 
     users = {
       root = {
-        hashedPassword = null;
+        #hashedPassword = null;
         home = lib.mkForce "/home/root";
-      };
-
-      sam = {
-        isNormalUser = true;
-        passwordFile = config.sops.secrets."sam-pw".path;
       };
 
       "${user.login}" = {
         isNormalUser = true;
-        passwordFile = config.sops.secrets."${user.login}-pw".path;
+        #passwordFile = config.sops.secrets."${user.login}-pw".path;
         extraGroups = [
           "adbusers"
           "docker"
@@ -464,20 +312,17 @@ G{ config, pkgs, lib, modulesPath, inputs, root, user, domain, ... }:
     defaultPackages = lib.mkForce [ ];
 
     systemPackages = (with pkgs; [
-      rdma-core
       lshw
-      opensm
-      radeontop
       smartmontools
       usbutils
 
       git
       rsync
 
-      (mathematica.override {
-        version = "13.1.0";
-        config.cudaSupport = true;
-      })
+      #(mathematica.override {
+      #  version = "13.1.0";
+      #  config.cudaSupport = true;
+      #})
 
       (hunspellWithDicts [ hunspellDicts.en_US hunspellDicts.en_US-large ])
 
@@ -510,11 +355,6 @@ G{ config, pkgs, lib, modulesPath, inputs, root, user, domain, ... }:
     nix-ld.enable = true;
     zsh.enable = true;
 
-    custom.ddcutil = {
-      enable = true;
-      users = [ user.login ];
-    };
-
     neovim = {
       enable = true;
       defaultEditor = true;
@@ -545,6 +385,7 @@ G{ config, pkgs, lib, modulesPath, inputs, root, user, domain, ... }:
     man.generateCaches = true;
   };
 
+/*
   sops = {
     defaultSopsFile = "${root}/secrets/secrets.yaml";
     age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
@@ -554,8 +395,18 @@ G{ config, pkgs, lib, modulesPath, inputs, root, user, domain, ... }:
       "sam-pw".neededForUsers = true;
     };
   };
+*/
 
   zramSwap.enable = true;
 
-  system.stateVersion = lib.mkForce "22.11";
+  system.stateVersion = lib.mkForce "23.05";
+
+  # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
+  # (the default) this is the recommended approach. When using systemd-networkd it's
+  # still possible to use this option, but it's recommended to use it in conjunction
+  # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
+  networking.useDHCP = lib.mkDefault true;
+  # networking.interfaces.wlp166s0.useDHCP = lib.mkDefault true;
+
+  powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
 }
