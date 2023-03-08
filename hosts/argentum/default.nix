@@ -141,6 +141,11 @@
       };
     };
 
+    logind = {
+      extraConfig = "HandlePowerKey=suspend";
+      lidSwitch = "suspend";
+    };
+
     pipewire = {
       enable = true;
       alsa.enable = true;
