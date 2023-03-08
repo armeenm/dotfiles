@@ -12,6 +12,7 @@
     "/" = {
       device = "/dev/disk/by-uuid/c8663fee-c299-4e3b-a482-6c19d4f9fcc9";
       fsType = "ext4";
+      options = "noatime";
     };
   };
 
