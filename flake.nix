@@ -62,7 +62,7 @@
         user = rec {
           login = "armeen";
           name = "Armeen Mahdian";
-          email = "${login}.${domain}";
+          email = "${login}@${domain}";
         };
 
         modules = [
@@ -91,7 +91,7 @@
             modules = modules ++ [
               ./hosts/argentum
               ./homes/full
-	      inputs.nixos-hardware.nixosModules.framework-12th-gen-intel
+	            inputs.nixos-hardware.nixosModules.framework-12th-gen-intel
             ];
           };
 
