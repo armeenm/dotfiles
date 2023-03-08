@@ -12,7 +12,7 @@
     "/" = {
       device = "/dev/disk/by-uuid/c8663fee-c299-4e3b-a482-6c19d4f9fcc9";
       fsType = "ext4";
-      options = "noatime";
+      options = ["noatime"];
     };
   };
 
@@ -27,7 +27,7 @@
 
       systemd-boot = {
         enable = true;
-        editor = true; # XXX
+        editor = false;
       };
     };
   };
@@ -70,7 +70,7 @@
     keyMap = "us";
     font = "Tamsyn7x13r";
     packages = [ pkgs.tamsyn ];
-    earlySetup = false;
+    earlySetup = true;
   };
 
   nix = {
@@ -85,8 +85,8 @@
     };
 
     settings = {
-      allowed-users = lib.mkForce [ "@wheel" "sam" ];
-      trusted-users = lib.mkForce [ "@wheel" "sam" ];
+      allowed-users = lib.mkForce [ "@wheel" ];
+      trusted-users = lib.mkForce [ "@wheel" ];
 
       substituters = [
         "https://cache.ngi0.nixos.org"
@@ -97,12 +97,13 @@
         "cache.ngi0.nixos.org-1:KqH5CBLNSyX184S9BKZJo1LxrxJ9ltnY2uAs5c/f1MA="
         "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       ];
-    };
 
-    extraOptions = ''
-      warn-dirty = false
-      experimental-features = flakes nix-command ca-derivations
-    '';
+      experimental-features = [
+        "flakes" "nix-command" "ca-derivations" "impure-derivations"
+      ];
+
+      warn-dirty = false;
+    };
   };
 
   nixpkgs = {
@@ -133,7 +134,6 @@
 
     openssh = {
       enable = true;
-      forwardX11 = true;
 
       settings = {
         PasswordAuthentication = false;
@@ -373,7 +373,6 @@
 
     secrets = {
       "${user.login}-pw".neededForUsers = true;
-      "sam-pw".neededForUsers = true;
     };
   };
 */
