@@ -567,14 +567,6 @@
     includes = [{ path = "${root}/conf/git/general.inc"; }];
   };
 
-  mako = {
-    enable = true;
-    extraConfig = ''
-      [mode=do-not-disturb]
-      invisible=1
-    '';
-  };
-
   mpv = {
     enable = true;
     config = {
@@ -618,10 +610,16 @@
 
   waybar = {
     enable = true;
+    systemd.enable = true;
+
     settings = {
       mainBar = {
-        output = [ "DP-2" ];
+        modules-left = [
+          "sway/workspaces"
+        ];
+
         modules-right = [
+          "battery"
           "idle_inhibitor"
           "pulseaudio"
           "network"

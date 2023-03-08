@@ -32,7 +32,7 @@
 
               config.programs.emacs.finalPackage
               config.programs.foot.package
-              config.programs.mako.package
+              config.services.mako.package
               config.services.playerctld.package
             ])}"
 

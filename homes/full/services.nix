@@ -14,6 +14,14 @@
     };
   };
 
+  mako = {
+    enable = true;
+    extraConfig = ''
+      [mode=do-not-disturb]
+      invisible=1
+    '';
+  };
+
   swayidle =
     let
       systemd = sys.systemd.package;
