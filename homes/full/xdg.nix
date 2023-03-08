@@ -2,25 +2,26 @@
 
 let
   conf = "${root}/conf";
+  home = "/home/${user.login}";
 in
 {
   enable = true;
 
   userDirs = {
     enable = true;
-    desktop = "~/desktop";
-    documents = "~/docs";
-    download = "~/dl";
-    music = "~/music";
-    pictures = "~/media";
-    publicShare = "~/shared";
-    templates = "~/templates";
-    videos = "~/media";
+    desktop = "${home}/desktop";
+    documents = "${home}/docs";
+    download = "${home}/dl";
+    music = "${home}/music";
+    pictures = "${home}/media";
+    publicShare = "${home}/shared";
+    templates = "${home}/templates";
+    videos = "${home}/media";
   };
 
   systemDirs.data = [
     "/var/lib/flatpak/exports/share"
-    "~/.local/share/flatpak/exports/share"
+    "${home}/.local/share/flatpak/exports/share"
   ];
 
   configFile = {
