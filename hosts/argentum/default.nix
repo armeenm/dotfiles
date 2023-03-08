@@ -45,6 +45,7 @@
     bluetooth.enable = true;
     cpu.intel.updateMicrocode = true;
     rtl-sdr.enable = true;
+    sensor.iio.enable = true;
     video.hidpi.enable = true;
 
     opengl = {
@@ -112,12 +113,9 @@
     flatpak.enable = true;
     fstrim.enable = true;
     haveged.enable = true;
-    i2pd.enable = false;
-    iperf3.enable = true;
     physlock.enable = true;
     saned.enable = true;
     smartd.enable = true;
-    spice-vdagentd.enable = true;
     tcsd.enable = false;
     timesyncd.enable = true;
     udisks2.enable = true;
@@ -161,11 +159,6 @@
         gutenprintBin
         cnijfilter2
       ];
-    };
-
-    tor = {
-      enable = false;
-      client.enable = true;
     };
 
     udev = {
@@ -247,7 +240,8 @@
         value = "65536";
       }];
 
-      services.swaylock = {};
+      services.swaylock.fprintAuth = true;
+      services.login.fprintAuth = true;
     };
 
     tpm2 = {
@@ -259,27 +253,6 @@
   };
 
   virtualisation = {
-    spiceUSBRedirection.enable = true;
-    waydroid.enable = true;
-
-    libvirtd = {
-      enable = false;
-      qemu = {
-        swtpm.enable = true;
-        ovmf = {
-          enable = true;
-          package = (pkgs.OVMF.override {
-            secureBoot = true;
-            tpmSupport = true;
-          });
-        };
-      };
-    };
-
-    docker = {
-      enable = true;
-    };
-
     podman = {
       enable = true;
       defaultNetwork.settings.dns_enabled = true;
