@@ -23,6 +23,7 @@ in
       direnv
       dos2unix
       du-dust
+      duf
       fasd
       fd
       ffmpeg
@@ -41,6 +42,7 @@ in
       mediainfo
       ncdu
       nix-tree
+      onefetch
       p7zip
       pandoc
       patchutils
@@ -48,6 +50,7 @@ in
       procs
       pstree
       ripgrep
+      scc
       sd
       sl
       sops
