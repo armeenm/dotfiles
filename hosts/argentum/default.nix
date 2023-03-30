@@ -47,7 +47,6 @@
     cpu.intel.updateMicrocode = true;
     rtl-sdr.enable = true;
     sensor.iio.enable = true;
-    video.hidpi.enable = true;
 
     opengl = {
       enable = true;
@@ -156,7 +155,7 @@
     printing = {
       enable = true;
       drivers = with pkgs; [
-        gutenprint
+        #gutenprint
         gutenprintBin
         cnijfilter2
       ];

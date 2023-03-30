@@ -270,14 +270,14 @@
         };
 
         yasnippet = {
-          enable = true;
+          enable = false;
           config = ''
             (yas-global-mode)
           '';
         };
 
         yasnippet-snippets = {
-          enable = true;
+          enable = false;
           after = [ "yasnippet" ];
         };
 

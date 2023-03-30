@@ -180,7 +180,7 @@ in
       kotatogram-desktop
       slack
       weechat
-      zoom-us
+      #zoom-us
     ]);
 
   file = {
