@@ -155,7 +155,7 @@
     printing = {
       enable = true;
       drivers = with pkgs; [
-        #gutenprint
+        gutenprint
         gutenprintBin
         cnijfilter2
       ];
