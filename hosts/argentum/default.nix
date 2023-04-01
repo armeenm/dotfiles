@@ -164,6 +164,7 @@
     udev = {
       packages = with pkgs; [
         ledger-udev-rules
+        vial
         yubikey-personalization
       ];
     };
