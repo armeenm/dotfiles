@@ -5,7 +5,7 @@
 }:
 
 let
-  kernel = linuxKernel.kernels.linux_6_0_hardened;
+  kernel = linuxKernel.kernels.linux_6_1_hardened;
 in
 linuxPackagesFor (kernel.override {
   features = {
@@ -22,14 +22,15 @@ linuxPackagesFor (kernel.override {
 
   structuredExtraConfig = with lib.kernel; {
     ## General ##
+    #AIO = lib.mkForce no;
+    #BINFMT_MISC = lib.mkForce no;
+    #BPF_SYSCALL = lib.mkForce no; # NOTE: runc
     #DEBUG_KMEMLEAK = yes;
+    #KCSAN = yes;
     #PROVE_LOCKING = yes;
     #SCHED_STACK_END_CHECK = yes;
     ACCESSIBILITY = lib.mkForce no;
-    #AIO = lib.mkForce no;
     BIG_KEYS = yes;
-    #BINFMT_MISC = lib.mkForce no;
-    #BPF_SYSCALL = lib.mkForce no; # NOTE: runc
     BUG_ON_DATA_CORRUPTION = yes;
     COMPAT_BRK = no;
     COMPAT_VDSO = no;
@@ -70,7 +71,6 @@ linuxPackagesFor (kernel.override {
     HIBERNATION = no;
     INIT_ON_ALLOC_DEFAULT_ON = yes;
     INIT_ON_FREE_DEFAULT_ON = yes;
-    #KCSAN = yes;
     KEXEC = no;
     KEXEC_FILE = lib.mkForce no;
     KEYS = yes;
@@ -380,7 +380,6 @@ linuxPackagesFor (kernel.override {
     ACPI_SBS = no;
     ACPI_TABLE_UPGRADE = no;
     ACPI_TINY_POWER_BUTTON = no;
-    ACPI_VIDEO = no;
     ACQUIRE_WDT = no;
     AD525X_DPOT = no;
     ADAPTEC_STARFIRE = no;

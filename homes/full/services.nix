@@ -53,4 +53,12 @@
     enable = true;
     network.startWhenNeeded = true;
   };
+
+  mako = {
+    enable = true;
+    extraConfig = ''
+      [mode=do-not-disturb]
+      invisible=1
+    '';
+  };
 }

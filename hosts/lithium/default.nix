@@ -17,15 +17,14 @@
 
   boot = {
     initrd = {
+      #availableKernelModules = [ "nvme" "ahci" "usbhid" "usb_storage" ];
+      #kernelModules = [ "amdgpu" "kvm-amd" ];
       includeDefaultModules = false;
       verbose = false;
-      kernelModules = [ "amdgpu" ];
     };
 
     binfmt.emulatedSystems = [ "aarch64-linux" ];
-
-    #supportedFilesystems = [ "zfs" ];
-
+    supportedFilesystems = [ "zfs" ];
     consoleLogLevel = 0;
 
     kernelModules = [
@@ -143,7 +142,6 @@
     bluetooth.enable = true;
     cpu.amd.updateMicrocode = true;
     rtl-sdr.enable = true;
-    video.hidpi.enable = true;
 
     opengl = {
       enable = true;
@@ -192,8 +190,8 @@
     };
 
     settings = {
-      allowed-users = lib.mkForce [ "@wheel" "sam" ];
-      trusted-users = lib.mkForce [ "@wheel" "sam" ];
+      allowed-users = lib.mkForce [ "@wheel" ];
+      trusted-users = lib.mkForce [ "@wheel" ];
 
       substituters = [
         "https://cache.ngi0.nixos.org"
@@ -221,7 +219,7 @@
     flatpak.enable = true;
     fstrim.enable = true;
     haveged.enable = true;
-    i2pd.enable = false;
+    i2pd.enable = true;
     iperf3.enable = true;
     physlock.enable = true;
     saned.enable = true;
@@ -241,30 +239,8 @@
       bolt.enable = true;
     };
 
-    monero = {
-      enable = false;
-
-      rpc = { };
-
-      extraConfig = ''
-        rpc-use-ipv6=1
-        rpc-ignore-ipv4=1
-        rpc-bind-ipv6-address=::1
-        rpc-restricted-bind-ipv6-address=::1
-        rpc-restricted-bind-port=18089
-
-        p2p-use-ipv6=1
-        p2p-ignore-ipv4=1
-        p2p-bind-ipv6-address=::
-        no-igd=1
-        no-zmq=1
-        enforce-dns-checkpointing=1
-      '';
-    };
-
     openssh = {
       enable = true;
-      forwardX11 = true;
 
       settings = {
         PasswordAuthentication = false;
@@ -289,14 +265,14 @@
     };
 
     tor = {
-      enable = false;
+      enable = true;
       client.enable = true;
     };
 
     udev = {
       packages = with pkgs; [
         ledger-udev-rules
-        #platformio
+        platformio
         yubikey-personalization
       ];
 
@@ -315,32 +291,19 @@
 
     xserver.videoDrivers = [ "amdgpu" "nvidia" ];
 
-    /*
     zfs = {
       trim.enable = true;
       autoScrub.enable = true;
       autoSnapshot.enable = true;
     };
-    */
   };
 
   systemd = {
     watchdog.rebootTime = "15s";
 
     tmpfiles.rules = [
-      "d /run/cache 0755 - - -"
-      "d /var/etc 0755 - - -"
       "d /var/srv 0755 - - -"
-      "d /run/tmp 1777 - - -"
-
       "L /srv - - - - /var/srv"
-      "L /tmp - - - - /run/tmp"
-
-      # Using /home/root instead
-      "R /root - - - - -"
-
-      # For Wolfram kernel
-      "L /bin/uname - - - - ${pkgs.coreutils}/bin/uname"
     ];
 
     suppressedSystemUnits = [
@@ -380,14 +343,6 @@
 
     pam = {
       u2f.enable = true;
-
-      loginLimits = [{
-        domain = "*";
-        type = "soft";
-        item = "nofile";
-        value = "65536";
-      }];
-
       services.swaylock = {};
     };
 
@@ -435,12 +390,7 @@
     users = {
       root = {
         hashedPassword = null;
-        home = lib.mkForce "/home/root";
-      };
-
-      sam = {
-        isNormalUser = true;
-        passwordFile = config.sops.secrets."sam-pw".path;
+        #home = lib.mkForce "/home/root";
       };
 
       "${user.login}" = {
@@ -470,6 +420,9 @@
       radeontop
       smartmontools
       usbutils
+      hdparm
+      lm_sensors
+      pciutils
 
       git
       rsync
@@ -480,24 +433,9 @@
       })
 
       (hunspellWithDicts [ hunspellDicts.en_US hunspellDicts.en_US-large ])
-
-      #(lkrg.override { kernel = config.boot.kernelPackages.kernel; })
-    ])
-    ++
-    (with pkgs.pkgsMusl; [
-      hdparm
-      lm_sensors
-      pciutils
     ]);
 
     etc = {
-      /*
-      "ssh/ssh_host_ed25519_key".source = "/var/etc/ssh/ssh_host_ed25519_key";
-      "ssh/ssh_host_ed25519_key.pub".source = "/var/etc/ssh/ssh_host_ed25519_key.pub";
-      "ssh/ssh_host_rsa_key".source = "/var/etc/ssh/ssh_host_rsa_key";
-      "ssh/ssh_host_rsa_key.pub".source = "/var/etc/ssh/ssh_host_rsa_key.pub";
-      */
-
       openvpn.source = "${pkgs.update-resolv-conf}/libexec/openvpn";
     };
   };
@@ -551,7 +489,6 @@
 
     secrets = {
       "${user.login}-pw".neededForUsers = true;
-      "sam-pw".neededForUsers = true;
     };
   };
 
