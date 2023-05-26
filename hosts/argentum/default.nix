@@ -188,7 +188,6 @@
       "d /run/tmp 1777 - - -"
 
       "L /srv - - - - /var/srv"
-      "L /tmp - - - - /run/tmp"
 
       # Using /home/root instead
       "R /root - - - - -"
@@ -367,7 +366,6 @@
     man.generateCaches = true;
   };
 
-/*
   sops = {
     defaultSopsFile = "${root}/secrets/secrets.yaml";
     age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
@@ -376,7 +374,6 @@
       "${user.login}-pw".neededForUsers = true;
     };
   };
-*/
 
   zramSwap.enable = true;
 

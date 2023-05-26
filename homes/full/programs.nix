@@ -270,14 +270,14 @@
         };
 
         yasnippet = {
-          enable = false;
+          enable = true;
           config = ''
             (yas-global-mode)
           '';
         };
 
         yasnippet-snippets = {
-          enable = false;
+          enable = true;
           after = [ "yasnippet" ];
         };
 
@@ -534,11 +534,6 @@
     };
   };
 
-  gpg = {
-    enable = true;
-    homedir = "${config.xdg.dataHome}/gnupg";
-  };
-
   git = {
     enable = true;
     userEmail = user.email;
@@ -570,12 +565,11 @@
   mpv = {
     enable = true;
     config = {
-      #gpu-api = "vulkan";
-      #gpu-context = "wayland";
-      #gpu-context = "x11vk";
-      #hwdec = "vaapi";
-      #profile = "gpu-hq";
-      #spirv-compiler = "shaderc";
+      gpu-api = "vulkan";
+      gpu-context = "wayland";
+      hwdec = "vaapi";
+      profile = "gpu-hq";
+      spirv-compiler = "shaderc";
     };
   };
 
@@ -594,18 +588,6 @@
     extraConfig = ''
       set editing-mode vi
     '';
-  };
-
-  starship = {
-    enable = false;
-    settings = {
-      add_newline = false;
-      character = {
-        success_symbol = "[>](bold green)";
-        error_symbol = "[x](bold red)";
-        vicmd_symbol = "[<](bold green)";
-      };
-    };
   };
 
   waybar = {

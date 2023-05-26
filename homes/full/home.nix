@@ -177,8 +177,6 @@ in
     (with pkgs; [
       discord-canary
       element-desktop
-      #kotatogram-desktop
-      slack
       weechat
       zoom-us
     ]);
