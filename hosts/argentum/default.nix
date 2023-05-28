@@ -114,14 +114,15 @@
     blueman.enable = true;
     flatpak.enable = true;
     fstrim.enable = true;
+    fwupd.enable = true;
     haveged.enable = true;
     physlock.enable = true;
     saned.enable = true;
     smartd.enable = true;
     tcsd.enable = false;
     timesyncd.enable = true;
+    tlp.enable = true;
     udisks2.enable = true;
-    fwupd.enable = true;
 
     avahi = {
       enable = true;
@@ -168,11 +169,6 @@
         vial
         yubikey-personalization
       ];
-    };
-
-    usbguard = {
-      enable = false;
-      rules = builtins.readFile ./conf/usbguard/rules.conf;
     };
 
     xserver.videoDrivers = [ "intel" ];
@@ -379,12 +375,7 @@
 
   system.stateVersion = lib.mkForce "23.05";
 
-  # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
-  # (the default) this is the recommended approach. When using systemd-networkd it's
-  # still possible to use this option, but it's recommended to use it in conjunction
-  # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
   networking.useDHCP = lib.mkDefault true;
-  # networking.interfaces.wlp166s0.useDHCP = lib.mkDefault true;
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
 }

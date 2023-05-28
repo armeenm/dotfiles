@@ -182,10 +182,7 @@
     nixPath = lib.mkForce [ "nixpkgs=${config.nix.registry.nixpkgs.flake}" ];
 
     registry = {
-      nixpkgs.flake = inputs.unstable;
-      ns.flake = inputs.stable;
-      nu.flake = inputs.unstable;
-      nur.flake = inputs.nur;
+      nixpkgs.flake = inputs.nixpkgs;
     };
 
     settings = {
@@ -426,10 +423,10 @@
       git
       rsync
 
-      (mathematica.override {
-        version = "13.1.0";
-        config.cudaSupport = true;
-      })
+      #(mathematica.override {
+      #  version = "13.1.0";
+      #  config.cudaSupport = true;
+      #})
 
       (hunspellWithDicts [ hunspellDicts.en_US hunspellDicts.en_US-large ])
     ]);
