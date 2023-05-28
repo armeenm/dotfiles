@@ -269,6 +269,7 @@
       packages = with pkgs; [
         ledger-udev-rules
         platformio
+        vial
         yubikey-personalization
       ];
 

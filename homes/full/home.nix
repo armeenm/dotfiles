@@ -148,6 +148,8 @@ in
       noto-fonts-emoji
 
       gtk3
+
+      vial
     ])
     ++
 
