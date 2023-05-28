@@ -70,6 +70,12 @@
         ];
       };
 
+      carbon = nixpkgs.lib.nixosSystem {
+        modules = modules ++ [
+          ./hosts/carbon
+        ];
+      };
+
       basic-img = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
@@ -79,10 +85,26 @@
       };
     };
 
-    deploy.nodes.lithium.profiles.system = {
-      user = "root";
-      sudo = "doas -u";
-      path = inputs.deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.lithium;
+    deploy = {
+      nodes = {
+        carbon = {
+          hostname = "carbon";
+          profiles.system = {
+            user = "root";
+            sudo = "doas -u";
+            path = inputs.deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.carbon;
+          };
+        };
+
+        lithium = {
+          hostname = "lithium";
+          profiles.system = {
+            user = "root";
+            sudo = "doas -u";
+            path = inputs.deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.lithium;
+          };
+        };
+      };
     };
 
     devShells = forAllSystems (system: pkgs: with pkgs; {
