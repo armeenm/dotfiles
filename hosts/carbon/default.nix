@@ -1,7 +1,10 @@
 { config, pkgs, lib, modulesPath, inputs, root, user, domain, ... }:
 
 {
-  imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
+  imports = [
+    ./router.nix
+    (modulesPath + "/installer/scan/not-detected.nix")
+  ];
 
   fileSystems = {
     "/boot" = {
@@ -41,12 +44,6 @@
         editor = false;
       };
     };
-  };
-
-  networking = {
-    inherit domain;
-    hostName = "carbon";
-    useDHCP = lib.mkDefault true;
   };
 
   hardware = {
@@ -122,6 +119,16 @@
     vaultwarden = {
       enable = true;
     };
+
+    nginx = {
+      enable = false;
+      virtualHosts."vault.armeen.xyz" = {
+        enableACME = true;
+        forceSSL = true;
+        locations."/".proxyPass = "http://127.0.0.1$:8000";
+      };
+    };
+
   };
 
   systemd = {
