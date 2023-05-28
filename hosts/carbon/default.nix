@@ -46,6 +46,7 @@
   networking = {
     inherit domain;
     hostName = "carbon";
+    useDHCP = lib.mkDefault true;
   };
 
   hardware = {
@@ -117,6 +118,10 @@
       pulse.enable = true;
       jack.enable = true;
     };
+
+    vaultwarden = {
+      enable = true;
+    };
   };
 
   systemd = {
@@ -169,14 +174,12 @@
       u2f.enable = true;
     };
 
-/*
     tpm2 = {
       enable = true;
-      abrmd.enable = true;
+      abrmd.enable = false;
       pkcs11.enable = true;
       tctiEnvironment.enable = true;
     };
-    */
   };
 
   virtualisation = {
@@ -268,5 +271,4 @@
 
   zramSwap.enable = true;
   system.stateVersion = lib.mkForce "23.05";
-  networking.useDHCP = lib.mkDefault true;
 }
