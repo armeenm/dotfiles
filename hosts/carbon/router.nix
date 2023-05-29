@@ -61,25 +61,57 @@ in
   networking = {
     inherit hostName hostId domain;
 
-    firewall = {
-      allowPing = false;
+    firewall.enable = false;
+    nat.enable = false;
 
-      interfaces.${wan} = {
-        allowedTCPPorts = [ 443 ];
-      };
+    nftables = {
+      enable = true;
+      ruleset = ''
+        table inet filter {
+          chain output {
+            type filter hook output priority 100; policy accept;
+          }
 
-      interfaces.${lan} = {
-        allowedUDPPorts = [ 53 ];
-        allowedTCPPorts = [ 22 443 ];
-      };
+          chain input {
+            type filter hook input priority filter; policy drop;
 
-      interfaces.${aux} = {
-        allowedTCPPorts = [ 22 ];
-      };
+            iifname "lo" accept
 
-      extraCommands = ''
-        iptables -A nixos-fw -i ${aux} -p icmp -j nixos-fw-accept
-        iptables -A nixos-fw -i ${lan} -p icmp -j nixos-fw-accept
+            iifname "${aux}" counter accept
+            iifname "${lan}" counter accept
+
+            iifname "${wan}" ct state { established, related } counter accept
+            iifname "${wan}" tcp dport 443 counter accept
+            iifname "${wan}" drop
+          }
+
+          chain forward {
+            type filter hook forward priority filter; policy drop;
+
+            iifname {
+              "${lan}",
+            } oifname {
+              "${wan}",
+            } counter accept comment "Allow trusted LAN to WAN"
+
+            iifname {
+              "${wan}",
+            } oifname {
+              "${lan}",
+            } ct state established,related counter accept comment "Allow established back to LANs"
+          }
+        }
+
+        table ip nat {
+          chain prerouting {
+            type nat hook output priority filter; policy accept;
+          }
+
+          chain postrouting {
+            type nat hook postrouting priority filter; policy accept;
+            oifname "${wan}" masquerade
+          }
+        }
       '';
     };
 
@@ -102,12 +134,6 @@ in
           { address = "127.0.0.1"; prefixLength = 8; }
         ];
       };
-    };
-
-    nat = {
-      enable = true;
-      internalIPs = [ subnet ];
-      externalInterface = wan;
     };
   };
 
