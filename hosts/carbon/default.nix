@@ -107,9 +107,6 @@
       "fs.protected_regular" = 2;
     };
 
-    supportedFilesystems = [ "ntfs" ];
-    #binfmt.emulatedSystems = [ "aarch64-linux" ];
-
     loader = {
       efi.canTouchEfiVariables = true;
 
