@@ -1,11 +1,12 @@
-{ config, lib, domain, ... }:
+{ config, lib, ... }:
 
 let
   esc-nl = str: builtins.replaceStrings [ "\n" ] [ "\\n" ] str;
   rev-ip4 = with lib; ip4: "${concatStringsSep "." (reverseList (splitString "." ip4))}.in-addr.arpa";
 
-  hostName = "carbon";
   hostId = "196d325d";
+  hostName = "carbon";
+  domain = "armeen.xyz";
 
   wan = "enp3s0f0";
   lan = "enp3s0f1";
@@ -35,6 +36,7 @@ let
     )
   '';
 
+
   zone-domain = ''
     $ORIGIN ${domain}.
     $TTL 5m
@@ -45,6 +47,7 @@ let
     ns1 A ${ip}
     ${hostName} A ${ip}
     carbon A ${ip}
+    vault A ${ip}
   '';
 
   zone-subnet = ''
@@ -82,6 +85,7 @@ in
 
             iifname "${wan}" ct state { established, related } counter accept
             iifname "${wan}" tcp dport 443 counter accept
+            iifname "${wan}" tcp dport 80 counter accept
             iifname "${wan}" drop
           }
 
@@ -161,6 +165,10 @@ in
             {
               name = "domain-name-servers";
               data = ip;
+            }
+            {
+              name = "domain-search";
+              data = domain;
             }
           ];
 

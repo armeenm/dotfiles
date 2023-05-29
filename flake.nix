@@ -36,11 +36,10 @@
     ] (system: f system (import nixpkgs { inherit system config overlays; }));
 
     root = ./.;
-    domain = "armeen.org";
     user = rec {
       login = "armeen";
       name = "Armeen Mahdian";
-      email = "${login}@${domain}";
+      email = "armeen@fulminous-hill.com";
     };
 
     modules = [
@@ -49,7 +48,7 @@
       inputs.nur.nixosModules.nur
       inputs.sops-nix.nixosModules.sops
       { nixpkgs = { inherit config overlays; }; }
-      { _module.args = { inherit inputs root domain user; }; }
+      { _module.args = { inherit inputs root user; }; }
       ./modules
     ];
 

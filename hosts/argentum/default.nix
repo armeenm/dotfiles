@@ -1,4 +1,4 @@
-{ config, pkgs, lib, modulesPath, inputs, root, user, domain, ... }:
+{ config, pkgs, lib, modulesPath, inputs, root, user, ... }:
 
 {
   imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
@@ -34,10 +34,7 @@
   };
 
   networking = {
-    inherit domain;
-
     hostName = "argentum";
-
     wireless.iwd.enable = true;
   };
 

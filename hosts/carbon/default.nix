@@ -1,4 +1,4 @@
-{ config, pkgs, lib, modulesPath, inputs, root, user, domain, ... }:
+{ config, pkgs, lib, modulesPath, inputs, root, user, ... }:
 
 {
   imports = [
@@ -193,17 +193,23 @@
     vaultwarden = {
       enable = true;
       config = {
+        DOMAIN = "https://vault.armeen.xyz";
         ROCKET_ADDRESS = "::1";
         ROCKET_PORT = "8000";
       };
     };
 
     nginx = {
-      enable = false;
+      enable = true;
       virtualHosts."vault.armeen.xyz" = {
         enableACME = true;
         forceSSL = true;
-        locations."/".proxyPass = "http://127.0.0.1$:8000";
+        locations."/".proxyPass = "http://[::1]:8000";
+        extraConfig = ''
+          if ( $host != 'vault.armeen.xyz' ) {
+            rewrite ^/(.*)$ https://vault.armeen.xyz/$1 permanent;
+          }
+        '';
       };
     };
 

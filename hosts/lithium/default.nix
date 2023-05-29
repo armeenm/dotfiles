@@ -1,4 +1,4 @@
-{ config, pkgs, lib, modulesPath, inputs, root, user, domain, ... }:
+{ config, pkgs, lib, modulesPath, inputs, root, user, ... }:
 
 {
   imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
@@ -117,8 +117,6 @@
   };
 
   networking = {
-    inherit domain;
-
     hostId = "5a656e88";
     hostName = "lithium";
 
