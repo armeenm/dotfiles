@@ -546,6 +546,8 @@
       ci = "commit";
       co = "checkout";
       d = "diff";
+      ds = "diff --staged";
+      f = "fuzzy";
       st = "status";
       sw = "switch";
       wt = "worktree";
@@ -596,24 +598,94 @@
 
     settings = {
       mainBar = {
+        layer = "top";
+        position = "top";
+        height = 24;
+
         modules-left = [
-          "sway/workspaces"
+          "wlr/workspaces"
+          "wlr/mode"
         ];
 
+        modules-center = [ "hyprland/window" ];
+
         modules-right = [
-          "battery"
-          "idle_inhibitor"
           "pulseaudio"
           "network"
+          "temperature"
           "cpu"
           "memory"
-          "temperature"
-          "backlight"
-          "keyboard-state"
-          "sway/language"
-          "clock"
+          "battery"
           "tray"
+          "clock"
         ];
+
+        "wlr/workspaces" = {
+          disable-scroll = true;
+          all-outputs = false;
+          on-click = "activate";
+        };
+
+        "wlr/mode" = { format = "<span style=\"italic\">{}</span>"; };
+        "tray" = {
+          # "icon-size" = 21,
+          "spacing" = 10;
+        };
+
+        "clock" = { "format-alt" = "{:%Y-%m-%d}"; "on-click" = ""; };
+        "cpu" = {
+          "format" = "{usage}% 󰍛";
+        };
+
+        "memory" = { "format"= "{}% "; };
+
+        "temperature" = {
+          "critical-threshold" = 80;
+          "format" = "{}℃  󰏈";
+          "format-critical" = "{}℃ 󰇺";
+          "interval" = 5;
+        };
+
+        "battery" = {
+            "bat"= "BAT0";
+            "states"= {
+                # "good"= 95;
+                "warning"= 30;
+                "critical"= 15;
+            };
+            "format"= "{capacity}% {icon}";
+            # "format-good"= ""; # An empty format will hide the module
+            # "format-full"= "";
+            "format-icons"= ["" "" "" "" ""];
+        };
+
+        "network" = {
+            "format-wifi"= "{essid} ({signalStrength}%) ";
+            "format-ethernet"= "{ifname}= {ipaddr}/{cidr} ";
+            "format-disconnected"= "Disconnected ⚠";
+        };
+
+        "pulseaudio" = {
+            #"scroll-step"= 1;
+            "format"= "{volume}% {icon}";
+            "format-bluetooth"= "{volume}% {icon}";
+            "format-muted"= "";
+            "format-icons"= {
+                "headphones" = "";
+                "handsfree" = "";
+                "headset" = "";
+                "phone" = "";
+                "portable" = "";
+                "car" = "";
+                "default" = [ "" "" ];
+            };
+            "on-click"= "pavucontrol";
+        };
+
+        "hyprland/window" = {
+          "format" = {};
+          "seperate-outputs" = true;
+        };
       };
     };
   };

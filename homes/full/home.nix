@@ -142,6 +142,7 @@ in
 
       fira-code
       fira-code-symbols
+      hack-font
       hicolor-icon-theme
       noto-fonts
       noto-fonts-cjk
