@@ -162,7 +162,7 @@
     fstrim.enable = true;
     fwupd.enable = true;
     haveged.enable = true;
-    smartd.enable = true;
+    smartd.enable = false; # TODO: Enable when this machine has actual drives.
     tcsd.enable = false;
     timesyncd.enable = true;
     udisks2.enable = true;
@@ -191,6 +191,7 @@
       enable = true;
       config = {
         DOMAIN = "https://vault.armeen.xyz";
+        SIGNUPS_ALLOWED = false;
         ROCKET_ADDRESS = "::1";
         ROCKET_PORT = "8000";
       };
