@@ -252,9 +252,10 @@
     printing = {
       enable = true;
       drivers = with pkgs; [
+        canon-cups-ufr2
+        cnijfilter2
         gutenprint
         gutenprintBin
-        cnijfilter2
       ];
     };
 
