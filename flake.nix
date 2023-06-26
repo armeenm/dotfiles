@@ -10,13 +10,13 @@
     nixos-hardware.url = github:nixos/nixos-hardware;
     nur.url = github:nix-community/nur;
     sops-nix.url = github:Mic92/sops-nix;
+    nix-misc.url = github:armeenm/nix-misc;
 
     emacs-overlay.url = github:nix-community/emacs-overlay;
     emacs-overlay.inputs.nixpkgs.follows = "nixpkgs";
 
     hyprland.url = github:hyprwm/Hyprland;
     hyprland.inputs.nixpkgs.follows = "nixpkgs";
-
   };
 
   outputs = inputs@{ self, nixpkgs, ... }: let
@@ -33,7 +33,9 @@
     forAllSystems = f: nixpkgs.lib.genAttrs [
       "x86_64-linux"
       "aarch64-linux"
-    ] (system: f system (import nixpkgs { inherit system config overlays; }));
+    ] (system: f system (
+      import nixpkgs { inherit system config overlays; }
+    ));
 
     root = ./.;
     user = rec {

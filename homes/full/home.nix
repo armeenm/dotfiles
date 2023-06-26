@@ -7,6 +7,9 @@ let
 
   files = "${home}/files";
   common = "${home}/common";
+
+  # TODO: Factor this out along with nixpkgs.hostPlatform
+  nix-misc = inputs.nix-misc.packages.x86_64-linux;
 in
 {
   username = user.login;
@@ -15,6 +18,10 @@ in
 
   packages =
     ## CLI Utils ##
+    (with nix-misc; [
+      git-fuzzy
+    ]) ++
+
     (with pkgs; [
       bottom
       btop
@@ -63,8 +70,7 @@ in
       unzip
       xplr
       zip
-    ])
-    ++
+    ]) ++
 
     ## Networking ##
     (with pkgs; [
@@ -88,8 +94,7 @@ in
       whois
       wireshark
       xh
-    ])
-    ++
+    ]) ++
 
     ## Privacy and Security ##
     (with pkgs; [
@@ -106,8 +111,7 @@ in
       yubikey-personalization
       yubikey-personalization-gui
       yubioath-flutter
-    ])
-    ++
+    ]) ++
 
     ## Desktop Environment ##
     (with pkgs; [
@@ -151,8 +155,7 @@ in
       gtk3
 
       vial
-    ])
-    ++
+    ]) ++
 
     ## Windows ##
     (with pkgs; [
@@ -160,8 +163,7 @@ in
       dosfstools
       efibootmgr
       exfatprogs
-    ])
-    ++
+    ]) ++
 
     ## Media ##
     (with pkgs; [
@@ -173,8 +175,7 @@ in
       vlc
       yt-dlp
       playerctl
-    ])
-    ++
+    ]) ++
 
     ## Communication ##
     (with pkgs; [
