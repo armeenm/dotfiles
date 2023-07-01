@@ -12,11 +12,6 @@
     sops-nix.url = github:Mic92/sops-nix;
     nix-misc.url = github:armeenm/nix-misc;
 
-    nix-on-droid = {
-      url = github:t184256/nix-on-droid;
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     emacs-overlay = {
       url = github:nix-community/emacs-overlay;
       inputs.nixpkgs.follows = "nixpkgs";
@@ -24,6 +19,11 @@
 
     hyprland = {
       url = github:hyprwm/Hyprland;
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    nix-on-droid = {
+      url = github:t184256/nix-on-droid;
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -91,6 +91,14 @@
         modules = [
           "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
           ./img/basic
+        ];
+      };
+    };
+
+    nixOnDroidConfigurations = {
+      default = inputs.nix-on-droid.lib.nixOnDroidConfiguration {
+        modules = modules ++ [
+          ./hosts/droid
         ];
       };
     };
