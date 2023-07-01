@@ -199,15 +199,23 @@
 
     nginx = {
       enable = true;
-      virtualHosts."vault.armeen.xyz" = {
-        enableACME = true;
-        forceSSL = true;
-        locations."/".proxyPass = "http://[::1]:8000";
-        extraConfig = ''
-          if ( $host != 'vault.armeen.xyz' ) {
-            rewrite ^/(.*)$ https://vault.armeen.xyz/$1 permanent;
-          }
-        '';
+      virtualHosts = {
+        "armeen.xyz" = {
+          enableACME = true;
+          forceSSL = true;
+          root = "/srv/armeen-xyz";
+        };
+
+        "vault.armeen.xyz" = {
+          enableACME = true;
+          forceSSL = true;
+          locations."/".proxyPass = "http://[::1]:8000";
+          extraConfig = ''
+            if ( $host != 'vault.armeen.xyz' ) {
+              rewrite ^/(.*)$ https://vault.armeen.xyz/$1 permanent;
+            }
+          '';
+        };
       };
     };
 
