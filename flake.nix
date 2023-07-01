@@ -12,11 +12,20 @@
     sops-nix.url = github:Mic92/sops-nix;
     nix-misc.url = github:armeenm/nix-misc;
 
-    emacs-overlay.url = github:nix-community/emacs-overlay;
-    emacs-overlay.inputs.nixpkgs.follows = "nixpkgs";
+    nix-on-droid = {
+      url = github:t184256/nix-on-droid;
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
-    hyprland.url = github:hyprwm/Hyprland;
-    hyprland.inputs.nixpkgs.follows = "nixpkgs";
+    emacs-overlay = {
+      url = github:nix-community/emacs-overlay;
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    hyprland = {
+      url = github:hyprwm/Hyprland;
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs@{ self, nixpkgs, ... }: let
