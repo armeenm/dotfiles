@@ -261,6 +261,7 @@ in
     diff = "delta";
     g = "git";
     open = "xdg-open";
+    ovpn = "openvpn3";
     rlf = "readlink -f";
     tf = "terraform";
     zc = "zcalc -r";

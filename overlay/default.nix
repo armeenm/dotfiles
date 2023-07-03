@@ -1,3 +1,5 @@
+{ inputs, ... }:
+
 final: prev: {
   mathematica = prev.mathematica.overrideAttrs (_: {
     postInstall = ''
@@ -8,4 +10,6 @@ final: prev: {
   waybar = prev.waybar.overrideAttrs (old: {
     mesonFlags = old.mesonFlags ++ [ "-Dexperimental=true" ];
   });
+
+  openvpn3 = inputs.nixpkgs-old.legacyPackages.x86_64-linux.callPackage ./openvpn3 { };
 }

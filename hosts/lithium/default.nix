@@ -437,6 +437,7 @@
     hyprland.enable = true;
     mtr.enable = true;
     nix-ld.enable = true;
+    openvpn3.enable = true;
     zsh.enable = true;
 
     custom.ddcutil = {
