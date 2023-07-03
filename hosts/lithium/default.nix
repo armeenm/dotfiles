@@ -348,6 +348,8 @@
       pkcs11.enable = true;
       tctiEnvironment.enable = true;
     };
+
+    pki.certificateFiles = [ "/srv/a.crt" ];
   };
 
   virtualisation = {
