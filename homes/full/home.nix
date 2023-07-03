@@ -251,6 +251,7 @@ in
     g = "git";
     open = "xdg-open";
     rlf = "readlink -f";
+    tf = "terraform";
     zc = "zcalc -r";
 
     noti = "noti ";
