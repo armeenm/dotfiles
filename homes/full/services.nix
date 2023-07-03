@@ -6,11 +6,12 @@
 
   emacs = {
     enable = true;
-    defaultEditor = true;
+    # TODO: Fix upstream.
+    defaultEditor = false;
 
     client = {
       enable = true;
-      arguments = [ "-c" "-n" ];
+      arguments = [ "-n" "-t" "-c" ];
     };
   };
 

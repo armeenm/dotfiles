@@ -17,6 +17,12 @@ in
   stateVersion = lib.mkForce "21.05";
 
   packages =
+    ## Lang Specific ##
+    (with pkgs; [
+      gnuapl
+      shellcheck
+    ]) ++
+
     ## CLI Utils ##
     (with nix-misc; [
       git-fuzzy
@@ -69,6 +75,7 @@ in
       unrar
       unzip
       xplr
+      zellij
       zip
     ]) ++
 
@@ -243,6 +250,10 @@ in
     # Wayland
     MOZ_ENABLE_WAYLAND = "1";
     XKB_DEFAULT_OPTIONS = "caps:escape";
+
+    EDITOR = lib.getBin (pkgs.writeShellScript "editor" ''
+      exec ${lib.getBin config.services.emacs.package}/bin/emacsclient -ct $@
+    '');
   };
 
   shellAliases = {
@@ -253,6 +264,7 @@ in
     rlf = "readlink -f";
     tf = "terraform";
     zc = "zcalc -r";
+    zl = "zellij";
 
     noti = "noti ";
     doas = "doas ";

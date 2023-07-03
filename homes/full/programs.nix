@@ -115,6 +115,7 @@
 
         (line-number-mode)
         (column-number-mode)
+        (global-display-line-numbers-mode)
 
         (put 'narrow-to-region 'disabled nil)
         (put 'upcase-region 'disabled nil)
@@ -124,7 +125,13 @@
          js-indent-level 2
          c-default-style "k&r"
          c-basic-offset 2
-         verilog-auto-newline nil)
+         verilog-indent-level 2
+         verilog-indent-level-declaration 2
+         verilog-indent-level directive 2
+         verilog-indent-level-behavioral 2
+         verilog-indent-level-module 2
+         verilog-auto-newline nil
+         verilog-indent-lists nil)
 
         (setq-default indent-tabs-mode nil
                       tab-width 2
@@ -141,9 +148,12 @@
         (transient-mark-mode 1)
 
         (setq scroll-step 1
-              scroll-conservatively 5)
+              scroll-margin 7
+              scroll-conservatively 100000)
 
         (global-hl-line-mode 1)
+
+        (xterm-mouse-mode 1)
 
         (setq select-enable-clipboard t
               select-enable-primary t
@@ -171,6 +181,13 @@
           after = [ "evil" ];
           config = ''
             (evil-collection-init)
+          '';
+        };
+
+        coterm = {
+          enable = true;
+          config = ''
+            (coterm-mode)
           '';
         };
 
@@ -346,7 +363,7 @@
           init = ''
             (setq lsp-keymap-prefix "C-c l")
           '';
-          after = [ "direnv" "evil" ];
+          after = [ "direnv" "evil" "lsp-modeline" "lsp-headerline" "lsp-ui" "lsp-lens" ];
           hook = [
             "(c++-mode . lsp-deferred)"
             "(c-mode . lsp-deferred)"
@@ -436,15 +453,21 @@
 
         typescript-mode = {
           enable = true;
-          mode = [ "\\.mts\\'" ];
         };
 
         nix-mode = {
           enable = true;
-          mode = [ "\\.nix\\'" ];
         };
 
         rust-mode = {
+          enable = true;
+        };
+
+        julia-mode = {
+          enable = true;
+        };
+
+        prism = {
           enable = true;
         };
 
@@ -482,6 +505,10 @@
           config = ''
             (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
           '';
+        };
+
+        vterm = {
+          enable = true;
         };
       };
 
@@ -548,6 +575,9 @@
       d = "diff";
       ds = "diff --staged";
       f = "fuzzy";
+      pl = "pull";
+      ps = "push";
+      psf = "push --force-with-lease";
       st = "status";
       sw = "switch";
       wt = "worktree";
@@ -561,7 +591,19 @@
       };
     };
 
-    includes = [{ path = "${root}/conf/git/general.inc"; }];
+    extraConfig = {
+      init = {
+        defaultBranch = "master";
+      };
+
+      credential = {
+        helper = "store";
+      };
+
+      core = {
+        editor = "${config.home.sessionVariables.EDITOR}";
+      };
+    };
   };
 
   mpv = {
@@ -692,14 +734,21 @@
 
   zsh = {
     enable = true;
-    enableCompletion = true;
     enableAutosuggestions = true;
+    enableCompletion = true;
+    enableVteIntegration = true;
+    syntaxHighlighting.enable = true;
+    historySubstringSearch.enable = true;
 
     autocd = true;
     defaultKeymap = "viins";
 
     dotDir = "${builtins.baseNameOf config.xdg.configHome}/zsh";
-    history.path = "${config.xdg.cacheHome}/zsh/history";
+
+    history = {
+      path = "${config.xdg.cacheHome}/zsh/history";
+      ignoreSpace = true;
+    };
 
     initExtraFirst = ''
       source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
