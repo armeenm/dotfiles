@@ -530,7 +530,7 @@
     settings = {
       main = {
         term = "xterm-256color";
-        font = "Tamsyn:size=14";
+        font = "Tamsyn:size=12";
         dpi-aware = "no";
       };
 
