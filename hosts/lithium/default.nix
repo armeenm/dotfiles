@@ -345,7 +345,7 @@
     tpm2 = {
       enable = true;
       abrmd.enable = true;
-      pkcs11.enable = true;
+      pkcs11.enable = false; # XXX
       tctiEnvironment.enable = true;
     };
 
