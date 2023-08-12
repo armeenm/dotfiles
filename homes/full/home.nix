@@ -117,7 +117,7 @@ in
       yubikey-manager-qt
       yubikey-personalization
       yubikey-personalization-gui
-      yubioath-flutter
+      #yubioath-flutter
     ]) ++
 
     ## Desktop Environment ##
@@ -126,7 +126,7 @@ in
       google-chrome
 
       audacity
-      #gimp-with-plugins
+      gimp-with-plugins
       inkscape
       libreoffice-fresh
 
@@ -215,28 +215,6 @@ in
 
         #command
         / forw-search ^W
-      '';
-    };
-
-    chell = {
-      target = ".local/bin/chell";
-      executable = true;
-      text = ''
-        #!/bin/sh
-        ${pkgs.xdg-desktop-portal}/libexec/xdg-desktop-portal -r &
-        ${pkgs.xdg-desktop-portal-gtk}/libexec/xdg-desktop-portal-gtk -r &
-        ${pkgs.xdg-desktop-portal-wlr}/libexec/xdg-desktop-portal-wlr -l INFO -r &
-      '';
-    };
-
-    lock = {
-      target = ".local/bin/lock";
-      executable = true;
-      text = ''
-        #!${pkgs.bash}/bin/bash
-        ${pkgs.playerctl}/bin/playerctl -a pause
-        ${sys.security.wrapperDir}/doas ${pkgs.physlock}/bin/physlock
-        #${pkgs.vbetool}/bin/vbetool dpms off
       '';
     };
   };
