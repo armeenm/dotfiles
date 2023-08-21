@@ -140,6 +140,13 @@
         (set-default 'semantic-case-fold t)
 
         (setq-default show-trailing-whitespace t)
+        (dolist (hook '(special-mode-hook
+                        term-mode-hook
+                        comint-mode-hook
+                        compilation-mode-hook
+                        minibuffer-setup-hook))
+          (add-hook hook
+            (lambda () (setq show-trailing-whitespace nil))))
 
         (setq sentence-end-double-space nil)
 
@@ -264,12 +271,7 @@
           enable = true;
           after = [ "ivy" ];
           config = ''
-            (setq
-             ivy-virtual-abbreviate 'full
-             ivy-rich-switch-buffer-align-virtual-buffer t
-             ivy-rich-path-style 'abbrev)
-            (ivy-set-display-transformer 'ivy-switch-buffer
-                                         'ivy-rich-switch-buffer-transform)
+            (ivy-rich-mode 1)
           '';
         };
 
