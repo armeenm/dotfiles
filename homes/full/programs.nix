@@ -149,6 +149,30 @@
           (add-hook hook
             (lambda () (setq show-trailing-whitespace nil))))
 
+        (defun crm-indicator (args)
+          (cons (format "[CRM%s] %s"
+                        (replace-regexp-in-string
+                         "\\`\\[.*?]\\*\\|\\[.*?]\\*\\'" ""
+                         crm-separator)
+                        (car args))
+                (cdr args)))
+        (advice-add #'completing-read-multiple :filter-args #'crm-indicator)
+
+        (setq completion-cycle-threshold 3
+              tab-always-indent 'complete)
+
+        ;; Do not allow the cursor in the minibuffer prompt.
+        (setq minibuffer-prompt-properties
+              '(read-only t cursor-intangible t face minibuffer-prompt))
+        (add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
+
+        ;; Hide commands in M-x which do not work in the current mode.
+        ;; Vertico commands are hidden in normal buffers.
+        (setq read-extended-command-predicate
+              #'command-completion-default-include-p)
+
+        (setq enable-recursive-minibuffers t)
+
         (setq sentence-end-double-space nil)
 
         (prefer-coding-system 'utf-8)
@@ -171,6 +195,17 @@
       '';
 
       usePackage = {
+        all-the-icons.enable = true;
+        cloc.enable = true;
+        clojure-mode.enable = true;
+        haskell-mode.enable = true;
+        julia-mode.enable = true;
+        nix-mode.enable = true;
+        prism.enable = true;
+        rust-mode.enable = true;
+        solidity-mode.enable = true;
+        typescript-mode.enable = true;
+
         evil = {
           enable = true;
           init = ''
@@ -219,19 +254,15 @@
               "g" 'magit
               "w" 'evil-window-map
               "l" 'lsp-command-map
-              "r" 'ivy-resume
-              "c" 'counsel-git
               "p" 'projectile-command-map
-              "b b" 'ivy-switch-buffer
+              "b b" 'consult-buffer
               "b e" 'eval-buffer
               "b k" 'kill-buffer
               "b l" 'list-buffers
-              "t i" 'ivy-mode
               "/ c" 'avy-goto-char-2
               "/ f" 'find-file
-              "/ l" 'find-file
-              "/ a" 'counsel-ag
-              "/ g" 'counsel-git-grep
+              "/ r" 'consult-ripgrep
+              "/ g" 'consult-git-grep
               "k f" 'describe-function
               "k v" 'describe-variable
               "k s" 'describe-symbol
@@ -243,7 +274,7 @@
             (general-def 'normal
               "u" 'undo-fu-only-undo
               "C-r" 'undo-fu-only-redo
-              "/" 'swiper)
+              "/" 'consult-line)
 
             (general-def 'normal lsp-mode-map
               "K" 'lsp-describe-thing-at-point)
@@ -255,38 +286,6 @@
           config = ''
             (frames-only-mode)
           '';
-        };
-
-        ivy = {
-          enable = true;
-          config = ''
-            (setq
-             ivy-count-format "(%d/%d) "
-             ivy-use-virtual-buffers t
-             enable-recursive-minibuffers t)
-            (ivy-mode)
-          '';
-        };
-
-        ivy-rich = {
-          enable = true;
-          after = [ "ivy" ];
-          config = ''
-            (ivy-rich-mode 1)
-          '';
-        };
-
-        counsel = {
-          enable = true;
-          after = [ "ivy" ];
-          config = ''
-            (counsel-mode)
-          '';
-        };
-
-        swiper = {
-          enable = true;
-          after = [ "ivy" ];
         };
 
         yasnippet = {
@@ -343,7 +342,6 @@
         projectile = {
           enable = true;
           config = ''
-            (setq projectile-completion-system 'ivy)
             (projectile-mode)
           '';
         };
@@ -364,14 +362,6 @@
           enable = true;
           config = ''
             (smex-initialize)
-          '';
-        };
-
-        company = {
-          enable = true;
-          config = ''
-            (progn
-              (add-hook 'after-init-hook 'global-company-mode))
           '';
         };
 
@@ -414,11 +404,6 @@
           '';
         };
 
-        lsp-ivy = {
-          enable = true;
-          command = [ "lsp-ivy-workspace-symbol" ];
-        };
-
         lsp-treemacs = {
           enable = true;
           command = [ "lsp-treemacs-error-list" ];
@@ -444,53 +429,6 @@
           config = ''
             (treemacs-icons-dired-mode)
           '';
-        };
-
-        all-the-icons = {
-          enable = true;
-        };
-
-        all-the-icons-ivy = {
-          enable = true;
-          config = ''
-            (all-the-icons-ivy-setup)
-          '';
-        };
-
-        clojure-mode = {
-          enable = true;
-        };
-
-        solidity-mode = {
-          enable = true;
-        };
-
-        haskell-mode = {
-          enable = true;
-        };
-
-        typescript-mode = {
-          enable = true;
-        };
-
-        nix-mode = {
-          enable = true;
-        };
-
-        rust-mode = {
-          enable = true;
-        };
-
-        julia-mode = {
-          enable = true;
-        };
-
-        prism = {
-          enable = true;
-        };
-
-        cloc = {
-          enable = true;
         };
 
         hl-todo = {
@@ -522,6 +460,75 @@
           enable = true;
           config = ''
             (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
+          '';
+        };
+
+        diff-hl = {
+          enable = true;
+          config = ''
+            (global-diff-hl-mode)
+          '';
+        };
+
+        savehist = {
+          enable = true;
+          config = ''
+            (savehist-mode)
+          '';
+        };
+
+        orderless = {
+          enable = true;
+          config = ''
+            (setq completion-styles '(orderless basic)
+                  completion-category-defaults nil
+                  completion-category-overrides '((file (styles partial-completion))))
+          '';
+        };
+
+        corfu = {
+          enable = true;
+          config = ''
+            (setq
+              corfu-cycle t
+              corfu-auto t)
+            (global-corfu-mode)
+          '';
+        };
+
+        cape = {
+          enable = true;
+          init = ''
+            (add-to-list 'completion-at-point-functions #'cape-dabbrev)
+            (add-to-list 'completion-at-point-functions #'cape-file)
+            (add-to-list 'completion-at-point-functions #'cape-elisp-block)
+            (add-to-list 'completion-at-point-functions #'cape-history)
+            ;; (add-to-list 'completion-at-point-functions #'cape-keyword)
+            ;; (add-to-list 'completion-at-point-functions #'cape-tex)
+            ;; (add-to-list 'completion-at-point-functions #'cape-sgml)
+            ;; (add-to-list 'completion-at-point-functions #'cape-rfc1345)
+            (add-to-list 'completion-at-point-functions #'cape-abbrev)
+            ;; (add-to-list 'completion-at-point-functions #'cape-dict)
+            ;; (add-to-list 'completion-at-point-functions #'cape-elisp-symbol)
+            ;; (add-to-list 'completion-at-point-functions #'cape-line)
+          '';
+        };
+
+        marginalia = {
+          enable = true;
+          config = ''
+            (marginalia-mode)
+          '';
+        };
+
+        consult = {
+          enable = true;
+        };
+
+        vertico = {
+          enable = true;
+          config = ''
+            (vertico-mode)
           '';
         };
 
