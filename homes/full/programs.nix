@@ -115,6 +115,7 @@
 
         (line-number-mode)
         (column-number-mode)
+        (setq display-line-numbers-type 'relative)
         (global-display-line-numbers-mode)
 
         (put 'narrow-to-region 'disabled nil)
@@ -301,6 +302,21 @@
         };
 
         avy = {
+          enable = true;
+        };
+
+        blamer = {
+          enable = true;
+          config = ''
+            (global-blamer-mode 1)
+          '';
+        };
+
+        git-timemachine = {
+          enable = true;
+        };
+
+        hyperbole = {
           enable = true;
         };
 
