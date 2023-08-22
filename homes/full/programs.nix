@@ -228,6 +228,13 @@
           '';
         };
 
+        evil-mc = {
+          enable = true;
+          config = ''
+            (global-evil-mc-mode 1)
+          '';
+        };
+
         coterm = {
           enable = true;
           config = ''
@@ -278,6 +285,10 @@
               "u" 'undo-fu-only-undo
               "C-r" 'undo-fu-only-redo
               "/" 'consult-line)
+
+            (general-def 'visual
+              "A" 'evil-mc-make-cursor-in-visual-selection-end
+              "I" 'evil-mc-make-cursor-in-visual-selection-beg)
 
             (general-def 'normal lsp-mode-map
               "K" 'lsp-describe-thing-at-point)
