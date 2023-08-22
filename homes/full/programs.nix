@@ -202,6 +202,7 @@
         julia-mode.enable = true;
         nix-mode.enable = true;
         prism.enable = true;
+        rainbow-mode.enable = true;
         rust-mode.enable = true;
         solidity-mode.enable = true;
         typescript-mode.enable = true;
@@ -269,7 +270,9 @@
               "x m" 'lsp-ui-imenu)
 
             (general-define-key
-             "M-/" 'avy-goto-char)
+             :keymaps 'override
+             "M-/" 'avy-goto-char
+             "C-." 'embark-act)
 
             (general-def 'normal
               "u" 'undo-fu-only-undo
@@ -278,6 +281,20 @@
 
             (general-def 'normal lsp-mode-map
               "K" 'lsp-describe-thing-at-point)
+          '';
+        };
+
+        highlight-thing = {
+          enable = true;
+          config = ''
+            (global-highlight-thing-mode)
+          '';
+        };
+
+        indent-guide = {
+          enable = true;
+          config = ''
+            (indent-guide-global-mode)
           '';
         };
 
@@ -486,6 +503,32 @@
           '';
         };
 
+        embark = {
+          enable = true;
+          after = [ "frames-only-mode" ];
+
+          init = ''
+            (setq prefix-help-command #'embark-prefix-help-command)
+            (add-hook 'eldoc-documentation-functions #'embark-eldoc-first-target)
+          '';
+
+          config = ''
+            ;; Hide the mode line of the Embark live/completions buffers
+            (add-to-list 'display-buffer-alist
+                         '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
+                           nil
+                           (window-parameters (mode-line-format . none))))
+
+             (add-to-list 'frames-only-mode-use-window-functions
+                          'embark-act)
+          '';
+        };
+
+        embark-consult = {
+          enable = true;
+          hook = [ "(embark-collect-mode . consult-preview-at-point-mode)" ];
+        };
+
         corfu = {
           enable = true;
           config = ''
@@ -534,6 +577,13 @@
 
         vterm = {
           enable = true;
+        };
+
+        whitespace-cleanup-mode = {
+          enable = true;
+          config = ''
+            (global-whitespace-cleanup-mode)
+          '';
         };
       };
 
