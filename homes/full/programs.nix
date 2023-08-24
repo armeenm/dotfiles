@@ -196,16 +196,24 @@
 
       usePackage = {
         all-the-icons.enable = true;
+        bazel.enable = true;
         cloc.enable = true;
         clojure-mode.enable = true;
+        devdocs.enable = true;
+        git-link.enable = true;
+        git-timemachine.enable = true;
         haskell-mode.enable = true;
         julia-mode.enable = true;
         nix-mode.enable = true;
         prism.enable = true;
         rainbow-mode.enable = true;
         rust-mode.enable = true;
+        smartparens.enable = true;
         solidity-mode.enable = true;
+        symbol-overlay.enable = true;
         typescript-mode.enable = true;
+        vterm.enable = true;
+        vundo.enable = true;
 
         evil = {
           enable = true;
@@ -235,6 +243,13 @@
           '';
         };
 
+        color-identifiers-mode = {
+          enable = true;
+          config = ''
+            (global-color-identifiers-mode)
+          '';
+        };
+
         coterm = {
           enable = true;
           config = ''
@@ -261,24 +276,21 @@
               "SPC" 'save-buffer
               "g" 'magit
               "w" 'evil-window-map
-              "l" 'lsp-command-map
               "p" 'projectile-command-map
               "b b" 'consult-buffer
               "b e" 'eval-buffer
               "b k" 'kill-buffer
               "b l" 'list-buffers
-              "/ c" 'avy-goto-char-2
               "/ f" 'find-file
               "/ r" 'consult-ripgrep
               "/ g" 'consult-git-grep
               "k f" 'describe-function
               "k v" 'describe-variable
-              "k s" 'describe-symbol
-              "x m" 'lsp-ui-imenu)
+              "k s" 'describe-symbol)
 
             (general-define-key
              :keymaps 'override
-             "M-/" 'avy-goto-char
+             "M-/" 'avy-goto-char-timer
              "C-." 'embark-act)
 
             (general-def 'normal
@@ -289,9 +301,6 @@
             (general-def 'visual
               "A" 'evil-mc-make-cursor-in-visual-selection-end
               "I" 'evil-mc-make-cursor-in-visual-selection-beg)
-
-            (general-def 'normal lsp-mode-map
-              "K" 'lsp-describe-thing-at-point)
           '';
         };
 
@@ -306,6 +315,14 @@
           enable = true;
           config = ''
             (indent-guide-global-mode)
+          '';
+        };
+
+        literate-calc-mode = {
+          enable = true;
+          config = ''
+            (setq literate-calc-mode-idle-time 0.1)
+            (literate-calc-mode)
           '';
         };
 
@@ -337,10 +354,6 @@
           config = ''
             (global-blamer-mode 1)
           '';
-        };
-
-        git-timemachine = {
-          enable = true;
         };
 
         hyperbole = {
@@ -382,59 +395,11 @@
           '';
         };
 
-        deadgrep = {
-          enable = true;
-        };
-
         smex = {
           enable = true;
           config = ''
             (smex-initialize)
           '';
-        };
-
-        lsp-mode = {
-          enable = true;
-          command = [ "lsp" "lsp-deferred" ];
-          init = ''
-            (setq lsp-keymap-prefix "C-c l")
-          '';
-          after = [ "direnv" "evil" "lsp-modeline" "lsp-headerline" "lsp-ui" "lsp-lens" ];
-          hook = [
-            "(c++-mode . lsp-deferred)"
-            "(c-mode . lsp-deferred)"
-            "(vhdl-mode . lsp-deferred)"
-            "(verilog-mode . lsp-deferred)"
-            "(haskell-mode . lsp-deferred)"
-            "(haskell-literate-mode . lsp-deferred)"
-            "(typescript-mode . lsp-deferred)"
-            "(python-mode . lsp-deferred)"
-            "(js-mode . lsp-deferred)"
-            "(html-mode . lsp-deferred)"
-            "(rust-mode . lsp-deferred)"
-            "(lsp-mode . lsp-enable-which-key-integration)"
-          ];
-          config = ''
-            (setq lsp-eslint-package-manager "yarn")
-            (setq lsp-lens-enable t)
-            (setq lsp-modeline-code-actions-enable nil)
-            (advice-add 'lsp :before #'direnv-update-environment)
-          '';
-        };
-
-        lsp-ui = {
-          enable = true;
-          hook = [
-            "(prog-mode . lsp-ui-mode)"
-          ];
-          config = ''
-            (setq lsp-ui-doc-position :bottom)
-          '';
-        };
-
-        lsp-treemacs = {
-          enable = true;
-          command = [ "lsp-treemacs-error-list" ];
         };
 
         treemacs = {
@@ -550,6 +515,14 @@
           '';
         };
 
+        corfu-terminal = {
+          enable = true;
+          config = ''
+            (unless (display-graphic-p)
+              (corfu-terminal-mode +1))
+          '';
+        };
+
         cape = {
           enable = true;
           init = ''
@@ -584,10 +557,6 @@
           config = ''
             (vertico-mode)
           '';
-        };
-
-        vterm = {
-          enable = true;
         };
 
         whitespace-cleanup-mode = {
