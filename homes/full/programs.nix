@@ -277,6 +277,11 @@
               "g" 'magit
               "w" 'evil-window-map
               "p" 'projectile-command-map
+              "s i" 'symbol-overlay-put
+              "s n" 'symbol-overlay-switch-forward
+              "s p" 'symbol-overlay-switch-backward
+              "s m" 'symbol-overlay-mode
+              "s x" 'symbol-overlay-remove-all
               "b b" 'consult-buffer
               "b e" 'eval-buffer
               "b k" 'kill-buffer
