@@ -53,6 +53,7 @@ in
       libva-utils
       lsof
       mediainfo
+      miniserve
       ncdu
       nix-tree
       onefetch
@@ -244,6 +245,8 @@ in
     tf = "terraform";
     zc = "zcalc -r";
     zl = "zellij";
+    bz = "bazel";
+    ms = "miniserve -HWqrgzl --readme --index index.html";
 
     noti = "noti ";
     doas = "doas ";
