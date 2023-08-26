@@ -196,14 +196,18 @@
 
       usePackage = {
         all-the-icons.enable = true;
+        avy.enable = true;
         bazel.enable = true;
         cloc.enable = true;
         clojure-mode.enable = true;
+        consult.enable = true;
         devdocs.enable = true;
         git-link.enable = true;
         git-timemachine.enable = true;
         haskell-mode.enable = true;
+        hyperbole.enable = true;
         julia-mode.enable = true;
+        magit.enable = true;
         nix-mode.enable = true;
         prism.enable = true;
         rainbow-mode.enable = true;
@@ -211,9 +215,109 @@
         smartparens.enable = true;
         solidity-mode.enable = true;
         symbol-overlay.enable = true;
+        treemacs.enable = true;
         typescript-mode.enable = true;
+        undo-fu.enable = true;
         vterm.enable = true;
         vundo.enable = true;
+        wgrep.enable = true;
+
+        blamer = {
+          enable = true;
+          config = ''
+            (global-blamer-mode 1)
+          '';
+        };
+
+        cape = {
+          enable = true;
+          init = ''
+            (add-to-list 'completion-at-point-functions #'cape-dabbrev)
+            (add-to-list 'completion-at-point-functions #'cape-file)
+            (add-to-list 'completion-at-point-functions #'cape-elisp-block)
+            (add-to-list 'completion-at-point-functions #'cape-history)
+            ;; (add-to-list 'completion-at-point-functions #'cape-keyword)
+            ;; (add-to-list 'completion-at-point-functions #'cape-tex)
+            ;; (add-to-list 'completion-at-point-functions #'cape-sgml)
+            ;; (add-to-list 'completion-at-point-functions #'cape-rfc1345)
+            (add-to-list 'completion-at-point-functions #'cape-abbrev)
+            ;; (add-to-list 'completion-at-point-functions #'cape-dict)
+            ;; (add-to-list 'completion-at-point-functions #'cape-elisp-symbol)
+            ;; (add-to-list 'completion-at-point-functions #'cape-line)
+          '';
+        };
+
+        color-identifiers-mode = {
+          enable = true;
+          config = ''
+            (global-color-identifiers-mode)
+          '';
+        };
+
+        corfu = {
+          enable = true;
+          config = ''
+            (setq
+              corfu-cycle t
+              corfu-auto t)
+            (global-corfu-mode)
+          '';
+        };
+
+        corfu-terminal = {
+          enable = true;
+          config = ''
+            (unless (display-graphic-p)
+              (corfu-terminal-mode +1))
+          '';
+        };
+
+        coterm = {
+          enable = true;
+          config = ''
+            (coterm-mode)
+          '';
+        };
+
+        direnv = {
+          enable = true;
+          config = ''
+            (direnv-mode)
+          '';
+        };
+
+        diff-hl = {
+          enable = true;
+          config = ''
+            (global-diff-hl-mode)
+          '';
+        };
+
+        embark = {
+          enable = true;
+          after = [ "frames-only-mode" ];
+
+          init = ''
+            (setq prefix-help-command #'embark-prefix-help-command)
+            (add-hook 'eldoc-documentation-functions #'embark-eldoc-first-target)
+          '';
+
+          config = ''
+            ;; Hide the mode line of the Embark live/completions buffers
+            (add-to-list 'display-buffer-alist
+                         '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
+                           nil
+                           (window-parameters (mode-line-format . none))))
+
+             (add-to-list 'frames-only-mode-use-window-functions
+                          'embark-act)
+          '';
+        };
+
+        embark-consult = {
+          enable = true;
+          hook = [ "(embark-collect-mode . consult-preview-at-point-mode)" ];
+        };
 
         evil = {
           enable = true;
@@ -243,24 +347,10 @@
           '';
         };
 
-        color-identifiers-mode = {
+        frames-only-mode = {
           enable = true;
           config = ''
-            (global-color-identifiers-mode)
-          '';
-        };
-
-        coterm = {
-          enable = true;
-          config = ''
-            (coterm-mode)
-          '';
-        };
-
-        gruvbox-theme = {
-          enable = true;
-          config = ''
-            (load-theme 'gruvbox-dark-medium)
+            (frames-only-mode)
           '';
         };
 
@@ -309,10 +399,24 @@
           '';
         };
 
+        gruvbox-theme = {
+          enable = true;
+          config = ''
+            (load-theme 'gruvbox-dark-medium)
+          '';
+        };
+
         highlight-thing = {
           enable = true;
           config = ''
             (global-highlight-thing-mode)
+          '';
+        };
+
+        hl-todo = {
+          enable = true;
+          config = ''
+            (global-hl-todo-mode)
           '';
         };
 
@@ -331,57 +435,26 @@
           '';
         };
 
-        frames-only-mode = {
+        marginalia = {
           enable = true;
           config = ''
-            (frames-only-mode)
+            (marginalia-mode)
           '';
         };
 
-        yasnippet = {
+        magit-todos = {
           enable = true;
           config = ''
-            (yas-global-mode)
+            (magit-todos-mode)
           '';
         };
 
-        yasnippet-snippets = {
-          enable = true;
-          after = [ "yasnippet" ];
-        };
-
-        avy = {
-          enable = true;
-        };
-
-        blamer = {
+        orderless = {
           enable = true;
           config = ''
-            (global-blamer-mode 1)
-          '';
-        };
-
-        hyperbole = {
-          enable = true;
-        };
-
-        undo-fu = {
-          enable = true;
-        };
-
-        undo-fu-session = {
-          enable = true;
-          config = ''
-            (setq undo-fu-session-incompatible-files '("/COMMIT_EDITMSG\\'" "/git-rebase-todo\\'"))
-            (global-undo-fu-session-mode)
-          '';
-        };
-
-        smooth-scrolling = {
-          enable = true;
-          config = ''
-            (setq smooth-scrolling-margin 5)
-            (smooth-scrolling-mode)
+            (setq completion-styles '(orderless basic)
+                  completion-category-defaults nil
+                  completion-category-overrides '((file (styles partial-completion))))
           '';
         };
 
@@ -392,11 +465,17 @@
           '';
         };
 
-        which-key = {
+        rainbow-delimiters = {
           enable = true;
           config = ''
-            (setq which-key-idle-delay 0.01)
-            (which-key-mode)
+            (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
+          '';
+        };
+
+        savehist = {
+          enable = true;
+          config = ''
+            (savehist-mode)
           '';
         };
 
@@ -407,8 +486,12 @@
           '';
         };
 
-        treemacs = {
+        smooth-scrolling = {
           enable = true;
+          config = ''
+            (setq smooth-scrolling-margin 5)
+            (smooth-scrolling-mode)
+          '';
         };
 
         treemacs-evil = {
@@ -429,132 +512,12 @@
           '';
         };
 
-        hl-todo = {
+        undo-fu-session = {
           enable = true;
           config = ''
-            (global-hl-todo-mode)
+            (setq undo-fu-session-incompatible-files '("/COMMIT_EDITMSG\\'" "/git-rebase-todo\\'"))
+            (global-undo-fu-session-mode)
           '';
-        };
-
-        magit = {
-          enable = true;
-        };
-
-        magit-todos = {
-          enable = true;
-          config = ''
-            (magit-todos-mode)
-          '';
-        };
-
-        direnv = {
-          enable = true;
-          config = ''
-            (direnv-mode)
-          '';
-        };
-
-        rainbow-delimiters = {
-          enable = true;
-          config = ''
-            (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
-          '';
-        };
-
-        diff-hl = {
-          enable = true;
-          config = ''
-            (global-diff-hl-mode)
-          '';
-        };
-
-        savehist = {
-          enable = true;
-          config = ''
-            (savehist-mode)
-          '';
-        };
-
-        orderless = {
-          enable = true;
-          config = ''
-            (setq completion-styles '(orderless basic)
-                  completion-category-defaults nil
-                  completion-category-overrides '((file (styles partial-completion))))
-          '';
-        };
-
-        embark = {
-          enable = true;
-          after = [ "frames-only-mode" ];
-
-          init = ''
-            (setq prefix-help-command #'embark-prefix-help-command)
-            (add-hook 'eldoc-documentation-functions #'embark-eldoc-first-target)
-          '';
-
-          config = ''
-            ;; Hide the mode line of the Embark live/completions buffers
-            (add-to-list 'display-buffer-alist
-                         '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
-                           nil
-                           (window-parameters (mode-line-format . none))))
-
-             (add-to-list 'frames-only-mode-use-window-functions
-                          'embark-act)
-          '';
-        };
-
-        embark-consult = {
-          enable = true;
-          hook = [ "(embark-collect-mode . consult-preview-at-point-mode)" ];
-        };
-
-        corfu = {
-          enable = true;
-          config = ''
-            (setq
-              corfu-cycle t
-              corfu-auto t)
-            (global-corfu-mode)
-          '';
-        };
-
-        corfu-terminal = {
-          enable = true;
-          config = ''
-            (unless (display-graphic-p)
-              (corfu-terminal-mode +1))
-          '';
-        };
-
-        cape = {
-          enable = true;
-          init = ''
-            (add-to-list 'completion-at-point-functions #'cape-dabbrev)
-            (add-to-list 'completion-at-point-functions #'cape-file)
-            (add-to-list 'completion-at-point-functions #'cape-elisp-block)
-            (add-to-list 'completion-at-point-functions #'cape-history)
-            ;; (add-to-list 'completion-at-point-functions #'cape-keyword)
-            ;; (add-to-list 'completion-at-point-functions #'cape-tex)
-            ;; (add-to-list 'completion-at-point-functions #'cape-sgml)
-            ;; (add-to-list 'completion-at-point-functions #'cape-rfc1345)
-            (add-to-list 'completion-at-point-functions #'cape-abbrev)
-            ;; (add-to-list 'completion-at-point-functions #'cape-dict)
-            ;; (add-to-list 'completion-at-point-functions #'cape-elisp-symbol)
-            ;; (add-to-list 'completion-at-point-functions #'cape-line)
-          '';
-        };
-
-        marginalia = {
-          enable = true;
-          config = ''
-            (marginalia-mode)
-          '';
-        };
-
-        consult = {
-          enable = true;
         };
 
         vertico = {
@@ -564,11 +527,31 @@
           '';
         };
 
+        which-key = {
+          enable = true;
+          config = ''
+            (setq which-key-idle-delay 0.01)
+            (which-key-mode)
+          '';
+        };
+
         whitespace-cleanup-mode = {
           enable = true;
           config = ''
             (global-whitespace-cleanup-mode)
           '';
+        };
+
+        yasnippet = {
+          enable = true;
+          config = ''
+            (yas-global-mode)
+          '';
+        };
+
+        yasnippet-snippets = {
+          enable = true;
+          after = [ "yasnippet" ];
         };
       };
 
