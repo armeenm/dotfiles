@@ -367,6 +367,7 @@
               "g" 'magit
               "w" 'evil-window-map
               "p" 'projectile-command-map
+              "r" 'vertico-repeat
               "s i" 'symbol-overlay-put
               "s n" 'symbol-overlay-switch-forward
               "s p" 'symbol-overlay-switch-backward
@@ -386,7 +387,8 @@
             (general-define-key
              :keymaps 'override
              "M-/" 'avy-goto-char-timer
-             "C-." 'embark-act)
+             "C-." 'embark-act
+             "M-." 'embark-dwim)
 
             (general-def 'normal
               "u" 'undo-fu-only-undo
@@ -396,6 +398,12 @@
             (general-def 'visual
               "A" 'evil-mc-make-cursor-in-visual-selection-end
               "I" 'evil-mc-make-cursor-in-visual-selection-beg)
+
+            (general-define-key
+             :keymaps 'vertico-map
+             "C-'" 'vertico-quick-jump
+             "C-o" 'vertico-quick-exit
+             "C-i" 'vertico-quick-insert)
           '';
         };
 
@@ -476,6 +484,7 @@
           enable = true;
           config = ''
             (savehist-mode)
+            (add-to-list 'savehist-additional-variables #'vertico-repeat-history)
           '';
         };
 
@@ -524,6 +533,29 @@
           enable = true;
           config = ''
             (vertico-mode)
+          '';
+        };
+
+        vertico-grid = {
+          enable = true;
+          config = ''
+            (vertico-grid-mode)
+          '';
+        };
+
+        vertico-quick.enable = true;
+
+        vertico-mouse = {
+          enable = true;
+          config = ''
+            (vertico-mouse-mode)
+          '';
+        };
+
+        vertico-repeat = {
+          enable = true;
+          config = ''
+            (add-hook 'minibuffer-setup-hook #'vertico-repeat-save)
           '';
         };
 
