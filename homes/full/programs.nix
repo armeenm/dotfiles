@@ -18,16 +18,16 @@
   bat = {
     enable = true;
     config = {
-      theme = "Dracula";
+      theme = "ayu";
     };
     themes = {
-      dracula = builtins.readFile (pkgs.fetchFromGitHub
+      ayu = builtins.readFile (pkgs.fetchFromGitHub
         {
-          owner = "dracula";
-          repo = "sublime";
-          rev = "26c57ec282abcaa76e57e055f38432bd827ac34e";
-          sha256 = "019hfl4zbn4vm4154hh3bwk6hm7bdxbr1hdww83nabxwjn99ndhv";
-        } + "/Dracula.tmTheme");
+          owner = "dempfi";
+          repo = "ayu";
+          rev = "4.0.3";
+          hash = "sha256-O0zoKAmCgSAHv2gcORYrorIlw0kdXN1+2k2Emtntc2g=";
+        } + "/ayu-dark.tmTheme");
     };
   };
 
@@ -407,10 +407,10 @@
           '';
         };
 
-        gruvbox-theme = {
+        ayu-theme = {
           enable = true;
           config = ''
-            (load-theme 'gruvbox-dark-medium)
+            (load-theme 'ayu-dark)
           '';
         };
 
@@ -539,7 +539,15 @@
         vertico-grid = {
           enable = true;
           config = ''
-            (vertico-grid-mode)
+            ;; TODO: Enable this only sometimes.
+            ;; (vertico-grid-mode)
+          '';
+        };
+
+        vertico-indexed = {
+          enable = true;
+          config = ''
+            (vertico-indexed-mode)
           '';
         };
 
@@ -614,24 +622,27 @@
       };
 
       colors = {
-        background = "282828";
-        foreground = "ebdbb2";
-        regular0 = "282828";
-        regular1 = "cc241d";
-        regular2 = "98971a";
-        regular3 = "d79921";
-        regular4 = "458588";
-        regular5 = "b16286";
-        regular6 = "689d6a";
-        regular7 = "a89984";
-        bright0 = "928374";
-        bright1 = "fb4934";
-        bright2 = "b8bb26";
-        bright3 = "fabd2f";
-        bright4 = "83a598";
-        bright5 = "d3869b";
-        bright6 = "8ec07c";
-        bright7 = "ebdbb2";
+        # Ayu theme.
+        background = "000919";
+        foreground = "c3c0bb";
+
+        regular0 = "242936"; # black
+        regular1 = "f28779"; # red
+        regular2 = "d5ff80"; # green
+        regular3 = "ffd173"; # yellow
+        regular4 = "73d0ff"; # blue
+        regular5 = "dfbfff"; # magenta
+        regular6 = "5ccfe6"; # cyan
+        regular7 = "cccac2"; # white
+
+        bright0 = "fcfcfc"; # bright black
+        bright1 = "f07171"; # bright red
+        bright2 = "86b300"; # bright gree
+        bright3 = "f2ae49"; # bright yellow
+        bright4 = "399ee6"; # bright blue
+        bright5 = "a37acc"; # bright magenta
+        bright6 = "55b4d4"; # bright cyan
+        bright7 = "5c6166"; # bright white
       };
     };
   };
@@ -661,7 +672,7 @@
     delta = {
       enable = true;
       options = {
-        syntax-theme = "Dracula";
+        syntax-theme = "ayu";
         line-numbers = true;
       };
     };
