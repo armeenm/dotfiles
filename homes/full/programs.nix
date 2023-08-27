@@ -59,8 +59,6 @@
         (push '(tool-bar-lines . nil) default-frame-alist)
         (push '(vertical-scroll-bars . nil) default-frame-alist)
 
-        (setq frame-title-format "")
-
         (set-face-attribute 'default nil
                             :family "Tamsyn"
                             :height 120
@@ -192,6 +190,17 @@
               save-interprogram-paste-before-kill t)
 
         (setq mouse-yank-at-point t)
+
+        (load-theme 'ayu-dark)
+
+        (defun set-background-for-terminal (&optional frame)
+          (or frame (setq frame (selected-frame)))
+          "Unsets the background color in terminal mode."
+          (unless (display-graphic-p frame)
+            (set-face-background 'default "unspecified-bg" frame)))
+
+        (add-hook 'after-make-frame-functions 'set-background-for-terminal)
+        (add-hook 'window-setup-hook 'set-background-for-terminal)
       '';
 
       usePackage = {
@@ -205,7 +214,6 @@
         git-link.enable = true;
         git-timemachine.enable = true;
         haskell-mode.enable = true;
-        hyperbole.enable = true;
         julia-mode.enable = true;
         magit.enable = true;
         nix-mode.enable = true;
@@ -266,9 +274,17 @@
 
         corfu-terminal = {
           enable = true;
+
+          defines = [ "corfu-terminal-mode" ];
+
           config = ''
-            (unless (display-graphic-p)
-              (corfu-terminal-mode +1))
+            (defun corfu-terminal-setup (frame)
+              (if (display-graphic-p frame)
+                  (corfu-terminal-mode -1)
+                  (corfu-terminal-mode)))
+
+            (mapc 'corfu-terminal-setup (frame-list))
+            (add-hook 'after-make-frame-functions 'corfu-terminal-setup)
           '';
         };
 
@@ -404,13 +420,6 @@
              "C-'" 'vertico-quick-jump
              "C-o" 'vertico-quick-exit
              "C-i" 'vertico-quick-insert)
-          '';
-        };
-
-        ayu-theme = {
-          enable = true;
-          config = ''
-            (load-theme 'ayu-dark)
           '';
         };
 
@@ -622,7 +631,7 @@
       };
 
       colors = {
-        # Ayu theme.
+        # Ayu dark theme.
         background = "000919";
         foreground = "c3c0bb";
 

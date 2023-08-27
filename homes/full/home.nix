@@ -218,6 +218,11 @@ in
         / forw-search ^W
       '';
     };
+
+    emacs-ayu-dark = {
+      source = "${root}/conf/emacs/ayu-dark-theme.el";
+      target = ".emacs.d/ayu-dark-theme.el";
+    };
   };
 
   sessionPath = [ "${home}/.local/bin" ];
