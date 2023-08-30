@@ -14,12 +14,13 @@ in
 {
   username = user.login;
   homeDirectory = home;
-  stateVersion = lib.mkForce "21.05";
+  stateVersion = sys.system.stateVersion;
 
   packages =
     ## Lang Specific ##
     (with pkgs; [
       gnuapl
+      nil
       shellcheck
     ]) ++
 
@@ -35,15 +36,11 @@ in
       comma
       direnv
       dos2unix
-      du-dust
-      duf
       fasd
       fd
       ffmpeg
       file
       gh
-      git-crypt
-      google-cloud-sdk
       htop
       hyperfine
       joshuto
@@ -56,8 +53,8 @@ in
       miniserve
       ncdu
       nix-tree
+      nurl
       onefetch
-      p7zip
       pandoc
       patchutils
       powertop
@@ -65,14 +62,12 @@ in
       pstree
       ripgrep
       scc
-      sd
       sl
       sops
       strace
       tcpdump
       tldr
       tmux
-      trash-cli
       unrar
       unzip
       xplr
@@ -85,19 +80,15 @@ in
       remmina
       bluetuith
       croc
-      curlie
-      dog
       gping
       iperf
       ipfs
       ldns
-      miraclecast
       mosh
       nmap
       scrcpy
       speedtest-cli
       w3m
-      wayvnc
       wget
       whois
       wireshark
@@ -118,7 +109,7 @@ in
       yubikey-manager-qt
       yubikey-personalization
       yubikey-personalization-gui
-      #yubioath-flutter
+      yubioath-flutter
     ]) ++
 
     ## Desktop Environment ##
@@ -135,7 +126,6 @@ in
       grim
       imv
       nomacs
-      session-desktop-appimage
       simple-scan
       slurp
       swappy
@@ -154,7 +144,6 @@ in
 
       fira-code
       fira-code-symbols
-      hack-font
       hicolor-icon-theme
       noto-fonts
       noto-fonts-cjk
