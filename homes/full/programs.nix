@@ -363,6 +363,14 @@
           '';
         };
 
+        evil-snipe = {
+          enable = true;
+          config = ''
+            (evil-snipe-mode 1)
+            (evil-snipe-override-mode 1)
+          '';
+        };
+
         frames-only-mode = {
           enable = true;
           config = ''
