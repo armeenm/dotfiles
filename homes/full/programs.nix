@@ -412,7 +412,14 @@
              :keymaps 'override
              "M-/" 'avy-goto-char-timer
              "C-." 'embark-act
-             "M-." 'embark-dwim)
+             "M-." 'embark-dwim
+             "M-s e" 'consult-isearch-history)
+
+            (general-define-key
+             :keymaps 'isearch-mode-map
+             "M-e" 'consult-isearch-history
+             "M-s l" 'consult-line
+             "M-s L" 'consult-line-multi)
 
             (general-def 'normal
               "u" 'undo-fu-only-undo
