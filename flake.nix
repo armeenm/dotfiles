@@ -2,29 +2,29 @@
   description = "Nix-based config";
 
   inputs = {
-    nixpkgs.url = github:nixos/nixpkgs/nixos-unstable-small;
-    nixpkgs-stable.url = github:nixos/nixpkgs/nixos-23.05-small;
-    nixpkgs-old.url = github:nixos/nixpkgs/nixos-22.11;
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable-small";
+    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-23.05-small";
+    nixpkgs-old.url = "github:nixos/nixpkgs/nixos-22.11";
 
-    deploy-rs.url = github:serokell/deploy-rs;
-    home-manager.url = github:nix-community/home-manager;
-    nixos-hardware.url = github:nixos/nixos-hardware;
-    nur.url = github:nix-community/nur;
-    sops-nix.url = github:Mic92/sops-nix;
-    nix-misc.url = github:armeenm/nix-misc;
+    deploy-rs.url = "github:serokell/deploy-rs";
+    home-manager.url = "github:nix-community/home-manager";
+    nixos-hardware.url = "github:nixos/nixos-hardware";
+    nur.url = "github:nix-community/nur";
+    sops-nix.url = "github:Mic92/sops-nix";
+    nix-misc.url = "github:armeenm/nix-misc";
 
     emacs-overlay = {
-      url = github:nix-community/emacs-overlay;
+      url = "github:nix-community/emacs-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     hyprland = {
-      url = github:hyprwm/Hyprland;
+      url = "github:hyprwm/Hyprland";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     nix-on-droid = {
-      url = github:t184256/nix-on-droid;
+      url = "github:t184256/nix-on-droid";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -48,7 +48,7 @@
     ));
 
     root = ./.;
-    user = rec {
+    user = {
       login = "armeen";
       name = "Armeen Mahdian";
       email = "armeen@fulminous-hill.com";
@@ -133,6 +133,7 @@
           nixUnstable
           openssl
           sops
+          nil
         ];
 
         shellHook = ''
