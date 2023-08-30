@@ -488,5 +488,12 @@
 
   zramSwap.enable = true;
 
-  system.stateVersion = lib.mkForce "22.11";
+  system = {
+    stateVersion = lib.mkForce "22.11";
+
+    activationScripts.report-changes = ''
+        PATH=$PATH:${lib.makeBinPath [ pkgs.nvd pkgs.nix ]}
+        nvd diff $(ls -dv /nix/var/nix/profiles/system-*-link | tail -2)
+    '';
+  };
 }
