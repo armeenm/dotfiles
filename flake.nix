@@ -140,10 +140,11 @@
       default = mkShell {
         packages = [
           inputs.deploy-rs.packages.${system}.default
+          nil
           nixUnstable
+          nvd
           openssl
           sops
-          nil
         ];
 
         shellHook = ''
