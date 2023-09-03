@@ -10,12 +10,22 @@
     home-manager.url = "github:nix-community/home-manager";
     nixos-hardware.url = "github:nixos/nixos-hardware";
     nur.url = "github:nix-community/nur";
-    sops-nix.url = "github:Mic92/sops-nix";
-    nix-misc.url = "github:armeenm/nix-misc";
+
+    nix-misc = {
+      url = "github:armeenm/nix-misc";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs-stable.follows = "nixpkgs-stable";
+    };
 
     emacs-overlay = {
       url = "github:nix-community/emacs-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs-stable.follows = "nixpkgs-stable";
     };
 
     hyprland = {

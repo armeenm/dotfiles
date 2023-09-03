@@ -133,7 +133,6 @@ in
       wl-clipboard
       wlr-randr
 
-      tamsyn
       xdg-user-dirs
       xdg-utils
       xorg.xeyes
@@ -144,10 +143,12 @@ in
 
       fira-code
       fira-code-symbols
+      hack-font
       hicolor-icon-theme
       noto-fonts
       noto-fonts-cjk
       noto-fonts-emoji
+      tamsyn
 
       gtk3
 
