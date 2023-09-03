@@ -79,14 +79,14 @@
       lithium = nixpkgs.lib.nixosSystem {
         modules = modules ++ [
           ./hosts/lithium
-          ./homes/full
+          ./home
         ];
       };
 
       argentum = nixpkgs.lib.nixosSystem {
         modules = modules ++ [
           ./hosts/argentum
-          ./homes/full
+          ./home
           inputs.nixos-hardware.nixosModules.framework-12th-gen-intel
         ];
       };
