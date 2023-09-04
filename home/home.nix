@@ -140,6 +140,7 @@ in
 
       breeze-icons
       gnome.adwaita-icon-theme
+      material-design-icons
 
       fira-code
       fira-code-symbols
