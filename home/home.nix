@@ -35,6 +35,7 @@ in
       cloc
       comma
       direnv
+      duf
       dos2unix
       fasd
       fd

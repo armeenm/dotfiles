@@ -17,6 +17,11 @@
 
   boot = {
     initrd = {
+      systemd = {
+        enable = true;
+        network.enable = true;
+      };
+
       kernelModules = [ "amdgpu" ];
       includeDefaultModules = false;
       verbose = false;
@@ -120,6 +125,7 @@
     hostId = "5a656e88";
     hostName = "lithium";
 
+    useNetworkd = true;
     wireless.iwd.enable = true;
   };
 
@@ -167,6 +173,7 @@
 
   nix = {
     package = pkgs.nixUnstable;
+    channel.enable = true; # NOTE: We should try to get rid of this.
     nixPath = lib.mkForce [ "nixpkgs=${config.nix.registry.nixpkgs.flake}" ];
 
     registry = {
@@ -285,6 +292,8 @@
     suppressedSystemUnits = [
       "sys-kernel-debug.mount"
     ];
+
+    services.systemd-networkd-wait-online.enable = lib.mkForce false;
   };
 
   security = {
