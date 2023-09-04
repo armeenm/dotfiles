@@ -4,7 +4,6 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable-small";
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-23.05-small";
-    nixpkgs-old.url = "github:nixos/nixpkgs/nixos-22.11";
 
     deploy-rs.url = "github:serokell/deploy-rs";
     home-manager.url = "github:nix-community/home-manager";
