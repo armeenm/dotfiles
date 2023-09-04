@@ -22,6 +22,11 @@
       inputs.nixpkgs-stable.follows = "nixpkgs-stable";
     };
 
+    lanzaboote = {
+      url = "github:nix-community/lanzaboote/v0.3.0";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     emacs-overlay = {
       url = "github:nix-community/emacs-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -69,6 +74,7 @@
       inputs.hyprland.nixosModules.default
       inputs.nur.nixosModules.nur
       inputs.sops-nix.nixosModules.sops
+      inputs.lanzaboote.nixosModules.lanzaboote
       { nixpkgs = { inherit config overlays; }; }
       { _module.args = { inherit inputs root user; }; }
       ./modules

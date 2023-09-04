@@ -27,6 +27,11 @@
       verbose = false;
     };
 
+    lanzaboote = {
+      enable = true;
+      pkiBundle = "/etc/secureboot";
+    };
+
     binfmt.emulatedSystems = [ "aarch64-linux" ];
     supportedFilesystems = [ "zfs" ];
     consoleLogLevel = 0;
@@ -115,7 +120,7 @@
       efi.canTouchEfiVariables = true;
 
       systemd-boot = {
-        enable = true;
+        enable = lib.mkForce false; # NOTE: Conflicts with lanzaboote.
         editor = false;
       };
     };
@@ -398,15 +403,16 @@
     defaultPackages = lib.mkForce [ ];
 
     systemPackages = (with pkgs; [
-      rdma-core
-      lshw
-      opensm
-      radeontop
-      smartmontools
-      usbutils
       hdparm
       lm_sensors
+      lshw
+      opensm
       pciutils
+      radeontop
+      rdma-core
+      sbctl
+      smartmontools
+      usbutils
 
       git
       rsync
