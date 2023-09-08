@@ -8,7 +8,6 @@
     deploy-rs.url = "github:serokell/deploy-rs";
     home-manager.url = "github:nix-community/home-manager";
     nixos-hardware.url = "github:nixos/nixos-hardware";
-    nur.url = "github:nix-community/nur";
 
     nix-misc = {
       url = "github:armeenm/nix-misc";
@@ -71,7 +70,6 @@
     modules = [
       inputs.home-manager.nixosModules.home-manager
       inputs.hyprland.nixosModules.default
-      inputs.nur.nixosModules.nur
       inputs.sops-nix.nixosModules.sops
       inputs.lanzaboote.nixosModules.lanzaboote
       { nixpkgs = { inherit config overlays; }; }

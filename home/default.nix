@@ -17,8 +17,6 @@ in
     xdg = import ./xdg.nix args;
     gtk = import ./gtk.nix args;
 
-    imports = [ config.nur.repos.rycee.hmModules.emacs-init ];
-
     fonts.fontconfig.enable = lib.mkForce true;
   };
 }
