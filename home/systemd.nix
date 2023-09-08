@@ -17,6 +17,8 @@
         };
       };
 
+      # NOTE: This is all gigabungled.
+      /*
       hyprland = {
         Unit = {
           Description = "A dynamic tiling Wayland compositor that doesn't sacrifice on its looks.";
@@ -54,6 +56,7 @@
           ExecStart = "${sys.programs.hyprland.package}/bin/Hyprland";
         };
       };
+       */
     };
   };
 }

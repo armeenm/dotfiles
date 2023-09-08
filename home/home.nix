@@ -17,22 +17,13 @@ in
   stateVersion = sys.system.stateVersion;
 
   packages =
-    ## Lang Specific ##
-    (with pkgs; [
-      gnuapl
-      nil
-      shellcheck
-    ]) ++
-
     ## CLI Utils ##
     (with nix-misc; [
       git-fuzzy
     ]) ++
 
     (with pkgs; [
-      bottom
       btop
-      cloc
       comma
       direnv
       duf
@@ -44,7 +35,6 @@ in
       gh
       htop
       hyperfine
-      joshuto
       jq
       killall
       libnotify
@@ -56,20 +46,14 @@ in
       nix-tree
       nurl
       onefetch
-      pandoc
       patchutils
       powertop
       procs
-      pstree
       ripgrep
       scc
-      sl
       sops
       strace
       tcpdump
-      tldr
-      tmux
-      unrar
       unzip
       xplr
       zellij
@@ -80,37 +64,19 @@ in
     (with pkgs; [
       remmina
       bluetuith
-      croc
-      gping
       iperf
-      ipfs
       ldns
-      mosh
       nmap
-      scrcpy
       speedtest-cli
-      w3m
       wget
       whois
       wireshark
-      xh
     ]) ++
 
     ## Privacy and Security ##
     (with pkgs; [
       bubblewrap
-      keepassxc
-      ledger-live-desktop
       monero
-      monero-gui
-      tor-browser-bundle-bin
-      usbguard
-      veracrypt
-      yubikey-manager
-      yubikey-manager-qt
-      yubikey-personalization
-      yubikey-personalization-gui
-      yubioath-flutter
     ]) ++
 
     ## Desktop Environment ##
@@ -118,9 +84,7 @@ in
       firefox-wayland
       google-chrome
 
-      audacity
       gimp-with-plugins
-      inkscape
       libreoffice-fresh
 
       bemenu
@@ -161,7 +125,6 @@ in
     (with pkgs; [
       ntfs3g
       dosfstools
-      efibootmgr
       exfatprogs
     ]) ++
 
@@ -171,7 +134,6 @@ in
       mpc_cli
       pamixer
       pavucontrol
-      streamlink
       vlc
       yt-dlp
       playerctl
@@ -180,7 +142,6 @@ in
     ## Communication ##
     (with pkgs; [
       discord-canary
-      element-desktop
       weechat
       zoom-us
     ]);
