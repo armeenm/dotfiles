@@ -251,6 +251,12 @@
       ];
     };
 
+    resolved = {
+      enable = true;
+      fallbackDns = lib.mkForce [];
+      dnssec = "false";
+    };
+
     tor = {
       enable = true;
       client.enable = true;
