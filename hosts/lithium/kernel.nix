@@ -86,7 +86,7 @@ linuxPackagesFor (kernel.override {
     PAGE_TABLE_ISOLATION = yes;
     PERSISTENT_KEYS = yes;
     PROC_KCORE = no;
-    PROC_PAGE_MONITOR = no;
+    PROC_PAGE_MONITOR = yes; # NOTE: Needed for CRIU.
     PROFILING = no;
     PSTORE_COMPRESS_DEFAULT = freeform "zstd";
     PSTORE_DEFLATE_COMPRESS = yes;
