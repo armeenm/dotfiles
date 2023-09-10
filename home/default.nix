@@ -16,6 +16,7 @@ in
     systemd = import ./systemd.nix args;
     xdg = import ./xdg.nix args;
     gtk = import ./gtk.nix args;
+    wayland = import ./wayland.nix args;
 
     fonts.fontconfig.enable = lib.mkForce true;
   };

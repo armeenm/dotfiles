@@ -27,8 +27,6 @@ in
   configFile = {
     "zsh/.p10k.zsh".source = "${conf}/zsh/p10k.zsh";
     "yt-dlp/config".source = "${conf}/yt-dlp/config";
-    "xdg-desktop-portal-wlr/Hyprland".source = "${conf}/hypr/xdg-desktop-portal-wlr";
-    "hypr/hyprland.conf".source = "${conf}/hypr/hyprland.conf";
     "waybar/style.css".source = "${conf}/waybar/style.css";
   };
 }
