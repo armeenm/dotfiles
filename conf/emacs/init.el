@@ -213,8 +213,11 @@
   :config
   (setq
    corfu-cycle t
-   corfu-auto t)
-  (global-corfu-mode))
+   corfu-auto t
+   corfu-quit-no-match t
+   corfu-preselect 'directory)
+  :bind (:map corfu-map ("RET" . nil))
+  :init (global-corfu-mode))
 
 (use-package corfu-terminal
   :defines corfu-terminal-mode
