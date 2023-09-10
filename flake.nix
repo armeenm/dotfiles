@@ -26,7 +26,7 @@
     };
 
     emacs-overlay = {
-      url = "github:linj-fork/emacs-overlay/fix-default.el-version";
+      url = "github:nix-community/emacs-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.nixpkgs-stable.follows = "nixpkgs-stable";
     };

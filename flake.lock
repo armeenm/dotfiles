@@ -64,16 +64,15 @@
         ]
       },
       "locked": {
-        "lastModified": 1694134061,
-        "narHash": "sha256-wyINyjV8SppfLU1rLKRn8G73WqMAzuYsMReiWFb2GmQ=",
-        "owner": "linj-fork",
+        "lastModified": 1694255179,
+        "narHash": "sha256-T/GkCkdkvE/r6FFu5srD4tQnJ1Wz8r3XOHOMP+5OLDM=",
+        "owner": "nix-community",
         "repo": "emacs-overlay",
-        "rev": "e04309d19514494ae641111c75883c953e518a65",
+        "rev": "8e921c1a525227797dcceff637dff1077a57c223",
         "type": "github"
       },
       "original": {
-        "owner": "linj-fork",
-        "ref": "fix-default.el-version",
+        "owner": "nix-community",
         "repo": "emacs-overlay",
         "type": "github"
       }
