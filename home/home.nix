@@ -24,10 +24,11 @@ in
 
     (with pkgs; [
       btop
+      bubblewrap
       comma
       direnv
-      duf
       dos2unix
+      duf
       fasd
       fd
       ffmpeg
@@ -62,21 +63,16 @@ in
 
     ## Networking ##
     (with pkgs; [
-      remmina
       bluetuith
       iperf
       ldns
+      monero
       nmap
+      remmina
       speedtest-cli
       wget
       whois
       wireshark
-    ]) ++
-
-    ## Privacy and Security ##
-    (with pkgs; [
-      bubblewrap
-      monero
     ]) ++
 
     ## Desktop Environment ##
