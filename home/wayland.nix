@@ -1,16 +1,20 @@
 { config, sys, pkgs, lib, root, user, inputs, ... }:
 
-{
+let
+  left = "DP-2";
+  right = "DP-1";
+
+in {
   windowManager.hyprland = {
     enable = true;
     settings = {
       monitor = [
-        "DP-1,highrr,0x525,1"
-        "DP-2,preferred,2560x0,1"
+        "${left},highrr,0x525,1"
+        "${right},preferred,2560x0,1"
         ",preferred,auto,1"
       ];
 
-      workspace = "DP-1,1";
+      workspace = "${left},1";
 
       input = {
         kb_options = "caps:escape";
@@ -71,12 +75,12 @@
         "SUPER,F,fullscreen,1"
         "SUPER_SHIFT,F,fullscreen,0"
 
-        "SUPER,W,focusmonitor,DP-1"
-        "SUPER,E,focusmonitor,DP-2"
-        "SUPER_SHIFT,W,movewindow,mon:DP-1"
-        "SUPER_SHIFT,E,movewindow,mon:DP-2"
-        "SUPER_ALT,W,movecurrentworkspacetomonitor,DP-1"
-        "SUPER_ALT,E,movecurrentworkspacetomonitor,DP-2"
+        "SUPER,W,focusmonitor,${left}"
+        "SUPER,E,focusmonitor,${right}"
+        "SUPER_SHIFT,W,movewindow,mon:${left}"
+        "SUPER_SHIFT,E,movewindow,mon:${right}"
+        "SUPER_ALT,W,movecurrentworkspacetomonitor,${left}"
+        "SUPER_ALT,E,movecurrentworkspacetomonitor,${right}"
 
         "SUPER_ALT,H,resizeactive,-30 0"
         "SUPER_ALT,J,resizeactive,0 30"
