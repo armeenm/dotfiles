@@ -390,7 +390,7 @@
 
       "${user.login}" = {
         isNormalUser = true;
-        passwordFile = config.sops.secrets."${user.login}-pw".path;
+        hashedPasswordFile = config.sops.secrets."${user.login}-pw".path;
         extraGroups = [
           "adbusers"
           "docker"
