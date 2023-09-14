@@ -24,6 +24,7 @@ let
     "2620:fe::fe:11@853#dns.quad9.net"
     "9.9.9.11@853#dns.quad9.net"
     "149.112.112.11@853#dns.quad9.net"
+    "1.1.1.1@853#cloudflare-dns.com"
   ];
 
   soa = ''
