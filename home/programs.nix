@@ -61,6 +61,7 @@
         term = "xterm-256color";
         font = "Tamsyn:size=12";
         dpi-aware = "no";
+        pad = "20x20";
       };
 
       mouse = {

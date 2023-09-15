@@ -33,8 +33,8 @@ in {
         gaps_in = 5;
         gaps_out = 10;
         border_size = 2;
-        "col.active_border" = "0xffc2bc21";
-        "col.inactive_border" = "0x66333333";
+        "col.active_border" = "rgba(9f40ffcc)";
+        "col.inactive_border" = "rgba(0b0e1411)";
         apply_sens_to_raw = 0;
       };
 
