@@ -54,4 +54,6 @@
     enable = true;
     network.startWhenNeeded = true;
   };
+
+  mpd-mpris.enable = true;
 }

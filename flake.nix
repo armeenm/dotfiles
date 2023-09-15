@@ -40,6 +40,11 @@
       url = "github:t184256/nix-on-droid";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    mpd-mpris = {
+      url = "github:natsukagami/mpd-mpris";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs@{ self, nixpkgs, ... }: let
@@ -72,6 +77,7 @@
       inputs.hyprland.nixosModules.default
       inputs.sops-nix.nixosModules.sops
       inputs.lanzaboote.nixosModules.lanzaboote
+      inputs.mpd-mpris.homeManagerModules.default
       { nixpkgs = { inherit config overlays; }; }
       { _module.args = { inherit inputs root user; }; }
       ./modules
