@@ -100,6 +100,13 @@
         ];
       };
 
+      boron = nixpkgs.lib.nixosSystem {
+        modules = modules ++ [
+          ./hosts/boron
+          ./home
+        ];
+      };
+
       carbon = nixpkgs.lib.nixosSystem {
         modules = modules ++ [
           ./hosts/carbon
@@ -140,6 +147,15 @@
             user = "root";
             sudo = "doas -u";
             path = inputs.deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.lithium;
+          };
+        };
+
+        boron = {
+          hostname = "boron";
+          profiles.system = {
+            user = "root";
+            sudo = "doas -u";
+            path = inputs.deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.boron;
           };
         };
       };
