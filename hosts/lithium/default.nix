@@ -321,6 +321,7 @@
     apparmor.enable = true;
     auditd.enable = true;
     rtkit.enable = true;
+    polkit.enable = true;
     sudo.enable = false;
 
     acme = {

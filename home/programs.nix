@@ -69,6 +69,7 @@
       };
 
       colors = {
+        # TODO: Base16?
         # Ayu dark theme.
         background = "000919";
         foreground = "c3c0bb";
