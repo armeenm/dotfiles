@@ -126,17 +126,10 @@
     };
 
     extraConfig = {
-      init = {
-        defaultBranch = "master";
-      };
-
-      credential = {
-        helper = "store";
-      };
-
-      core = {
-        editor = "${config.home.sessionVariables.EDITOR}";
-      };
+      init.defaultBranch = "master";
+      credential.helper = "store";
+      core.editor = "${config.home.sessionVariables.EDITOR}";
+      push.autoSetupRemote = true;
     };
   };
 
