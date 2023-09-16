@@ -72,14 +72,17 @@
       email = "armeen@fulminous-hill.com";
     };
 
-    modules = [
+    hmModules = [
+      inputs.mpd-mpris.homeManagerModules.default
+      { _module.args = { inherit inputs root user; }; }
+    ];
+
+    modules = hmModules ++ [
       inputs.home-manager.nixosModules.home-manager
       inputs.hyprland.nixosModules.default
       inputs.sops-nix.nixosModules.sops
       inputs.lanzaboote.nixosModules.lanzaboote
-      inputs.mpd-mpris.homeManagerModules.default
       { nixpkgs = { inherit config overlays; }; }
-      { _module.args = { inherit inputs root user; }; }
       ./modules
     ];
 
@@ -121,6 +124,13 @@
         ];
       };
     };
+
+    homeConfigurations = forAllSystems (system: pkgs: with pkgs; {
+      foo = inputs.home-manager.lib.homeManagerConfiguration {
+        inherit pkgs;
+        modules = hmModules ++ [ ./home ];
+      };
+    });
 
     nixOnDroidConfigurations = {
       default = inputs.nix-on-droid.lib.nixOnDroidConfiguration {
