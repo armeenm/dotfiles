@@ -73,7 +73,7 @@
     };
 
     hmModules = [
-      inputs.mpd-mpris.homeManagerModules.default
+      #inputs.mpd-mpris.homeManagerModules.default
       { _module.args = { inherit inputs root user; }; }
     ];
 
@@ -86,12 +86,13 @@
       ./modules
     ];
 
-  in {
+  in rec {
     nixosConfigurations = {
       lithium = nixpkgs.lib.nixosSystem {
         modules = modules ++ [
           ./hosts/lithium
-          ./home
+          { home-manager.users.armeen = homeConfigurations.x86_64-linux.default.config; }
+          #./home
         ];
       };
 
@@ -126,7 +127,7 @@
     };
 
     homeConfigurations = forAllSystems (system: pkgs: with pkgs; {
-      foo = inputs.home-manager.lib.homeManagerConfiguration {
+      default = inputs.home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         modules = hmModules ++ [ ./home ];
       };
