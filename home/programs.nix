@@ -10,6 +10,17 @@
   zathura.enable = true;
   zoxide.enable = true;
 
+  atuin = {
+    enable = true;
+
+    settings = {
+      inline_height = 30;
+      show_preview = true;
+      auto_sync = false;
+      update_check = false;
+    };
+  };
+
   bash = {
     enable = true;
     historyFile = "${config.xdg.cacheHome}/bash/history";
@@ -264,7 +275,6 @@
     enableCompletion = true;
     enableVteIntegration = true;
     syntaxHighlighting.enable = true;
-    historySubstringSearch.enable = true;
 
     autocd = true;
     defaultKeymap = "viins";
@@ -277,6 +287,15 @@
     };
 
     initExtraFirst = ''
+      function zshaddhistory() { return 1 }
+
+      bindkey '^ ' autosuggest-accept
+      _zsh_autosuggest_strategy_atuin_top() {
+          suggestion=$(atuin search --cmd-only --limit 1 --search-mode prefix $1)
+      }
+
+      ZSH_AUTOSUGGEST_STRATEGY=atuin_top
+
       source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
       if [[ -r "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh" ]]; then
         source "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh"
