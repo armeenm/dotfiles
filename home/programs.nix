@@ -18,6 +18,8 @@
       show_preview = true;
       auto_sync = false;
       update_check = false;
+      invert = true;
+      workspaces = true;
     };
   };
 
