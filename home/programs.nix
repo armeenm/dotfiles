@@ -213,7 +213,7 @@
         "$git_commit"
         "$git_state"
         "$git_status"
-        "$fill "
+        "$fill"
         "$git_metrics"
         "$fill "
         "$time"
@@ -301,6 +301,7 @@
 
       git_metrics = {
         disabled = false;
+        format = "( [+$added]($added_style) )([-$deleted]($deleted_style) )";
       };
 
       golang = {
