@@ -1,3 +1,4 @@
+(setq debug-on-error t)
 (auto-compression-mode 1)
 (push '(menu-bar-lines . 0) default-frame-alist)
 (push '(tool-bar-lines . nil) default-frame-alist)
@@ -145,6 +146,10 @@
 
 (require 'use-package-ensure)
 (setq use-package-always-ensure t)
+
+(use-package bind-key
+  :config
+  (add-to-list 'same-window-buffer-names "*Personal Keybindings*"))
 
 (use-package all-the-icons)
 (use-package avy)
