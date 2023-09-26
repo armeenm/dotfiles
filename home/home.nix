@@ -10,6 +10,10 @@ let
 
   # TODO: Factor this out along with nixpkgs.hostPlatform
   nix-misc = inputs.nix-misc.packages.x86_64-linux;
+
+  editor = lib.getBin (pkgs.writeShellScript "editor" ''
+    exec ${lib.getBin config.services.emacs.package}/bin/emacsclient -ct $@
+  '');
 in
 {
   username = user.login;
@@ -184,9 +188,7 @@ in
     MOZ_ENABLE_WAYLAND = "1";
     XKB_DEFAULT_OPTIONS = "caps:escape";
 
-    EDITOR = lib.getBin (pkgs.writeShellScript "editor" ''
-      exec ${lib.getBin config.services.emacs.package}/bin/emacsclient -ct $@
-    '');
+    EDITOR = editor;
   };
 
   shellAliases = {
@@ -211,8 +213,8 @@ in
     uc = "systemctl --user";
     udc = "udisksctl";
 
-    vi = "$EDITOR -t";
-    vim = "$EDITOR -t";
+    vi = "${editor} -t";
+    vim = "${editor} -t";
 
     rscp = "rsync -ahvP";
   };

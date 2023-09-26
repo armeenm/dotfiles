@@ -18,7 +18,7 @@
       show_preview = true;
       auto_sync = false;
       update_check = false;
-      invert = true;
+      invert = false;
       workspaces = true;
     };
   };
@@ -167,11 +167,253 @@
     ];
   };
 
+  nushell = {
+    enable = true;
+
+    shellAliases = config.home.shellAliases;
+
+    envFile.text = ''
+      $env.config = {
+        show_banner: false,
+        keybindings: [],
+        edit_mode: vi,
+      }
+    '';
+  };
+
   readline = {
     enable = true;
     extraConfig = ''
       set editing-mode vi
     '';
+  };
+
+  starship = {
+    enable = true;
+    #enableZshIntegration = false;
+
+    settings = {
+      add_newline = false;
+      continuation_prompt = ">> ";
+
+      character = {
+        success_symbol = "[>](green)";
+        error_symbol = "[>](red)";
+        vimcmd_symbol = "[<](green)";
+      };
+
+      fill = {
+        symbol = "-";
+        style = "dimmed white";
+      };
+
+      format = lib.concatStrings [
+        "$username"
+        "$hostname"
+        "$localip"
+        "$shlvl"
+        "$directory"
+        "$git_branch"
+        "$git_commit"
+        "$git_state"
+        "$git_status"
+        "$fill "
+        "$git_metrics"
+        "$fill "
+        "$all"
+        "$character"
+      ];
+
+      aws = {
+        format = "[$symbol( $profile)($region)($duration)]($style) ";
+        symbol = "aws";
+      };
+
+      c = {
+        format = "[$symbol( $version(-$name))]($style) ";
+        symbol = "c";
+      };
+
+      cmake = {
+        format = "[$symbol( $version)]($style) ";
+        symbol = "cmake";
+      };
+
+      cmd_duration = {
+        format = "[$duration]($style) ";
+      };
+
+      conda = {
+        format = "[$symbol $environment]($style) ";
+        symbol = "conda";
+      };
+
+      dart = {
+        format = "[$symbol( $version)]($style) ";
+        symbol = "dart";
+      };
+
+      docker_context = {
+        format = "[$symbol $context]($style) ";
+        symbol = "docker";
+      };
+
+      gcloud = {
+        format = "[$symbol $account(@$domain)($region)]($style) ";
+        symbol = "gcp";
+      };
+
+      git_branch = {
+        format = "[$branch]($style) ";
+      };
+
+      git_commit = {
+        tag_symbol = " tag ";
+      };
+
+      git_status = {
+        format = "([$all_status$ahead_behind ]($style))";
+        style = "#b87200";
+
+        diverged = "<$behind_count>$ahead_count";
+
+        conflicted = "=$count";
+        ahead = ">$count";
+        behind = "<$count";
+        untracked = "?$count";
+        stashed = "*$count";
+        modified = "!$count";
+        staged = "+$count";
+        renamed = "r$count";
+        deleted = "x$count";
+      };
+
+      git_metrics = {
+        disabled = false;
+      };
+
+      golang = {
+        format = "[$symbol( $version)]($style) ";
+        symbol = "go";
+      };
+
+      gradle = {
+        format = "[$symbol( $version)]($style) ";
+        symbol = "gradle";
+      };
+
+      haskell = {
+        format = "[$symbol( $version)]($style) ";
+        symbol = "hs";
+      };
+
+      helm = {
+        format = "[$symbol( $version)]($style) ";
+        symbol = "helm";
+      };
+
+      java = {
+        format = "[$symbol( $version)]($style) ";
+        symbol = "java";
+      };
+
+      julia = {
+        format = "[$symbol( $version)]($style) ";
+        symbol = "jl";
+      };
+
+      kotlin = {
+        format = "[$symbol( $version)]($style) ";
+        symbol = "kt";
+      };
+
+      kubernetes = {
+        format = "[$symbol $context( $namespace)]($style) ";
+        symbol = "k8s";
+      };
+
+      lua = {
+        format = "[$symbol( $version)]($style) ";
+        symbol = "lua";
+      };
+
+      memory_usage = {
+        format = "$symbol [$ram( | $swap)]($style) ";
+        symbol = "ram";
+      };
+
+      meson = {
+        format = "[$symbol $project]($style) ";
+        symbol = "meson";
+      };
+
+      nix_shell = {
+        format = "[$symbol $state( $name)]($style) ";
+        symbol = "nix";
+      };
+
+      nodejs = {
+        format = "[$symbol( $version)]($style) ";
+        symbol = "node";
+      };
+
+      os = {
+        format = "[$symbol]($style) ";
+      };
+
+      package = {
+        format = "[$symbol $version]($style) ";
+        symbol = "pkg";
+      };
+
+      purescript = {
+        format = "[$symbol( $version)]($style) ";
+        symbol = "purs";
+      };
+
+      python = {
+        format = "[$symbol$pyenv_prefix( $version)($virtualenv)]($style) ";
+        symbol = "py";
+      };
+
+      ruby = {
+        format = "[$symbol( $version)]($style) ";
+        symbol = "rb";
+      };
+
+      rust = {
+        format = "[$symbol( $version)]($style) ";
+        symbol = "rs";
+      };
+
+      sudo = {
+        format = "[as $symbol]($style) ";
+        symbol = "sudo";
+      };
+
+      swift = {
+        format = "[$symbol( $version)]($style) ";
+        symbol = "swift";
+      };
+
+      terraform = {
+        format = "[$symbol $workspace]($style) ";
+        symbol = "tf";
+      };
+
+      time = {
+        format = "[$time]($style) ";
+      };
+
+      username = {
+        format = "[$user]($style) ";
+      };
+
+      zig = {
+        format = "[$symbol( $version)]($style) ";
+        symbol = "zig";
+      };
+    };
   };
 
   waybar = {
@@ -228,39 +470,39 @@
         };
 
         "battery" = {
-            "bat"= "BAT0";
-            "states"= {
-                # "good"= 95;
-                "warning"= 30;
-                "critical"= 15;
-            };
-            "format"= "{capacity}% {icon}";
-            # "format-good"= ""; # An empty format will hide the module
-            # "format-full"= "";
-            "format-icons"= ["" "" "" "" ""];
+          "bat"= "BAT0";
+          "states"= {
+            # "good"= 95;
+            "warning"= 30;
+            "critical"= 15;
+          };
+          "format"= "{capacity}% {icon}";
+          # "format-good"= ""; # An empty format will hide the module
+          # "format-full"= "";
+          "format-icons"= ["" "" "" "" ""];
         };
 
         "network" = {
-            "format-wifi"= "{essid} ({signalStrength}%) ";
-            "format-ethernet"= "{ifname}= {ipaddr}/{cidr} ";
-            "format-disconnected"= "Disconnected ⚠";
+          "format-wifi"= "{essid} ({signalStrength}%) ";
+          "format-ethernet"= "{ifname}= {ipaddr}/{cidr} ";
+          "format-disconnected"= "Disconnected ⚠";
         };
 
         "pulseaudio" = {
-            #"scroll-step"= 1;
-            "format"= "{volume}% {icon}";
-            "format-bluetooth"= "{volume}% {icon}";
-            "format-muted"= "";
-            "format-icons"= {
-                "headphones" = "";
-                "handsfree" = "";
-                "headset" = "";
-                "phone" = "";
-                "portable" = "";
-                "car" = "";
-                "default" = [ "" "" ];
-            };
-            "on-click"= "pavucontrol";
+          #"scroll-step"= 1;
+          "format"= "{volume}% {icon}";
+          "format-bluetooth"= "{volume}% {icon}";
+          "format-muted"= "";
+          "format-icons"= {
+            "headphones" = "";
+            "handsfree" = "";
+            "headset" = "";
+            "phone" = "";
+            "portable" = "";
+            "car" = "";
+            "default" = [ "" "" ];
+          };
+          "on-click"= "pavucontrol";
         };
 
         "hyprland/window" = {
@@ -298,11 +540,11 @@
 
       ZSH_AUTOSUGGEST_STRATEGY=atuin_top
 
-      source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
-      if [[ -r "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh" ]]; then
-        source "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh"
-      fi
-      [[ ! -f ~/.config/zsh/.p10k.zsh ]] || source ~/.config/zsh/.p10k.zsh
+      #source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
+      #if [[ -r "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh" ]]; then
+      #  source "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh"
+      #fi
+      #[[ ! -f ~/.config/zsh/.p10k.zsh ]] || source ~/.config/zsh/.p10k.zsh
     '';
 
     initExtraBeforeCompInit = ''
