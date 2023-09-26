@@ -141,7 +141,7 @@
     extraConfig = {
       init.defaultBranch = "master";
       credential.helper = "store";
-      core.editor = "${config.home.sessionVariables.EDITOR}";
+      core.editor = ''${config.home.sessionVariables.EDITOR}'';
       push.autoSetupRemote = true;
     };
   };
@@ -173,10 +173,18 @@
     shellAliases = config.home.shellAliases;
 
     envFile.text = ''
+      $env.PROMPT_INDICATOR_VI_INSERT = ""
+      $env.PROMPT_INDICATOR_VI_NORMAL = ""
+
       $env.config = {
         show_banner: false,
         keybindings: [],
         edit_mode: vi,
+        cursor_shape: {
+          emacs: line,
+          vi_insert: line,
+          vi_normal: underscore,
+        }
       }
     '';
   };
@@ -196,22 +204,10 @@
       add_newline = false;
       continuation_prompt = ">> ";
 
-      character = {
-        success_symbol = "[>](green)";
-        error_symbol = "[>](red)";
-        vimcmd_symbol = "[<](green)";
-      };
-
-      fill = {
-        symbol = "-";
-        style = "dimmed white";
-      };
-
       format = lib.concatStrings [
         "$username"
         "$hostname"
         "$localip"
-        "$shlvl"
         "$directory"
         "$git_branch"
         "$git_commit"
@@ -220,6 +216,10 @@
         "$fill "
         "$git_metrics"
         "$fill "
+        "$time"
+        "$shlvl"
+        "$status"
+        "$shell"
         "$all"
         "$character"
       ];
@@ -232,6 +232,12 @@
       c = {
         format = "[$symbol( $version(-$name))]($style) ";
         symbol = "c";
+      };
+
+      character = {
+        success_symbol = "[>](green)";
+        error_symbol = "[>](red)";
+        vimcmd_symbol = "[<](green)";
       };
 
       cmake = {
@@ -258,6 +264,11 @@
         symbol = "docker";
       };
 
+      fill = {
+        symbol = "-";
+        style = "dimmed white";
+      };
+
       gcloud = {
         format = "[$symbol $account(@$domain)($region)]($style) ";
         symbol = "gcp";
@@ -272,20 +283,20 @@
       };
 
       git_status = {
-        format = "([$all_status$ahead_behind ]($style))";
-        style = "#b87200";
+        format = "([$all_status$ahead_behind]($style))";
+        style = "yellow";
 
         diverged = "<$behind_count>$ahead_count";
 
-        conflicted = "=$count";
-        ahead = ">$count";
-        behind = "<$count";
-        untracked = "?$count";
-        stashed = "*$count";
-        modified = "!$count";
-        staged = "+$count";
-        renamed = "r$count";
-        deleted = "x$count";
+        conflicted = "=$count ";
+        ahead = "[>$count](green) ";
+        behind = "[<$count](green) ";
+        untracked = "?$count ";
+        stashed = "*$count ";
+        modified = "!$count ";
+        staged = "+$count ";
+        renamed = "r$count ";
+        deleted = "x$count ";
       };
 
       git_metrics = {
@@ -386,6 +397,22 @@
         symbol = "rs";
       };
 
+      shell = {
+        disabled = false;
+      };
+
+      shlvl = {
+        disabled = false;
+        symbol = "lvl ";
+      };
+
+      status = {
+        disabled = false;
+        format = "[$common_meaning]($style) ";
+        map_symbol = true;
+        pipestatus = true;
+      };
+
       sudo = {
         format = "[as $symbol]($style) ";
         symbol = "sudo";
@@ -402,6 +429,7 @@
       };
 
       time = {
+        disabled = false;
         format = "[$time]($style) ";
       };
 
@@ -539,17 +567,28 @@
       }
 
       ZSH_AUTOSUGGEST_STRATEGY=atuin_top
-
-      #source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
-      #if [[ -r "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh" ]]; then
-      #  source "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh"
-      #fi
-      #[[ ! -f ~/.config/zsh/.p10k.zsh ]] || source ~/.config/zsh/.p10k.zsh
     '';
 
     initExtraBeforeCompInit = ''
       autoload -Uz zcalc
       autoload -Uz edit-command-line
+
+      zle-keymap-select () {
+        if [ $KEYMAP = vicmd ]; then
+          printf "\033[2 q"
+        else
+          printf "\033[6 q"
+        fi
+      }
+
+      zle -N zle-keymap-select
+
+      zle-line-init () {
+        zle -K viins
+        printf "\033[6 q"
+      }
+
+      zle -N zle-line-init
 
       zle -N edit-command-line
       bindkey -M vicmd v edit-command-line

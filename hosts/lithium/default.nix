@@ -397,7 +397,6 @@
       "${user.login}" = {
         isNormalUser = true;
         hashedPasswordFile = config.sops.secrets."${user.login}-pw".path;
-        shell = pkgs.nushell;
         extraGroups = [
           "adbusers"
           "docker"
