@@ -60,7 +60,6 @@ in
       strace
       tcpdump
       unzip
-      xplr
       zellij
       zip
     ]) ++
@@ -135,7 +134,6 @@ in
       pamixer
       pavucontrol
       vlc
-      yt-dlp
       playerctl
     ]) ++
 

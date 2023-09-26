@@ -542,6 +542,19 @@
     };
   };
 
+  yazi = {
+    enable = true;
+  };
+
+  yt-dlp = {
+    enable = true;
+    settings = {
+      embed-thumbnail = true;
+      downloader = "aria2c";
+      downloader-args = "aria2c:'-c -x8 -s8 -k1M'";
+    };
+  };
+
   zsh = {
     enable = true;
     enableAutosuggestions = true;
