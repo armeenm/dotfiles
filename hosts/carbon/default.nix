@@ -167,24 +167,12 @@
     timesyncd.enable = true;
     udisks2.enable = true;
 
-    hardware = {
-      bolt.enable = true;
-    };
-
     openssh = {
       enable = true;
 
       settings = {
         PasswordAuthentication = false;
       };
-    };
-
-    pipewire = {
-      enable = true;
-      alsa.enable = true;
-      alsa.support32Bit = true;
-      pulse.enable = true;
-      jack.enable = true;
     };
 
     vaultwarden = {
@@ -231,9 +219,6 @@
       "d /run/tmp 1777 - - -"
 
       "L /srv - - - - /var/srv"
-
-      # Using /home/root instead
-      "R /root - - - - -"
     ];
   };
 
@@ -279,22 +264,12 @@
     };
   };
 
-  virtualisation = {
-    podman = {
-      enable = true;
-      defaultNetwork.settings.dns_enabled = true;
-    };
-  };
-
   users = {
     defaultUserShell = pkgs.zsh;
     mutableUsers = true; # XXX
 
     users = {
-      root = {
-        #hashedPassword = null;
-        home = lib.mkForce "/home/root";
-      };
+      root.hashedPassword = null;
 
       "${user.login}" = {
         isNormalUser = true;
@@ -321,8 +296,6 @@
       smartmontools
       tcpdump
       usbutils
-
-      (hunspellWithDicts [ hunspellDicts.en_US hunspellDicts.en_US-large ])
     ];
   };
 
@@ -353,11 +326,6 @@
         '';
       };
     };
-  };
-
-  documentation = {
-    dev.enable = true;
-    man.generateCaches = true;
   };
 
 /*
