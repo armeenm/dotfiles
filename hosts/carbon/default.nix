@@ -135,7 +135,6 @@
   };
 
   nix = {
-    package = pkgs.nixUnstable;
     nixPath = lib.mkForce [ "nixpkgs=${config.nix.registry.nixpkgs.flake}" ];
 
     registry = {
@@ -146,10 +145,7 @@
       allowed-users = lib.mkForce [ "@wheel" ];
       trusted-users = lib.mkForce [ "@wheel" ];
 
-      experimental-features = [
-        "flakes" "nix-command" "ca-derivations" "impure-derivations"
-      ];
-
+      experimental-features = [ "flakes" "nix-command" ];
       warn-dirty = false;
     };
   };
@@ -166,6 +162,19 @@
     tcsd.enable = false;
     timesyncd.enable = true;
     udisks2.enable = true;
+
+    home-assistant = {
+      enable = true;
+      extraComponents = [
+        "esphome"
+        "met"
+        "radio_browser"
+      ];
+
+      config = {
+        default_config = {};
+      };
+    };
 
     openssh = {
       enable = true;
