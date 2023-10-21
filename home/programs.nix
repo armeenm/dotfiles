@@ -13,12 +13,29 @@
   atuin = {
     enable = true;
 
+    package = pkgs.atuin.overrideAttrs (drv: rec {
+      src = pkgs.fetchFromGitHub {
+        owner = "atuinsh";
+        repo = "atuin";
+        rev = "7a91422";
+        hash = "sha256-cBOLdK/otbEq467YI35VTHRol+N3Y7A/SujckEYqfH4=";
+      };
+
+      doCheck = false;
+
+      cargoDeps = drv.cargoDeps.overrideAttrs (lib.const {
+        inherit src;
+        outputHash = "sha256-Xtw8xzdFtYjMBZGV1F+UP3CHv4Q+RAOOSrUt2SO11qQ=";
+      });
+    });
+
     settings = {
-      inline_height = 30;
-      show_preview = true;
       auto_sync = false;
-      update_check = false;
+      enter_accept = true;
+      inline_height = 30;
       invert = false;
+      show_preview = true;
+      update_check = false;
       workspaces = true;
     };
   };
