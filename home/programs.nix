@@ -426,8 +426,9 @@
       status = {
         disabled = false;
         format = "[$common_meaning]($style) ";
-        map_symbol = true;
-        pipestatus = true;
+        # TODO: Fix the weird width stuff
+        pipestatus = false;
+        pipestatus_format = "$pipestatus=> [$common_meaning$signal_name$maybe_int]($style) ";
       };
 
       sudo = {
