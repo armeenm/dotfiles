@@ -140,7 +140,7 @@ in
 
     ## Communication ##
     (with pkgs; [
-      discord-canary
+      discord
       weechat
       zoom-us
     ]);
