@@ -411,6 +411,10 @@
     };
   };
 
+  #home-manager = {
+#
+  #};
+
   environment = {
     defaultPackages = lib.mkForce [ ];
 
@@ -447,7 +451,7 @@
     zsh.enable = true;
 
     custom.ddcutil = {
-      enable = true;
+      enable = false;
       users = [ user.login ];
     };
 

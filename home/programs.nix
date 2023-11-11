@@ -12,23 +12,6 @@
 
   atuin = {
     enable = true;
-
-    package = pkgs.atuin.overrideAttrs (drv: rec {
-      src = pkgs.fetchFromGitHub {
-        owner = "atuinsh";
-        repo = "atuin";
-        rev = "7a91422";
-        hash = "sha256-cBOLdK/otbEq467YI35VTHRol+N3Y7A/SujckEYqfH4=";
-      };
-
-      doCheck = false;
-
-      cargoDeps = drv.cargoDeps.overrideAttrs (lib.const {
-        inherit src;
-        outputHash = "sha256-Xtw8xzdFtYjMBZGV1F+UP3CHv4Q+RAOOSrUt2SO11qQ=";
-      });
-    });
-
     settings = {
       auto_sync = false;
       enter_accept = true;
