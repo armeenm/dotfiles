@@ -27,5 +27,11 @@
   mpd = {
     enable = true;
     network.startWhenNeeded = true;
+    extraConfig = ''
+      audio_output {
+        type "pipewire"
+        name "Pipewire Playback"
+      }
+    '';
   };
 }

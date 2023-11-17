@@ -1,7 +1,8 @@
 { config, pkgs, lib, root, user, ... }:
 
 {
-  aria2.enable = true;
+  # XXX: Broken patches.
+  aria2.enable = false;
   dircolors.enable = true;
   fzf.enable = true;
   home-manager.enable = true;
@@ -12,6 +13,9 @@
 
   atuin = {
     enable = true;
+    # XXX: This is broken because bash-preexec -> bats -> resholve -> python2 :/
+    enableBashIntegration = false;
+
     settings = {
       auto_sync = false;
       enter_accept = true;

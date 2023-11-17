@@ -31,11 +31,6 @@
       inputs.nixpkgs-stable.follows = "nixpkgs-stable";
     };
 
-    hyprland = {
-      url = "github:hyprwm/Hyprland";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     nix-on-droid = {
       url = "github:t184256/nix-on-droid";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -43,6 +38,11 @@
 
     mpd-mpris = {
       url = "github:natsukagami/mpd-mpris";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    update-systemd-resolved = {
+      url = "github:jonathanio/update-systemd-resolved";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -79,9 +79,9 @@
 
     modules = hmModules ++ [
       inputs.home-manager.nixosModules.home-manager
-      inputs.hyprland.nixosModules.default
       inputs.sops-nix.nixosModules.sops
       inputs.lanzaboote.nixosModules.lanzaboote
+      inputs.update-systemd-resolved.nixosModules.update-systemd-resolved
       { nixpkgs = { inherit config overlays; }; }
       ./modules
     ];

@@ -238,6 +238,13 @@
       };
     };
 
+    openvpn = {
+      servers.foo = {
+        autoStart = false;
+        config = '' config /home/armeen/foo.ovpn '';
+      };
+    };
+
     pipewire = {
       enable = true;
       alsa.enable = true;
@@ -476,6 +483,12 @@
           set tags^=./.git/tags;
           set mouse=a
         '';
+      };
+    };
+
+    update-systemd-resolved = {
+      servers.foo = {
+        includeAutomatically = true;
       };
     };
   };
