@@ -192,7 +192,6 @@ in
 
   shellAliases = {
     cat = "bat";
-    diff = "delta";
     g = "git";
     open = "xdg-open";
     ovpn = "openvpn3";

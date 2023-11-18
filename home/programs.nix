@@ -614,6 +614,10 @@
 
       setopt globdots
       setopt autopushd
+
+      d () {
+        diff -u $@ | delta
+      }
     '';
   };
 }
