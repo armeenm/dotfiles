@@ -132,6 +132,8 @@
 
     useNetworkd = true;
     wireless.iwd.enable = true;
+
+    firewall.interfaces.enp77s0.allowedTCPPorts = [ 8080 ];
   };
 
   hardware = {
@@ -207,6 +209,7 @@
     haveged.enable = true;
     i2pd.enable = true;
     iperf3.enable = true;
+    mozillavpn.enable = true;
     physlock.enable = true;
     saned.enable = true;
     smartd.enable = true;
@@ -218,7 +221,8 @@
 
     avahi = {
       enable = true;
-      nssmdns = true;
+      nssmdns4 = true;
+      nssmdns6 = true;
     };
 
     hardware = {
