@@ -104,12 +104,19 @@ in
             } oifname {
               "${lan}",
             } ct state established,related counter accept comment "Allow established back to LANs"
+
+            ct status dnat accept
           }
         }
 
         table ip nat {
-          chain prerouting {
+          chain output {
             type nat hook output priority filter; policy accept;
+          }
+
+          chain prerouting {
+            type nat hook prerouting priority -100; policy accept;
+            tcp dport { 9000 } dnat to 192.168.0.128
           }
 
           chain postrouting {
@@ -156,6 +163,13 @@ in
             pools = [{
               pool = "${prefix}.128 - ${prefix}.254";
             }];
+
+            reservations = [
+              {
+                hw-address = "F4:7B:09:F5:60:FE";
+                ip-address = "192.168.0.128";
+              }
+            ];
           }];
 
           option-data = [
@@ -182,6 +196,7 @@ in
             persist = true;
             type = "memfile";
           };
+
         };
       };
     };

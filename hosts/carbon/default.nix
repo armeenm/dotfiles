@@ -164,7 +164,7 @@
     udisks2.enable = true;
 
     home-assistant = {
-      enable = true;
+      enable = false;
       extraComponents = [
         "esphome"
         "met"
@@ -212,6 +212,12 @@
               rewrite ^/(.*)$ https://vault.armeen.xyz/$1 permanent;
             }
           '';
+        };
+
+        "gpt.fulminous-hill.com" = {
+          enableACME = true;
+          forceSSL = true;
+          locations."/".proxyPass = "http://192.168.0.128:9000";
         };
       };
     };
