@@ -146,14 +146,6 @@ in
     ]);
 
   file = {
-    desktop.source = symlink "${files}/desktop";
-    dl.source = symlink "${files}/dl";
-    docs.source = symlink "${files}/docs";
-    media.source = symlink "${files}/media";
-    music.source = symlink "${files}/music";
-    ss.source = symlink "${files}/ss";
-    templates.source = symlink "${files}/templates";
-
     dnsCheck = {
       source = "${root}/conf/bin/dnscheck.sh";
       target = ".local/bin/dnscheck";
@@ -198,7 +190,7 @@ in
     rlf = "readlink -f";
     tf = "terraform";
     zc = "zcalc -r";
-    zl = "zellij";
+    zj = "zellij";
     bz = "bazel";
     ms = "miniserve -HWqrgzl --readme --index index.html";
 
