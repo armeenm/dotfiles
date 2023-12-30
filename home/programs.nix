@@ -18,12 +18,14 @@
 
     settings = {
       auto_sync = false;
+      style = "compact";
       enter_accept = true;
       inline_height = 30;
       invert = false;
       show_preview = true;
       update_check = false;
       workspaces = true;
+      filter_mode_shell_up_key_binding = "session";
     };
   };
 
@@ -60,6 +62,19 @@
       defaultInitFile = true;
       alwaysEnsure = true;
       package = pkgs.emacs-pgtk;
+
+      override = epkgs: epkgs // {
+        xah-wolfram-mode = epkgs.trivialBuild {
+          pname = "xah-wolfram-mode";
+          version = "";
+          src = pkgs.fetchFromGitHub {
+            owner = "xahlee";
+            repo = "xah-wolfram-mode";
+            rev = "d8dbf460ed1b3efd4a1adf45cdf80214b55a39c4";
+            hash = "sha256-HvEzqLi7iRx1six8K4mq5M0OlesqXYx9RuGwqfMyqDk=";
+          };
+        };
+      };
     };
   };
 

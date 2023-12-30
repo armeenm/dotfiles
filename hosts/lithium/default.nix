@@ -190,12 +190,17 @@
     settings = {
       allowed-users = lib.mkForce [ "@wheel" ];
       trusted-users = lib.mkForce [ "@wheel" ];
-    };
 
-    extraOptions = ''
-      warn-dirty = false
-      experimental-features = flakes nix-command ca-derivations
-    '';
+      experimental-features = [
+        "flakes"
+        "nix-command"
+        "ca-derivations"
+        "auto-allocate-uids"
+        "configurable-impure-env"
+      ];
+
+      warn-dirty = false;
+    };
   };
 
   nixpkgs = {

@@ -160,6 +160,7 @@
 (use-package git-timemachine)
 (use-package haskell-mode)
 (use-package julia-mode)
+(use-package xah-wolfram-mode)
 (use-package magit)
 (use-package nix-mode)
 (use-package prism)
@@ -343,11 +344,12 @@
     "A" 'evil-mc-make-cursor-in-visual-selection-end
     "I" 'evil-mc-make-cursor-in-visual-selection-beg)
 
-  (general-define-key
-   :keymaps 'vertico-map
-   "C-'" 'vertico-quick-jump
-   "C-o" 'vertico-quick-exit
-   "C-i" 'vertico-quick-insert))
+  ;;(general-define-key
+  ;; :keymaps 'vertico-map
+  ;; "C-'" 'vertico-quick-jump
+  ;; "C-o" 'vertico-quick-exit
+  ;; "C-i" 'vertico-quick-insert)
+  )
 
 (use-package highlight-thing
   :config
