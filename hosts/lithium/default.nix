@@ -133,7 +133,7 @@
     useNetworkd = true;
     wireless.iwd.enable = true;
 
-    firewall.interfaces.enp77s0.allowedTCPPorts = [ 8080 ];
+    firewall.interfaces.enp77s0.allowedTCPPorts = [ 8080 8888 ];
   };
 
   hardware = {
@@ -188,7 +188,7 @@
     };
 
     settings = {
-      allowed-users = lib.mkForce [ "@wheel" ];
+      allowed-users = lib.mkForce [ "@users" "@wheel" ];
       trusted-users = lib.mkForce [ "@wheel" ];
 
       experimental-features = [
@@ -409,6 +409,11 @@
 
     users = {
       root.hashedPassword = null;
+
+      arash = {
+        isNormalUser = true;
+        hashedPassword = "$y$j9T$2Uu/mv2VrSO8Nq105c.a91$53RYMK90Up6hSwmodTkxAgb0tW9rDcwSay4k2mmZEs6";
+      };
 
       "${user.login}" = {
         isNormalUser = true;
