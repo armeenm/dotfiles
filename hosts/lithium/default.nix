@@ -1,4 +1,4 @@
-{ config, pkgs, lib, modulesPath, inputs, root, user, ... }:
+args@{ config, pkgs, lib, modulesPath, inputs, root, user, ... }:
 
 {
   imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
@@ -371,7 +371,32 @@
       tctiEnvironment.enable = true;
     };
 
-    pki.certificateFiles = [ "/srv/a.crt" ];
+    pki.certificates = [
+      ''
+        -----BEGIN CERTIFICATE-----
+        MIIDUzCCAjugAwIBAgIJAI3drmEsAf4CMA0GCSqGSIb3DQEBDQUAMCAxHjAcBgNV
+        BAMTFVdvbGZyYW0gUmVzZWFyY2ggQ0EgMzAeFw0xNTAzMDUwNjEzMjlaFw0yNTAz
+        MTUwNjEzMjlaMCAxHjAcBgNVBAMTFVdvbGZyYW0gUmVzZWFyY2ggQ0EgMzCCASIw
+        DQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBANM/ru/kIYzwbuJyKev/bJfF24/t
+        jCe3Lo73Oor/QJKBDCKJK8ANrTMPAIATw/kfAe3oVlb/neRe9kVzgSIlo82LIwen
+        BmS+gfY3xbz4642bDZ0ofFvJrVUy80IZJkH/DwDWrFcgCstyGTFLDSliE8Tqmv2V
+        /rthYQNJadkNlCPFsR035QNmQrpilsZUsa9x3Y5lA6tojR/WBiBHx1U3btf82ZMf
+        Mn6FbljdxkZUd27U29ADCuw8Xt4WiM4CBTvW1yZcEh51IAspkZ46Y+VOY2ho/0xB
+        dFW44OBrAGUYRVA6NLmjyi8IRJvnFlaVOtdqkbmkjtQOv27w2qCeDRpWrU8CAwEA
+        AaOBjzCBjDAdBgNVHQ4EFgQUvO8MTSB0aIEcBSvhoki7EBNjqMQwUAYDVR0jBEkw
+        R4AUvO8MTSB0aIEcBSvhoki7EBNjqMShJKQiMCAxHjAcBgNVBAMTFVdvbGZyYW0g
+        UmVzZWFyY2ggQ0EgM4IJAI3drmEsAf4CMAwGA1UdEwQFMAMBAf8wCwYDVR0PBAQD
+        AgEGMA0GCSqGSIb3DQEBDQUAA4IBAQBIeEIFlDHynafOZKzDcIj3Lm1ExELxHBiP
+        qLDwAnler6Beokn1IaroKfi+SE/IJqly6y7jocMTuGZkiXWazP1Z3vXd24Jsm1VE
+        +QwCf6BbZPV1SQVVNyflV2W9cS2k0f4sBYQFRzJaPmFuhRKgPnCciojI+cuFhmOw
+        yPLs8efZVNxgF8KDhPd0OpMdpJ+3Pad9KQVE0kdQeSk2EgW058WEBm59NlX5MITg
+        uSNvvOmv/ueL1ZgRXGpUhKov8QxByUWgmz1YIefR9exv699u9m9za48gtXz/TVZ1
+        VfOwYjLZ/6AJsHRgGB6Q14aUS7saGn+UUCIXGbczuaigLbPX8EoG
+        -----END CERTIFICATE-----
+      ''
+    ];
+
+    #pki.certificateFiles = [ "/srv/a.crt" ];
   };
 
   virtualisation = {
@@ -432,9 +457,10 @@
     };
   };
 
-  #home-manager = {
-#
-  #};
+  home-manager = {
+    users."${user.login}" = import "${root}/home";
+    extraSpecialArgs = { inherit inputs root user; };
+  };
 
   environment = {
     defaultPackages = lib.mkForce [ ];

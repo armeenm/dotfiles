@@ -1,37 +1,39 @@
-{ config, pkgs, lib, sys, root, user, ... }:
+{ config, pkgs, lib, root, user, ... }:
 
 {
-  mpd-mpris.enable = true;
-  mpris-proxy.enable = true;
-  playerctld.enable = true;
+  services = {
+    mpd-mpris.enable = true;
+    mpris-proxy.enable = true;
+    playerctld.enable = true;
 
-  emacs = {
-    enable = true;
-    # TODO: Fix upstream.
-    defaultEditor = false;
-
-    client = {
+    emacs = {
       enable = true;
-      arguments = [ "-n" "-t" "-c" ];
-    };
-  };
+      # TODO: Fix upstream.
+      defaultEditor = false;
 
-  mako = {
-    enable = true;
-    extraConfig = ''
+      client = {
+        enable = true;
+        arguments = [ "-n" "-t" "-c" ];
+      };
+    };
+
+    mako = {
+      enable = true;
+      extraConfig = ''
       [mode=do-not-disturb]
       invisible=1
     '';
-  };
+    };
 
-  mpd = {
-    enable = true;
-    network.startWhenNeeded = true;
-    extraConfig = ''
+    mpd = {
+      enable = true;
+      network.startWhenNeeded = true;
+      extraConfig = ''
       audio_output {
         type "pipewire"
         name "Pipewire Playback"
       }
     '';
+    };
   };
 }
