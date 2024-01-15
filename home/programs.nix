@@ -653,7 +653,7 @@
       fi
       }
       zle -N _sgpt_zsh
-      bindkey ^i _sgpt_zsh
+      bindkey ^p _sgpt_zsh
     '';
     };
   };
