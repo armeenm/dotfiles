@@ -55,6 +55,7 @@ in
         sops
         strace
         tcpdump
+        tig
         ueberzugpp
         unzip
         zellij
