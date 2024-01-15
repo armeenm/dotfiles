@@ -236,6 +236,8 @@
   (mapc 'corfu-terminal-setup (frame-list))
   (add-hook 'after-make-frame-functions 'corfu-terminal-setup))
 
+(use-package copilot)
+
 (use-package coterm
   :config
   (coterm-mode))
@@ -344,11 +346,11 @@
     "A" 'evil-mc-make-cursor-in-visual-selection-end
     "I" 'evil-mc-make-cursor-in-visual-selection-beg)
 
-  ;;(general-define-key
-  ;; :keymaps 'vertico-map
-  ;; "C-'" 'vertico-quick-jump
-  ;; "C-o" 'vertico-quick-exit
-  ;; "C-i" 'vertico-quick-insert)
+  (general-define-key
+   :keymaps 'vertico-map
+   "C-'" 'vertico-quick-jump
+   "C-o" 'vertico-quick-exit
+   "C-i" 'vertico-quick-insert)
   )
 
 (use-package highlight-thing
@@ -423,13 +425,9 @@
   :config
   (vertico-mode))
 
-(use-package vertico-grid
-  :config
-  (vertico-grid-mode))
+(use-package vertico-grid)
 
-(use-package vertico-indexed
-  :config
-  (vertico-indexed-mode))
+(use-package vertico-indexed)
 
 (use-package vertico-quick)
 

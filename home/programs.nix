@@ -466,6 +466,13 @@
       };
     };
 
+    tealdeer = {
+      enable = true;
+      settings = {
+        updates.auto_update = true;
+      };
+    };
+
     waybar = {
       enable = true;
       systemd.enable = true;
@@ -614,14 +621,14 @@
         else
           printf "\033[6 q"
         fi
-                      }
+      }
 
       zle -N zle-keymap-select
 
       zle-line-init () {
         zle -K viins
         printf "\033[6 q"
-                    }
+      }
 
       zle -N zle-line-init
 
@@ -635,6 +642,18 @@
       d () {
         diff -u $@ | delta
       }
+
+      _sgpt_zsh() {
+      if [[ -n "$BUFFER" ]]; then
+          _sgpt_prev_cmd=$BUFFER
+          BUFFER+=" processing..."
+          zle -I && zle redisplay
+          BUFFER=$(sgpt --shell <<< "$_sgpt_prev_cmd")
+          zle end-of-line
+      fi
+      }
+      zle -N _sgpt_zsh
+      bindkey ^i _sgpt_zsh
     '';
     };
   };

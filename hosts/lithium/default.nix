@@ -133,7 +133,7 @@ args@{ config, pkgs, lib, modulesPath, inputs, root, user, ... }:
     useNetworkd = true;
     wireless.iwd.enable = true;
 
-    firewall.interfaces.enp77s0.allowedTCPPorts = [ 8080 8888 ];
+    firewall.interfaces.enp77s0.allowedTCPPorts = [ 8080 8888 7860 ];
   };
 
   hardware = {

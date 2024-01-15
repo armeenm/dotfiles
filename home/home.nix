@@ -51,6 +51,7 @@ in
         procs
         ripgrep
         scc
+        shell_gpt
         sops
         strace
         tcpdump
@@ -147,7 +148,6 @@ in
         executable = true;
       };
 
-        #LESSHISTFILE=${config.xdg.cacheHome}/less/history
       lesskey = {
         target = ".lesskey";
         text = ''
