@@ -405,6 +405,10 @@
   (setq smooth-scrolling-margin 5)
   (smooth-scrolling-mode))
 
+(use-package treesit-auto
+  :config
+  (global-treesit-auto-mode))
+
 (use-package treemacs-evil
   :after (treemacs evil))
 

@@ -12,10 +12,21 @@ let
 in
 {
   home = {
+    # XXX: https://github.com/nix-community/home-manager/issues/4826
+    activation.batCache = lib.mkForce (lib.hm.dag.entryAfter [ "linkGeneration" ] '''');
+
     username = user.login;
     stateVersion = osConfig.system.stateVersion;
 
     packages =
+      ## Language Specific ##
+      (with pkgs; [
+        gnuapl
+        python3
+        bacon
+        nixd
+      ]) ++
+
       ## CLI Utils ##
       (with nix-misc; [
         git-fuzzy
