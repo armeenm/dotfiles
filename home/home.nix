@@ -33,6 +33,7 @@ in
       ]) ++
 
       (with pkgs; [
+        boxes
         btop
         bubblewrap
         comma
@@ -54,6 +55,7 @@ in
         mediainfo
         miniserve
         ncdu
+        nix-output-monitor
         nix-tree
         nurl
         onefetch
@@ -67,6 +69,7 @@ in
         strace
         tcpdump
         tig
+        toilet
         ueberzugpp
         unzip
         zellij
