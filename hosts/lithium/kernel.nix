@@ -5,7 +5,7 @@
 }:
 
 let
-  kernel = linuxKernel.kernels.linux_6_1_hardened;
+  kernel = linuxKernel.kernels.linux_6_7_hardened;
 in
 linuxPackagesFor (kernel.override {
   features = {
@@ -22,9 +22,6 @@ linuxPackagesFor (kernel.override {
 
   structuredExtraConfig = with lib.kernel; {
     ## General ##
-    #AIO = lib.mkForce no;
-    #BINFMT_MISC = lib.mkForce no;
-    #BPF_SYSCALL = lib.mkForce no; # NOTE: runc
     #DEBUG_KMEMLEAK = yes;
     #KCSAN = yes;
     #PROVE_LOCKING = yes;
@@ -142,12 +139,6 @@ linuxPackagesFor (kernel.override {
     X86_X32 = yes;
 
     ## Hardware ##
-    #BT = yes;
-    #BT_BNEP = yes;
-    #BT_HCIBTUSB = yes;
-    #BT_INTEL = yes;
-    #BT_RFCOMM = yes;
-    #IWLWIFI = module;
     ACPI_APEI = yes;
     ACPI_APEI_GHES = yes;
     ACPI_APEI_PCIEAER = yes;
@@ -836,7 +827,6 @@ linuxPackagesFor (kernel.override {
     MACHZ_WDT = no;
     MACINTOSH_DRIVERS = no;
     MADERA_IRQ = no;
-    MARVELL_10G_PHY = no;
     MARVELL_88X2222_PHY = no;
     MARVELL_PHY = no;
     MAX63XX_WATCHDOG = no;

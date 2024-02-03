@@ -1,4 +1,4 @@
-{ config, pkgs, lib, root, user, ... }:
+{ config, pkgs, lib, inputs, root, user, ... }:
 
 {
   programs = {
@@ -72,6 +72,8 @@
               hash = "sha256-HvEzqLi7iRx1six8K4mq5M0OlesqXYx9RuGwqfMyqDk=";
             };
           };
+
+          projectile = inputs.nixpkgs-stable.legacyPackages.x86_64-linux.emacsPackages.projectile;
         };
 
         extraEmacsPackages = epkgs: with epkgs; [

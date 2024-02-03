@@ -33,7 +33,8 @@ args@{ config, pkgs, lib, modulesPath, inputs, root, user, ... }:
     };
 
     binfmt.emulatedSystems = [ "aarch64-linux" ];
-    supportedFilesystems = [ "zfs" ];
+    # XXX: Broken on Linux 6.7.
+    #supportedFilesystems = [ "zfs" ];
     consoleLogLevel = 0;
 
     kernelModules = [

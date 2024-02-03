@@ -154,7 +154,6 @@
 (use-package all-the-icons)
 (use-package avy)
 (use-package bazel)
-(use-package clojure-mode)
 (use-package devdocs)
 (use-package git-link)
 (use-package git-timemachine)

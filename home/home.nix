@@ -40,12 +40,14 @@ in
         direnv
         dos2unix
         duf
+        expect
         fasd
         fd
         ffmpeg
         file
         gh
         htop
+        httpie
         hyperfine
         jq
         killall

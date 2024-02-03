@@ -6,4 +6,4 @@ else
     cmd=nix
 fi
 
-$cmd build ".#nixosConfigurations.$(hostname).config.system.build.toplevel" "$@"
+$cmd build ".#nixosConfigurations.$(hostname).config.system.build.toplevel" --keep-going "$@"
