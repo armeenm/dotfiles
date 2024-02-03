@@ -186,6 +186,7 @@ in
     sessionVariables = {
       # General
       MANPAGER = "sh -c 'col -bx | bat -l man -p'";
+      MANROFFOPT = "-c";
 
       # Wayland
       MOZ_ENABLE_WAYLAND = "1";
