@@ -8,7 +8,6 @@
     home-manager.enable = true;
     nix-index.enable = true;
     noti.enable = true;
-    zathura.enable = true;
     zoxide.enable = true;
 
     atuin = {
@@ -582,6 +581,13 @@
         embed-thumbnail = true;
         downloader = "aria2c";
         downloader-args = "aria2c:'-c -x8 -s8 -k1M'";
+      };
+    };
+
+    zathura = {
+      enable = true;
+      mappings = {
+        "<C-i>" = "recolor";
       };
     };
 
