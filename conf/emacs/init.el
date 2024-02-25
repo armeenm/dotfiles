@@ -1,4 +1,4 @@
-(setq debug-on-error t)
+(setq debug-on-error nil)
 (auto-compression-mode 1)
 (push '(menu-bar-lines . 0) default-frame-alist)
 (push '(tool-bar-lines . nil) default-frame-alist)
@@ -344,14 +344,7 @@
 
   (general-def 'visual
     "A" 'evil-mc-make-cursor-in-visual-selection-end
-    "I" 'evil-mc-make-cursor-in-visual-selection-beg)
-
-  (general-define-key
-   :keymaps 'vertico-map
-   "C-'" 'vertico-quick-jump
-   "C-o" 'vertico-quick-exit
-   "C-i" 'vertico-quick-insert)
-  )
+    "I" 'evil-mc-make-cursor-in-visual-selection-beg))
 
 (use-package highlight-thing
   :config
