@@ -124,7 +124,6 @@
       scroll-margin 7
       scroll-conservatively 100000)
 
-(global-hl-line-mode 1)
 (xterm-mouse-mode 1)
 
 (setq select-enable-clipboard t

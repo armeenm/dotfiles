@@ -125,7 +125,7 @@
     };
 
     homeConfigurations = forAllSystems (system: pkgs: with pkgs; {
-      foo = inputs.home-manager.lib.homeManagerConfiguration {
+      default = inputs.home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         modules = hmModules ++ [ ./home ];
       };
