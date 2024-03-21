@@ -1,2 +1,2 @@
 #!/bin/sh
-doas nixos-rebuild --flake . switch "$@"
+nixos-rebuild --use-remote-sudo --flake . switch "$@"

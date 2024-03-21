@@ -24,7 +24,7 @@ in
         gnuapl
         python3
         bacon
-        nixd
+        #nixd
       ]) ++
 
       ## CLI Utils ##
@@ -97,7 +97,7 @@ in
         firefox-wayland
         google-chrome
 
-        gimp-with-plugins
+        #gimp-with-plugins
         libreoffice-fresh
 
         bemenu
