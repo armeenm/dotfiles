@@ -33,9 +33,11 @@
 
     bat = {
       enable = true;
+
       config = {
         theme = "ayu";
       };
+
       themes = {
         ayu = builtins.readFile (pkgs.fetchFromGitHub
           {
@@ -83,7 +85,6 @@
 
     eza = {
       enable = true;
-      enableAliases = true;
       git = true;
     };
 
@@ -593,7 +594,7 @@
 
     zsh = {
       enable = true;
-      enableAutosuggestions = true;
+      autosuggestion.enable = true;
       enableCompletion = true;
       enableVteIntegration = true;
       syntaxHighlighting.enable = true;

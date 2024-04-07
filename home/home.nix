@@ -209,7 +209,7 @@ in
 
       noti = "noti ";
       doas = "doas ";
-      sudo = "doas ";
+      sudo = "sudo ";
 
       sc = "systemctl";
       jc = "journalctl";

@@ -433,6 +433,8 @@ args@{ config, pkgs, lib, modulesPath, inputs, root, user, ... }:
     defaultPackages = lib.mkForce [ ];
 
     systemPackages = (with pkgs; [
+      doas-sudo-shim
+
       hdparm
       lm_sensors
       lshw

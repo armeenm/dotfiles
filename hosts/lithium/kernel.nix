@@ -5,7 +5,7 @@
 }:
 
 let
-  kernel = linuxKernel.kernels.linux_6_7_hardened;
+  kernel = linuxKernel.kernels.linux_6_6_hardened;
 in
 linuxPackagesFor (kernel.override {
   features = {
@@ -77,7 +77,6 @@ linuxPackagesFor (kernel.override {
     NLS_CODEPAGE_437 = lib.mkForce yes;
     NLS_ISO8859_1 = lib.mkForce yes;
     OVERLAY_FS = yes;
-    PAGE_POISONING = no;
     PAGE_SANITIZE = yes;
     PAGE_SANITIZE_VERIFY = yes;
     PAGE_TABLE_ISOLATION = yes;
@@ -1005,7 +1004,6 @@ linuxPackagesFor (kernel.override {
     RCU_REF_SCALE_TEST = no;
     RCU_SCALE_TEST = no;
     RCU_TRACE = no;
-    RC_CORE = no;
     RDS = no;
     REISERFS_FS = no;
     RENESAS_PHY = no;
