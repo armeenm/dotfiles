@@ -140,12 +140,6 @@ in
           prefixLength = 24;
         }];
       };
-
-      lo = {
-        ipv4.addresses = [
-          { address = "127.0.0.1"; prefixLength = 8; }
-        ];
-      };
     };
   };
 

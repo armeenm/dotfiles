@@ -1,0 +1,3 @@
+#!/bin/sh
+
+systemd-run --user --scope zellij -s safe-shell
