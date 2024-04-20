@@ -24,7 +24,9 @@ in
         gnuapl
         python3
         bacon
-        #nixd
+        nix-inspect
+
+        nixd
       ]) ++
 
       ## CLI Utils ##

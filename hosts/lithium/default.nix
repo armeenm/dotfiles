@@ -489,12 +489,6 @@ args@{ config, pkgs, lib, modulesPath, inputs, root, user, ... }:
         '';
       };
     };
-
-    update-systemd-resolved = {
-      servers.foo = {
-        includeAutomatically = true;
-      };
-    };
   };
 
   documentation = {
