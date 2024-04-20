@@ -300,6 +300,7 @@
     systemPackages = with pkgs; [
       btop
       conntrack-tools
+      doas-sudo-shim
       ethtool
       git
       hdparm
