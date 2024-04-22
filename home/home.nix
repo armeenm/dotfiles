@@ -83,12 +83,15 @@ in
       ## Networking ##
       (with pkgs; [
         bluetuith
+        cfspeedtest
         iperf
         ldns
         monero
         nmap
+        rclone
         remmina
-        speedtest-cli
+        s3cmd
+        seaweedfs
         wget
         whois
         wireshark

@@ -9,7 +9,7 @@ let
   domain = "armeen.xyz";
 
   wan = "enp90s0";
-  lan = "enp2s0f0";
+  lan = "enp2s0f0np0";
   aux = "enp87s0";
 
   prefix = "192.168.0";
@@ -49,6 +49,7 @@ let
     ${hostName} A ${ip}
     carbon A ${ip}
     vault A ${ip}
+    s3 A ${ip}
   '';
 
   zone-subnet = ''

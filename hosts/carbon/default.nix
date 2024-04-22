@@ -20,17 +20,22 @@
   };
 
   boot = {
+    kernelPackages = pkgs.linuxPackages_6_8;
 
-    initrd.availableKernelModules = [
-      "ahci"
-      "xhci_pci"
-      "ehci_pci"
-      "usbhid"
-      "usb_storage"
-      "uas"
-      "sd_mod"
-      "sr_mod"
-    ];
+    initrd = {
+      supportedFilesystems = [ "bcachefs" ];
+
+      availableKernelModules = [
+        "ahci"
+        "xhci_pci"
+        "ehci_pci"
+        "usbhid"
+        "usb_storage"
+        "uas"
+        "sd_mod"
+        "sr_mod"
+      ];
+    };
 
     kernelModules = [ "kvm-intel" ];
 
@@ -196,6 +201,7 @@
 
     nginx = {
       enable = true;
+
       virtualHosts = {
         "armeen.xyz" = {
           enableACME = true;
@@ -211,6 +217,33 @@
             if ( $host != 'vault.armeen.xyz' ) {
               rewrite ^/(.*)$ https://vault.armeen.xyz/$1 permanent;
             }
+          '';
+        };
+
+        "s3.armeen.xyz" = {
+          enableACME = true;
+          forceSSL = true;
+          # TODO: Switch to UDS
+          locations."/".proxyPass = "http://127.0.0.1:8333";
+
+          extraConfig = ''
+            if ( $host != 's3.armeen.xyz' ) {
+              rewrite ^/(.*)$ https://s3.armeen.xyz/$1 permanent;
+            }
+
+            ignore_invalid_headers off;
+            client_max_body_size 0;
+            proxy_buffering off;
+
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $remote_addr;
+            proxy_set_header X-Forwarded-Proto $scheme;
+
+            proxy_connect_timeout 300;
+            proxy_http_version 1.1;
+            proxy_set_header Connection "";
+            chunked_transfer_encoding off;
           '';
         };
 
@@ -298,20 +331,25 @@
     defaultPackages = lib.mkForce [ ];
 
     systemPackages = with pkgs; [
+      bcachefs-tools
       btop
       conntrack-tools
       doas-sudo-shim
       ethtool
       git
       hdparm
+      keyutils
       ldns
       lm_sensors
       lshw
+      parted
       pciutils
       rsync
+      seaweedfs
       smartmontools
       tcpdump
       usbutils
+      zellij
     ];
   };
 
