@@ -68,7 +68,7 @@ in
         procs
         ripgrep
         scc
-        shell_gpt
+        #shell_gpt
         sops
         strace
         tcpdump

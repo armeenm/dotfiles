@@ -134,7 +134,7 @@ args@{ config, pkgs, lib, modulesPath, inputs, root, user, ... }:
     useNetworkd = true;
     wireless.iwd.enable = true;
 
-    firewall.interfaces.enp77s0.allowedTCPPorts = [ 8080 8888 7860 5201 ];
+    firewall.interfaces.enp78s0.allowedTCPPorts = [ 8080 8888 7860 5201 ];
   };
 
   hardware = {
@@ -180,7 +180,7 @@ args@{ config, pkgs, lib, modulesPath, inputs, root, user, ... }:
   };
 
   nix = {
-    package = pkgs.nixUnstable;
+    package = pkgs.nixVersions.latest;
     channel.enable = true; # NOTE: We should try to get rid of this.
     nixPath = lib.mkForce [ "nixpkgs=${config.nix.registry.nixpkgs.flake}" ];
 
@@ -197,7 +197,6 @@ args@{ config, pkgs, lib, modulesPath, inputs, root, user, ... }:
         "nix-command"
         "ca-derivations"
         "auto-allocate-uids"
-        "configurable-impure-env"
       ];
 
       warn-dirty = false;

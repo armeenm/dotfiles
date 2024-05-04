@@ -952,7 +952,6 @@ linuxPackagesFor (kernel.override {
     NS83820 = no;
     NTB = no;
     NVME_FC = no;
-    NVME_TARGET = no;
     NVME_TCP = no;
     NV_TCO = no;
     NXP_C45_TJA11XX_PHY = no;

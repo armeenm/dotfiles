@@ -17,7 +17,7 @@
   };
 
   nix = {
-    package = pkgs.nixUnstable;
+    package = pkgs.nixVersions.latest;
     extraOptions = ''
       warn-dirty = false
       experimental-features = nix-command flakes ca-derivations
