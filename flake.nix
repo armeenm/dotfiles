@@ -58,8 +58,10 @@
       contentAddressedByDefault = false;
     };
 
+    overlay = (import ./overlay { inherit inputs; });
+
     overlays = [
-      (import ./overlay { inherit inputs; })
+      overlay
       inputs.emacs-overlay.overlays.default
     ];
 
@@ -93,6 +95,8 @@
     ];
 
   in {
+    overlays.default = overlay;
+
     nixosConfigurations = {
       lithium = nixpkgs.lib.nixosSystem {
         modules = modules ++ [

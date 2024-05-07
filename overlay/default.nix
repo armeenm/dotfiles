@@ -8,7 +8,7 @@ final: prev: {
   });
 
   pcsclite = prev.pcsclite.overrideAttrs (old: {
-    postPatch = old.postPatch + ''
+    postPatch = (old.postPatch or "") + ''
       substituteInPlace src/libredirect.c src/spy/libpcscspy.c \
         --replace-fail "libpcsclite_real.so.1" "$lib/lib/libpcsclite_real.so.1"
     '';

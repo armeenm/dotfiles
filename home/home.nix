@@ -139,10 +139,10 @@ in
       lesskey = {
         target = ".lesskey";
         text = ''
-        #env
+          #env
 
-        #command
-        / forw-search ^W
+          #command
+          / forw-search ^W
       '';
       };
 

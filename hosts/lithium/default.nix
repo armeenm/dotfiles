@@ -336,12 +336,17 @@ args@{ config, pkgs, lib, modulesPath, inputs, root, user, ... }:
         groups = [ "wheel" ];
         keepEnv = true;
         noPass = false;
+        persist = true;
       }];
     };
 
     pam = {
       u2f.enable = true;
-      services.swaylock = {};
+      services = {
+        swaylock = {};
+        login.u2fAuth = true;
+        doas.u2fAuth = true;
+      };
     };
 
     tpm2 = {
@@ -419,8 +424,6 @@ args@{ config, pkgs, lib, modulesPath, inputs, root, user, ... }:
     defaultPackages = lib.mkForce [ ];
 
     systemPackages = (with pkgs; [
-      doas-sudo-shim
-
       hdparm
       lm_sensors
       lshw
