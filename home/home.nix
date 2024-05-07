@@ -3,8 +3,8 @@
 let
   homeDir = "/home/${user.login}";
 
-  # TODO: Factor this out along with nixpkgs.hostPlatform
   nix-misc = inputs.nix-misc.packages.x86_64-linux;
+  ragenix = inputs.ragenix.packages.x86_64-linux.default;
 
   editor = lib.getBin (pkgs.writeShellScript "editor" ''
     exec ${lib.getBin config.services.emacs.package}/bin/emacsclient -ct $@
@@ -18,150 +18,116 @@ in
     username = user.login;
     stateVersion = osConfig.system.stateVersion;
 
-    packages =
-      ## Language Specific ##
-      (with pkgs; [
-        gnuapl
-        python3
+    packages = with pkgs; [
+        #git-fuzzy
+        #shell_gpt
+        age-plugin-yubikey
         bacon
-        nix-inspect
-
-        nixd
-      ]) ++
-
-      ## CLI Utils ##
-      (with nix-misc; [
-        git-fuzzy
-      ]) ++
-
-      (with pkgs; [
+        bemenu
+        bluetuith
         boxes
+        breeze-icons
         btop
         bubblewrap
+        cfspeedtest
         comma
         direnv
+        discord
         dos2unix
+        dosfstools
         duf
+        easyeffects
+        exfatprogs
         expect
         fasd
         fd
         ffmpeg
         file
+        fira-code
+        fira-code-symbols
+        firefox-wayland
         gh
+        gimp-with-plugins
+        gnome.adwaita-icon-theme
+        gnuapl
+        google-chrome
+        grim
+        gtk3
+        hack-font
+        hicolor-icon-theme
         htop
         httpie
         hyperfine
+        imv
+        iperf
         jq
         killall
+        ldns
         libnotify
+        libreoffice-fresh
         libva-utils
         lsof
+        material-design-icons
         mediainfo
         miniserve
+        monero
+        mpc_cli
         ncdu
+        nix-inspect
         nix-output-monitor
         nix-tree
+        nixd
+        nmap
+        nomacs
+        noto-fonts
+        noto-fonts-cjk
+        noto-fonts-emoji
+        ntfs3g
         nurl
         onefetch
+        pamixer
         patchutils
+        pavucontrol
+        playerctl
         powertop
         procs
+        python3
+        rage
+        ragenix
+        rclone
+        remmina
         ripgrep
+        s3cmd
         scc
-        #shell_gpt
+        seaweedfs
+        simple-scan
+        slurp
         sops
         strace
+        swappy
+        swaylock
+        tamsyn
         tcpdump
         tig
         toilet
         ueberzugpp
         unzip
-        zellij
-        zip
-      ]) ++
-
-      ## Networking ##
-      (with pkgs; [
-        bluetuith
-        cfspeedtest
-        iperf
-        ldns
-        monero
-        nmap
-        rclone
-        remmina
-        s3cmd
-        seaweedfs
+        vial
+        vlc
+        weechat
         wget
         whois
         wireshark
-      ]) ++
-
-      ## Desktop Environment ##
-      (with pkgs; [
-        firefox-wayland
-        google-chrome
-
-        #gimp-with-plugins
-        libreoffice-fresh
-
-        bemenu
-        grim
-        imv
-        nomacs
-        simple-scan
-        slurp
-        swappy
-        swaylock
         wl-clipboard
         wlr-randr
-
         xdg-user-dirs
         xdg-utils
         xorg.xeyes
         xorg.xkill
-
-        breeze-icons
-        gnome.adwaita-icon-theme
-        material-design-icons
-
-        fira-code
-        fira-code-symbols
-        hack-font
-        hicolor-icon-theme
-        noto-fonts
-        noto-fonts-cjk
-        noto-fonts-emoji
-        tamsyn
-
-        gtk3
-
-        vial
-      ]) ++
-
-      ## Windows ##
-      (with pkgs; [
-        ntfs3g
-        dosfstools
-        exfatprogs
-      ]) ++
-
-      ## Media ##
-      (with pkgs; [
-        easyeffects
-        mpc_cli
-        pamixer
-        pavucontrol
-        vlc
-        playerctl
-      ]) ++
-
-      ## Communication ##
-      (with pkgs; [
-        discord
-        weechat
+        zellij
+        zip
         zoom-us
-      ]);
+      ];
 
     file = {
       dnsCheck = {

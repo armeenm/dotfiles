@@ -12,6 +12,13 @@
       fsType = "vfat";
     };
 
+    /*
+    "/srv/cobalt" = {
+      device = "/dev/nvme0n1:/dev/nvme1n1";
+      fsType = "bcachefs";
+    };
+    */
+
     "/" = {
       device = "/dev/disk/by-uuid/580bb1f1-73ac-444a-b4ca-5e36b502cdb4";
       fsType = "ext4";
@@ -189,6 +196,15 @@
       };
     };
 
+    /*
+    restic = {
+      backups = {
+        b2 = {
+        };
+      };
+    };
+*/
+
     vaultwarden = {
       enable = true;
       config = {
@@ -220,15 +236,15 @@
           '';
         };
 
-        "s3.armeen.xyz" = {
+        "cobalt.armeen.xyz" = {
           enableACME = true;
           forceSSL = true;
           # TODO: Switch to UDS
           locations."/".proxyPass = "http://127.0.0.1:8333";
 
           extraConfig = ''
-            if ( $host != 's3.armeen.xyz' ) {
-              rewrite ^/(.*)$ https://s3.armeen.xyz/$1 permanent;
+            if ( $host != 'cobalt.armeen.xyz' ) {
+              rewrite ^/(.*)$ https://cobalt.armeen.xyz/$1 permanent;
             }
 
             ignore_invalid_headers off;
@@ -245,12 +261,6 @@
             proxy_set_header Connection "";
             chunked_transfer_encoding off;
           '';
-        };
-
-        "gpt.fulminous-hill.com" = {
-          enableACME = true;
-          forceSSL = true;
-          locations."/".proxyPass = "http://192.168.0.128:9000";
         };
       };
     };
@@ -381,17 +391,6 @@
       };
     };
   };
-
-/*
-  sops = {
-    defaultSopsFile = "${root}/secrets/secrets.yaml";
-    age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
-
-    secrets = {
-      "${user.login}-pw".neededForUsers = true;
-    };
-  };
-  */
 
   zramSwap.enable = true;
   system.stateVersion = lib.mkForce "23.05";

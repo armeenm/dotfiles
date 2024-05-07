@@ -33,8 +33,6 @@ args@{ config, pkgs, lib, modulesPath, inputs, root, user, ... }:
     };
 
     binfmt.emulatedSystems = [ "aarch64-linux" ];
-    # XXX: Broken on Linux 6.7.
-    #supportedFilesystems = [ "zfs" ];
     consoleLogLevel = 0;
 
     kernelModules = [
@@ -181,7 +179,7 @@ args@{ config, pkgs, lib, modulesPath, inputs, root, user, ... }:
 
   nix = {
     package = pkgs.nixVersions.latest;
-    channel.enable = true; # NOTE: We should try to get rid of this.
+    channel.enable = true;
     nixPath = lib.mkForce [ "nixpkgs=${config.nix.registry.nixpkgs.flake}" ];
 
     registry = {
@@ -193,10 +191,11 @@ args@{ config, pkgs, lib, modulesPath, inputs, root, user, ... }:
       trusted-users = lib.mkForce [ "@wheel" ];
 
       experimental-features = [
+        "auto-allocate-uids"
+        "ca-derivations"
         "flakes"
         "nix-command"
-        "ca-derivations"
-        "auto-allocate-uids"
+        "recursive-nix"
       ];
 
       warn-dirty = false;
@@ -211,10 +210,12 @@ args@{ config, pkgs, lib, modulesPath, inputs, root, user, ... }:
     blueman.enable = true;
     flatpak.enable = true;
     fstrim.enable = true;
+    fwupd.enable = true;
     haveged.enable = true;
     i2pd.enable = true;
     iperf3.enable = true;
     mozillavpn.enable = true;
+    pcscd.enable = true;
     physlock.enable = true;
     saned.enable = true;
     smartd.enable = true;
@@ -222,7 +223,6 @@ args@{ config, pkgs, lib, modulesPath, inputs, root, user, ... }:
     tcsd.enable = false;
     timesyncd.enable = true;
     udisks2.enable = true;
-    fwupd.enable = true;
 
     avahi = {
       enable = true;
@@ -283,13 +283,6 @@ args@{ config, pkgs, lib, modulesPath, inputs, root, user, ... }:
         vial
         yubikey-personalization
       ];
-
-      extraRules = ''
-        ACTION=="add|change"                                                    \
-        , KERNEL=="sd[a-z]*[0-9]*|mmcblk[0-9]*p[0-9]*|nvme[0-9]*n[0-9]*p[0-9]*" \
-        , ENV{ID_FS_TYPE}=="zfs_member"                                         \
-        , ATTR{../queue/scheduler}="none"
-      '';
     };
 
     usbguard = {
@@ -298,12 +291,6 @@ args@{ config, pkgs, lib, modulesPath, inputs, root, user, ... }:
     };
 
     xserver.videoDrivers = [ "amdgpu" "nvidia" ];
-
-    zfs = {
-      trim.enable = true;
-      autoScrub.enable = true;
-      autoSnapshot.enable = true;
-    };
   };
 
   systemd = {

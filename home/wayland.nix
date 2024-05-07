@@ -15,7 +15,7 @@ in {
           ",preferred,auto,1"
         ];
 
-        workspace = "${left},1";
+        workspace = "1,monitor:${left}";
 
         input = {
           kb_options = "caps:escape";

@@ -45,6 +45,11 @@
       url = "github:jonathanio/update-systemd-resolved";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    ragenix = {
+      url = "github:yaxitech/ragenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs@{ self, nixpkgs, ... }: let
@@ -82,6 +87,7 @@
       inputs.sops-nix.nixosModules.sops
       inputs.lanzaboote.nixosModules.lanzaboote
       inputs.update-systemd-resolved.nixosModules.update-systemd-resolved
+      inputs.ragenix.nixosModules.default
       { nixpkgs = { inherit config overlays; }; }
       ./modules
     ];
@@ -94,6 +100,7 @@
         ];
       };
 
+      /*
       argentum = nixpkgs.lib.nixosSystem {
         modules = modules ++ [
           ./hosts/argentum
@@ -101,13 +108,16 @@
           inputs.nixos-hardware.nixosModules.framework-12th-gen-intel
         ];
       };
+      */
 
+      /*
       boron = nixpkgs.lib.nixosSystem {
         modules = modules ++ [
           ./hosts/boron
           ./home
         ];
       };
+      */
 
       carbon = nixpkgs.lib.nixosSystem {
         modules = modules ++ [
@@ -159,6 +169,7 @@
           };
         };
 
+        /*
         boron = {
           hostname = "boron";
           profiles.system = {
@@ -167,6 +178,7 @@
             path = inputs.deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.boron;
           };
         };
+        */
       };
     };
 
@@ -174,10 +186,12 @@
       default = mkShell {
         packages = [
           inputs.deploy-rs.packages.${system}.default
-          nil
+          inputs.ragenix.packages.${system}.default
+
+          age-plugin-yubikey
           nvd
           openssl
-          sops
+          rage
         ];
 
         shellHook = ''
