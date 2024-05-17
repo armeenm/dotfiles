@@ -47,9 +47,8 @@ let
 
     ns1 A ${ip}
     ${hostName} A ${ip}
-    carbon A ${ip}
     vault A ${ip}
-    s3 A ${ip}
+    cobalt A ${ip}
   '';
 
   zone-subnet = ''

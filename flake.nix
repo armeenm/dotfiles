@@ -190,12 +190,8 @@
       default = mkShell {
         packages = [
           inputs.deploy-rs.packages.${system}.default
-          inputs.ragenix.packages.${system}.default
-
-          age-plugin-yubikey
           nvd
           openssl
-          rage
         ];
 
         shellHook = ''

@@ -395,12 +395,12 @@ args@{ config, pkgs, lib, modulesPath, inputs, root, user, ... }:
 
       arash = {
         isNormalUser = true;
-        hashedPassword = "$y$j9T$2Uu/mv2VrSO8Nq105c.a91$53RYMK90Up6hSwmodTkxAgb0tW9rDcwSay4k2mmZEs6";
+        hashedPasswordFile = config.age.secrets.arash-pw.path;
       };
 
       "${user.login}" = {
         isNormalUser = true;
-        hashedPasswordFile = config.sops.secrets."${user.login}-pw".path;
+        hashedPasswordFile = config.age.secrets."${user.login}-pw".path;
         extraGroups = [
           "adbusers"
           "docker"
@@ -424,6 +424,7 @@ args@{ config, pkgs, lib, modulesPath, inputs, root, user, ... }:
     defaultPackages = lib.mkForce [ ];
 
     systemPackages = (with pkgs; [
+      doas-sudo-shim
       hdparm
       lm_sensors
       lshw
@@ -485,13 +486,14 @@ args@{ config, pkgs, lib, modulesPath, inputs, root, user, ... }:
     man.generateCaches = true;
   };
 
-  sops = {
-    defaultSopsFile = "${root}/secrets/secrets.yaml";
-    age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
 
+  age = {
     secrets = {
-      "${user.login}-pw".neededForUsers = true;
+      "${user.login}-pw".file = "${root}/secrets/${user.login}-pw.age";
+      "arash-pw".file = "${root}/secrets/arash-pw.age";
     };
+
+    identityPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
   };
 
   zramSwap.enable = true;

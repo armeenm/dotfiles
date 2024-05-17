@@ -208,7 +208,7 @@
           vi_insert: line,
           vi_normal: underscore,
         }
-                                        }
+      }
     '';
     };
 
@@ -217,6 +217,19 @@
       extraConfig = ''
       set editing-mode vi
     '';
+    };
+
+    ssh = {
+      enable = true;
+      compression = true;
+      controlMaster = "auto";
+      matchBlocks = {
+        "i-* mi-*" = {
+          proxyCommand = ''
+            sh -c "aws ssm start-session --target %h --document-name AWS-StartSSHSession --parameters 'portNumber=%p'"
+          '';
+        };
+      };
     };
 
     starship = {

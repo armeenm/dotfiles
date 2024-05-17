@@ -170,7 +170,7 @@
     fstrim.enable = true;
     fwupd.enable = true;
     haveged.enable = true;
-    smartd.enable = false; # TODO: Enable when this machine has actual drives.
+    smartd.enable = true;
     tcsd.enable = false;
     timesyncd.enable = true;
     udisks2.enable = true;
@@ -196,17 +196,21 @@
       };
     };
 
-    /*
     restic = {
       backups = {
         b2 = {
+          paths = [ "/srv/tank" ];
+          user = "restic";
+          repository = "b2:backups-jKl9AFet877bX";
+          passwordFile = config.age.secrets.restic-pw.path;
+          environmentFile = config.age.secrets.restic-b2-env.path;
         };
       };
     };
-*/
 
     vaultwarden = {
       enable = true;
+      backupDir = "/srv/tank/vaultwarden";
       config = {
         DOMAIN = "https://vault.armeen.xyz";
         SIGNUPS_ALLOWED = false;
@@ -324,15 +328,22 @@
 
   users = {
     defaultUserShell = pkgs.zsh;
-    mutableUsers = true; # XXX
+    mutableUsers = false;
+
+    groups.restic = {};
 
     users = {
       root.hashedPassword = null;
 
       "${user.login}" = {
         isNormalUser = true;
-        #passwordFile = config.sops.secrets."${user.login}-pw".path;
+        hashedPasswordFile = config.age.secrets."${user.login}-pw".path;
         extraGroups = [ "wheel" ];
+      };
+
+      restic = {
+        isSystemUser = true;
+        group = "restic";
       };
     };
   };
@@ -390,6 +401,26 @@
         '';
       };
     };
+  };
+
+  age = {
+    secrets = {
+      "${user.login}-pw".file = "${root}/secrets/${user.login}-pw.age";
+
+      restic-pw = {
+        file = "${root}/secrets/restic-pw.age";
+        owner = "restic";
+        group = "restic";
+      };
+
+      restic-b2-env = {
+        file = "${root}/secrets/restic-b2-env.age";
+        owner = "restic";
+        group = "restic";
+      };
+    };
+
+    identityPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
   };
 
   zramSwap.enable = true;
