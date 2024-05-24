@@ -102,12 +102,12 @@ in
       seaweedfs
       simple-scan
       slurp
-      sops
       strace
       swappy
       swaylock
       tamsyn
       tcpdump
+      telegram-desktop
       tig
       toilet
       ueberzugpp

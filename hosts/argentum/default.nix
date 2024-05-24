@@ -263,7 +263,6 @@
 
       "${user.login}" = {
         isNormalUser = true;
-        #passwordFile = config.sops.secrets."${user.login}-pw".path;
         extraGroups = [
           "adbusers"
           "docker"
@@ -355,15 +354,6 @@
   documentation = {
     dev.enable = true;
     man.generateCaches = true;
-  };
-
-  sops = {
-    defaultSopsFile = "${root}/secrets/secrets.yaml";
-    age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
-
-    secrets = {
-      "${user.login}-pw".neededForUsers = true;
-    };
   };
 
   zramSwap.enable = true;

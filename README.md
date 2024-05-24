@@ -2,5 +2,5 @@
 
 Neat features:
 - Lanzaboote for secure boot
-- sops-nix for secrets management
+- ragenix for secrets management
 - deploy-rs for remote deployment
