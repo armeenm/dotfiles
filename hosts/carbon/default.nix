@@ -244,7 +244,7 @@
           enableACME = true;
           forceSSL = true;
           # TODO: Switch to UDS
-          locations."/".proxyPass = "http://127.0.0.1:8333";
+          locations."/".proxyPass = "http://[::1]:8333";
 
           extraConfig = ''
             if ( $host != 'cobalt.armeen.xyz' ) {
@@ -282,6 +282,68 @@
 
       "L /srv - - - - /var/srv"
     ];
+
+    services = {
+      swfs-master = {
+        description = "SeaweedFS Master";
+        wantedBy = [ "multi-user.target" ];
+        after = [ "network.target" ];
+        serviceConfig = {
+          Type = "exec";
+          User = "seaweed";
+          ExecStart = ''
+           ${pkgs.seaweedfs}/bin/weed master \
+             -mdir /srv/tank/seaweed \
+             -ip="[::1]"
+           '';
+        };
+      };
+
+      swfs-volume = {
+        description = "SeaweedFS Volume Server";
+        wantedBy = [ "multi-user.target" ];
+        after = [ "swfs-master.service" ];
+        serviceConfig = {
+          Type = "exec";
+          User = "seaweed";
+          ExecStart = ''
+            ${pkgs.seaweedfs}/bin/weed volume \
+              -max 100 \
+              -dir /srv/tank/seaweed \
+              -ip="[::1]"
+          '';
+        };
+      };
+
+      swfs-filer = {
+        description = "SeaweedFS Filer";
+        wantedBy = [ "multi-user.target" ];
+        after = [ "swfs-volume.service" ];
+        serviceConfig = {
+          Type = "exec";
+          User = "seaweed";
+          ExecStart = ''
+            ${pkgs.seaweedfs}/bin/weed filer \
+              -ip="[::1]"
+          '';
+        };
+      };
+
+      swfs-s3 = {
+        description = "SeaweedFS S3 Gateway";
+        wantedBy = [ "multi-user.target" ];
+        after = [ "swfs-filer.service" ];
+        serviceConfig = {
+          Type = "exec";
+          User = "seaweed";
+          ExecStart = ''
+            ${pkgs.seaweedfs}/bin/weed s3 \
+              -config ${config.age.secrets."cobalt-s3.config".path} \
+              -ip.bind="[::1]"
+          '';
+        };
+      };
+    };
   };
 
   security = {
@@ -331,6 +393,7 @@
     mutableUsers = false;
 
     groups.restic = {};
+    groups.seaweed = {};
 
     users = {
       root.hashedPassword = null;
@@ -344,6 +407,11 @@
       restic = {
         isSystemUser = true;
         group = "restic";
+      };
+
+      seaweed = {
+        isSystemUser = true;
+        group = "seaweed";
       };
     };
   };
@@ -372,6 +440,13 @@
       usbutils
       zellij
     ];
+
+    etc = {
+      swfs-filer = {
+        source = ./filer.toml;
+        target = "seaweedfs/filer.toml";
+      };
+    };
   };
 
   programs = {
@@ -417,6 +492,12 @@
         file = "${root}/secrets/restic-b2-env.age";
         owner = "restic";
         group = "restic";
+      };
+
+      "cobalt-s3.config" = {
+        file = "${root}/secrets/cobalt-s3.config.age";
+        owner = "seaweed";
+        group = "seaweed";
       };
     };
 

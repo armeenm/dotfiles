@@ -10,4 +10,5 @@ in {
   "arash-pw.age".publicKeys = [ armeen-yk0 lithium ];
   "restic-pw.age".publicKeys = [ armeen-yk0 carbon ];
   "restic-b2-env.age".publicKeys = [ armeen-yk0 carbon ];
+  "cobalt-s3.config.age".publicKeys = [ armeen-yk0 carbon ];
 }
