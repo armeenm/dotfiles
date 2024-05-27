@@ -20,7 +20,7 @@ in
 
     packages = with pkgs; [
       #git-fuzzy
-      #shell_gpt
+      shell-gpt
       age-plugin-yubikey
       bacon
       bemenu
@@ -116,6 +116,7 @@ in
       vlc
       weechat
       wget
+      whatsapp-for-linux
       whois
       wireshark
       wl-clipboard
