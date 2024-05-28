@@ -20,6 +20,7 @@ in
 
     packages = with pkgs; [
       #git-fuzzy
+      multimarkdown
       shell-gpt
       age-plugin-yubikey
       bacon
