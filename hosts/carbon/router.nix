@@ -151,12 +151,17 @@ in
           renew-timer = 1000;
           valid-lifetime = 4000;
 
-          subnet4 = [{
-            inherit subnet;
-            pools = [{
-              pool = "${prefix}.128 - ${prefix}.254";
-            }];
-          }];
+          subnet4 = [
+            {
+              id = 1;
+              inherit subnet;
+              pools = [
+                {
+                  pool = "${prefix}.128 - ${prefix}.254";
+                }
+              ];
+            }
+          ];
 
           option-data = [
             {

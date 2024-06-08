@@ -208,7 +208,6 @@ args@{ config, pkgs, lib, modulesPath, inputs, root, user, ... }:
 
   services = {
     blueman.enable = true;
-    flatpak.enable = true;
     fstrim.enable = true;
     fwupd.enable = true;
     haveged.enable = true;
