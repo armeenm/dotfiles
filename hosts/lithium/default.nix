@@ -359,7 +359,6 @@ args@{ config, pkgs, lib, modulesPath, inputs, root, user, ... }:
 
   virtualisation = {
     spiceUSBRedirection.enable = true;
-    waydroid.enable = true;
 
     libvirtd = {
       enable = false;

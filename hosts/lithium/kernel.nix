@@ -121,7 +121,6 @@ linuxPackagesFor (kernel.override {
     WQ_WATCHDOG = yes;
     ZRAM = module;
     ZRAM_DEF_COMP = freeform "zstd";
-    ZSMALLOC = module;
     ZSMALLOC_STAT = yes;
 
     ## X86_64 ##
