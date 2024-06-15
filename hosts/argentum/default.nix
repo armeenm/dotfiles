@@ -179,12 +179,6 @@
       "d /run/tmp 1777 - - -"
 
       "L /srv - - - - /var/srv"
-
-      # Using /home/root instead
-      "R /root - - - - -"
-
-      # For Wolfram kernel
-      "L /bin/uname - - - - ${pkgs.coreutils}/bin/uname"
     ];
 
     suppressedSystemUnits = [
@@ -289,14 +283,7 @@
       git
       rsync
 
-      #(mathematica.override {
-      #  version = "13.1.0";
-      #  config.cudaSupport = true;
-      #})
-
       (hunspellWithDicts [ hunspellDicts.en_US hunspellDicts.en_US-large ])
-
-      #(lkrg.override { kernel = config.boot.kernelPackages.kernel; })
     ])
     ++
     (with pkgs.pkgsMusl; [
@@ -304,17 +291,6 @@
       lm_sensors
       pciutils
     ]);
-
-    etc = {
-      /*
-      "ssh/ssh_host_ed25519_key".source = "/var/etc/ssh/ssh_host_ed25519_key";
-      "ssh/ssh_host_ed25519_key.pub".source = "/var/etc/ssh/ssh_host_ed25519_key.pub";
-      "ssh/ssh_host_rsa_key".source = "/var/etc/ssh/ssh_host_rsa_key";
-      "ssh/ssh_host_rsa_key.pub".source = "/var/etc/ssh/ssh_host_rsa_key.pub";
-      */
-
-      openvpn.source = "${pkgs.update-resolv-conf}/libexec/openvpn";
-    };
   };
 
   programs = {

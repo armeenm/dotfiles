@@ -20,8 +20,6 @@ in
 
     packages = with pkgs; [
       #git-fuzzy
-      multimarkdown
-      shell-gpt
       age-plugin-yubikey
       bacon
       bemenu
@@ -73,6 +71,7 @@ in
       mkpasswd
       monero
       mpc_cli
+      multimarkdown
       ncdu
       nix-inspect
       nix-output-monitor
@@ -87,6 +86,7 @@ in
       nurl
       onefetch
       pamixer
+      pandoc
       patchutils
       pavucontrol
       playerctl
@@ -101,6 +101,7 @@ in
       s3cmd
       scc
       seaweedfs
+      shell-gpt
       simple-scan
       slurp
       strace
