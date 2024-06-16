@@ -234,6 +234,7 @@
 
     starship = {
       enable = true;
+      enableZshIntegration = false;
 
       settings = {
         add_newline = false;
@@ -623,6 +624,12 @@
       };
 
       initExtraFirst = ''
+      source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
+      if [[ -r "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh" ]]; then
+        source "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh"
+      fi
+      [[ ! -f ~/.config/zsh/.p10k.zsh ]] || source ~/.config/zsh/.p10k.zsh
+
       function zshaddhistory() { return 1 }
 
       bindkey '^ ' autosuggest-accept
