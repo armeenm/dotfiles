@@ -215,7 +215,6 @@ args@{ config, pkgs, lib, modulesPath, inputs, root, user, ... }:
     iperf3.enable = true;
     mozillavpn.enable = true;
     pcscd.enable = true;
-    physlock.enable = true;
     saned.enable = true;
     smartd.enable = true;
     spice-vdagentd.enable = true;
@@ -343,6 +342,7 @@ args@{ config, pkgs, lib, modulesPath, inputs, root, user, ... }:
       u2f.enable = true;
       services = {
         swaylock = {};
+        hyprlock = {};
         login.u2fAuth = true;
         doas.u2fAuth = true;
       };
@@ -478,6 +478,8 @@ args@{ config, pkgs, lib, modulesPath, inputs, root, user, ... }:
       };
     };
   };
+
+  xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
 
   documentation = {
     dev.enable = true;

@@ -63,6 +63,8 @@
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
 
+(add-to-list 'auto-mode-alist '("\\.svelte\\'" . mhtml-mode))
+
 (setq
  js-indent-level 2
  c-default-style "k&r"

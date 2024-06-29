@@ -56,6 +56,7 @@ in
       htop
       httpie
       hyperfine
+      hyprpicker
       imv
       iperf
       jq
@@ -84,6 +85,10 @@ in
       noto-fonts-emoji
       ntfs3g
       nurl
+      obs-studio
+      obs-studio-plugins.wlrobs
+      obs-studio-plugins.obs-pipewire-audio-capture
+      obs-studio-plugins.droidcam-obs
       onefetch
       pamixer
       pandoc
@@ -102,6 +107,7 @@ in
       scc
       seaweedfs
       shell-gpt
+      shellcheck
       simple-scan
       slurp
       strace
@@ -154,6 +160,13 @@ in
         source = "${root}/conf/emacs/ayu-dark-theme.el";
         target = ".emacs.d/ayu-dark-theme.el";
       };
+    };
+
+    pointerCursor = {
+      gtk.enable = true;
+      package = pkgs.gnome.adwaita-icon-theme;
+      name = "Adwaita";
+      size = 16;
     };
 
     sessionPath = [ "${config.home.homeDirectory}/.local/bin" ];

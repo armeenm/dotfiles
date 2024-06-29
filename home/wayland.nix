@@ -136,7 +136,7 @@ in {
           "SUPER_SHIFT,A,exec,makoctl dismiss -a"
           "SUPER,S,exec,makoctl set-mode do-not-disturb"
           "SUPER_SHIFT,S,exec,makoctl set-mode default"
-          "SUPER_SHIFT,X,exec,swaylock -fF -c 000000"
+          "SUPER_SHIFT,X,exec,hyprlock"
 
           ",xf86audiopause,exec,playerctl play-pause"
           ",xf86audioplay,exec,playerctl play-pause"
