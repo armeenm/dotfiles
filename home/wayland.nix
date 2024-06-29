@@ -91,6 +91,7 @@ in {
           "SUPER,tab,workspace,previous"
           "SUPER,minus,togglespecialworkspace"
           "SUPER,Z,togglesplit"
+          "SUPER_SHIFT,Z,swapsplit"
           "SUPER,T,togglegroup"
           "SUPER,X,movecursortocorner,0"
 
