@@ -144,7 +144,6 @@ args@{ config, pkgs, lib, modulesPath, inputs, root, user, ... }:
 
     opengl = {
       enable = true;
-      driSupport = true;
       driSupport32Bit = true;
       extraPackages = with pkgs; [
         amdvlk

@@ -257,14 +257,14 @@ linuxPackagesFor (kernel.override {
     HOSTAP = no;
     INET6_AH = yes;
     INET6_ESP = yes;
-    INET6_ESPINTCP = no;
+    INET6_ESPINTCP = yes;
     INET6_ESP_OFFLOAD = yes;
     INET6_IPCOMP = yes;
     INET6_XFRM_TUNNEL = yes;
     INET_AH = yes;
     INET_DIAG = yes; # NOTE
     INET_ESP = yes;
-    INET_ESPINTCP = no;
+    INET_ESPINTCP = yes;
     INET_ESP_OFFLOAD = yes;
     INET_IPCOMP = yes;
     INET_RAW_DIAG = yes;
