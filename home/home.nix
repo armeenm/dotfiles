@@ -55,6 +55,7 @@ in
       hicolor-icon-theme
       htop
       httpie
+      httpie-desktop
       hyperfine
       hyprpicker
       imv
@@ -86,9 +87,9 @@ in
       ntfs3g
       nurl
       obs-studio
-      obs-studio-plugins.wlrobs
-      obs-studio-plugins.obs-pipewire-audio-capture
       obs-studio-plugins.droidcam-obs
+      obs-studio-plugins.obs-pipewire-audio-capture
+      obs-studio-plugins.wlrobs
       onefetch
       pamixer
       pandoc
