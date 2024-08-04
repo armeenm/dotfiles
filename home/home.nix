@@ -19,7 +19,9 @@ in
     stateVersion = osConfig.system.stateVersion;
 
     packages = with pkgs; [
+      # ueberzugpp
       #git-fuzzy
+      adwaita-icon-theme
       age-plugin-yubikey
       bacon
       bemenu
@@ -46,7 +48,6 @@ in
       firefox-wayland
       gh
       gimp-with-plugins
-      gnome.adwaita-icon-theme
       gnuapl
       google-chrome
       grim
@@ -111,6 +112,7 @@ in
       shellcheck
       simple-scan
       slurp
+      spek
       strace
       swappy
       swaylock
@@ -119,7 +121,6 @@ in
       telegram-desktop
       tig
       toilet
-      ueberzugpp
       unzip
       vial
       vlc
@@ -165,7 +166,7 @@ in
 
     pointerCursor = {
       gtk.enable = true;
-      package = pkgs.gnome.adwaita-icon-theme;
+      package = pkgs.adwaita-icon-theme;
       name = "Adwaita";
       size = 16;
     };

@@ -39,13 +39,15 @@ args@{ config, pkgs, lib, inputs, root, user, ... }:
       };
 
       themes = {
-        ayu = builtins.readFile (pkgs.fetchFromGitHub
-          {
+        ayu = {
+          src = pkgs.fetchFromGitHub {
             owner = "dempfi";
             repo = "ayu";
             rev = "4.0.3";
             hash = "sha256-O0zoKAmCgSAHv2gcORYrorIlw0kdXN1+2k2Emtntc2g=";
-          } + "/ayu-dark.tmTheme");
+          };
+          file = "ayu-dark.tmTheme";
+        };
       };
     };
 

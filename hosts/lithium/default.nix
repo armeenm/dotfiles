@@ -132,19 +132,19 @@ args@{ config, pkgs, lib, modulesPath, inputs, root, user, ... }:
     useNetworkd = true;
     wireless.iwd.enable = true;
 
-    firewall.interfaces.enp78s0.allowedTCPPorts = [ 8080 8888 7860 5201 ];
+    firewall.interfaces.enp78s0.allowedTCPPorts = [ 8080 8888 7860 5201 11434 ];
   };
 
   hardware = {
     enableAllFirmware = true;
-
     bluetooth.enable = true;
     cpu.amd.updateMicrocode = true;
     rtl-sdr.enable = true;
+    nvidia-container-toolkit.enable = true;
 
-    opengl = {
+    graphics = {
       enable = true;
-      driSupport32Bit = true;
+      enable32Bit = true;
       extraPackages = with pkgs; [
         amdvlk
         rocm-opencl-icd
@@ -203,6 +203,10 @@ args@{ config, pkgs, lib, modulesPath, inputs, root, user, ... }:
 
   nixpkgs = {
     hostPlatform = "x86_64-linux";
+    config = {
+      cudaSupport = false;
+      rocmSupport = true;
+    };
   };
 
   services = {
@@ -234,6 +238,11 @@ args@{ config, pkgs, lib, modulesPath, inputs, root, user, ... }:
         package = pkgs.openrgb-with-all-plugins;
         motherboard = "amd";
       };
+    };
+
+    ollama = {
+      enable = true;
+      host = "0.0.0.0";
     };
 
     openssh = {
@@ -374,7 +383,6 @@ args@{ config, pkgs, lib, modulesPath, inputs, root, user, ... }:
 
     docker = {
       enable = true;
-      enableNvidia = true;
     };
 
     podman = {

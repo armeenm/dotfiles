@@ -170,13 +170,16 @@
 (use-package symbol-overlay)
 (use-package terraform-mode)
 (use-package treemacs)
-(use-package typescript-mode)
 (use-package undo-fu)
 (use-package vterm)
 (use-package vundo)
 (use-package wgrep)
 (use-package xah-wolfram-mode)
 (use-package markdown-mode)
+
+(use-package typescript-mode
+  :config
+  (setq typescript-indent-level 2))
 
 (use-package blamer
   :config

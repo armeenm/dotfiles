@@ -6,8 +6,12 @@
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-23.11-small";
 
     deploy-rs.url = "github:serokell/deploy-rs";
-    home-manager.url = "github:nix-community/home-manager";
     nixos-hardware.url = "github:nixos/nixos-hardware";
+
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     nix-misc = {
       url = "github:armeenm/nix-misc";
