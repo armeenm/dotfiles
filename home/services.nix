@@ -58,5 +58,11 @@
       }
     '';
     };
+
+    wlsunset = {
+        enable = true;
+        latitude = 47.76;
+        longitude = -122;
+    };
   };
 }
