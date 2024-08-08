@@ -181,9 +181,9 @@
   :config
   (setq typescript-indent-level 2))
 
-(use-package blamer
+(use-package why-this
   :config
-  (global-blamer-mode 1))
+  (global-why-this-mode))
 
 (use-package cape
   :config
