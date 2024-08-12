@@ -211,6 +211,7 @@ args@{ config, pkgs, lib, modulesPath, inputs, root, user, ... }:
 
   services = {
     blueman.enable = true;
+    devmon.enable = true;
     fstrim.enable = true;
     fwupd.enable = true;
     haveged.enable = true;
@@ -224,6 +225,7 @@ args@{ config, pkgs, lib, modulesPath, inputs, root, user, ... }:
     tcsd.enable = false;
     timesyncd.enable = true;
     udisks2.enable = true;
+    gvfs.enable = true;
 
     avahi = {
       enable = true;
