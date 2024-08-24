@@ -36,7 +36,8 @@
 
 (setq visual-bell 1)
 
-(setq save-place-mode t)
+;; TODO DEBUGGING
+(setq save-place-mode nil)
 
 (setq inhibit-startup-screen t
       inhibit-startup-echo-area-message (user-login-name))
