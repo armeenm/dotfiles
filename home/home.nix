@@ -194,6 +194,7 @@ in
       tf = "terraform";
       zc = "zcalc -r";
       zj = "zellij";
+      b2 = "buck2";
       bz = "bazel";
       ms = "miniserve -HWqrgzl --readme --index index.html";
 

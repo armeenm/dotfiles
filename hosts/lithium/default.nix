@@ -454,6 +454,7 @@ args@{ config, pkgs, lib, modulesPath, inputs, root, user, ... }:
     adb.enable = true;
     dconf.enable = true;
     hyprland.enable = true;
+    mosh.enable = true;
     mtr.enable = true;
     nix-ld.enable = true;
     zsh.enable = true;
