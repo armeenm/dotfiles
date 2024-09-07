@@ -141,6 +141,7 @@ args@{ config, pkgs, lib, modulesPath, inputs, root, user, ... }:
     cpu.amd.updateMicrocode = true;
     rtl-sdr.enable = true;
     nvidia-container-toolkit.enable = true;
+    nvidia.open = true;
 
     graphics = {
       enable = true;

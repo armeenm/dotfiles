@@ -19,8 +19,8 @@ in
     stateVersion = osConfig.system.stateVersion;
 
     packages = with pkgs; [
-      # ueberzugpp
       #git-fuzzy
+      #ueberzugpp
       adwaita-icon-theme
       age-plugin-yubikey
       bacon
@@ -38,6 +38,7 @@ in
       dosfstools
       duf
       easyeffects
+      element-desktop-wayland
       exfatprogs
       fasd
       fd
