@@ -5,8 +5,12 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable-small";
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-23.11-small";
 
-    deploy-rs.url = "github:serokell/deploy-rs";
     nixos-hardware.url = "github:nixos/nixos-hardware";
+
+    deploy-rs = {
+      url = "github:serokell/deploy-rs";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -48,6 +52,11 @@
       url = "github:yaxitech/ragenix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nix-darwin = {
+      url = "github:LnL7/nix-darwin";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs@{ self, nixpkgs, ... }: let
@@ -77,9 +86,17 @@
       email = "armeen@fulminous-hill.com";
     };
 
-    hmModules = [
-      inputs.mpd-mpris.homeManagerModules.default
+    baseModules = [
       { _module.args = { inherit inputs root user; }; }
+      { nixpkgs = { inherit config overlays; }; }
+    ];
+
+    darwinModules = baseModules ++ [
+      inputs.home-manager.darwinModules.home-manager
+    ];
+
+    hmModules = baseModules ++ [
+      inputs.mpd-mpris.homeManagerModules.default
     ];
 
     modules = hmModules ++ [
@@ -87,7 +104,6 @@
       inputs.lanzaboote.nixosModules.lanzaboote
       inputs.update-systemd-resolved.nixosModules.update-systemd-resolved
       inputs.ragenix.nixosModules.default
-      { nixpkgs = { inherit config overlays; }; }
       ./modules
     ];
 
@@ -131,6 +147,14 @@
         modules = [
           "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
           ./img/basic
+        ];
+      };
+    };
+
+    darwinConfigurations = {
+      rhenium = inputs.nix-darwin.lib.darwinSystem {
+        modules = darwinModules ++ [
+          ./hosts/rhenium
         ];
       };
     };

@@ -1,6 +1,18 @@
-{ config, osConfig, pkgs, lib, root, user, inputs, ... }:
+{ config
+, osConfig
+, pkgs
+, system
+, lib
+, root
+, user
+, inputs
+, stateVersion ? osConfig.system.stateVersion
+, ...
+}:
 
 let
+  inherit (osConfig.nixpkgs) hostPlatform;
+
   homeDir = "/home/${user.login}";
 
   nix-misc = inputs.nix-misc.packages.x86_64-linux;
@@ -12,11 +24,12 @@ let
 in
 {
   home = {
+    inherit stateVersion;
+
     # XXX: https://github.com/nix-community/home-manager/issues/4826
     activation.batCache = lib.mkForce (lib.hm.dag.entryAfter [ "linkGeneration" ] '''');
 
     username = user.login;
-    stateVersion = osConfig.system.stateVersion;
 
     packages = with pkgs; [
       #git-fuzzy
@@ -24,50 +37,33 @@ in
       adwaita-icon-theme
       age-plugin-yubikey
       bacon
-      bemenu
-      bluetuith
       boxes
       breeze-icons
       btop
-      bubblewrap
-      cfspeedtest
       comma
       direnv
-      discord
       dos2unix
       dosfstools
       duf
-      easyeffects
       element-desktop-wayland
-      exfatprogs
       fasd
       fd
       ffmpeg
       file
       fira-code
       fira-code-symbols
-      firefox-wayland
       gh
-      gimp-with-plugins
-      gnuapl
-      google-chrome
-      grim
       gtk3
       hack-font
       hicolor-icon-theme
       htop
       httpie
-      httpie-desktop
       hyperfine
-      hyprpicker
-      imv
       iperf
       jq
       killall
       ldns
       libnotify
-      libreoffice-fresh
-      libva-utils
       lsof
       material-design-icons
       mediainfo
@@ -88,17 +84,9 @@ in
       noto-fonts-emoji
       ntfs3g
       nurl
-      obs-studio
-      obs-studio-plugins.droidcam-obs
-      obs-studio-plugins.obs-pipewire-audio-capture
-      obs-studio-plugins.wlrobs
       onefetch
-      pamixer
       pandoc
       patchutils
-      pavucontrol
-      playerctl
-      powertop
       procs
       python3
       rage
@@ -111,27 +99,18 @@ in
       seaweedfs
       shell-gpt
       shellcheck
-      simple-scan
-      slurp
       spek
-      strace
-      swappy
-      swaylock
       tamsyn
       tcpdump
       telegram-desktop
       tig
       toilet
       unzip
-      vial
-      vlc
       weechat
       wget
-      whatsapp-for-linux
       whois
       wireshark
       wl-clipboard
-      wlr-randr
       xdg-user-dirs
       xdg-utils
       xorg.xeyes
@@ -139,6 +118,41 @@ in
       yubikey-manager
       zellij
       zip
+    ] ++ lib.optionals (hostPlatform.isLinux) [
+      bluetuith
+      bemenu
+      bubblewrap
+      cfspeedtest
+      discord
+      easyeffects
+      exfatprogs
+      firefox-wayland
+      google-chrome
+      gimp-with-plugins
+      gnuapl
+      grim
+      httpie-desktop
+      hyprpicker
+      imv
+      libreoffice-fresh
+      libva-utils
+      obs-studio
+      obs-studio-plugins.droidcam-obs
+      obs-studio-plugins.obs-pipewire-audio-capture
+      obs-studio-plugins.wlrobs
+      pamixer
+      pavucontrol
+      playerctl
+      powertop
+      simple-scan
+      slurp
+      strace
+      swappy
+      swaylock
+      vial
+      vlc
+      whatsapp-for-linux
+      wlr-randr
       zoom-us
     ];
 
@@ -163,13 +177,6 @@ in
         source = "${root}/conf/emacs/ayu-dark-theme.el";
         target = ".emacs.d/ayu-dark-theme.el";
       };
-    };
-
-    pointerCursor = {
-      gtk.enable = true;
-      package = pkgs.adwaita-icon-theme;
-      name = "Adwaita";
-      size = 16;
     };
 
     sessionPath = [ "${config.home.homeDirectory}/.local/bin" ];
@@ -212,6 +219,13 @@ in
       vim = "${editor} -t";
 
       rscp = "rsync -ahvP";
+    };
+  } // lib.optionalAttrs (hostPlatform.isLinux) {
+    pointerCursor = {
+      gtk.enable = true;
+      package = pkgs.adwaita-icon-theme;
+      name = "Adwaita";
+      size = 16;
     };
   };
 }
