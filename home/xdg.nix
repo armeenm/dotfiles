@@ -1,6 +1,7 @@
-{ config, pkgs, lib, root, user, ... }:
+{ config, osConfig, pkgs, lib, root, user, ... }:
 
 let
+  inherit (osConfig.nixpkgs) hostPlatform;
   conf = "${root}/conf";
   home = config.home.homeDirectory;
 in
@@ -9,7 +10,7 @@ in
     enable = true;
 
     userDirs = {
-      enable = true;
+      enable = hostPlatform.isLinux;
       desktop = "${home}/desktop";
       documents = "${home}/docs";
       download = "${home}/dl";
@@ -20,7 +21,7 @@ in
       videos = "${home}/media";
     };
 
-    systemDirs.data = [
+    systemDirs.data = lib.optionals (hostPlatform.isLinux) [
       "/var/lib/flatpak/exports/share"
       "${home}/.local/share/flatpak/exports/share"
     ];

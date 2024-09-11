@@ -75,6 +75,7 @@
     forAllSystems = f: nixpkgs.lib.genAttrs [
       "x86_64-linux"
       "aarch64-linux"
+      "aarch64-darwin"
     ] (system: f system (
       import nixpkgs { inherit system config overlays; }
     ));

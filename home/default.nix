@@ -6,11 +6,11 @@ in {
   imports = [
     ./home.nix
     ./programs.nix
+    ./xdg.nix
   ] ++ lib.optionals (hostPlatform.isLinux) [
     ./services.nix
     ./systemd.nix
     ./wayland.nix
-    ./xdg.nix
     ./gtk.nix
   ];
 

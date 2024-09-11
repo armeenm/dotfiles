@@ -83,6 +83,49 @@ in {
       git = true;
     };
 
+    foot = {
+      enable = hostPlatform.isLinux;
+      server.enable = true;
+
+      settings = {
+        main = {
+          term = "xterm-256color";
+          font = "Tamsyn:size=12";
+          dpi-aware = "no";
+          pad = "20x20";
+        };
+
+        mouse = {
+          hide-when-typing = "yes";
+        };
+
+        colors = {
+          # TODO: Base16?
+          # Ayu dark theme.
+          background = "000919";
+          foreground = "c3c0bb";
+
+          regular0 = "242936"; # black
+          regular1 = "f28779"; # red
+          regular2 = "d5ff80"; # green
+          regular3 = "ffd173"; # yellow
+          regular4 = "73d0ff"; # blue
+          regular5 = "dfbfff"; # magenta
+          regular6 = "5ccfe6"; # cyan
+          regular7 = "cccac2"; # white
+
+          bright0 = "fcfcfc"; # bright black
+          bright1 = "f07171"; # bright red
+          bright2 = "86b300"; # bright gree
+          bright3 = "f2ae49"; # bright yellow
+          bright4 = "399ee6"; # bright blue
+          bright5 = "a37acc"; # bright magenta
+          bright6 = "55b4d4"; # bright cyan
+          bright7 = "5c6166"; # bright white
+        };
+      };
+    };
+
     git = {
       enable = true;
       userEmail = user.email;
@@ -118,6 +161,42 @@ in {
         credential.helper = "store";
         core.editor = ''${config.home.sessionVariables.EDITOR}'';
         push.autoSetupRemote = true;
+      };
+    };
+
+    hyprlock = {
+      enable = hostPlatform.isLinux;
+      settings = {
+        general = {
+          disable_loading_bar = true;
+          grace = 3;
+          hide_cursor = true;
+          no_fade_in = false;
+        };
+
+        background = [
+          {
+            path = "screenshot";
+            blur_passes = 5;
+            blur_size = 8;
+          }
+        ];
+
+        input-field = [
+          {
+            size = "200, 50";
+            position = "0, -80";
+            monitor = "";
+            dots_center = true;
+            fade_on_empty = false;
+            font_color = "rgb(202, 211, 245)";
+            inner_color = "rgb(91, 96, 120)";
+            outer_color = "rgb(24, 25, 38)";
+            outline_thickness = 5;
+            placeholder_text = ''<span foreground="##cad3f5">Password...</span>'';
+            shadow_passes = 2;
+          }
+        ];
       };
     };
 
@@ -190,6 +269,103 @@ in {
       enable = true;
       settings = {
         updates.auto_update = true;
+      };
+    };
+
+    waybar = {
+      enable = hostPlatform.isLinux;
+      systemd.enable = true;
+
+      settings = {
+        mainBar = {
+          layer = "top";
+          position = "top";
+          height = 24;
+
+          modules-left = [
+            "hyprland/workspaces"
+          ];
+
+          modules-center = [ "hyprland/window" ];
+
+          modules-right = [
+            "pulseaudio"
+            "network"
+            "temperature"
+            "cpu"
+            "memory"
+            "battery"
+            "tray"
+            "clock"
+          ];
+
+          "wlr/workspaces" = {
+            disable-scroll = true;
+            all-outputs = false;
+            on-click = "activate";
+          };
+
+          "wlr/mode" = { format = "<span style=\"italic\">{}</span>"; };
+          "tray" = {
+            # "icon-size" = 21,
+            "spacing" = 10;
+          };
+
+          "clock" = { "format-alt" = "{:%Y-%m-%d}"; "on-click" = ""; };
+          "cpu" = {
+            "format" = "{usage}% 󰍛";
+          };
+
+          "memory" = { "format"= "{}% "; };
+
+          "temperature" = {
+            "critical-threshold" = 80;
+            "format" = "{}℃  󰏈";
+            "format-critical" = "{}℃ 󰇺";
+            "interval" = 5;
+          };
+
+          "battery" = {
+            "bat"= "BAT0";
+            "states"= {
+              # "good"= 95;
+              "warning"= 30;
+              "critical"= 15;
+            };
+            "format"= "{capacity}% {icon}";
+            # "format-good"= ""; # An empty format will hide the module
+            # "format-full"= "";
+            "format-icons"= ["" "" "" "" ""];
+          };
+
+          "network" = {
+            "format-wifi"= "{essid} ({signalStrength}%) ";
+            "format-ethernet"= "{ifname}= {ipaddr}/{cidr} ";
+            "format-disconnected"= "Disconnected ⚠";
+          };
+
+          "pulseaudio" = {
+            #"scroll-step"= 1;
+            "format"= "{volume}% {icon}";
+            "format-bluetooth"= "{volume}% {icon}";
+            "format-muted"= "";
+            "format-icons"= {
+              "headphones" = "";
+              "handsfree" = "";
+              "headset" = "";
+              "phone" = "";
+              "portable" = "";
+              "car" = "";
+              "default" = [ "" "" ];
+            };
+            "on-click"= "pavucontrol";
+          };
+
+          "hyprland/window" = {
+            "format" = {};
+            "seperate-outputs" = true;
+          };
+        };
       };
     };
 
@@ -291,182 +467,6 @@ in {
       zle -N _sgpt_zsh
       bindkey ^p _sgpt_zsh
     '';
-    };
-  } // lib.optionalAttrs (hostPlatform.isLinux) {
-    hyprlock = {
-      enable = true;
-      settings = {
-        general = {
-          disable_loading_bar = true;
-          grace = 3;
-          hide_cursor = true;
-          no_fade_in = false;
-        };
-
-        background = [
-          {
-            path = "screenshot";
-            blur_passes = 5;
-            blur_size = 8;
-          }
-        ];
-
-        input-field = [
-          {
-            size = "200, 50";
-            position = "0, -80";
-            monitor = "";
-            dots_center = true;
-            fade_on_empty = false;
-            font_color = "rgb(202, 211, 245)";
-            inner_color = "rgb(91, 96, 120)";
-            outer_color = "rgb(24, 25, 38)";
-            outline_thickness = 5;
-            placeholder_text = ''<span foreground="##cad3f5">Password...</span>'';
-            shadow_passes = 2;
-          }
-        ];
-      };
-    };
-
-    foot = {
-      enable = true;
-      server.enable = true;
-
-      settings = {
-        main = {
-          term = "xterm-256color";
-          font = "Tamsyn:size=12";
-          dpi-aware = "no";
-          pad = "20x20";
-        };
-
-        mouse = {
-          hide-when-typing = "yes";
-        };
-
-        colors = {
-          # TODO: Base16?
-          # Ayu dark theme.
-          background = "000919";
-          foreground = "c3c0bb";
-
-          regular0 = "242936"; # black
-          regular1 = "f28779"; # red
-          regular2 = "d5ff80"; # green
-          regular3 = "ffd173"; # yellow
-          regular4 = "73d0ff"; # blue
-          regular5 = "dfbfff"; # magenta
-          regular6 = "5ccfe6"; # cyan
-          regular7 = "cccac2"; # white
-
-          bright0 = "fcfcfc"; # bright black
-          bright1 = "f07171"; # bright red
-          bright2 = "86b300"; # bright gree
-          bright3 = "f2ae49"; # bright yellow
-          bright4 = "399ee6"; # bright blue
-          bright5 = "a37acc"; # bright magenta
-          bright6 = "55b4d4"; # bright cyan
-          bright7 = "5c6166"; # bright white
-        };
-      };
-    };
-
-    waybar = {
-      enable = true;
-      systemd.enable = true;
-
-      settings = {
-        mainBar = {
-          layer = "top";
-          position = "top";
-          height = 24;
-
-          modules-left = [
-            "hyprland/workspaces"
-          ];
-
-          modules-center = [ "hyprland/window" ];
-
-          modules-right = [
-            "pulseaudio"
-            "network"
-            "temperature"
-            "cpu"
-            "memory"
-            "battery"
-            "tray"
-            "clock"
-          ];
-
-          "wlr/workspaces" = {
-            disable-scroll = true;
-            all-outputs = false;
-            on-click = "activate";
-          };
-
-          "wlr/mode" = { format = "<span style=\"italic\">{}</span>"; };
-          "tray" = {
-            # "icon-size" = 21,
-            "spacing" = 10;
-          };
-
-          "clock" = { "format-alt" = "{:%Y-%m-%d}"; "on-click" = ""; };
-          "cpu" = {
-            "format" = "{usage}% 󰍛";
-          };
-
-          "memory" = { "format"= "{}% "; };
-
-          "temperature" = {
-            "critical-threshold" = 80;
-            "format" = "{}℃  󰏈";
-            "format-critical" = "{}℃ 󰇺";
-            "interval" = 5;
-          };
-
-          "battery" = {
-            "bat"= "BAT0";
-            "states"= {
-              # "good"= 95;
-              "warning"= 30;
-              "critical"= 15;
-            };
-            "format"= "{capacity}% {icon}";
-            # "format-good"= ""; # An empty format will hide the module
-            # "format-full"= "";
-            "format-icons"= ["" "" "" "" ""];
-          };
-
-          "network" = {
-            "format-wifi"= "{essid} ({signalStrength}%) ";
-            "format-ethernet"= "{ifname}= {ipaddr}/{cidr} ";
-            "format-disconnected"= "Disconnected ⚠";
-          };
-
-          "pulseaudio" = {
-            #"scroll-step"= 1;
-            "format"= "{volume}% {icon}";
-            "format-bluetooth"= "{volume}% {icon}";
-            "format-muted"= "";
-            "format-icons"= {
-              "headphones" = "";
-              "handsfree" = "";
-              "headset" = "";
-              "phone" = "";
-              "portable" = "";
-              "car" = "";
-              "default" = [ "" "" ];
-            };
-            "on-click"= "pavucontrol";
-          };
-
-          "hyprland/window" = {
-            "format" = {};
-            "seperate-outputs" = true;
-          };
-        };
-      };
     };
   };
 }
