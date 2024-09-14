@@ -38,16 +38,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    mpd-mpris = {
-      url = "github:natsukagami/mpd-mpris";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    update-systemd-resolved = {
-      url = "github:jonathanio/update-systemd-resolved";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     ragenix = {
       url = "github:yaxitech/ragenix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -96,14 +86,12 @@
       inputs.home-manager.darwinModules.home-manager
     ];
 
-    hmModules = baseModules ++ [
-      inputs.mpd-mpris.homeManagerModules.default
-    ];
+    hmModules = baseModules;
+    droidModules = baseModules;
 
-    modules = hmModules ++ [
+    nixosModules = baseModules ++ [
       inputs.home-manager.nixosModules.home-manager
       inputs.lanzaboote.nixosModules.lanzaboote
-      inputs.update-systemd-resolved.nixosModules.update-systemd-resolved
       inputs.ragenix.nixosModules.default
       ./modules
     ];
@@ -113,7 +101,7 @@
 
     nixosConfigurations = {
       lithium = nixpkgs.lib.nixosSystem {
-        modules = modules ++ [
+        modules = nixosModules ++ [
           ./hosts/lithium
         ];
       };
@@ -138,7 +126,7 @@
       */
 
       carbon = nixpkgs.lib.nixosSystem {
-        modules = modules ++ [
+        modules = nixosModules ++ [
           ./hosts/carbon
         ];
       };
@@ -169,9 +157,11 @@
 
     nixOnDroidConfigurations = {
       default = inputs.nix-on-droid.lib.nixOnDroidConfiguration {
-        modules = modules ++ [
-          ./hosts/droid
-        ];
+        pkgs = import nixpkgs {
+          inherit config overlays;
+          system = "aarch64-linux";
+        };
+        modules = [ ./hosts/droid ];
       };
     };
 
@@ -212,6 +202,7 @@
       default = mkShell {
         packages = [
           inputs.deploy-rs.packages.${system}.default
+          nix-output-monitor
           nvd
           openssl
         ];
