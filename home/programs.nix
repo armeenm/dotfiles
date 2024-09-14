@@ -60,7 +60,6 @@ in {
 
     emacs = {
       enable = true;
-      /*
       package = pkgs.emacsWithPackagesFromUsePackage {
         config = "${root}/conf/emacs/init.el";
         defaultInitFile = true;
@@ -75,7 +74,6 @@ in {
           treesit-grammars.with-all-grammars
         ];
       };
-*/
     };
 
     eza = {
