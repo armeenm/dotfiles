@@ -66,10 +66,6 @@ in {
         alwaysEnsure = true;
         package = pkgs.emacs-pgtk;
 
-        override = epkgs: epkgs // {
-          projectile = inputs.nixpkgs-stable.legacyPackages.x86_64-linux.emacsPackages.projectile;
-        };
-
         extraEmacsPackages = epkgs: with epkgs; [
           treesit-grammars.with-all-grammars
         ];
