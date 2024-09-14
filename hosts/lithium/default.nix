@@ -425,7 +425,10 @@ args@{ config, pkgs, lib, modulesPath, inputs, root, user, ... }:
 
   home-manager = {
     users."${user.login}" = import "${root}/home";
-    extraSpecialArgs = { inherit inputs root user; };
+    extraSpecialArgs = {
+      inherit inputs root user;
+      stateVersion = "24.11";
+    };
   };
 
   environment = {
@@ -510,7 +513,7 @@ args@{ config, pkgs, lib, modulesPath, inputs, root, user, ... }:
   zramSwap.enable = true;
 
   system = {
-    stateVersion = lib.mkForce "22.11";
+    stateVersion = lib.mkForce "24.11";
 
     activationScripts.report-changes = ''
         PATH=$PATH:${lib.makeBinPath [ pkgs.nvd pkgs.nix ]}

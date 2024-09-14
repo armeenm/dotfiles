@@ -6,7 +6,7 @@
 , root
 , user
 , inputs
-, stateVersion ? osConfig.system.stateVersion
+, stateVersion
 , ...
 }:
 
