@@ -1,10 +1,8 @@
 { config, pkgs, lib, inputs, root, user, ... }:
 
-let 
-  hostPlatform = "aarch64-darwin";
-in {
+{
   nixpkgs = {
-    inherit hostPlatform;
+    hostPlatform = "aarch64-darwin";
     config.allowUnfree = true;
   };
 
@@ -92,9 +90,8 @@ in {
       NSGlobalDomain = {
         AppleInterfaceStyleSwitchesAutomatically = true;
         AppleKeyboardUIMode = 3;
-        # NOTE: These don't appear to work?
-        InitialKeyRepeat = 15;
-        KeyRepeat = 2;
+        InitialKeyRepeat = 10;
+        KeyRepeat = 1;
       };
 
       SoftwareUpdate.AutomaticallyInstallMacOSUpdates = false;

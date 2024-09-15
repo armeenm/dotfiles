@@ -12,6 +12,13 @@ in {
     noti.enable = true;
     zoxide.enable = true;
 
+    alacritty = {
+      enable = true;
+      settings = {
+        window.option_as_alt = "OnlyLeft";
+      };
+    };
+
     atuin = {
       enable = true;
 
@@ -377,9 +384,26 @@ in {
     };
 
     zathura = {
-      enable = false;
+      enable = hostPlatform.isLinux;
       mappings = {
         "<C-i>" = "recolor";
+      };
+    };
+
+    zellij = {
+      enable = true;
+      enableZshIntegration = true;
+
+      settings = {
+        keybinds = {
+          unbind = "Ctrl g";
+
+          normal = {
+            "bind \"Ctrl m\"" = { SwitchToMode = "Locked"; };
+          };
+
+          locked."bind \"Ctrl m\"" = { SwitchToMode = "Normal"; };
+        };
       };
     };
 

@@ -39,11 +39,8 @@ in
     username = user.login;
 
     packages = with pkgs; [
-      age-plugin-yubikey
-      spek
-      tamsyn
-      nix-misc.git-fuzzy
       adwaita-icon-theme
+      age-plugin-yubikey
       bacon
       boxes
       breeze-icons
@@ -59,6 +56,7 @@ in
       fira-code
       fira-code-symbols
       gh
+      google-chrome
       hack-font
       hicolor-icon-theme
       htop
@@ -76,6 +74,7 @@ in
       mpc_cli
       ncdu
       nix-inspect
+      nix-misc.git-fuzzy
       nix-output-monitor
       nix-tree
       nixd
@@ -97,6 +96,8 @@ in
       seaweedfs
       shell-gpt
       shellcheck
+      spek
+      tamsyn
       tcpdump
       tig
       toilet
@@ -104,7 +105,6 @@ in
       weechat
       wget
       whois
-      zellij
       zip
     ] ++ lib.optionals (hostPlatform.isLinux) [
       bemenu
@@ -119,7 +119,6 @@ in
       firefox-wayland
       gimp-with-plugins
       gnuapl
-      google-chrome
       grim
       gtk3
       httpie
@@ -158,12 +157,10 @@ in
       xorg.xkill
       yubikey-manager
       zoom-us
-    ] ++ lib.optionals (hostPlatform.isDarwin) (with brewCasks; [
-      (hashOverride alacritty "sha256-xxziP8NlxNBG3ipIFh0mIypXNMUZ5rX/P1XGAlgmD2A=")
+    ] ++ (lib.optionals (hostPlatform.isDarwin) (with brewCasks; [
       (hashOverride firefox "sha256-yJ7pq896NVSVmn0tsKWnSL464sMNfBcLh53hDkYSdgI=")
-      (hashOverride google-chrome "sha256-nJnpIOaOWFST0SoS0Ip6RcaiMuwTZOhT0VNRC79tvQM=")
       linearmouse
-    ]);
+    ]));
 
     file = {
       dnsCheck = {
