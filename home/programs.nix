@@ -395,6 +395,9 @@ in {
       enableZshIntegration = true;
 
       settings = {
+        pane_frames = false;
+        default_layout = "compact";
+
         keybinds = {
           unbind = "Ctrl g";
 
