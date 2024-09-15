@@ -60,6 +60,10 @@
       url = "github:BatteredBunny/brew-api";
       flake = false;
     };
+
+    mac-app-util = {
+      url = "github:hraban/mac-app-util";
+    };
   };
 
   outputs = inputs@{ self, nixpkgs, ... }: let
@@ -93,21 +97,28 @@
 
     baseModules = [
       { _module.args = { inherit inputs root user; }; }
-      { nixpkgs = { inherit config overlays; }; }
-    ];
-
-    darwinModules = baseModules ++ [
-      inputs.home-manager.darwinModules.home-manager
     ];
 
     hmModules = baseModules ++ [
-      ./modules/home-manager
+      inputs.mac-app-util.homeManagerModules.default
     ];
+
+    sysModules = [
+      { home-manager.sharedModules = hmModules; }
+      { nixpkgs = { inherit config overlays; }; }
+    ];
+
     droidModules = baseModules;
 
-    nixosModules = baseModules ++ [
-      inputs.home-manager.nixosModules.home-manager
-      inputs.lanzaboote.nixosModules.lanzaboote
+    darwinModules = baseModules ++ sysModules ++ [
+      inputs.home-manager.darwinModules.default
+      inputs.mac-app-util.darwinModules.default
+      ./modules/darwin
+    ];
+
+    nixosModules = baseModules ++ sysModules ++ [
+      inputs.home-manager.nixosModules.default
+      inputs.lanzaboote.nixosModules.default
       inputs.ragenix.nixosModules.default
       ./modules/nixos
     ];
@@ -167,7 +178,10 @@
     homeConfigurations = forAllSystems (system: pkgs: with pkgs; {
       default = inputs.home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
-        modules = hmModules ++ [ ./home ];
+        modules = hmModules ++ [
+          { nixpkgs = { inherit config overlays; }; }
+          ./home
+        ];
       };
     });
 

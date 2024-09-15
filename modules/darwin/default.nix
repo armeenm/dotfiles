@@ -1,6 +1,5 @@
 {
   imports = [
     ../shared
-    ./ddcutil.nix
   ];
 }

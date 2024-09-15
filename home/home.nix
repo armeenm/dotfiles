@@ -90,7 +90,7 @@ in
       procs
       python3
       rage
-      #ragenix
+      ragenix
       rclone
       ripgrep
       scc
@@ -159,9 +159,10 @@ in
       yubikey-manager
       zoom-us
     ] ++ lib.optionals (hostPlatform.isDarwin) (with brewCasks; [
-      #(hashOverride alacritty "sha256-xxziP8NlxNBG3ipIFh0mIypXNMUZ5rX/P1XGAlgmD2A=")
-      #(hashOverride firefox "sha256-yJ7pq896NVSVmn0tsKWnSL464sMNfBcLh53hDkYSdgI=")
-      #(hashOverride google-chrome "sha256-nJnpIOaOWFST0SoS0Ip6RcaiMuwTZOhT0VNRC79tvQM=")
+      (hashOverride alacritty "sha256-xxziP8NlxNBG3ipIFh0mIypXNMUZ5rX/P1XGAlgmD2A=")
+      (hashOverride firefox "sha256-yJ7pq896NVSVmn0tsKWnSL464sMNfBcLh53hDkYSdgI=")
+      (hashOverride google-chrome "sha256-nJnpIOaOWFST0SoS0Ip6RcaiMuwTZOhT0VNRC79tvQM=")
+      linearmouse
     ]);
 
     file = {
