@@ -15,12 +15,19 @@ let
 
   homeDir = "/home/${user.login}";
 
-  nix-misc = inputs.nix-misc.packages.x86_64-linux;
-  ragenix = inputs.ragenix.packages.x86_64-linux.default;
+  nix-misc = inputs.nix-misc.packages.${hostPlatform.system};
+  ragenix = inputs.ragenix.packages.${hostPlatform.system}.default;
 
   editor = lib.getBin (pkgs.writeShellScript "editor" ''
     exec ${lib.getBin config.services.emacs.package}/bin/emacsclient -ct $@
   '');
+
+  hashOverride = drv: hash: (drv.overrideAttrs (old: {
+    src = pkgs.fetchurl {
+      inherit hash;
+      url = old.src.url;
+    };
+  }));
 in
 {
   home = {
@@ -32,10 +39,11 @@ in
     username = user.login;
 
     packages = with pkgs; [
-      #git-fuzzy
-      #ueberzugpp
-      adwaita-icon-theme
       age-plugin-yubikey
+      spek
+      tamsyn
+      nix-misc.git-fuzzy
+      adwaita-icon-theme
       bacon
       boxes
       breeze-icons
@@ -43,9 +51,7 @@ in
       comma
       direnv
       dos2unix
-      dosfstools
       duf
-      element-desktop-wayland
       fasd
       fd
       ffmpeg
@@ -53,11 +59,9 @@ in
       fira-code
       fira-code-symbols
       gh
-      gtk3
       hack-font
       hicolor-icon-theme
       htop
-      httpie
       hyperfine
       iperf
       jq
@@ -69,20 +73,16 @@ in
       mediainfo
       miniserve
       mkpasswd
-      monero
       mpc_cli
-      multimarkdown
       ncdu
       nix-inspect
       nix-output-monitor
       nix-tree
       nixd
       nmap
-      nomacs
       noto-fonts
       noto-fonts-cjk
       noto-fonts-emoji
-      ntfs3g
       nurl
       onefetch
       pandoc
@@ -90,52 +90,47 @@ in
       procs
       python3
       rage
-      ragenix
+      #ragenix
       rclone
-      remmina
       ripgrep
-      s3cmd
       scc
       seaweedfs
       shell-gpt
       shellcheck
-      spek
-      tamsyn
       tcpdump
-      telegram-desktop
       tig
       toilet
       unzip
       weechat
       wget
       whois
-      wireshark
-      wl-clipboard
-      xdg-user-dirs
-      xdg-utils
-      xorg.xeyes
-      xorg.xkill
-      yubikey-manager
       zellij
       zip
     ] ++ lib.optionals (hostPlatform.isLinux) [
-      bluetuith
       bemenu
+      bluetuith
       bubblewrap
       cfspeedtest
       discord
+      dosfstools
       easyeffects
+      element-desktop-wayland
       exfatprogs
       firefox-wayland
-      google-chrome
       gimp-with-plugins
       gnuapl
+      google-chrome
       grim
+      gtk3
+      httpie
       httpie-desktop
       hyprpicker
       imv
       libreoffice-fresh
       libva-utils
+      monero
+      nomacs
+      ntfs3g
       obs-studio
       obs-studio-plugins.droidcam-obs
       obs-studio-plugins.obs-pipewire-audio-capture
@@ -144,17 +139,30 @@ in
       pavucontrol
       playerctl
       powertop
+      remmina
       simple-scan
       slurp
       strace
       swappy
       swaylock
+      telegram-desktop
       vial
       vlc
       whatsapp-for-linux
+      wireshark
+      wl-clipboard
       wlr-randr
+      xdg-user-dirs
+      xdg-utils
+      xorg.xeyes
+      xorg.xkill
+      yubikey-manager
       zoom-us
-    ];
+    ] ++ lib.optionals (hostPlatform.isDarwin) (with brewCasks; [
+      #(hashOverride alacritty "sha256-xxziP8NlxNBG3ipIFh0mIypXNMUZ5rX/P1XGAlgmD2A=")
+      #(hashOverride firefox "sha256-yJ7pq896NVSVmn0tsKWnSL464sMNfBcLh53hDkYSdgI=")
+      #(hashOverride google-chrome "sha256-nJnpIOaOWFST0SoS0Ip6RcaiMuwTZOhT0VNRC79tvQM=")
+    ]);
 
     file = {
       dnsCheck = {

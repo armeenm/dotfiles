@@ -11,11 +11,7 @@ in {
   nix = {
     package = pkgs.nixVersions.latest;
     channel.enable = true;
-    nixPath = lib.mkForce [ "nixpkgs=${config.nix.registry.nixpkgs.flake}" ];
-
-    registry = {
-      nixpkgs.flake = inputs.nixpkgs;
-    };
+    #nixPath = lib.mkForce [ "nixpkgs=${config.nix.registry.nixpkgs.flake}" ];
 
     settings = {
       allowed-users = lib.mkForce [ "@everyone" ];
@@ -39,28 +35,98 @@ in {
 
   home-manager = {
     users."${user.login}" = import "${root}/home";
+
     extraSpecialArgs = {
-      inherit inputs root user;
+      inherit pkgs inputs root user;
       stateVersion = "24.11";
     };
   };
 
   environment = {
-    systemPackages = [
-    ] ++ (with pkgs; [
+    systemPackages = with pkgs; [
       git
-    ]);
+    ];
   };
 
   programs = {
     zsh.enable = true;
+    vim = {
+      enable = true;
+      enableSensible = true;
+      vimConfig = ''
+        set number
+        set hidden
+        set shell=bash
+        set cmdheight=2
+        set nocompatible
+        set shortmess+=c
+        set updatetime=300
+        set background=dark
+        set foldmethod=marker
+        set signcolumn=yes
+        set nobackup nowritebackup
+        set tabstop=2 shiftwidth=2 expandtab
+        set tagrelative
+        set tags^=./.git/tags;
+        set mouse=a
+      '';
+    };
   };
 
   services = {
     nix-daemon.enable = true;
+    emacs = {
+      enable = true;
+      package = config.home-manager.users.${user.login}.programs.emacs.package;
+    };
   };
 
-  homebrew = {
-    enable = true;
+  system = {
+    stateVersion = 5;
+
+    keyboard = {
+      enableKeyMapping = true;
+      remapCapsLockToEscape = true;
+    };
+    defaults = {
+      NSGlobalDomain = {
+        AppleInterfaceStyleSwitchesAutomatically = true;
+        AppleKeyboardUIMode = 3;
+        # NOTE: These don't appear to work?
+        InitialKeyRepeat = 15;
+        KeyRepeat = 2;
+      };
+
+      SoftwareUpdate.AutomaticallyInstallMacOSUpdates = false;
+
+      alf = {
+        globalstate = 1;
+        stealthenabled = 1;
+      };
+
+      dock = {
+        autohide = true;
+        wvous-bl-corner = 3; # Application Windows
+        wvous-br-corner = 4; # Desktop
+        wvous-tr-corner = 7; # Dashboard
+      };
+
+      screencapture = {
+        location = "~/Pictures/Screenshots";
+        type = "png";
+      };
+
+      trackpad = {
+        Clicking = true;
+      };
+
+      finder = {
+        ShowPathbar = true;
+        ShowStatusBar = true;
+        FXPreferredViewStyle = "Nlsv"; # List view
+        _FXShowPosixPathInTitle = false;
+        AppleShowAllExtensions = true;
+      };
+    };
   };
 }

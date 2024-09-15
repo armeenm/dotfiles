@@ -175,7 +175,6 @@
 (use-package vterm)
 (use-package vundo)
 (use-package wgrep)
-(use-package xah-wolfram-mode)
 (use-package markdown-mode)
 
 (use-package typescript-mode

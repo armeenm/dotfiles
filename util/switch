@@ -1,2 +1,12 @@
-#!/bin/sh
-nixos-rebuild --use-remote-sudo --flake . switch "$@"
+#!/usr/bin/env bash
+
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  cmd="darwin-rebuild"
+elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
+  cmd="nixos-rebuild --use-remote-sudo"
+else
+  echo "Unknown OS type: $OSTYPE"
+  exit 1
+fi
+
+"$cmd" --flake . switch "$@"

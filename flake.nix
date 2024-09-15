@@ -47,6 +47,18 @@
       url = "github:LnL7/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    brew-nix = {
+      url = "github:BatteredBunny/brew-nix";
+      inputs.brew-api.follows = "brew-api";
+      inputs.nix-darwin.follows = "nix-darwin";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    brew-api = {
+      url = "github:BatteredBunny/brew-api";
+      flake = false;
+    };
   };
 
   outputs = inputs@{ self, nixpkgs, ... }: let
@@ -60,6 +72,7 @@
     overlays = [
       overlay
       inputs.emacs-overlay.overlays.default
+      inputs.brew-nix.overlays.default
     ];
 
     forAllSystems = f: nixpkgs.lib.genAttrs [

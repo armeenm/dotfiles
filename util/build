@@ -1,9 +1,18 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 if type nom > /dev/null 2>&1; then
-    cmd=nom
+  cmd=nom
 else
-    cmd=nix
+  cmd=nix
 fi
 
-$cmd build ".#nixosConfigurations.$(hostname).config.system.build.toplevel" --keep-going "$@"
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  config=darwinConfigurations
+elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
+  config=nixosConfigurations
+else
+  echo "Unknown OS type: $OSTYPE"
+  exit 1
+fi
+
+$cmd build ".#$config.$(hostname).config.system.build.toplevel" --keep-going "$@"
