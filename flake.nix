@@ -99,12 +99,13 @@
       { _module.args = { inherit inputs root user; }; }
     ];
 
-    hmModules = baseModules ++ [
+    hmModules = baseModules;
+
+    hmDarwinModules = hmModules ++ [
       inputs.mac-app-util.homeManagerModules.default
     ];
 
     sysModules = [
-      { home-manager.sharedModules = hmModules; }
       { nixpkgs = { inherit config overlays; }; }
     ];
 
@@ -113,13 +114,15 @@
     darwinModules = baseModules ++ sysModules ++ [
       inputs.home-manager.darwinModules.default
       inputs.mac-app-util.darwinModules.default
+      { home-manager.sharedModules = hmDarwinModules; }
       ./modules/darwin
     ];
 
     nixosModules = baseModules ++ sysModules ++ [
       inputs.home-manager.nixosModules.default
-      inputs.lanzaboote.nixosModules.default
+      inputs.lanzaboote.nixosModules.lanzaboote
       inputs.ragenix.nixosModules.default
+      { home-manager.sharedModules = hmModules; }
       ./modules/nixos
     ];
 
@@ -178,7 +181,7 @@
     homeConfigurations = forAllSystems (system: pkgs: with pkgs; {
       default = inputs.home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
-        modules = hmModules ++ [
+        modules = (if system == "aarch64-darwin" then hmDarwinModules else hmModules) ++ [
           { nixpkgs = { inherit config overlays; }; }
           ./home
         ];
