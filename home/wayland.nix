@@ -36,7 +36,6 @@ in {
           border_size = 2;
           "col.active_border" = "rgba(9f40ffcc)";
           "col.inactive_border" = "rgba(0b0e1411)";
-          apply_sens_to_raw = 0;
         };
 
         decoration.rounding = 0;
