@@ -200,34 +200,36 @@ in
     };
 
     shellAliases = {
+      b2 = "buck2";
+      bz = "bazel";
       cat = "bat";
       g = "git";
-      open = "xdg-open";
-      ovpn = "openvpn3";
+      ms = "miniserve -HWqrgzl --readme --index index.html";
       rlf = "readlink -f";
       tf = "terraform";
       zc = "zcalc -r";
       zj = "zellij";
-      b2 = "buck2";
-      bz = "bazel";
-      ms = "miniserve -HWqrgzl --readme --index index.html";
 
       noti = "noti ";
-      doas = "doas ";
       sudo = "sudo ";
-
-      sc = "systemctl";
-      uc = "systemctl --user";
-      jc = "journalctl";
-      jcu = "journalctl --user";
-      udc = "udisksctl";
-      lc = "launchctl";
 
       vi = "${editor} -t";
       vim = "${editor} -t";
 
       rscp = "rsync -ahvP";
+    } // lib.optionalAttrs (hostPlatform.isLinux) {
+      doas = "doas ";
+      open = "xdg-open";
+
+      jc = "journalctl";
+      jcu = "journalctl --user";
+      sc = "systemctl";
+      uc = "systemctl --user";
+      udc = "udisksctl";
+    } // lib.optionalAttrs (hostPlatform.isDarwin) {
+      lc = "launchctl";
     };
+
   } // lib.optionalAttrs (hostPlatform.isLinux) {
     pointerCursor = {
       gtk.enable = true;
