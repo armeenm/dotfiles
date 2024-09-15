@@ -99,14 +99,16 @@
       inputs.home-manager.darwinModules.home-manager
     ];
 
-    hmModules = baseModules;
+    hmModules = baseModules ++ [
+      ./modules/home-manager
+    ];
     droidModules = baseModules;
 
     nixosModules = baseModules ++ [
       inputs.home-manager.nixosModules.home-manager
       inputs.lanzaboote.nixosModules.lanzaboote
       inputs.ragenix.nixosModules.default
-      ./modules
+      ./modules/nixos
     ];
 
   in {

@@ -219,9 +219,11 @@ in
       sudo = "sudo ";
 
       sc = "systemctl";
-      jc = "journalctl";
       uc = "systemctl --user";
+      jc = "journalctl";
+      jcu = "journalctl --user";
       udc = "udisksctl";
+      lc = "launchctl";
 
       vi = "${editor} -t";
       vim = "${editor} -t";

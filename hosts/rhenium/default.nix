@@ -11,7 +11,7 @@ in {
   nix = {
     package = pkgs.nixVersions.latest;
     channel.enable = true;
-    #nixPath = lib.mkForce [ "nixpkgs=${config.nix.registry.nixpkgs.flake}" ];
+    nixPath = lib.mkForce [ "nixpkgs=${inputs.nixpkgs}" ];
 
     settings = {
       allowed-users = lib.mkForce [ "@everyone" ];
