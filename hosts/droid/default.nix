@@ -7,5 +7,5 @@
 
   environment.packages = with pkgs; [ neovim ];
 
-  system.stateVersion = "24.11";
+  system.stateVersion = "24.05";
 }
