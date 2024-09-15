@@ -36,6 +36,7 @@
     nix-on-droid = {
       url = "github:t184256/nix-on-droid";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
     };
 
     ragenix = {
@@ -173,7 +174,8 @@
     nixOnDroidConfigurations = {
       default = inputs.nix-on-droid.lib.nixOnDroidConfiguration {
         pkgs = import nixpkgs {
-          inherit config overlays;
+          inherit config;
+          overlays = overlays ++ [ inputs.nix-on-droid.overlays.default ];
           system = "aarch64-linux";
         };
         modules = [ ./hosts/droid ];
