@@ -15,7 +15,11 @@ in {
     alacritty = {
       enable = true;
       settings = {
-        window.option_as_alt = "OnlyLeft";
+        font.normal.family = "Fira Code";
+        window = {
+          dynamic_padding = true;
+          option_as_alt = "OnlyLeft";
+        };
       };
     };
 

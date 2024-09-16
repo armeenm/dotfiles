@@ -157,7 +157,9 @@ in
       xorg.xkill
       yubikey-manager
       zoom-us
-    ] ++ (lib.optionals (hostPlatform.isDarwin) (with brewCasks; [
+    ] ++ (lib.optionals (hostPlatform.isDarwin) [
+      mas
+    ] ++ (with brewCasks; [
       (hashOverride firefox "sha256-yJ7pq896NVSVmn0tsKWnSL464sMNfBcLh53hDkYSdgI=")
       linearmouse
     ]));
