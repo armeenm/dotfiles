@@ -65,10 +65,13 @@ in {
     };
 
     btop = {
-      color_theme = "ayu";
-      rounded_corners = false;
-      vim_keys = true;
-      log_level = "WARNING";
+      enable = true;
+      settings = {
+        color_theme = "ayu";
+        rounded_corners = false;
+        vim_keys = true;
+        log_level = "WARNING";
+      };
     };
 
     direnv = {
