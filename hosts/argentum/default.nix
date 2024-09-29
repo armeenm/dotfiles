@@ -160,8 +160,6 @@
       ];
     };
 
-    displayManager.sddm.enable = true;
-
     displayManager = {
       defaultSession = "plasma";
       sddm = {
