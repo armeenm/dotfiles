@@ -274,6 +274,7 @@
 
   home-manager = {
     users."${user.login}" = import "${root}/home";
+    users.arash = import "${root}/home";
     extraSpecialArgs = {
       inherit inputs root user;
       stateVersion = config.system.stateVersion;

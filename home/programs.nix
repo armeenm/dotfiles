@@ -64,6 +64,13 @@ in {
       };
     };
 
+    btop = {
+      color_theme = "ayu";
+      rounded_corners = false;
+      vim_keys = true;
+      log_level = "WARNING";
+    };
+
     direnv = {
       enable = true;
       nix-direnv.enable = true;

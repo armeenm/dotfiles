@@ -42,7 +42,6 @@ in
       bacon
       boxes
       breeze-icons
-      btop
       comma
       direnv
       dos2unix
