@@ -162,10 +162,18 @@
 
     displayManager.sddm.enable = true;
 
+    displayManager = {
+      defaultSession = "plasma";
+      sddm = {
+        enable = true;
+        wayland.enable = true;
+      };
+    };
+
     xserver = {
       enable = true;
       videoDrivers = [ "intel" ];
-      desktopManager.plasma5.enable = true;
+      desktopManager.plasma6.enable = true;
     };
   };
 
@@ -278,7 +286,15 @@
     defaultPackages = lib.mkForce [ ];
 
     systemPackages = (with pkgs; [
+      doas-sudo-shim
+      hdparm
+      lm_sensors
       lshw
+      opensm
+      pciutils
+      radeontop
+      rdma-core
+      sbctl
       smartmontools
       usbutils
 
@@ -286,12 +302,6 @@
       rsync
 
       (hunspellWithDicts [ hunspellDicts.en_US hunspellDicts.en_US-large ])
-    ])
-    ++
-    (with pkgs.pkgsMusl; [
-      hdparm
-      lm_sensors
-      pciutils
     ]);
   };
 
