@@ -136,15 +136,12 @@
         ];
       };
 
-      /*
       argentum = nixpkgs.lib.nixosSystem {
-        modules = modules ++ [
+        modules = nixosModules ++ [
           ./hosts/argentum
-          ./home
           inputs.nixos-hardware.nixosModules.framework-12th-gen-intel
         ];
       };
-      */
 
       /*
       boron = nixpkgs.lib.nixosSystem {
@@ -201,6 +198,16 @@
 
     deploy = {
       nodes = {
+        argentum = {
+          hostname = "argentum";
+          profiles.system = {
+            user = "root";
+            sudo = "doas -u";
+            path = inputs.deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.argentum;
+            sshOpts = [ "-t" ];
+          };
+        };
+
         carbon = {
           hostname = "carbon";
           profiles.system = {

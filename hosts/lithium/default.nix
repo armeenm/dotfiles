@@ -426,7 +426,7 @@ args@{ config, pkgs, lib, modulesPath, inputs, root, user, ... }:
     users."${user.login}" = import "${root}/home";
     extraSpecialArgs = {
       inherit inputs root user;
-      stateVersion = "24.11";
+      stateVersion = config.system.stateVersion;
     };
   };
 
@@ -498,7 +498,6 @@ args@{ config, pkgs, lib, modulesPath, inputs, root, user, ... }:
     dev.enable = true;
     man.generateCaches = true;
   };
-
 
   age = {
     secrets = {

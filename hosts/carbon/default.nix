@@ -13,7 +13,7 @@
     };
 
     /*
-    "/srv/cobalt" = {
+    "/srv/tank" = {
       device = "/dev/nvme0n1:/dev/nvme1n1";
       fsType = "bcachefs";
     };

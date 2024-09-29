@@ -35,21 +35,19 @@
 
   networking = {
     hostName = "argentum";
+    firewall.enable = true;
     wireless.iwd.enable = true;
   };
 
   hardware = {
     enableAllFirmware = true;
-
     bluetooth.enable = true;
     cpu.intel.updateMicrocode = true;
-    rtl-sdr.enable = true;
     sensor.iio.enable = true;
 
-    opengl = {
+    graphics = {
       enable = true;
-      driSupport = true;
-      driSupport32Bit = true;
+      enable32Bit = true;
     };
 
     sane = {
@@ -72,29 +70,23 @@
 
   nix = {
     package = pkgs.nixVersions.latest;
+    channel.enable = true;
     nixPath = lib.mkForce [ "nixpkgs=${config.nix.registry.nixpkgs.flake}" ];
 
     registry = {
       nixpkgs.flake = inputs.nixpkgs;
-      ns.flake = inputs.nixpkgs-stable;
     };
 
     settings = {
-      allowed-users = lib.mkForce [ "@wheel" ];
+      allowed-users = lib.mkForce [ "@users" "@wheel" ];
       trusted-users = lib.mkForce [ "@wheel" ];
 
-      substituters = [
-        "https://cache.ngi0.nixos.org"
-        "https://nix-community.cachix.org"
-      ];
-
-      trusted-public-keys = [
-        "cache.ngi0.nixos.org-1:KqH5CBLNSyX184S9BKZJo1LxrxJ9ltnY2uAs5c/f1MA="
-        "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-      ];
-
       experimental-features = [
-        "flakes" "nix-command" "ca-derivations" "impure-derivations"
+        "auto-allocate-uids"
+        "ca-derivations"
+        "flakes"
+        "nix-command"
+        "recursive-nix"
       ];
 
       warn-dirty = false;
@@ -111,7 +103,8 @@
     fstrim.enable = true;
     fwupd.enable = true;
     haveged.enable = true;
-    physlock.enable = true;
+    physlock.enable = false;
+    power-profiles-daemon.enable = false;
     saned.enable = true;
     smartd.enable = true;
     tcsd.enable = false;
@@ -121,7 +114,8 @@
 
     avahi = {
       enable = true;
-      nssmdns = true;
+      nssmdns4 = true;
+      nssmdns6 = true;
     };
 
     hardware = {
@@ -146,15 +140,15 @@
       alsa.enable = true;
       alsa.support32Bit = true;
       pulse.enable = true;
-      jack.enable = true;
     };
 
     printing = {
       enable = true;
       drivers = with pkgs; [
+        canon-cups-ufr2
+        cnijfilter2
         gutenprint
         gutenprintBin
-        cnijfilter2
       ];
     };
 
@@ -166,18 +160,20 @@
       ];
     };
 
-    xserver.videoDrivers = [ "intel" ];
+    displayManager.sddm.enable = true;
+
+    xserver = {
+      enable = true;
+      videoDrivers = [ "intel" ];
+      desktopManager.plasma5.enable = true;
+    };
   };
 
   systemd = {
     watchdog.rebootTime = "15s";
 
     tmpfiles.rules = [
-      "d /run/cache 0755 - - -"
-      "d /var/etc 0755 - - -"
       "d /var/srv 0755 - - -"
-      "d /run/tmp 1777 - - -"
-
       "L /srv - - - - /var/srv"
     ];
 
@@ -195,6 +191,7 @@
     apparmor.enable = true;
     auditd.enable = true;
     rtkit.enable = true;
+    polkit.enable = true;
     sudo.enable = false;
 
     acme = {
@@ -218,16 +215,17 @@
 
     pam = {
       u2f.enable = true;
+      services = {
+        #swaylock.fprintAuth = true;
+        #hyprlock.fprintAuth = true;
+        #login.fprintAuth = true;
+        #doas.fprintAuth = true;
 
-      loginLimits = [{
-        domain = "*";
-        type = "soft";
-        item = "nofile";
-        value = "65536";
-      }];
-
-      services.swaylock.fprintAuth = true;
-      services.login.fprintAuth = true;
+        swaylock.u2fAuth = true;
+        hyprlock.u2fAuth = true;
+        login.u2fAuth = true;
+        doas.u2fAuth = true;
+      };
     };
 
     tpm2 = {
@@ -238,25 +236,22 @@
     };
   };
 
-  virtualisation = {
-    podman = {
-      enable = true;
-      defaultNetwork.settings.dns_enabled = true;
-    };
-  };
-
   users = {
     defaultUserShell = pkgs.zsh;
     mutableUsers = true; # XXX
 
     users = {
-      root = {
-        #hashedPassword = null;
-        home = lib.mkForce "/home/root";
+      root.hashedPassword = null;
+
+      arash = {
+        isNormalUser = true;
+        hashedPasswordFile = config.age.secrets.arash-pw.path;
+        extraGroups = [ "wheel" ];
       };
 
       "${user.login}" = {
         isNormalUser = true;
+        hashedPasswordFile = config.age.secrets."${user.login}-pw".path;
         extraGroups = [
           "adbusers"
           "docker"
@@ -265,10 +260,17 @@
           "lp"
           "plugdev"
           "scanner"
-          "video"
           "wheel"
         ];
       };
+    };
+  };
+
+  home-manager = {
+    users."${user.login}" = import "${root}/home";
+    extraSpecialArgs = {
+      inherit inputs root user;
+      stateVersion = config.system.stateVersion;
     };
   };
 
@@ -298,6 +300,7 @@
     dconf.enable = true;
     hyprland.enable = true;
     light.enable = true;
+    mosh.enable = true;
     mtr.enable = true;
     nix-ld.enable = true;
     zsh.enable = true;
@@ -327,14 +330,25 @@
     };
   };
 
+  xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+
   documentation = {
     dev.enable = true;
     man.generateCaches = true;
   };
 
+  age = {
+    secrets = {
+      "${user.login}-pw".file = "${root}/secrets/${user.login}-pw.age";
+      "arash-pw".file = "${root}/secrets/arash-pw.age";
+    };
+
+    identityPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+  };
+
   zramSwap.enable = true;
 
-  system.stateVersion = lib.mkForce "23.05";
+  system.stateVersion = lib.mkForce "24.11";
 
   networking.useDHCP = lib.mkDefault true;
 

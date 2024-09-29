@@ -13,8 +13,6 @@
 let
   inherit (osConfig.nixpkgs) hostPlatform;
 
-  homeDir = "/home/${user.login}";
-
   nix-misc = inputs.nix-misc.packages.${hostPlatform.system};
   ragenix = inputs.ragenix.packages.${hostPlatform.system}.default;
 
