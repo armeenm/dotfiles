@@ -143,14 +143,11 @@
         ];
       };
 
-      /*
       boron = nixpkgs.lib.nixosSystem {
-        modules = modules ++ [
+        modules = nixosModules ++ [
           ./hosts/boron
-          ./home
         ];
       };
-      */
 
       carbon = nixpkgs.lib.nixosSystem {
         modules = nixosModules ++ [
@@ -226,7 +223,6 @@
           };
         };
 
-        /*
         boron = {
           hostname = "boron";
           profiles.system = {
@@ -235,7 +231,6 @@
             path = inputs.deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.boron;
           };
         };
-        */
       };
     };
 

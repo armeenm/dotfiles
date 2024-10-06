@@ -192,6 +192,7 @@ in
       # Wayland
       MOZ_ENABLE_WAYLAND = "1";
       XKB_DEFAULT_OPTIONS = "caps:escape";
+      NIXOS_OZONE_WL = "1";
 
       EDITOR = editor;
     };

@@ -17,11 +17,10 @@
   };
 
   boot = {
+    binfmt.emulatedSystems = [ "aarch64-linux" ];
     initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "nvme" "usb_storage" "sd_mod" ];
     kernelModules = [ "kvm-intel" ];
-
     supportedFilesystems = [ "ntfs" ];
-    binfmt.emulatedSystems = [ "aarch64-linux" ];
 
     loader = {
       efi.canTouchEfiVariables = true;
@@ -287,7 +286,9 @@
     defaultPackages = lib.mkForce [ ];
 
     systemPackages = (with pkgs; [
+      (hunspellWithDicts [ hunspellDicts.en_US hunspellDicts.en_US-large ])
       doas-sudo-shim
+      git
       hdparm
       lm_sensors
       lshw
@@ -295,14 +296,10 @@
       pciutils
       radeontop
       rdma-core
+      rsync
       sbctl
       smartmontools
       usbutils
-
-      git
-      rsync
-
-      (hunspellWithDicts [ hunspellDicts.en_US hunspellDicts.en_US-large ])
     ]);
   };
 
