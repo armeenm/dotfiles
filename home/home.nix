@@ -50,7 +50,6 @@ in
       file
       fira-code
       fira-code-symbols
-      gh
       git-filter-repo
       google-chrome
       hack-font

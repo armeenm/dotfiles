@@ -141,6 +141,14 @@ in {
       };
     };
 
+    gh = {
+      enable = true;
+      extensions = with pkgs; [
+        gh-dash
+        gh-eco
+      ];
+    };
+
     git = {
       enable = true;
       userEmail = user.email;
