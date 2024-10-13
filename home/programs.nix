@@ -64,6 +64,13 @@ in {
       };
     };
 
+    beets = {
+      enable = true;
+      settings = {
+        directory = config.xdg.userDirs.music;
+      };
+    };
+
     btop = {
       enable = true;
       settings = {
@@ -509,6 +516,16 @@ in {
         zle end-of-line
       fi
       }
+
+      function y() {
+        local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
+        yazi "$@" --cwd-file="$tmp"
+        if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+          builtin cd -- "$cwd"
+        fi
+        rm -f -- "$tmp"
+      }
+
       zle -N _sgpt_zsh
       bindkey ^p _sgpt_zsh
     '';
