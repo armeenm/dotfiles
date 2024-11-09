@@ -421,6 +421,7 @@ args@{ config, pkgs, lib, modulesPath, inputs, root, user, ... }:
     extraSpecialArgs = {
       inherit inputs root user;
       stateVersion = config.system.stateVersion;
+      isHeadless = false;
     };
   };
 

@@ -1,5 +1,6 @@
 { config
 , osConfig
+, isHeadless
 , pkgs
 , system
 , lib
@@ -101,38 +102,39 @@ in
       wget
       whois
       zip
-    ] ++ lib.optionals (hostPlatform.isLinux) [
-      bemenu
+    ] ++ (lib.optionals (hostPlatform.isLinux) [
       bluetuith
       bubblewrap
       cfspeedtest
-      discord
       dosfstools
-      easyeffects
-      element-desktop-wayland
       exfatprogs
-      firefox-wayland
-      gimp-with-plugins
       gnuapl
-      grim
-      gtk3
       httpie
-      httpie-desktop
-      hyprpicker
-      imv
-      libreoffice-fresh
       libva-utils
       monero-cli
-      nomacs
       ntfs3g
-      obs-studio
-      obs-studio-plugins.droidcam-obs
-      obs-studio-plugins.obs-pipewire-audio-capture
-      obs-studio-plugins.wlrobs
       pamixer
       pavucontrol
       playerctl
       powertop
+    ] ++ (lib.optionals (!isHeadless) [
+      bemenu
+      discord
+      easyeffects
+      element-desktop-wayland
+      firefox-wayland
+      gimp-with-plugins
+      grim
+      gtk3
+      httpie-desktop
+      hyprpicker
+      imv
+      libreoffice-fresh
+      nomacs
+      obs-studio
+      obs-studio-plugins.droidcam-obs
+      obs-studio-plugins.obs-pipewire-audio-capture
+      obs-studio-plugins.wlrobs
       remmina
       simple-scan
       slurp
@@ -152,7 +154,7 @@ in
       xorg.xkill
       yubikey-manager
       zoom-us
-    ] ++ (lib.optionals (hostPlatform.isDarwin) ([
+    ])) ++ (lib.optionals (hostPlatform.isDarwin) ([
       mas
     ] ++ (with brewCasks; [
       (hashOverride firefox "sha256-yJ7pq896NVSVmn0tsKWnSL464sMNfBcLh53hDkYSdgI=")
@@ -230,7 +232,7 @@ in
 
   } // lib.optionalAttrs (hostPlatform.isLinux) {
     pointerCursor = {
-      gtk.enable = true;
+      gtk.enable = !isHeadless;
       package = pkgs.adwaita-icon-theme;
       name = "Adwaita";
       size = 16;

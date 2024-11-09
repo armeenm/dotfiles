@@ -1,9 +1,8 @@
-{ config, pkgs, ... }:
+{ config, isHeadless, pkgs, ... }:
 
 {
   gtk = {
-    enable = true;
-
+    enable = !isHeadless;
     cursorTheme = {
       package = pkgs.vanilla-dmz;
       name = "Vanilla-DMZ-AA";

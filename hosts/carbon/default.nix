@@ -414,6 +414,15 @@
     };
   };
 
+  home-manager = {
+    users."${user.login}" = import "${root}/home";
+    extraSpecialArgs = {
+      inherit inputs root user;
+      stateVersion = config.system.stateVersion;
+      isHeadless = true;
+    };
+  };
+
   environment = {
     defaultPackages = lib.mkForce [ ];
 
@@ -503,5 +512,5 @@
   };
 
   zramSwap.enable = true;
-  system.stateVersion = lib.mkForce "23.05";
+  system.stateVersion = lib.mkForce "24.11";
 }

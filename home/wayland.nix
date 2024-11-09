@@ -1,4 +1,13 @@
-{ config, sys, pkgs, lib, root, user, inputs, ... }:
+{ config
+, sys
+, isHeadless
+, pkgs
+, lib
+, root
+, user
+, inputs
+, ...
+}:
 
 let
   left = "DP-2";
@@ -7,7 +16,7 @@ let
 in {
   wayland = {
     windowManager.hyprland = {
-      enable = true;
+      enable = !isHeadless;
       settings = {
         monitor = [
           "${left},highrr,0x525,1"

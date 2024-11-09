@@ -1,4 +1,13 @@
-args@{ config, osConfig, pkgs, lib, inputs, root, user, ... }:
+{ config
+, osConfig
+, isHeadless
+, pkgs
+, lib
+, inputs
+, root
+, user
+, ...
+} @ args:
 
 let
   inherit (osConfig.nixpkgs) hostPlatform;
@@ -13,7 +22,7 @@ in {
     zoxide.enable = true;
 
     alacritty = {
-      enable = true;
+      enable = !isHeadless;
       settings = {
         font.normal.family = "Fira Code";
         window = {
@@ -25,7 +34,6 @@ in {
 
     atuin = {
       enable = true;
-
       settings = {
         auto_sync = false;
         style = "compact";
@@ -107,7 +115,7 @@ in {
     };
 
     foot = {
-      enable = hostPlatform.isLinux;
+      enable = hostPlatform.isLinux && !isHeadless;
       server.enable = true;
 
       settings = {
@@ -196,7 +204,7 @@ in {
     };
 
     hyprlock = {
-      enable = hostPlatform.isLinux;
+      enable = hostPlatform.isLinux && !isHeadless;
       settings = {
         general = {
           disable_loading_bar = true;
@@ -232,7 +240,7 @@ in {
     };
 
     mpv = {
-      enable = true;
+      enable = !isHeadless;
       config = {
         gpu-api = "vulkan";
         gpu-context = "wayland";
@@ -253,8 +261,7 @@ in {
     };
 
     nushell = {
-      enable = true;
-
+      enable = false;
       shellAliases = config.home.shellAliases;
 
       envFile.text = ''
@@ -304,7 +311,7 @@ in {
     };
 
     waybar = {
-      enable = hostPlatform.isLinux;
+      enable = hostPlatform.isLinux && !isHeadless;
       systemd.enable = true;
 
       settings = {
@@ -407,7 +414,7 @@ in {
     };
 
     yt-dlp = {
-      enable = true;
+      enable = !isHeadless;
       settings = {
         embed-thumbnail = true;
         downloader = "aria2c";
@@ -416,7 +423,7 @@ in {
     };
 
     zathura = {
-      enable = hostPlatform.isLinux;
+      enable = hostPlatform.isLinux && !isHeadless;
       mappings = {
         "<C-i>" = "recolor";
       };
@@ -424,7 +431,7 @@ in {
 
     zellij = {
       enable = true;
-      enableZshIntegration = true;
+      enableZshIntegration = false;
 
       settings = {
         pane_frames = false;

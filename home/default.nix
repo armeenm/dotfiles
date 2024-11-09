@@ -1,4 +1,4 @@
-{ lib, osConfig, ... }:
+{ lib, osConfig, isHeadless, ... }:
 
 let
   inherit (osConfig.nixpkgs) hostPlatform;
@@ -14,5 +14,5 @@ in {
     ./gtk.nix
   ];
 
-  fonts.fontconfig.enable = lib.mkForce true;
+  fonts.fontconfig.enable = !isHeadless;
 }
