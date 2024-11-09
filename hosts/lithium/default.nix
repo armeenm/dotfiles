@@ -148,8 +148,7 @@ args@{ config, pkgs, lib, modulesPath, inputs, root, user, ... }:
       enable32Bit = true;
       extraPackages = with pkgs; [
         amdvlk
-        rocm-opencl-icd
-        rocm-opencl-runtime
+        rocmPackages.clr.icd
       ];
       extraPackages32 = with pkgs; [ driversi686Linux.amdvlk ];
     };

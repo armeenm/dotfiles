@@ -75,7 +75,7 @@ in
       nixd
       nmap
       noto-fonts
-      noto-fonts-cjk
+      noto-fonts-cjk-sans
       noto-fonts-emoji
       nurl
       onefetch
@@ -122,7 +122,7 @@ in
       imv
       libreoffice-fresh
       libva-utils
-      monero
+      monero-cli
       nomacs
       ntfs3g
       obs-studio
