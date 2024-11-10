@@ -208,7 +208,9 @@
 
     vaultwarden = {
       enable = true;
+      environmentFile = config.age.secrets.vaultwarden-env.path;
       backupDir = "/srv/tank/vaultwarden";
+
       config = {
         DOMAIN = "https://vault.armeen.xyz";
         SIGNUPS_ALLOWED = false;
@@ -242,26 +244,12 @@
           enableACME = true;
           forceSSL = true;
           # TODO: Switch to UDS
-          locations."/".proxyPass = "http://[::1]:8333";
+          locations."/".proxyPass = "http://[::1]:8001";
 
           extraConfig = ''
             if ( $host != 'cobalt.armeen.xyz' ) {
               rewrite ^/(.*)$ https://cobalt.armeen.xyz/$1 permanent;
             }
-
-            ignore_invalid_headers off;
-            client_max_body_size 0;
-            proxy_buffering off;
-
-            proxy_set_header Host $host;
-            proxy_set_header X-Real-IP $remote_addr;
-            proxy_set_header X-Forwarded-For $remote_addr;
-            proxy_set_header X-Forwarded-Proto $scheme;
-
-            proxy_connect_timeout 300;
-            proxy_http_version 1.1;
-            proxy_set_header Connection "";
-            chunked_transfer_encoding off;
           '';
         };
       };
@@ -282,62 +270,15 @@
     ];
 
     services = {
-      swfs-master = {
-        description = "SeaweedFS Master";
+      cobalt-dufs = {
+        description = "Cobalt DUFS";
         wantedBy = [ "multi-user.target" ];
         after = [ "network.target" ];
         serviceConfig = {
           Type = "exec";
-          User = "seaweed";
+          User = "dufs";
           ExecStart = ''
-           ${pkgs.seaweedfs}/bin/weed master \
-             -mdir /srv/tank/seaweed \
-             -ip="[::1]"
-           '';
-        };
-      };
-
-      swfs-volume = {
-        description = "SeaweedFS Volume Server";
-        wantedBy = [ "multi-user.target" ];
-        after = [ "swfs-master.service" ];
-        serviceConfig = {
-          Type = "exec";
-          User = "seaweed";
-          ExecStart = ''
-            ${pkgs.seaweedfs}/bin/weed volume \
-              -max 100 \
-              -dir /srv/tank/seaweed \
-              -ip="[::1]"
-          '';
-        };
-      };
-
-      swfs-filer = {
-        description = "SeaweedFS Filer";
-        wantedBy = [ "multi-user.target" ];
-        after = [ "swfs-volume.service" ];
-        serviceConfig = {
-          Type = "exec";
-          User = "seaweed";
-          ExecStart = ''
-            ${pkgs.seaweedfs}/bin/weed filer \
-              -ip="[::1]"
-          '';
-        };
-      };
-
-      swfs-s3 = {
-        description = "SeaweedFS S3 Gateway";
-        wantedBy = [ "multi-user.target" ];
-        after = [ "swfs-filer.service" ];
-        serviceConfig = {
-          Type = "exec";
-          User = "seaweed";
-          ExecStart = ''
-            ${pkgs.seaweedfs}/bin/weed s3 \
-              -config ${config.age.secrets."cobalt-s3.config".path} \
-              -ip.bind="[::1]"
+            ${pkgs.dufs}/bin/dufs -c ${config.age.secrets.cobalt-config.path}
           '';
         };
       };
@@ -391,7 +332,7 @@
     mutableUsers = false;
 
     groups.restic = {};
-    groups.seaweed = {};
+    groups.dufs = {};
 
     users = {
       root.hashedPassword = null;
@@ -407,9 +348,9 @@
         group = "restic";
       };
 
-      seaweed = {
+      dufs = {
         isSystemUser = true;
-        group = "seaweed";
+        group = "dufs";
       };
     };
   };
@@ -501,10 +442,16 @@
         group = "restic";
       };
 
-      "cobalt-s3.config" = {
-        file = "${root}/secrets/cobalt-s3.config.age";
-        owner = "seaweed";
-        group = "seaweed";
+      vaultwarden-env = {
+        file = "${root}/secrets/vaultwarden-env.age";
+        owner = "vaultwarden";
+        group = "vaultwarden";
+      };
+
+      cobalt-config = {
+        file = "${root}/secrets/cobalt.yaml.age";
+        owner = "dufs";
+        group = "dufs";
       };
     };
 
