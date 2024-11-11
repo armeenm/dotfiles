@@ -300,6 +300,7 @@ linuxPackagesFor (kernel.override {
     XFRM_USER = yes;
 
     ## Storage ##
+    AF_RXRPC = yes;
     AUTOFS_FS = yes;
     BLK_DEV_BSG = yes;
     BLK_DEV_DM = yes;
@@ -309,6 +310,7 @@ linuxPackagesFor (kernel.override {
     BLK_DEV_SR = yes;
     BTRFS_FS = yes;
     CACHEFILES = yes;
+    CIFS = yes;
     CUSE = yes;
     DAX = yes;
     DM_BUFIO = yes;
@@ -332,7 +334,10 @@ linuxPackagesFor (kernel.override {
     JBD2 = yes;
     MMC = yes;
     MMC_BLOCK = yes;
-    NETWORK_FILESYSTEMS = no;
+    NETWORK_FILESYSTEMS = yes;
+    NFS_FS = yes;
+    NFS_V4 = yes;
+    NFS_V4_1 = yes;
     NTFS_FS = lib.mkForce yes;
     NVME_CORE = yes;
     QFMT_v2 = yes;
@@ -378,7 +383,6 @@ linuxPackagesFor (kernel.override {
     ADV_SWBUTTON = no;
     AFFS_FS = no;
     AF_KCM = no;
-    AF_RXRPC = no;
     ALIENWARE_WMI = no;
     ALIM1535_WDT = no;
     ALIM7101_WDT = no;
@@ -458,7 +462,6 @@ linuxPackagesFor (kernel.override {
     CAVIUM_PTP = no;
     CB710_CORE = no;
     CDROM_PKTCDVD = no;
-    CEPH_LIB = no;
     CHELSIO_INLINE_CRYPTO = no;
     CHELSIO_IPSEC_INLINE = no;
     CHELSIO_T1 = no;

@@ -221,6 +221,7 @@ args@{ config, pkgs, lib, modulesPath, inputs, root, user, ... }:
     iperf3.enable = true;
     mozillavpn.enable = true;
     pcscd.enable = true;
+    rpcbind.enable = true;
     saned.enable = true;
     smartd.enable = true;
     spice-vdagentd.enable = true;
@@ -297,6 +298,7 @@ args@{ config, pkgs, lib, modulesPath, inputs, root, user, ... }:
 
   systemd = {
     watchdog.rebootTime = "15s";
+    services.systemd-networkd-wait-online.enable = lib.mkForce false;
 
     tmpfiles.rules = [
       "d /var/srv 0755 - - -"
@@ -307,7 +309,26 @@ args@{ config, pkgs, lib, modulesPath, inputs, root, user, ... }:
       "sys-kernel-debug.mount"
     ];
 
-    services.systemd-networkd-wait-online.enable = lib.mkForce false;
+    mounts = [
+      {
+        type = "nfs";
+        mountConfig = {
+          Options = "noatime";
+        };
+        what = "192.168.0.1:/srv/export/tank";
+        where = "/mnt/tank";
+      }
+    ];
+
+    automounts = [
+      {
+        wantedBy = [ "multi-user.target" ];
+        automountConfig = {
+          TimeoutIdleSecs = "600";
+        };
+        where = "/mnt/tank";
+      }
+    ];
   };
 
   security = {

@@ -12,6 +12,12 @@
       fsType = "vfat";
     };
 
+    "/" = {
+      device = "/dev/disk/by-uuid/580bb1f1-73ac-444a-b4ca-5e36b502cdb4";
+      fsType = "ext4";
+      options = ["noatime"];
+    };
+
     /*
     "/srv/tank" = {
       device = "/dev/nvme0n1:/dev/nvme1n1";
@@ -19,10 +25,9 @@
     };
     */
 
-    "/" = {
-      device = "/dev/disk/by-uuid/580bb1f1-73ac-444a-b4ca-5e36b502cdb4";
-      fsType = "ext4";
-      options = ["noatime"];
+    "/srv/export/tank" = {
+      device = "/srv/tank";
+      options = [ "bind" ];
     };
   };
 
@@ -186,6 +191,13 @@
       };
     };
 
+    nfs.server = {
+      enable = true;
+      exports = ''
+        /srv/export/tank 192.168.0.150(rw,fsid=0,no_subtree_check)
+      '';
+    };
+
     openssh = {
       enable = true;
 
@@ -250,6 +262,17 @@
             if ( $host != 'cobalt.armeen.xyz' ) {
               rewrite ^/(.*)$ https://cobalt.armeen.xyz/$1 permanent;
             }
+            ignore_invalid_headers off;
+            client_max_body_size 0;
+            proxy_buffering off;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $remote_addr;
+            proxy_set_header X-Forwarded-Proto $scheme;
+            proxy_connect_timeout 300;
+            proxy_http_version 1.1;
+            proxy_set_header Connection "";
+            chunked_transfer_encoding off;
           '';
         };
       };
