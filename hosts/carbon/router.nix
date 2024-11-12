@@ -150,6 +150,7 @@ in
           rebind-timer = 2000;
           renew-timer = 1000;
           valid-lifetime = 4000;
+          ddns-qualifying-suffix = domain;
 
           subnet4 = [
             {
@@ -173,7 +174,7 @@ in
               data = ip;
             }
             {
-              name = "domain-search";
+              name = "domain-name";
               data = domain;
             }
           ];
@@ -188,23 +189,73 @@ in
             type = "memfile";
           };
 
+          dhcp-ddns = {
+            enable-updates = true;
+            server-ip = "::1";
+            server-port = 53001;
+            ncr-format = "JSON";
+            ncr-protocol = "UDP";
+          };
+        };
+      };
+
+      dhcp-ddns = {
+        enable = true;
+        settings = {
+          dns-server-timeout = 100;
+          ip-address = "::1";
+          ncr-format = "JSON";
+          ncr-protocol = "UDP";
+          port = 53001;
+          forward-ddns = {
+            ddns-domains = [
+              {
+                name = "${domain}.";
+                key-name = "";
+                dns-servers = [
+                  {
+                    ip-address = "::1";
+                    port = 10053;
+                  }
+                ];
+              }
+            ];
+          };
         };
       };
     };
 
-    nsd = {
+    knot = {
       enable = true;
-      interfaces = [ "::1" ];
-      port = 10053;
+      settings = {
+        server.listen = "::@10053";
 
-      zones = {
-        "${domain}." = {
-          data = zone-domain;
-        };
+        log = [{
+            target = "syslog";
+            any = "info";
+        }];
 
-        "${prefixRev}." = {
-          data = zone-subnet;
-        };
+        acl = [
+          {
+            id = "update_acl";
+            address = "::1";
+            action = "update";
+          }
+        ];
+
+        zone = [
+          {
+            inherit domain;
+            storage = "/var/lib/knot/zones";
+            file = "${domain}.zone";
+            acl = "update_acl";
+          }
+          {
+            domain = prefixRev;
+            storage = "/var/lib/knot/zones";
+            file = "${prefixRev}.zone";
+          }
+        ];
       };
     };
 
