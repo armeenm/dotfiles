@@ -209,6 +209,7 @@ in
       tf = "terraform";
       zc = "zcalc -r";
       zj = "zellij";
+      lg = "ls -laahg";
 
       noti = "noti ";
       sudo = "sudo ";

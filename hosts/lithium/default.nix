@@ -22,7 +22,9 @@ args@{ config, pkgs, lib, modulesPath, inputs, root, user, ... }:
         network.enable = true;
       };
 
+      supportedFilesystems = [ "nfs" ];
       kernelModules = [ "amdgpu" ];
+
       includeDefaultModules = false;
       verbose = false;
     };
@@ -141,7 +143,7 @@ args@{ config, pkgs, lib, modulesPath, inputs, root, user, ... }:
     cpu.amd.updateMicrocode = true;
     rtl-sdr.enable = true;
     nvidia-container-toolkit.enable = true;
-    nvidia.open = true;
+    nvidia.open = false;
 
     graphics = {
       enable = true;
@@ -312,10 +314,7 @@ args@{ config, pkgs, lib, modulesPath, inputs, root, user, ... }:
     mounts = [
       {
         type = "nfs";
-        mountConfig = {
-          Options = "noatime";
-        };
-        what = "192.168.0.1:/srv/export/tank";
+        what = "192.168.0.1:/export/tank";
         where = "/mnt/tank";
       }
     ];
@@ -454,6 +453,7 @@ args@{ config, pkgs, lib, modulesPath, inputs, root, user, ... }:
       hdparm
       lm_sensors
       lshw
+      nfs-utils
       opensm
       pciutils
       radeontop

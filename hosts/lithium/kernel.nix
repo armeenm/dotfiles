@@ -338,6 +338,8 @@ linuxPackagesFor (kernel.override {
     NFS_FS = yes;
     NFS_V4 = yes;
     NFS_V4_1 = yes;
+    NFS_V4_2 = yes;
+    #NFS_V4_2_READ_PLUS = yes;
     NTFS_FS = lib.mkForce yes;
     NVME_CORE = yes;
     QFMT_v2 = yes;

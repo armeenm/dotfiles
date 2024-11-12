@@ -25,13 +25,15 @@
     };
     */
 
-    "/srv/export/tank" = {
+    "/export/tank" = {
       device = "/srv/tank";
       options = [ "bind" ];
     };
   };
 
   boot = {
+    kernelPackages = pkgs.linuxPackages_6_11;
+
     initrd = {
       supportedFilesystems = [ "bcachefs" ];
 
@@ -194,7 +196,7 @@
     nfs.server = {
       enable = true;
       exports = ''
-        /srv/export/tank 192.168.0.150(rw,fsid=0,no_subtree_check)
+        /export/tank 192.168.0.161(rw,fsid=0,no_subtree_check)
       '';
     };
 
