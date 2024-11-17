@@ -405,6 +405,11 @@
     users = {
       root.hashedPassword = null;
 
+      arash = {
+        isNormalUser = true;
+        hashedPasswordFile = config.age.secrets.arash-pw.path;
+      };
+
       "${user.login}" = {
         isNormalUser = true;
         hashedPasswordFile = config.age.secrets."${user.login}-pw".path;
@@ -497,6 +502,7 @@
   age = {
     secrets = {
       "${user.login}-pw".file = "${root}/secrets/${user.login}-pw.age";
+      "arash-pw".file = "${root}/secrets/arash-pw.age";
 
       restic-pw = {
         file = "${root}/secrets/restic-pw.age";

@@ -8,7 +8,7 @@ let
 
 in {
   "armeen-pw.age".publicKeys = [ armeen-yk0 ] ++ hosts;
-  "arash-pw.age".publicKeys = [ armeen-yk0 lithium argentum ];
+  "arash-pw.age".publicKeys = [ armeen-yk0 ] ++ hosts;
   "restic-pw.age".publicKeys = [ armeen-yk0 carbon ];
   "restic-b2-env.age".publicKeys = [ armeen-yk0 carbon ];
   "vaultwarden-env.age".publicKeys = [ armeen-yk0 carbon ];

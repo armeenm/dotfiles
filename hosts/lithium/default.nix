@@ -130,6 +130,7 @@ args@{ config, pkgs, lib, modulesPath, inputs, root, user, ... }:
   networking = {
     hostId = "5a656e88";
     hostName = "lithium";
+    domain = "armeen.xyz";
 
     useNetworkd = false;
     wireless.iwd.enable = true;
@@ -473,6 +474,7 @@ args@{ config, pkgs, lib, modulesPath, inputs, root, user, ... }:
 
     systemPackages = (with pkgs; [
       doas-sudo-shim
+      ethtool
       hdparm
       lm_sensors
       lshw
