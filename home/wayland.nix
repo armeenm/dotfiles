@@ -24,19 +24,13 @@ in {
           ",preferred,auto,1"
         ];
 
-        workspace = "1,monitor:${left}";
-
         input = {
           kb_options = "caps:escape";
-
           repeat_rate = 60;
           repeat_delay = 200;
-
           follow_mouse = true;
-
           touchpad.natural_scroll = true;
-
-          sensitivity = 0; # -1.0 - 1.0, 0 means no modification.
+          sensitivity = 0;
         };
 
         general = {
@@ -52,9 +46,23 @@ in {
 
         dwindle = {
           pseudotile = true;
-          no_gaps_when_only = true;
           preserve_split = true;
         };
+
+        workspace = [
+          "1, monitor:${left}"
+          # "No gaps when only" functionality.
+          "w[tv1], gapsout:0, gapsin:0"
+          "f[1], gapsout:0, gapsin:0"
+        ];
+
+        # "No gaps when only" functionality.
+        windowrulev2 = [
+          "bordersize 0, floating:0, onworkspace:w[tv1]"
+          "rounding 0, floating:0, onworkspace:w[tv1]"
+          "bordersize 0, floating:0, onworkspace:f[1]"
+          "rounding 0, floating:0, onworkspace:f[1]"
+        ];
 
         gestures = {
           workspace_swipe = true;

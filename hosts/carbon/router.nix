@@ -156,11 +156,7 @@ in
             {
               id = 1;
               inherit subnet;
-              pools = [
-                {
-                  pool = "${prefix}.128 - ${prefix}.254";
-                }
-              ];
+              pools = [ { pool = "${prefix}.128 - ${prefix}.254"; } ];
             }
           ];
 
@@ -175,6 +171,10 @@ in
             }
             {
               name = "domain-name";
+              data = domain;
+            }
+            {
+              name = "domain-search";
               data = domain;
             }
           ];
@@ -271,7 +271,8 @@ in
           hide-version = true;
           so-reuseport = true;
           use-caps-for-id = false;
-          verbosity = 2;
+          verbosity = 1;
+          log-queries = true;
 
           interface = [ ip "::1" ];
           access-control = [ "${subnet} allow" "::1 allow" ];
@@ -279,15 +280,16 @@ in
           tls-cert-bundle = "/etc/ssl/certs/ca-certificates.crt";
 
           domain-insecure = [ domain prefixRev ];
+          # TODO: Use the revPrefix stuff.
           local-zone = [
             "${domain}.    nodefault"
-            "${prefixRev}. nodefault"
+            "168.192.in-addr.arpa. nodefault"
           ];
         };
 
         stub-zone = [
           { name = domain; stub-addr = "::1@10053"; }
-          { name = prefixRev; stub-addr = "::1@10053"; }
+          { name = "168.192.in-addr.arpa"; stub-addr = "::1@10053"; }
         ];
 
         forward-zone = [{

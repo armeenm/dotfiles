@@ -193,10 +193,24 @@
       };
     };
 
+    kerberos_server = {
+      enable = true;
+      settings = {
+        realms = {
+          "ARMEEN.XYZ" = {
+            acl = [
+              { access = "all"; principal = "admin/admin"; }
+            ];
+          };
+        };
+      };
+    };
+
     nfs.server = {
       enable = true;
+      createMountPoints = true;
       exports = ''
-        /export/tank 192.168.0.161(rw,fsid=0,no_subtree_check)
+        /export/tank *(rw,no_root_squash,fsid=0,sec=krb5p)
       '';
     };
 
@@ -235,35 +249,38 @@
 
     nginx = {
       enable = true;
+      enableQuicBPF = true;
+      enableReload = true;
+      recommendedOptimisation = true;
+      recommendedTlsSettings = true;
+      recommendedZstdSettings = true;
+      package = pkgs.nginxQuic;
 
       virtualHosts = {
-        "armeen.xyz" = {
-          enableACME = true;
-          forceSSL = true;
-          root = "/srv/armeen-xyz";
+        "\"\"" = {
+          default = true;
+          extraConfig = ''
+            return 444;
+          '';
         };
 
+        vault = { globalRedirect = "vault.armeen.xyz"; };
         "vault.armeen.xyz" = {
           enableACME = true;
           forceSSL = true;
           locations."/".proxyPass = "http://[::1]:8000";
-          extraConfig = ''
-            if ( $host != 'vault.armeen.xyz' ) {
-              rewrite ^/(.*)$ https://vault.armeen.xyz/$1 permanent;
-            }
-          '';
         };
 
+        cobalt = { globalRedirect = "cobalt.armeen.xyz"; };
         "cobalt.armeen.xyz" = {
           enableACME = true;
           forceSSL = true;
+          kTLS = true;
+          quic = true;
           # TODO: Switch to UDS
           locations."/".proxyPass = "http://[::1]:8001";
 
           extraConfig = ''
-            if ( $host != 'cobalt.armeen.xyz' ) {
-              rewrite ^/(.*)$ https://cobalt.armeen.xyz/$1 permanent;
-            }
             ignore_invalid_headers off;
             client_max_body_size 0;
             proxy_buffering off;
@@ -275,6 +292,10 @@
             proxy_http_version 1.1;
             proxy_set_header Connection "";
             chunked_transfer_encoding off;
+
+            quic_gso on;
+            quic_retry on;
+            add_header Alt-Svc 'h3=":443"; ma=86400';
           '';
         };
       };
@@ -338,6 +359,28 @@
         keepEnv = true;
         noPass = true;
       }];
+    };
+
+    krb5 = {
+      enable = true;
+      settings = {
+        libdefaults = {
+          default_realm = "ARMEEN.XYZ";
+        };
+
+        domain_realm = {
+          "armeen.xyz" = "ARMEEN.XYZ";
+        };
+
+        realms = {
+          "ARMEEN.XYZ" = {
+            admin_server = "cobalt.armeen.xyz";
+            kdc = [
+              "cobalt.armeen.xyz"
+            ];
+          };
+        };
+      };
     };
 
     pam = {

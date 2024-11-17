@@ -175,10 +175,20 @@
     homeConfigurations = forAllSystems (system: pkgs: with pkgs; {
       default = inputs.home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
+
         modules = (if system == "aarch64-darwin" then hmDarwinModules else hmModules) ++ [
           { nixpkgs = { inherit config overlays; }; }
           ./home
         ];
+
+        extraSpecialArgs = {
+          isHeadless = false;
+          stateVersion = "24.11";
+
+          osConfig = {
+            nixpkgs = pkgs;
+          };
+        };
       };
     });
 

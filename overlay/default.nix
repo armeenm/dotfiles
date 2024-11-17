@@ -7,6 +7,8 @@ final: prev: {
     '';
   });
 
+  dufs = prev.dufs.overrideAttrs (_: { doCheck = false; });
+
   /*
   ncmpcpp = prev.ncmpcpp.overrideAttrs (_: {
     src = prev.fetchFromGitHub {

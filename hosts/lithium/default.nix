@@ -16,13 +16,13 @@ args@{ config, pkgs, lib, modulesPath, inputs, root, user, ... }:
   };
 
   boot = {
+    supportedFilesystems = [ "nfs" "nfs4" ];
     initrd = {
       systemd = {
         enable = true;
         network.enable = true;
       };
 
-      supportedFilesystems = [ "nfs" ];
       kernelModules = [ "amdgpu" ];
 
       includeDefaultModules = false;
@@ -54,7 +54,7 @@ args@{ config, pkgs, lib, modulesPath, inputs, root, user, ... }:
     ];
 
     kernel.sysctl = {
-      # Needed for router
+      # Needed for router.
       "net.ipv4.conf.all.accept_redirects" = true;
       "net.ipv6.conf.all.accept_redirects" = true;
       "net.ipv4.conf.all.accept_source_route" = true;
@@ -104,7 +104,7 @@ args@{ config, pkgs, lib, modulesPath, inputs, root, user, ... }:
       "kernel.unprivileged_bpf_disabled" = true;
       "kernel.yama.ptrace_scope" = 2;
 
-      # Appropriate for x86
+      # Appropriate for x86.
       "vm.max_map_count" = 1048576;
       "vm.mmap_rnd_bits" = 32;
       "vm.mmap_rnd_compat_bits" = 16;
@@ -131,7 +131,7 @@ args@{ config, pkgs, lib, modulesPath, inputs, root, user, ... }:
     hostId = "5a656e88";
     hostName = "lithium";
 
-    useNetworkd = true;
+    useNetworkd = false;
     wireless.iwd.enable = true;
 
     firewall.interfaces.enp78s0.allowedTCPPorts = [ 8080 8888 7860 5201 11434 ];
@@ -271,7 +271,7 @@ args@{ config, pkgs, lib, modulesPath, inputs, root, user, ... }:
     };
 
     resolved = {
-      enable = true;
+      enable = false;
       fallbackDns = lib.mkForce [];
       dnssec = "false";
     };
@@ -314,8 +314,9 @@ args@{ config, pkgs, lib, modulesPath, inputs, root, user, ... }:
     mounts = [
       {
         type = "nfs";
-        what = "192.168.0.1:/export/tank";
+        what = "carbon.armeen.xyz:/export/tank";
         where = "/mnt/tank";
+        options = "sec=krb5p";
       }
     ];
 
@@ -323,7 +324,7 @@ args@{ config, pkgs, lib, modulesPath, inputs, root, user, ... }:
       {
         wantedBy = [ "multi-user.target" ];
         automountConfig = {
-          TimeoutIdleSecs = "600";
+          TimeoutIdleSec = "600";
         };
         where = "/mnt/tank";
       }
@@ -360,6 +361,28 @@ args@{ config, pkgs, lib, modulesPath, inputs, root, user, ... }:
         noPass = false;
         persist = true;
       }];
+    };
+
+    krb5 = {
+      enable = true;
+      settings = {
+        libdefaults = {
+          default_realm = "ARMEEN.XYZ";
+        };
+
+        domain_realm = {
+          "armeen.xyz" = "ARMEEN.XYZ";
+        };
+
+        realms = {
+          "ARMEEN.XYZ" = {
+            admin_server = "cobalt.armeen.xyz";
+            kdc = [
+              "cobalt.armeen.xyz"
+            ];
+          };
+        };
+      };
     };
 
     pam = {
