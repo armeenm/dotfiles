@@ -49,6 +49,8 @@ let
     ${hostName} A ${ip}
     vault A ${ip}
     cobalt A ${ip}
+    music A ${ip}
+    media A ${ip}
   '';
 
   zone-subnet = ''

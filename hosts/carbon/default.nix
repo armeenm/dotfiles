@@ -180,6 +180,12 @@
     timesyncd.enable = true;
     udisks2.enable = true;
 
+    cloudflare-dyndns = {
+      enable = true;
+      domains = [ "armeen.xyz" ];
+      apiTokenFile = config.age.secrets.cloudflare-api-token.path;
+    };
+
     home-assistant = {
       enable = false;
       extraComponents = [
@@ -193,6 +199,10 @@
       };
     };
 
+    jellyfin = {
+      enable = true;
+    };
+
     kerberos_server = {
       enable = true;
       settings = {
@@ -203,6 +213,14 @@
             ];
           };
         };
+      };
+    };
+
+    navidrome = {
+      enable = true;
+      settings = {
+        Address = "[::1]";
+        MusicFolder = "/srv/tank/armeen/music";
       };
     };
 
@@ -254,6 +272,7 @@
       recommendedOptimisation = true;
       recommendedTlsSettings = true;
       recommendedZstdSettings = true;
+      recommendedProxySettings = true;
       package = pkgs.nginxQuic;
 
       virtualHosts = {
@@ -296,6 +315,77 @@
             quic_gso on;
             quic_retry on;
             add_header Alt-Svc 'h3=":443"; ma=86400';
+          '';
+        };
+
+        music = { globalRedirect = "music.armeen.xyz"; };
+        "music.armeen.xyz" = {
+          enableACME = true;
+          forceSSL = true;
+          kTLS = true;
+          quic = true;
+          locations."/".proxyPass = "http://[::1]:4533";
+          extraConfig = ''
+            quic_gso on;
+            quic_retry on;
+            add_header Alt-Svc 'h3=":443"; ma=86400';
+          '';
+        };
+
+        media = { globalRedirect = "media.armeen.xyz"; };
+        "media.armeen.xyz" = {
+          enableACME = true;
+          forceSSL = true;
+          #kTLS = true;
+          #quic = true;
+
+          locations = let
+            proxyPass = "http://127.0.0.1:8096";
+            commonProxy = ''
+              proxy_set_header X-Real-IP $remote_addr;
+              proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+              proxy_set_header X-Forwarded-Proto $scheme;
+              proxy_set_header X-Forwarded-Protocol $scheme;
+              proxy_set_header X-Forwarded-Host $http_host;
+            '';
+          in {
+            "/" = {
+              inherit proxyPass;
+              extraConfig = commonProxy + ''
+                # Disable buffering when the nginx proxy gets very resource heavy upon streaming.
+                proxy_buffering off;
+              '';
+            };
+
+            "/socket" = {
+              inherit proxyPass;
+              proxyWebsockets = true;
+              extraConfig = commonProxy;
+            };
+          };
+
+          extraConfig = ''
+            ## The default `client_max_body_size` is 1M, this might not be enough for some posters, etc.
+            client_max_body_size 20M;
+
+            # Security / XSS Mitigation Headers
+            # NOTE: X-Frame-Options may cause issues with the webOS app
+            add_header X-Frame-Options "SAMEORIGIN";
+            add_header X-Content-Type-Options "nosniff";
+
+            # Permissions policy. May cause issues with some clients
+            add_header Permissions-Policy "accelerometer=(), ambient-light-sensor=(), battery=(), bluetooth=(), camera=(), clipboard-read=(), display-capture=(), document-domain=(), encrypted-media=(), gamepad=(), geolocation=(), gyroscope=(), hid=(), idle-detection=(), interest-cohort=(), keyboard-map=(), local-fonts=(), magnetometer=(), microphone=(), payment=(), publickey-credentials-get=(), serial=(), sync-xhr=(), usb=(), xr-spatial-tracking=()" always;
+
+            # Content Security Policy
+            # See: https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP
+            # Enforces https content and restricts JS/CSS to origin
+            # External Javascript (such as cast_sender.js for Chromecast) must be whitelisted.
+            # NOTE: The default CSP headers may cause issues with the webOS app
+            add_header Content-Security-Policy "default-src https: data: blob: ; img-src 'self' https://* ; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' https://www.gstatic.com https://www.youtube.com blob:; worker-src 'self' blob:; connect-src 'self'; object-src 'none'; frame-ancestors 'self'";
+
+            #quic_gso on;
+            #quic_retry on;
+            #add_header Alt-Svc 'h3=":443"; ma=86400';
           '';
         };
       };
@@ -502,7 +592,8 @@
   age = {
     secrets = {
       "${user.login}-pw".file = "${root}/secrets/${user.login}-pw.age";
-      "arash-pw".file = "${root}/secrets/arash-pw.age";
+      arash-pw.file = "${root}/secrets/arash-pw.age";
+      cloudflare-api-token.file = "${root}/secrets/cloudflare-api-token.env.age";
 
       restic-pw = {
         file = "${root}/secrets/restic-pw.age";
