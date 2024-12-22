@@ -3,7 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable-small";
-    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.05-small";
+    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.11-small";
 
     nixos-hardware.url = "github:nixos/nixos-hardware";
 
@@ -23,7 +23,7 @@
     };
 
     lanzaboote = {
-      url = "github:nix-community/lanzaboote/v0.3.0";
+      url = "github:nix-community/lanzaboote/v0.4.1";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

@@ -123,7 +123,7 @@ in
       bemenu
       discord
       easyeffects
-      element-desktop-wayland
+      element-desktop
       firefox-wayland
       gimp-with-plugins
       grim

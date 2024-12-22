@@ -34,7 +34,6 @@ linuxPackagesFor (kernel.override {
     CONFIGFS_FS = yes;
     CONNECTOR = yes;
     COREDUMP = no;
-    CRASH_DUMP = no;
     CRYPTO_CMAC = yes;
     CRYPTO_CRYPTD = yes;
     CRYPTO_JITTERENTROPY = yes;
