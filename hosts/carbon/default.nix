@@ -336,8 +336,8 @@
         "media.armeen.xyz" = {
           enableACME = true;
           forceSSL = true;
-          #kTLS = true;
-          #quic = true;
+          kTLS = true;
+          quic = true;
 
           locations = let
             proxyPass = "http://127.0.0.1:8096";
@@ -383,9 +383,9 @@
             # NOTE: The default CSP headers may cause issues with the webOS app
             add_header Content-Security-Policy "default-src https: data: blob: ; img-src 'self' https://* ; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' https://www.gstatic.com https://www.youtube.com blob:; worker-src 'self' blob:; connect-src 'self'; object-src 'none'; frame-ancestors 'self'";
 
-            #quic_gso on;
-            #quic_retry on;
-            #add_header Alt-Svc 'h3=":443"; ma=86400';
+            quic_gso on;
+            quic_retry on;
+            add_header Alt-Svc 'h3=":443"; ma=86400';
           '';
         };
       };
@@ -551,13 +551,6 @@
       usbutils
       zellij
     ];
-
-    etc = {
-      swfs-filer = {
-        source = ./filer.toml;
-        target = "seaweedfs/filer.toml";
-      };
-    };
   };
 
   programs = {
