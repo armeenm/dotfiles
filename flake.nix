@@ -17,6 +17,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    hyprland-qtutils = {
+      url = "github:hyprwm/hyprland-qtutils";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nix-misc = {
       url = "github:armeenm/nix-misc";
       inputs.nixpkgs.follows = "nixpkgs";

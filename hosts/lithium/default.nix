@@ -208,7 +208,7 @@ args@{ config, pkgs, lib, modulesPath, inputs, root, user, ... }:
     hostPlatform = "x86_64-linux";
     config = {
       cudaSupport = false;
-      rocmSupport = true;
+      rocmSupport = false;
     };
   };
 
@@ -265,7 +265,7 @@ args@{ config, pkgs, lib, modulesPath, inputs, root, user, ... }:
       enable = true;
       drivers = with pkgs; [
         canon-cups-ufr2
-        cnijfilter2
+        #cnijfilter2
         gutenprint
         gutenprintBin
       ];

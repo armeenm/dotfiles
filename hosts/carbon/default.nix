@@ -418,6 +418,8 @@
           '';
         };
       };
+
+      cloudflare-dyndns.environment.HOME = "/tmp";
     };
   };
 

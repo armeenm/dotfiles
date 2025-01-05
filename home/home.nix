@@ -16,6 +16,7 @@ let
 
   nix-misc = inputs.nix-misc.packages.${hostPlatform.system};
   ragenix = inputs.ragenix.packages.${hostPlatform.system}.default;
+  hyprland-qtutils = inputs.hyprland-qtutils.packages.${hostPlatform.system}.default;
 
   editor = lib.getBin (pkgs.writeShellScript "editor" ''
     exec ${lib.getBin config.services.emacs.package}/bin/emacsclient -ct $@
@@ -125,10 +126,11 @@ in
       easyeffects
       element-desktop
       firefox-wayland
-      gimp-with-plugins
+      #gimp-with-plugins
       grim
       gtk3
       httpie-desktop
+      hyprland-qtutils
       hyprpicker
       imv
       libreoffice-fresh
