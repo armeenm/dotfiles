@@ -232,6 +232,11 @@ args@{ config, pkgs, lib, modulesPath, inputs, root, user, ... }:
     timesyncd.enable = true;
     udisks2.enable = true;
 
+    avahi = {
+      enable = true;
+      nssmdns4 = true;
+    };
+
     hardware = {
       bolt.enable = true;
       openrgb = {
