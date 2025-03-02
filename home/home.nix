@@ -43,7 +43,7 @@ in
       age-plugin-yubikey
       bacon
       boxes
-      breeze-icons
+      kdePackages.breeze-icons
       comma
       direnv
       dos2unix
@@ -136,7 +136,6 @@ in
       libreoffice-fresh
       nomacs
       obs-studio
-      obs-studio-plugins.droidcam-obs
       obs-studio-plugins.obs-pipewire-audio-capture
       obs-studio-plugins.wlrobs
       remmina

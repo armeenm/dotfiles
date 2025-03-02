@@ -334,7 +334,7 @@ linuxPackagesFor (kernel.override {
     MMC = yes;
     MMC_BLOCK = yes;
     NETWORK_FILESYSTEMS = yes;
-    NFS_FS = yes;
+    NFS_FS = lib.mkForce yes;
     NFS_V4 = yes;
     NFS_V4_1 = yes;
     NFS_V4_2 = yes;
@@ -725,7 +725,6 @@ linuxPackagesFor (kernel.override {
     INPUT_IMS_PCU = no;
     INPUT_IQS269A = no;
     INPUT_IQS626A = no;
-    INPUT_JOYSTICK = no;
     INPUT_KEYBOARD = no;
     INPUT_KEYSPAN_REMOTE = no;
     INPUT_KXTJ9 = no;
@@ -777,7 +776,6 @@ linuxPackagesFor (kernel.override {
     IPV6_MIP6 = no;
     IPV6_SIT = no;
     IP_DCCP = no;
-    IP_MROUTE = no;
     IP_PIMSM_V1 = yes;
     IP_PIMSM_V2 = no;
     IP_SCTP = no;
@@ -1307,7 +1305,6 @@ linuxPackagesFor (kernel.override {
     SENSORS_XGENE = no;
     SENSORS_ZL6100 = no;
     SERIAL_IPOCTAL = no;
-    SERIO = no;
     SFC = no;
     SFC_FALCON = no;
     SFC_MCDI_LOGGING = no;
