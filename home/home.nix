@@ -35,9 +35,6 @@ in
     username = lib.mkOverride 500 user.login;
     homeDirectory = lib.mkOverride 500 "/home/${user.login}";
 
-    # XXX: https://github.com/nix-community/home-manager/issues/4826
-    activation.batCache = lib.mkForce (lib.hm.dag.entryAfter [ "linkGeneration" ] '''');
-
     packages = with pkgs; [
       adwaita-icon-theme
       age-plugin-yubikey
