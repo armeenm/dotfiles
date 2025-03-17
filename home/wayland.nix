@@ -17,6 +17,7 @@ in {
   wayland = {
     windowManager.hyprland = {
       enable = !isHeadless;
+      systemd.enable = false;
       settings = {
         monitor = [
           "${left},highrr,0x525,1"
@@ -68,9 +69,17 @@ in {
           workspace_swipe = true;
         };
 
+        group = {
+          groupbar = {
+            font_size = 18;
+            gradients = true;
+          };
+        };
+
         misc = {
           disable_hyprland_logo = true;
           disable_splash_rendering = true;
+          font_family = "Tamsyn";
         };
 
         bindm = [

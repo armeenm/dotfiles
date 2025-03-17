@@ -502,7 +502,6 @@ args@{ config, pkgs, lib, modulesPath, inputs, root, user, ... }:
   programs = {
     adb.enable = true;
     dconf.enable = true;
-    hyprland.enable = true;
     mosh.enable = true;
     mtr.enable = true;
     nix-ld.enable = true;
@@ -511,6 +510,11 @@ args@{ config, pkgs, lib, modulesPath, inputs, root, user, ... }:
     custom.ddcutil = {
       enable = false;
       users = [ user.login ];
+    };
+
+    hyprland = {
+      enable = true;
+      withUWSM = true;
     };
 
     neovim = {
