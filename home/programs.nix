@@ -101,7 +101,7 @@ in {
         config = "${root}/conf/emacs/init.el";
         defaultInitFile = true;
         alwaysEnsure = true;
-        package = pkgs.emacs-pgtk;
+        package = pkgs.emacs-git-pgtk;
 
         extraEmacsPackages = epkgs: with epkgs; [
           treesit-grammars.with-all-grammars

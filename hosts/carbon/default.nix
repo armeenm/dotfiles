@@ -221,6 +221,7 @@
       settings = {
         Address = "[::1]";
         MusicFolder = "/srv/tank/armeen/music";
+        EnableSharing = true;
       };
     };
 
