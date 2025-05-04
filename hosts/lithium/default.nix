@@ -208,7 +208,7 @@ args@{ config, pkgs, lib, modulesPath, inputs, root, user, ... }:
     hostPlatform = "x86_64-linux";
     config = {
       cudaSupport = false;
-      rocmSupport = false;
+      rocmSupport = true;
     };
   };
 
@@ -249,6 +249,7 @@ args@{ config, pkgs, lib, modulesPath, inputs, root, user, ... }:
     ollama = {
       enable = true;
       host = "0.0.0.0";
+      rocmOverrideGfx = "10.3.0";
     };
 
     openssh = {
@@ -280,6 +281,12 @@ args@{ config, pkgs, lib, modulesPath, inputs, root, user, ... }:
       enable = false;
       fallbackDns = lib.mkForce [];
       dnssec = "false";
+    };
+
+    sunshine = {
+      enable = true;
+      capSysAdmin = true;
+      openFirewall = true;
     };
 
     tor = {

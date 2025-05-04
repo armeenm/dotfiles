@@ -49,10 +49,6 @@
 
     mako = {
       enable = !isHeadless;
-      extraConfig = ''
-      [mode=do-not-disturb]
-      invisible=1
-    '';
     };
 
     mpd = {

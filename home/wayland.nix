@@ -160,8 +160,8 @@ in {
 
           "SUPER,A,exec,makoctl dismiss"
           "SUPER_SHIFT,A,exec,makoctl dismiss -a"
-          "SUPER,S,exec,makoctl set-mode do-not-disturb"
-          "SUPER_SHIFT,S,exec,makoctl set-mode default"
+          "SUPER,S,exec,makoctl mode -s do-not-disturb"
+          "SUPER_SHIFT,S,exec,makoctl mode -s default"
           "SUPER_SHIFT,X,exec,hyprlock"
 
           ",xf86audiopause,exec,playerctl play-pause"

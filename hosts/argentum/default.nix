@@ -5,14 +5,14 @@
 
   fileSystems = {
     "/boot" = {
-      device = "/dev/disk/by-uuid/BBE8-0DBE";
+      device = "/dev/disk/by-uuid/81BA-80F5";
       fsType = "vfat";
+      options = [ "fmask=0077" "dmask=0077" ];
     };
 
     "/" = {
-      device = "/dev/disk/by-uuid/c8663fee-c299-4e3b-a482-6c19d4f9fcc9";
+      device = "/dev/disk/by-uuid/98affdf5-1020-4752-994e-343092303139";
       fsType = "ext4";
-      options = ["noatime"];
     };
   };
 
@@ -279,6 +279,7 @@
     extraSpecialArgs = {
       inherit inputs root user;
       stateVersion = config.system.stateVersion;
+      isHeadless = false;
     };
   };
 

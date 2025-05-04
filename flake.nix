@@ -214,9 +214,9 @@
           hostname = "argentum";
           profiles.system = {
             user = "root";
-            sudo = "doas -u";
+            #sudo = "doas -u";
             path = inputs.deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.argentum;
-            sshOpts = [ "-t" ];
+            #sshOpts = [ "-t" ];
           };
         };
 

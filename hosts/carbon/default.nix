@@ -245,6 +245,7 @@
       backups = {
         b2 = {
           paths = [ "/srv/tank" ];
+          exclude = [ "/srv/tank/nobak" ];
           user = "restic";
           repository = "b2:backups-jKl9AFet877bX";
           passwordFile = config.age.secrets.restic-pw.path;
