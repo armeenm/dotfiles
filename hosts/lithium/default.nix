@@ -17,6 +17,8 @@ args@{ config, pkgs, lib, modulesPath, inputs, root, user, ... }:
 
   boot = {
     supportedFilesystems = [ "nfs" "nfs4" ];
+    extraModulePackages = with config.boot.kernelPackages; [ ddcci-driver ];
+
     initrd = {
       systemd = {
         enable = true;
@@ -519,9 +521,13 @@ args@{ config, pkgs, lib, modulesPath, inputs, root, user, ... }:
       users = [ user.login ];
     };
 
-    hyprland = {
+    hyprland = let
+      hyprPkgs = inputs.hyprland.packages.${pkgs.system};
+    in {
       enable = true;
       withUWSM = true;
+      package = hyprPkgs.hyprland;
+      portalPackage = hyprPkgs.xdg-desktop-portal-hyprland;
     };
 
     neovim = {

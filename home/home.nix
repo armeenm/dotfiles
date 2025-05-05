@@ -2,7 +2,6 @@
 , osConfig
 , isHeadless
 , pkgs
-, system
 , lib
 , root
 , user
@@ -102,6 +101,7 @@ in
       wget
       whois
       zip
+
     ] ++ (lib.optionals (hostPlatform.isLinux) [
       bluetuith
       bubblewrap
@@ -117,29 +117,34 @@ in
       pavucontrol
       playerctl
       powertop
+
     ] ++ (lib.optionals (!isHeadless) [
       bemenu
+      brightnessctl
       discord
       easyeffects
       element-desktop
       firefox-wayland
-      #gimp-with-plugins
+      gimp-with-plugins
       grim
       gtk3
       httpie-desktop
       hyprland-qtutils
       hyprpicker
+      hyprshot
       imv
       libreoffice-fresh
+      moonlight-qt
       nomacs
       obs-studio
       obs-studio-plugins.obs-pipewire-audio-capture
       obs-studio-plugins.wlrobs
       remmina
+      satty
       simple-scan
       slurp
       strace
-      swappy
+      supersonic
       swaylock
       telegram-desktop
       vial
@@ -154,8 +159,10 @@ in
       xorg.xkill
       yubikey-manager
       zoom-us
+
     ])) ++ (lib.optionals (hostPlatform.isDarwin) ([
       mas
+
     ] ++ (with brewCasks; [
       (hashOverride firefox "sha256-yJ7pq896NVSVmn0tsKWnSL464sMNfBcLh53hDkYSdgI=")
       linearmouse
@@ -233,9 +240,9 @@ in
 
   } // lib.optionalAttrs (hostPlatform.isLinux) {
     pointerCursor = {
-      gtk.enable = !isHeadless;
+      hyprcursor.enable = true;
       package = pkgs.adwaita-icon-theme;
-      name = "Adwaita";
+      name = "rose-pine-hyprcursor";
       size = 16;
     };
   };

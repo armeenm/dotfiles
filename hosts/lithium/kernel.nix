@@ -13,13 +13,6 @@ linuxPackagesFor (kernel.override {
     needsCifsUtils = false;
   };
 
-  /*
-  kernelPatches = [{
-    name = "module-signing";
-    patch = ./secrets/gc/kernel_key.patch;
-  }] ++ kernel.kernelPatches;
-  */
-
   structuredExtraConfig = with lib.kernel; {
     ## General ##
     #DEBUG_KMEMLEAK = yes;
@@ -1528,14 +1521,6 @@ linuxPackagesFor (kernel.override {
     XILLYUSB = no;
     YELLOWFIN = no;
     ZIIRAVE_WATCHDOG = no;
-
-    # NOTE: generate our own key for r13y
-    /*
-    MODULE_SIG = lib.mkForce yes;
-    MODULE_SIG_FORCE = no;
-    MODULE_SIG_ALL = yes;
-    MODULE_SIG_SHA512 = yes;
-    */
   };
 
   ignoreConfigErrors = true;

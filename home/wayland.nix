@@ -1,10 +1,5 @@
-{ config
-, sys
-, isHeadless
+{ isHeadless
 , pkgs
-, lib
-, root
-, user
 , inputs
 , ...
 }:
@@ -13,12 +8,27 @@ let
   left = "DP-2";
   right = "DP-1";
 
+  hyprland-plugins = inputs.hyprland-plugins.packages.${pkgs.system};
+
 in {
   wayland = {
     windowManager.hyprland = {
       enable = !isHeadless;
+      package = null;
       systemd.enable = false;
+
+      plugins = [
+        hyprland-plugins.hyprscrolling
+        hyprland-plugins.hyprexpo
+        hyprland-plugins.xtra-dispatchers
+        inputs.hyprsplit.packages.${pkgs.system}.hyprsplit
+        inputs.hypr-darkwindow.packages.${pkgs.system}.Hypr-DarkWindow
+      ];
+
       settings = {
+        decoration.rounding = 0;
+        animations.enabled = false;
+
         monitor = [
           "${left},highrr,0x525,1"
           "${right},preferred,2560x0,1"
@@ -38,12 +48,11 @@ in {
           gaps_in = 5;
           gaps_out = 10;
           border_size = 2;
+          resize_on_border = true;
+          layout = "dwindle";
           "col.active_border" = "rgba(9f40ffcc)";
           "col.inactive_border" = "rgba(0b0e1411)";
         };
-
-        decoration.rounding = 0;
-        animations.enabled = false;
 
         dwindle = {
           pseudotile = true;
@@ -76,6 +85,23 @@ in {
           };
         };
 
+        plugin = {
+          hyprexpo = {
+            columns = 3;
+            gap_size = 5;
+            workspace_method = "center current";
+
+            enable_gesture = true;
+            gesture_fingers = 3;
+            gesture_distance = 300;
+            gesture_positive = true;
+          };
+
+          hyprscrolling = {
+            fullscreen_on_one_column = true;
+          };
+        };
+
         misc = {
           disable_hyprland_logo = true;
           disable_splash_rendering = true;
@@ -96,10 +122,13 @@ in {
           "SUPER_SHIFT,space,pin"
           "SUPER,D,exec,bemenu-run -b"
           "SUPER,P,exec,systemd-run --user emacsclient -c -n"
-          ''SUPER,grave,exec,grim -g "$(slurp)" - | swappy -f -''
+          "SUPER,grave,hyprexpo:expo,toggle"
           "SUPER_SHIFT,P,pseudo,"
           "SUPER,F,fullscreen,1"
           "SUPER_SHIFT,F,fullscreen,0"
+
+          ''SUPER,C,exec,hyprshot -zm region -r - | satty -f - --fullscreen -o ~/ss/satty-$(date '+%Y%m%d-%H:%M:%S').png''
+          ''SUPER_SHIFT,C,exec,hyprshot -zm window -r - | satty -f - --fullscreen -o ~/ss/satty-$(date '+%Y%m%d-%H:%M:%S').png''
 
           "SUPER,W,focusmonitor,${left}"
           "SUPER,E,focusmonitor,${right}"
@@ -115,10 +144,11 @@ in {
 
           "SUPER,tab,workspace,previous"
           "SUPER,minus,togglespecialworkspace"
-          "SUPER,Z,togglesplit"
-          "SUPER_SHIFT,Z,swapsplit"
+          "SUPER_SHIFT,Z,togglesplit"
+          "SUPER,Z,swapsplit"
           "SUPER,T,togglegroup"
           "SUPER,X,movecursortocorner,0"
+          "SUPER,V,invertactivewindow"
 
           "SUPER,N,changegroupactive,b"
           "SUPER,M,changegroupactive,f"
@@ -127,32 +157,41 @@ in {
           "SUPER,J,movefocus,d"
           "SUPER,K,movefocus,u"
           "SUPER,L,movefocus,r"
+
           "SUPER_SHIFT,H,movewindow,l"
           "SUPER_SHIFT,J,movewindow,d"
           "SUPER_SHIFT,K,movewindow,u"
           "SUPER_SHIFT,L,movewindow,r"
 
-          "SUPER,1,workspace,1"
-          "SUPER,2,workspace,2"
-          "SUPER,3,workspace,3"
-          "SUPER,4,workspace,4"
-          "SUPER,5,workspace,5"
-          "SUPER,6,workspace,6"
-          "SUPER,7,workspace,7"
-          "SUPER,8,workspace,8"
-          "SUPER,9,workspace,9"
-          "SUPER,0,workspace,10"
+          "SUPER_CTRL,H,layoutmsg,movewindowto l"
+          "SUPER_CTRL,J,layoutmsg,movewindowto d"
+          "SUPER_CTRL,K,layoutmsg,movewindowto u"
+          "SUPER_CTRL,L,layoutmsg,movewindowto r"
 
-          "SUPER_SHIFT,1,movetoworkspacesilent,1"
-          "SUPER_SHIFT,2,movetoworkspacesilent,2"
-          "SUPER_SHIFT,3,movetoworkspacesilent,3"
-          "SUPER_SHIFT,4,movetoworkspacesilent,4"
-          "SUPER_SHIFT,5,movetoworkspacesilent,5"
-          "SUPER_SHIFT,6,movetoworkspacesilent,6"
-          "SUPER_SHIFT,7,movetoworkspacesilent,7"
-          "SUPER_SHIFT,8,movetoworkspacesilent,8"
-          "SUPER_SHIFT,9,movetoworkspacesilent,9"
-          "SUPER_SHIFT,0,movetoworkspacesilent,10"
+          "SUPER,comma,layoutmsg,move -col"
+          "SUPER,period,layoutmsg,move +col"
+
+          "SUPER,1,split:workspace,1"
+          "SUPER,2,split:workspace,2"
+          "SUPER,3,split:workspace,3"
+          "SUPER,4,split:workspace,4"
+          "SUPER,5,split:workspace,5"
+          "SUPER,6,split:workspace,6"
+          "SUPER,7,split:workspace,7"
+          "SUPER,8,split:workspace,8"
+          "SUPER,9,split:workspace,9"
+          "SUPER,0,split:workspace,10"
+
+          "SUPER_SHIFT,1,split:movetoworkspacesilent,1"
+          "SUPER_SHIFT,2,split:movetoworkspacesilent,2"
+          "SUPER_SHIFT,3,split:movetoworkspacesilent,3"
+          "SUPER_SHIFT,4,split:movetoworkspacesilent,4"
+          "SUPER_SHIFT,5,split:movetoworkspacesilent,5"
+          "SUPER_SHIFT,6,split:movetoworkspacesilent,6"
+          "SUPER_SHIFT,7,split:movetoworkspacesilent,7"
+          "SUPER_SHIFT,8,split:movetoworkspacesilent,8"
+          "SUPER_SHIFT,9,split:movetoworkspacesilent,9"
+          "SUPER_SHIFT,0,split:movetoworkspacesilent,10"
           "SUPER_SHIFT,minus,movetoworkspacesilent,special"
 
           "SUPER,mouse_down,workspace,m+1"
@@ -175,11 +214,6 @@ in {
           ",xf86audiolowervolume,exec,pamixer -d 5"
           ",xf86audiomute,exec,pamixer -t"
           ",xf86audiomicmute,exec,pamixer --default-source -t"
-        ];
-
-        # TODO: Make these units wanted-by's for the hyprland target.
-        exec-once = [
-          "systemctl --user start foot waybar emacs easyeffects"
         ];
       };
     };

@@ -466,77 +466,81 @@ in {
         ignoreSpace = true;
       };
 
-      initExtraFirst = ''
-      source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
-      if [[ -r "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh" ]]; then
-        source "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh"
-      fi
-      [[ ! -f ~/.config/zsh/.p10k.zsh ]] || source ~/.config/zsh/.p10k.zsh
+      profileExtra = ''
+        if uwsm check may-start -q && uwsm select; then
+          exec uwsm start default
+        fi
+      '';
 
-      function zshaddhistory() { return 1 }
+      initContent = lib.mkBefore ''
+        source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
+        if [[ -r "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh" ]]; then
+          source "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh"
+        fi
+        [[ ! -f ~/.config/zsh/.p10k.zsh ]] || source ~/.config/zsh/.p10k.zsh
 
-      bindkey '^ ' autosuggest-accept
-      _zsh_autosuggest_strategy_atuin_top() {
-          suggestion=$(atuin search --cmd-only --limit 1 --search-mode prefix $1)
-      }
+        function zshaddhistory() { return 1 }
 
-      ZSH_AUTOSUGGEST_STRATEGY=atuin_top
-    '';
+        bindkey '^ ' autosuggest-accept
+        _zsh_autosuggest_strategy_atuin_top() {
+            suggestion=$(atuin search --cmd-only --limit 1 --search-mode prefix $1)
+        }
 
-      initExtraBeforeCompInit = ''
-      autoload -Uz zcalc
-      autoload -Uz edit-command-line
+        ZSH_AUTOSUGGEST_STRATEGY=atuin_top
 
-      zle-keymap-select () {
-        if [ $KEYMAP = vicmd ]; then
-          printf "\033[2 q"
-        else
+        autoload -Uz zcalc
+        autoload -Uz edit-command-line
+
+        zle-keymap-select () {
+          if [ $KEYMAP = vicmd ]; then
+            printf "\033[2 q"
+          else
+            printf "\033[6 q"
+          fi
+        }
+
+        zle -N zle-keymap-select
+
+        zle-line-init () {
+          zle -K viins
           printf "\033[6 q"
+        }
+
+        zle -N zle-line-init
+
+        zle -N edit-command-line
+        bindkey -M vicmd v edit-command-line
+        bindkey -v '^?' backward-delete-char
+
+        setopt globdots
+        setopt autopushd
+
+        d () {
+          diff -u $@ | delta
+        }
+
+        _sgpt_zsh() {
+        if [[ -n "$BUFFER" ]]; then
+          _sgpt_prev_cmd=$BUFFER
+          BUFFER+=" processing..."
+          zle -I && zle redisplay
+          BUFFER=$(sgpt --shell <<< "$_sgpt_prev_cmd")
+          zle end-of-line
         fi
-      }
+        }
 
-      zle -N zle-keymap-select
+        function y() {
+          local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
+          yazi "$@" --cwd-file="$tmp"
+          if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+            builtin cd -- "$cwd"
+          fi
+          rm -f -- "$tmp"
+        }
 
-      zle-line-init () {
-        zle -K viins
-        printf "\033[6 q"
-      }
-
-      zle -N zle-line-init
-
-      zle -N edit-command-line
-      bindkey -M vicmd v edit-command-line
-      bindkey -v '^?' backward-delete-char
-
-      setopt globdots
-      setopt autopushd
-
-      d () {
-        diff -u $@ | delta
-      }
-
-      _sgpt_zsh() {
-      if [[ -n "$BUFFER" ]]; then
-        _sgpt_prev_cmd=$BUFFER
-        BUFFER+=" processing..."
-        zle -I && zle redisplay
-        BUFFER=$(sgpt --shell <<< "$_sgpt_prev_cmd")
-        zle end-of-line
-      fi
-      }
-
-      function y() {
-        local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
-        yazi "$@" --cwd-file="$tmp"
-        if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
-          builtin cd -- "$cwd"
-        fi
-        rm -f -- "$tmp"
-      }
-
-      zle -N _sgpt_zsh
-      bindkey ^p _sgpt_zsh
-    '';
+        zle -N _sgpt_zsh
+        bindkey ^p _sgpt_zsh
+      '';
     };
   };
 }

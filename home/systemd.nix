@@ -2,12 +2,12 @@
 
 let
   rclone = service: {
+    Install.WantedBy = [ "graphical-session.target" ];
+
     Unit = {
       Description = "Remote FUSE filesystem for ${service}";
       Documentation = "man:rclone(1)";
-      After = "network-online.target";
-      Wants = "network-online.target";
-      PartOf = [ "default.target" ];
+      PartOf = [ "graphical-session.target" ];
     };
 
     Service = {
@@ -33,6 +33,8 @@ in {
 
       services = {
         easyeffects = {
+          Install.WantedBy = [ "graphical-session.target" ];
+
           Unit = {
             Description = "Audio effects for PipeWire applications";
             Documentation = "https://github.com/wwmm/easyeffects/wiki";
