@@ -54,6 +54,10 @@ in {
           "col.inactive_border" = "rgba(0b0e1411)";
         };
 
+        env = [
+          "HYPRCURSOR_THEME,rose-pine-hyprcursor"
+        ];
+
         dwindle = {
           pseudotile = true;
           preserve_split = true;

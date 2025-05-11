@@ -140,6 +140,7 @@ in
       obs-studio-plugins.obs-pipewire-audio-capture
       obs-studio-plugins.wlrobs
       remmina
+      rose-pine-hyprcursor
       satty
       simple-scan
       slurp
@@ -182,7 +183,7 @@ in
 
           #command
           / forw-search ^W
-      '';
+        '';
       };
 
       emacs-ayu-dark = {
@@ -240,9 +241,9 @@ in
 
   } // lib.optionalAttrs (hostPlatform.isLinux) {
     pointerCursor = {
-      hyprcursor.enable = true;
+      gtk.enable = !isHeadless;
       package = pkgs.adwaita-icon-theme;
-      name = "rose-pine-hyprcursor";
+      name = "Adwaita";
       size = 16;
     };
   };

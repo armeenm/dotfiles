@@ -73,8 +73,7 @@ in {
     };
 
     beets = {
-      # XXX: python3.12-torch is cooked
-      enable = false;
+      enable = true;
       settings = {
         directory = config.xdg.userDirs.music;
       };
