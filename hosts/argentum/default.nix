@@ -34,7 +34,6 @@
 
   networking = {
     hostName = "argentum";
-    firewall.enable = true;
     wireless.iwd.enable = true;
   };
 
@@ -57,41 +56,6 @@
     };
   };
 
-  i18n.defaultLocale = "en_US.UTF-8";
-  time.timeZone = null;
-
-  console = {
-    keyMap = "us";
-    font = "Tamsyn7x13r";
-    packages = [ pkgs.tamsyn ];
-    earlySetup = true;
-  };
-
-  nix = {
-    package = pkgs.nixVersions.latest;
-    channel.enable = true;
-    nixPath = lib.mkForce [ "nixpkgs=${config.nix.registry.nixpkgs.flake}" ];
-
-    registry = {
-      nixpkgs.flake = inputs.nixpkgs;
-    };
-
-    settings = {
-      allowed-users = lib.mkForce [ "@users" "@wheel" ];
-      trusted-users = lib.mkForce [ "@wheel" ];
-
-      experimental-features = [
-        "auto-allocate-uids"
-        "ca-derivations"
-        "flakes"
-        "nix-command"
-        "recursive-nix"
-      ];
-
-      warn-dirty = false;
-    };
-  };
-
   nixpkgs = {
     hostPlatform = "x86_64-linux";
   };
@@ -99,34 +63,10 @@
   services = {
     blueman.enable = true;
     flatpak.enable = true;
-    fstrim.enable = true;
-    fwupd.enable = true;
-    haveged.enable = true;
-    physlock.enable = false;
-    power-profiles-daemon.enable = false;
     saned.enable = true;
-    smartd.enable = true;
-    tcsd.enable = false;
-    timesyncd.enable = true;
-    tlp.enable = true;
-    udisks2.enable = true;
-
-    avahi = {
-      enable = true;
-      nssmdns4 = true;
-      nssmdns6 = true;
-    };
 
     hardware = {
       bolt.enable = true;
-    };
-
-    openssh = {
-      enable = true;
-
-      settings = {
-        PasswordAuthentication = false;
-      };
     };
 
     logind = {
@@ -175,56 +115,25 @@
   };
 
   systemd = {
-    watchdog.rebootTime = "15s";
-
     tmpfiles.rules = [
       "d /var/srv 0755 - - -"
       "L /srv - - - - /var/srv"
     ];
-
-    suppressedSystemUnits = [
-      "sys-kernel-debug.mount"
-    ];
   };
 
   security = {
-    allowUserNamespaces = true;
-    protectKernelImage = true;
-    unprivilegedUsernsClone = true;
-    virtualisation.flushL1DataCache = null;
-
-    apparmor.enable = true;
-    auditd.enable = true;
-    rtkit.enable = true;
-    polkit.enable = true;
-    sudo.enable = false;
-
     acme = {
       acceptTerms = true;
       defaults.email = user.email;
     };
 
-    audit = {
-      enable = false;
-      rules = [ ];
-    };
-
-    doas = {
-      enable = true;
-      extraRules = [{
-        groups = [ "wheel" ];
-        keepEnv = true;
-        noPass = false;
-      }];
-    };
-
     pam = {
       u2f.enable = true;
       services = {
-        #swaylock.fprintAuth = true;
-        #hyprlock.fprintAuth = true;
-        #login.fprintAuth = true;
-        #doas.fprintAuth = true;
+        swaylock.fprintAuth = true;
+        hyprlock.fprintAuth = true;
+        login.fprintAuth = true;
+        doas.fprintAuth = true;
 
         swaylock.u2fAuth = true;
         hyprlock.u2fAuth = true;
@@ -232,50 +141,22 @@
         doas.u2fAuth = true;
       };
     };
-
-    tpm2 = {
-      enable = true;
-      abrmd.enable = true;
-      pkcs11.enable = true;
-      tctiEnvironment.enable = true;
-    };
   };
 
-  users = {
-    defaultUserShell = pkgs.zsh;
-    mutableUsers = true; # XXX
-
-    users = {
-      root.hashedPassword = null;
-
-      arash = {
-        isNormalUser = true;
-        hashedPasswordFile = config.age.secrets.arash-pw.path;
-        extraGroups = [ "wheel" ];
-      };
-
-      "${user.login}" = {
-        isNormalUser = true;
-        hashedPasswordFile = config.age.secrets."${user.login}-pw".path;
-        extraGroups = [
-          "adbusers"
-          "docker"
-          "i2c"
-          "libvirtd"
-          "lp"
-          "plugdev"
-          "scanner"
-          "wheel"
-        ];
-      };
-    };
-  };
+  users.users."${user.login}".extraGroups = [
+    "adbusers"
+    "i2c"
+    "lp" # Printing
+    "plugdev"
+    "scanner"
+  ];
 
   home-manager = {
     users = {
       "${user.login}" = import "${root}/home";
       arash = import "${root}/home";
     };
+
     extraSpecialArgs = {
       inherit inputs root user;
       stateVersion = config.system.stateVersion;
@@ -283,83 +164,24 @@
     };
   };
 
-  environment = {
-    defaultPackages = lib.mkForce [ ];
-
-    systemPackages = (with pkgs; [
-      (hunspellWithDicts [ hunspellDicts.en_US hunspellDicts.en_US-large ])
-      doas-sudo-shim
-      git
-      hdparm
-      lm_sensors
-      lshw
-      opensm
-      pciutils
-      radeontop
-      rdma-core
-      rsync
-      sbctl
-      smartmontools
-      usbutils
-    ]);
-  };
-
   programs = {
     adb.enable = true;
     dconf.enable = true;
-    hyprland.enable = true;
     light.enable = true;
-    mosh.enable = true;
-    mtr.enable = true;
-    nix-ld.enable = true;
-    zsh.enable = true;
 
-    neovim = {
+    hyprland = let
+      hyprPkgs = inputs.hyprland.packages.${pkgs.system};
+    in {
       enable = true;
-      defaultEditor = true;
-      configure = {
-        customRC = ''
-          set number
-          set hidden
-          set shell=bash
-          set cmdheight=2
-          set nocompatible
-          set shortmess+=c
-          set updatetime=300
-          set background=dark
-          set foldmethod=marker
-          set signcolumn=yes
-          set nobackup nowritebackup
-          set tabstop=2 shiftwidth=2 expandtab
-          set tagrelative
-          set tags^=./.git/tags;
-          set mouse=a
-        '';
-      };
+      withUWSM = true;
+      package = hyprPkgs.hyprland;
+      portalPackage = hyprPkgs.xdg-desktop-portal-hyprland;
     };
   };
 
   xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
 
-  documentation = {
-    dev.enable = true;
-    man.generateCaches = true;
-  };
-
-  age = {
-    secrets = {
-      "${user.login}-pw".file = "${root}/secrets/${user.login}-pw.age";
-      "arash-pw".file = "${root}/secrets/arash-pw.age";
-    };
-
-    identityPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
-  };
-
-  zramSwap.enable = true;
+  powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
 
   system.stateVersion = lib.mkForce "24.11";
-
-  networking.useDHCP = lib.mkDefault true;
-
-  powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
 }

@@ -1,8 +1,6 @@
 args@{ config, pkgs, lib, modulesPath, inputs, root, user, ... }:
 
 {
-  imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
-
   fileSystems = {
     "/boot" = {
       device = "/dev/disk/by-uuid/99E6-DA3E";
@@ -134,7 +132,6 @@ args@{ config, pkgs, lib, modulesPath, inputs, root, user, ... }:
     hostName = "lithium";
     domain = "armeen.xyz";
 
-    useNetworkd = false;
     wireless.iwd.enable = true;
 
     firewall.interfaces.enp78s0.allowedTCPPorts = [ 8080 8888 7860 5201 11434 ];
@@ -171,41 +168,6 @@ args@{ config, pkgs, lib, modulesPath, inputs, root, user, ... }:
     };
   };
 
-  i18n.defaultLocale = "en_US.UTF-8";
-  time.timeZone = "America/Los_Angeles";
-
-  console = {
-    keyMap = "us";
-    font = "Tamsyn7x13r";
-    packages = [ pkgs.tamsyn ];
-    earlySetup = false;
-  };
-
-  nix = {
-    package = pkgs.nixVersions.latest;
-    channel.enable = true;
-    nixPath = lib.mkForce [ "nixpkgs=${config.nix.registry.nixpkgs.flake}" ];
-
-    registry = {
-      nixpkgs.flake = inputs.nixpkgs;
-    };
-
-    settings = {
-      allowed-users = lib.mkForce [ "@users" "@wheel" ];
-      trusted-users = lib.mkForce [ "@wheel" ];
-
-      experimental-features = [
-        "auto-allocate-uids"
-        "ca-derivations"
-        "flakes"
-        "nix-command"
-        "recursive-nix"
-      ];
-
-      warn-dirty = false;
-    };
-  };
-
   nixpkgs = {
     hostPlatform = "x86_64-linux";
     config = {
@@ -216,28 +178,12 @@ args@{ config, pkgs, lib, modulesPath, inputs, root, user, ... }:
 
   services = {
     blueman.enable = true;
-    devmon.enable = true;
-    fstrim.enable = true;
-    fwupd.enable = true;
     gnome.gnome-keyring.enable = true;
     gvfs.enable = true;
-    haveged.enable = true;
     i2pd.enable = true;
     iperf3.enable = true;
     mozillavpn.enable = true;
-    pcscd.enable = true;
-    rpcbind.enable = true;
     saned.enable = true;
-    smartd.enable = true;
-    spice-vdagentd.enable = true;
-    tcsd.enable = false;
-    timesyncd.enable = true;
-    udisks2.enable = true;
-
-    avahi = {
-      enable = true;
-      nssmdns4 = true;
-    };
 
     hardware = {
       bolt.enable = true;
@@ -254,14 +200,6 @@ args@{ config, pkgs, lib, modulesPath, inputs, root, user, ... }:
       rocmOverrideGfx = "10.3.0";
     };
 
-    openssh = {
-      enable = true;
-
-      settings = {
-        PasswordAuthentication = false;
-      };
-    };
-
     pipewire = {
       enable = true;
       alsa.enable = true;
@@ -273,16 +211,10 @@ args@{ config, pkgs, lib, modulesPath, inputs, root, user, ... }:
       enable = true;
       drivers = with pkgs; [
         canon-cups-ufr2
-        #cnijfilter2
+        cnijfilter2
         gutenprint
         gutenprintBin
       ];
-    };
-
-    resolved = {
-      enable = false;
-      fallbackDns = lib.mkForce [];
-      dnssec = "false";
     };
 
     sunshine = {
@@ -314,16 +246,9 @@ args@{ config, pkgs, lib, modulesPath, inputs, root, user, ... }:
   };
 
   systemd = {
-    watchdog.rebootTime = "15s";
-    services.systemd-networkd-wait-online.enable = lib.mkForce false;
-
     tmpfiles.rules = [
       "d /var/srv 0755 - - -"
       "L /srv - - - - /var/srv"
-    ];
-
-    suppressedSystemUnits = [
-      "sys-kernel-debug.mount"
     ];
 
     mounts = [
@@ -347,35 +272,9 @@ args@{ config, pkgs, lib, modulesPath, inputs, root, user, ... }:
   };
 
   security = {
-    allowUserNamespaces = true;
-    protectKernelImage = true;
-    unprivilegedUsernsClone = true;
-    virtualisation.flushL1DataCache = null;
-
-    apparmor.enable = true;
-    auditd.enable = true;
-    rtkit.enable = true;
-    polkit.enable = true;
-    sudo.enable = false;
-
     acme = {
       acceptTerms = true;
       defaults.email = user.email;
-    };
-
-    audit = {
-      enable = false;
-      rules = [ ];
-    };
-
-    doas = {
-      enable = true;
-      extraRules = [{
-        groups = [ "wheel" ];
-        keepEnv = true;
-        noPass = false;
-        persist = true;
-      }];
     };
 
     krb5 = {
@@ -409,70 +308,22 @@ args@{ config, pkgs, lib, modulesPath, inputs, root, user, ... }:
         doas.u2fAuth = true;
       };
     };
-
-    tpm2 = {
-      enable = true;
-      abrmd.enable = true;
-      pkcs11.enable = false; # XXX
-      tctiEnvironment.enable = true;
-    };
   };
 
   virtualisation = {
-    spiceUSBRedirection.enable = true;
-
-    libvirtd = {
-      enable = false;
-      qemu = {
-        swtpm.enable = true;
-        ovmf = {
-          enable = true;
-          package = (pkgs.OVMF.override {
-            secureBoot = true;
-            tpmSupport = true;
-          });
-        };
-      };
-    };
-
-    docker = {
-      enable = true;
-    };
-
     podman = {
       enable = true;
       defaultNetwork.settings.dns_enabled = true;
     };
   };
 
-  users = {
-    defaultUserShell = pkgs.zsh;
-    mutableUsers = false;
-
-    users = {
-      root.hashedPassword = null;
-
-      arash = {
-        isNormalUser = true;
-        hashedPasswordFile = config.age.secrets.arash-pw.path;
-      };
-
-      "${user.login}" = {
-        isNormalUser = true;
-        hashedPasswordFile = config.age.secrets."${user.login}-pw".path;
-        extraGroups = [
-          "adbusers"
-          "docker"
-          "i2c"
-          "libvirtd"
-          "lp"
-          "plugdev"
-          "scanner"
-          "wheel"
-        ];
-      };
-    };
-  };
+  users.users."${user.login}".extraGroups = [
+    "adbusers"
+    "i2c"
+    "lp" # Printing
+    "plugdev"
+    "scanner"
+  ];
 
   home-manager = {
     users."${user.login}" = import "${root}/home";
@@ -484,42 +335,17 @@ args@{ config, pkgs, lib, modulesPath, inputs, root, user, ... }:
   };
 
   environment = {
-    defaultPackages = lib.mkForce [ ];
-
-    systemPackages = (with pkgs; [
-      doas-sudo-shim
-      ethtool
-      hdparm
-      lm_sensors
-      lshw
-      nfs-utils
+    systemPackages = with pkgs; [
       opensm
-      pciutils
       radeontop
       rdma-core
-      sbctl
-      smartmontools
-      usbutils
-
-      git
-      rsync
-
-      (hunspellWithDicts [ hunspellDicts.en_US hunspellDicts.en_US-large ])
-    ]);
+    ];
   };
 
   programs = {
     adb.enable = true;
     dconf.enable = true;
-    mosh.enable = true;
-    mtr.enable = true;
     nix-ld.enable = true;
-    zsh.enable = true;
-
-    custom.ddcutil = {
-      enable = false;
-      users = [ user.login ];
-    };
 
     hyprland = let
       hyprPkgs = inputs.hyprland.packages.${pkgs.system};
@@ -529,56 +355,9 @@ args@{ config, pkgs, lib, modulesPath, inputs, root, user, ... }:
       package = hyprPkgs.hyprland;
       portalPackage = hyprPkgs.xdg-desktop-portal-hyprland;
     };
-
-    neovim = {
-      enable = true;
-      defaultEditor = true;
-      configure = {
-        customRC = ''
-          set number
-          set hidden
-          set shell=bash
-          set cmdheight=2
-          set nocompatible
-          set shortmess+=c
-          set updatetime=300
-          set background=dark
-          set foldmethod=marker
-          set signcolumn=yes
-          set nobackup nowritebackup
-          set tabstop=2 shiftwidth=2 expandtab
-          set tagrelative
-          set tags^=./.git/tags;
-          set mouse=a
-        '';
-      };
-    };
   };
 
   xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
 
-  documentation = {
-    dev.enable = true;
-    man.generateCaches = true;
-  };
-
-  age = {
-    secrets = {
-      "${user.login}-pw".file = "${root}/secrets/${user.login}-pw.age";
-      "arash-pw".file = "${root}/secrets/arash-pw.age";
-    };
-
-    identityPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
-  };
-
-  zramSwap.enable = true;
-
-  system = {
-    stateVersion = lib.mkForce "24.11";
-
-    activationScripts.report-changes = ''
-        PATH=$PATH:${lib.makeBinPath [ pkgs.nvd pkgs.nix ]}
-        nvd diff $(ls -dv /nix/var/nix/profiles/system-*-link | tail -2)
-    '';
-  };
+  system.stateVersion = lib.mkForce "24.11";
 }
