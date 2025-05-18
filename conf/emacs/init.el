@@ -55,9 +55,9 @@
 
 (setq read-process-output-max (* 1024 1024))
 
+(setq display-line-numbers-type 'relative)
 (line-number-mode)
 (column-number-mode)
-(setq display-line-numbers-type 'relative)
 (global-display-line-numbers-mode)
 
 (put 'narrow-to-region 'disabled nil)
@@ -122,6 +122,7 @@
 (prefer-coding-system 'utf-8)
 
 (transient-mark-mode 1)
+(global-hl-line-mode)
 
 (setq scroll-step 1
       scroll-margin 7
@@ -134,8 +135,6 @@
       save-interprogram-paste-before-kill t)
 
 (setq mouse-yank-at-point t)
-
-(load-theme 'ayu-dark)
 
 (defun set-background-for-terminal (&optional frame)
   (or frame (setq frame (selected-frame)))
@@ -204,9 +203,21 @@
   :config
   (setq typescript-indent-level 2))
 
-(use-package why-this
+(use-package emsg-blame
   :config
-  (global-why-this-mode))
+  (defun my--emsg-blame-display ()
+    (posframe-show "*emgs-blame-posframe*"
+                   :string (format " %s\n %s\n %s " emsg-blame--commit-author emsg-blame--commit-date emsg-blame--commit-summary)
+                   :timeout 5
+                   :max-width 30
+                   :left-fringe 10
+                   :right-fringe 10
+                   :position (point)
+                   :poshandler #'posframe-poshandler-frame-top-right-corner
+                   :border-width 1
+                   :border-color "#5ccfe6"))
+  (setq emsg-blame-display #'my--emsg-blame-display)
+  (global-emsg-blame-mode))
 
 (use-package cape
   :config

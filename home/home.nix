@@ -35,13 +35,10 @@ in
     homeDirectory = lib.mkOverride 500 "/home/${user.login}";
 
     packages = with pkgs; [
-      mpvpaper
-
       adwaita-icon-theme
       age-plugin-yubikey
       bacon
       boxes
-      kdePackages.breeze-icons
       comma
       direnv
       dos2unix
@@ -54,12 +51,13 @@ in
       fira-code-symbols
       git-filter-repo
       google-chrome
-      hack-font
+      nerd-fonts.hack
       hicolor-icon-theme
       htop
       hyperfine
       iperf
       jq
+      kdePackages.breeze-icons
       killall
       ldns
       libnotify
@@ -68,7 +66,6 @@ in
       mediainfo
       miniserve
       mkpasswd
-      mpc_cli
       ncdu
       nix-inspect
       nix-misc.git-fuzzy
@@ -90,7 +87,6 @@ in
       rclone
       ripgrep
       scc
-      seaweedfs
       shell-gpt
       shellcheck
       spek
@@ -98,8 +94,8 @@ in
       tcpdump
       tig
       toilet
+      tty-clock
       unzip
-      weechat
       wget
       whois
       zip
@@ -125,6 +121,7 @@ in
       discord
       easyeffects
       element-desktop
+      feishin
       firefox-wayland
       gimp-with-plugins
       grim
@@ -146,7 +143,6 @@ in
       simple-scan
       slurp
       strace
-      supersonic
       swaylock
       telegram-desktop
       vial
@@ -243,8 +239,8 @@ in
   } // lib.optionalAttrs (hostPlatform.isLinux) {
     pointerCursor = {
       gtk.enable = !isHeadless;
-      package = pkgs.adwaita-icon-theme;
-      name = "Adwaita";
+      package = pkgs.rose-pine-cursor;
+      name = "Rose Pine";
       size = 16;
     };
   };

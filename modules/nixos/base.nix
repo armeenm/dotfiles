@@ -57,7 +57,6 @@
     pcscd.enable = true;
     rpcbind.enable = true;
     smartd.enable = true;
-    tcsd.enable = true;
     timesyncd.enable = true;
     udisks2.enable = true;
 

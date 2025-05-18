@@ -145,6 +145,16 @@
         popups = 12;
       };
 
+      serif = {
+        package = pkgs.crimson;
+        name = "Crimson Pro";
+      };
+
+      sansSerif = {
+        package = pkgs.lato;
+        name = "Lato";
+      };
+
       monospace = {
         package = pkgs.tamsyn;
         name = "Tamsyn";

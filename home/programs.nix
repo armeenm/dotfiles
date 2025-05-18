@@ -23,22 +23,6 @@ in {
     yazi.enable = true;
     zoxide.enable = true;
 
-    tofi = {
-      enable = true;
-      settings = {
-        "width" = "100%";
-        "height" = "100%";
-        "border-width" = 0;
-        "outline-width" = 0;
-        "padding-left" = "35%";
-        "padding-top" = "35%";
-        "result-spacing" = 25;
-        "num-results" = 15;
-        "font" = lib.mkForce "${pkgs.fira-code}/share/fonts/truetype/FiraCode-VF.ttf";
-        "font-size" = lib.mkForce "";
-      };
-    };
-
     alacritty = {
       enable = !isHeadless;
       settings = {
@@ -86,6 +70,13 @@ in {
       };
     };
 
+    cava = {
+      enable = true;
+      settings = {
+        general.framerate = 144;
+      };
+    };
+
     direnv = {
       enable = true;
       nix-direnv.enable = true;
@@ -100,6 +91,22 @@ in {
             ${config.programs.emacs.extraConfig}
           '';
           name = "config.el";
+        };
+
+        override = epkgs: epkgs // {
+          emsg-blame = epkgs.trivialBuild {
+            pname = "emsg-blame";
+            version = "unstable-2025-02-22";
+
+            src = pkgs.fetchFromGitHub {
+              owner = "ISouthRain";
+              repo = "emsg-blame";
+              rev = "7b0bdae8398a38b0bdb103f8cdeaaf62053496cb";
+              hash = "sha256-bI3zBUJ/B2TsyQx4N8fmIrACEUEw0IX3OBpNGzVpq2Y=";
+            };
+
+            packageRequires = [ epkgs.async ];
+          };
         };
 
         defaultInitFile = true;
@@ -245,13 +252,6 @@ in {
       enable = true;
       compression = true;
       controlMaster = "auto";
-      matchBlocks = {
-        "i-* mi-*" = {
-          proxyCommand = ''
-            sh -c "aws ssm start-session --target %h --document-name AWS-StartSSHSession --parameters 'portNumber=%p'"
-          '';
-        };
-      };
     };
 
     starship = import ./starship.nix args;
@@ -260,6 +260,22 @@ in {
       enable = true;
       settings = {
         updates.auto_update = true;
+      };
+    };
+
+    tofi = {
+      enable = true;
+      settings = {
+        "width" = "100%";
+        "height" = "100%";
+        "border-width" = 0;
+        "outline-width" = 0;
+        "padding-left" = "35%";
+        "padding-top" = "35%";
+        "result-spacing" = 25;
+        "num-results" = 5;
+        "font" = lib.mkForce "${pkgs.fira-code}/share/fonts/truetype/FiraCode-VF.ttf";
+        "font-size" = lib.mkForce "";
       };
     };
 
@@ -277,88 +293,44 @@ in {
 
           modules-left = [
             "hyprland/workspaces"
+            "custom/separator0"
+            "hyprland/submap"
           ];
 
           modules-center = [ "hyprland/window" ];
 
           modules-right = [
-            "pulseaudio"
             "network"
-            "temperature"
-            "cpu"
+            "custom/separator1"
             "memory"
-            "battery"
+            #"backlight"
+            "custom/separator1"
+            "pulseaudio/slider"
+            #"custom/separator1"
+            #"battery"
+            "custom/separator0"
             "clock"
+            "custom/separator0"
+            #"temperature"
+            #"cpu"
+            "tray"
           ];
 
-          "wlr/workspaces" = {
-            disable-scroll = true;
-            all-outputs = false;
-            on-click = "activate";
-          };
+          "custom/separator0".format = " | ";
+          "custom/separator1".format = " . ";
 
-          "wlr/mode" = { format = "<span style=\"italic\">{}</span>"; };
-          "tray" = {
-            # "icon-size" = 21,
-            "spacing" = 10;
-          };
-
-          "clock" = { "format-alt" = "{:%Y-%m-%d}"; "on-click" = ""; };
-          "cpu" = {
-            "format" = "{usage}% 󰍛";
-          };
-
-          "memory" = { "format"= "{}% "; };
-
-          "temperature" = {
-            "critical-threshold" = 80;
-            "format" = "{}℃  󰏈";
-            "format-critical" = "{}℃ 󰇺";
-            "interval" = 5;
-          };
-
-          "battery" = {
-            "bat"= "BAT0";
-            "states"= {
-              # "good"= 95;
-              "warning"= 30;
-              "critical"= 15;
-            };
-            "format"= "{capacity}% {icon}";
-            # "format-good"= ""; # An empty format will hide the module
-            # "format-full"= "";
-            "format-icons"= ["" "" "" "" ""];
-          };
-
-          "network" = {
-            "format-wifi"= "{essid} ({signalStrength}%) ";
-            "format-ethernet"= "{ifname}= {ipaddr}/{cidr} ";
-            "format-disconnected"= "Disconnected ⚠";
-          };
-
-          "pulseaudio" = {
-            #"scroll-step"= 1;
-            "format"= "{volume}% {icon}";
-            "format-bluetooth"= "{volume}% {icon}";
-            "format-muted"= "";
-            "format-icons"= {
-              "headphones" = "";
-              "handsfree" = "";
-              "headset" = "";
-              "phone" = "";
-              "portable" = "";
-              "car" = "";
-              "default" = [ "" "" ];
-            };
-            "on-click"= "pavucontrol";
-          };
-
-          "hyprland/window" = {
-            "format" = {};
-            "seperate-outputs" = true;
+          tray = {
+            icon-size = 16;
+            spacing = 10;
           };
         };
       };
+
+      style = ''
+        window#waybar {
+          background: transparent;
+        }
+      '';
     };
 
     yt-dlp = {

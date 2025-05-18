@@ -46,7 +46,7 @@ in {
 
         general = {
           gaps_in = 10;
-          gaps_out = 20;
+          gaps_out = "10,20,20,20";
           border_size = 2;
           resize_on_border = true;
           layout = "dwindle";
@@ -74,6 +74,7 @@ in {
           "rounding 0, floating:0, onworkspace:w[tv1]"
           "bordersize 0, floating:0, onworkspace:f[1]"
           "rounding 0, floating:0, onworkspace:f[1]"
+          "float, class:com.gabm.satty"
         ];
 
         gestures = {
@@ -107,6 +108,7 @@ in {
         misc = {
           disable_hyprland_logo = true;
           disable_splash_rendering = true;
+          enable_anr_dialog = false;
           font_family = "Tamsyn";
         };
 
