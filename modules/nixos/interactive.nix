@@ -49,43 +49,19 @@
     };
   };
 
-  services = {
-    gnome.gnome-keyring.enable = true;
-    gvfs.enable = true;
-    saned.enable = true;
-    mozillavpn.enable = true;
+  programs = {
+    adb.enable = true;
+    dconf.enable = true;
+    nix-ld.enable = true;
 
-    pipewire = {
+    hyprland = let
+      hyprPkgs = inputs.hyprland.packages.${pkgs.system};
+    in {
       enable = true;
-      alsa.enable = true;
-      alsa.support32Bit = true;
-      pulse.enable = true;
+      withUWSM = true;
+      package = hyprPkgs.hyprland;
+      portalPackage = hyprPkgs.xdg-desktop-portal-hyprland;
     };
-
-    printing = {
-      enable = true;
-      drivers = with pkgs; [
-        canon-cups-ufr2
-        cnijfilter2
-        gutenprint
-        gutenprintBin
-      ];
-    };
-
-    udev = {
-      packages = with pkgs; [
-        ledger-udev-rules
-        vial
-        yubikey-personalization
-      ];
-    };
-  };
-
-  systemd = {
-    tmpfiles.rules = [
-      "d /var/srv 0755 - - -"
-      "L /srv - - - - /var/srv"
-    ];
   };
 
   security = {
@@ -127,19 +103,58 @@
     };
   };
 
-  programs = {
-    adb.enable = true;
-    dconf.enable = true;
-    nix-ld.enable = true;
+  services = {
+    gnome.gnome-keyring.enable = true;
+    gvfs.enable = true;
+    saned.enable = true;
+    mozillavpn.enable = true;
 
-    hyprland = let
-      hyprPkgs = inputs.hyprland.packages.${pkgs.system};
-    in {
+    pipewire = {
       enable = true;
-      withUWSM = true;
-      package = hyprPkgs.hyprland;
-      portalPackage = hyprPkgs.xdg-desktop-portal-hyprland;
+      alsa.enable = true;
+      alsa.support32Bit = true;
+      pulse.enable = true;
     };
+
+    printing = {
+      enable = true;
+      drivers = with pkgs; [
+        canon-cups-ufr2
+        cnijfilter2
+        gutenprint
+        gutenprintBin
+      ];
+    };
+
+    udev = {
+      packages = with pkgs; [
+        ledger-udev-rules
+        vial
+        yubikey-personalization
+      ];
+    };
+  };
+
+  stylix = {
+    enable = true;
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/ayu-mirage.yaml";
+    fonts = {
+      sizes = {
+        popups = 12;
+      };
+
+      monospace = {
+        package = pkgs.tamsyn;
+        name = "Tamsyn";
+      };
+    };
+  };
+
+  systemd = {
+    tmpfiles.rules = [
+      "d /var/srv 0755 - - -"
+      "L /srv - - - - /var/srv"
+    ];
   };
 
   xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];

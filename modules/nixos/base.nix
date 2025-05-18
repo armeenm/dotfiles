@@ -31,6 +31,7 @@
 
     registry = {
       nixpkgs.flake = inputs.nixpkgs;
+      nixpkgs-stable.flake = inputs.nixpkgs-stable;
     };
 
     settings = {
@@ -177,6 +178,7 @@
       doas-sudo-shim
       ethtool
       hdparm
+      keyutils
       lm_sensors
       lshw
       nfs-utils

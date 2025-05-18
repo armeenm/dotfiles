@@ -46,6 +46,24 @@ in {
           };
         };
 
+        mpvpaper = {
+          Install.WantedBy = [ "graphical-session.target" ];
+
+          Unit = {
+            Description = "Video wallpaper program for wlroots compositors";
+            Documentation = "https://github.com/GhostNaN/mpvpaper";
+            PartOf = [ "graphical-session.target" ];
+          };
+
+          Service = {
+            ExecStart = ''
+              /bin/sh -c " \
+                ${pkgs.mpvpaper}/bin/mpvpaper -o \"term-status-msg= input-ipc-server=/run/user/$(id -u)/mpvpaper.sock\" ALL /home/armeen/.config/wallpaper.mp4 \
+              "
+             '';
+          };
+        };
+
         rclone-cobalt = rclone "cobalt";
         rclone-oxygen = rclone "oxygen";
       };

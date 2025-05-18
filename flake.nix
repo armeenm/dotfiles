@@ -3,13 +3,30 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable-small";
-    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.11-small";
-
+    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.05-small";
     nixos-hardware.url = "github:nixos/nixos-hardware";
+
+    brew-api = {
+      url = "github:BatteredBunny/brew-api";
+      flake = false;
+    };
+
+    brew-nix = {
+      url = "github:BatteredBunny/brew-nix";
+      inputs.brew-api.follows = "brew-api";
+      inputs.nix-darwin.follows = "nix-darwin";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     deploy-rs = {
       url = "github:serokell/deploy-rs";
       inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    emacs-overlay = {
+      url = "github:nix-community/emacs-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs-stable.follows = "nixpkgs-stable";
     };
 
     home-manager = {
@@ -47,20 +64,23 @@
       inputs.hyprland.follows = "hyprland";
     };
 
-    nix-misc = {
-      url = "github:armeenm/nix-misc";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     lanzaboote = {
       url = "github:nix-community/lanzaboote/v0.4.2";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    emacs-overlay = {
-      url = "github:nix-community/emacs-overlay";
+    mac-app-util = {
+      url = "github:hraban/mac-app-util";
+    };
+
+    nix-darwin = {
+      url = "github:LnL7/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.nixpkgs-stable.follows = "nixpkgs-stable";
+    };
+
+    nix-misc = {
+      url = "github:armeenm/nix-misc";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     nix-on-droid = {
@@ -74,25 +94,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nix-darwin = {
-      url = "github:LnL7/nix-darwin";
+    stylix = {
+      url = "github:danth/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    brew-nix = {
-      url = "github:BatteredBunny/brew-nix";
-      inputs.brew-api.follows = "brew-api";
-      inputs.nix-darwin.follows = "nix-darwin";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    brew-api = {
-      url = "github:BatteredBunny/brew-api";
-      flake = false;
-    };
-
-    mac-app-util = {
-      url = "github:hraban/mac-app-util";
+      inputs.home-manager.follows = "home-manager";
     };
   };
 
@@ -129,7 +134,9 @@
       { _module.args = { inherit inputs root user; }; }
     ];
 
-    hmModules = baseModules;
+    hmModules = baseModules ++ [
+      #inputs.stylix.homeModules.stylix
+    ];
 
     hmDarwinModules = hmModules ++ [
       inputs.mac-app-util.homeManagerModules.default
@@ -139,11 +146,10 @@
       { nixpkgs = { inherit config overlays; }; }
     ];
 
-    droidModules = baseModules;
-
     darwinModules = baseModules ++ sysModules ++ [
       inputs.home-manager.darwinModules.default
       inputs.mac-app-util.darwinModules.default
+      inputs.stylix.darwinModules.stylix
       { home-manager.sharedModules = hmDarwinModules; }
       ./modules/darwin
     ];
@@ -152,6 +158,7 @@
       inputs.home-manager.nixosModules.default
       inputs.lanzaboote.nixosModules.lanzaboote
       inputs.ragenix.nixosModules.default
+      inputs.stylix.nixosModules.stylix
       { home-manager.sharedModules = hmModules; }
       ./modules/nixos
     ];
@@ -204,7 +211,7 @@
       };
     };
 
-    homeConfigurations = forAllSystems (system: pkgs: with pkgs; {
+    homeConfigurations = forAllSystems (system: pkgs: {
       default = inputs.home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
 
@@ -231,7 +238,10 @@
           overlays = overlays ++ [ inputs.nix-on-droid.overlays.default ];
           system = "aarch64-linux";
         };
-        modules = [ ./hosts/droid ];
+        modules = [
+          inputs.stylix.nixOnDroidModules.default
+          ./hosts/droid
+        ];
       };
     };
 
@@ -241,9 +251,7 @@
           hostname = "argentum";
           profiles.system = {
             user = "root";
-            #sudo = "doas -u";
             path = inputs.deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.argentum;
-            #sshOpts = [ "-t" ];
           };
         };
 

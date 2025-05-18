@@ -14,6 +14,7 @@ let
 in {
   programs = {
     aria2.enable = true;
+    bat.enable = true;
     dircolors.enable = true;
     fzf.enable = true;
     home-manager.enable = true;
@@ -22,10 +23,25 @@ in {
     yazi.enable = true;
     zoxide.enable = true;
 
+    tofi = {
+      enable = true;
+      settings = {
+        "width" = "100%";
+        "height" = "100%";
+        "border-width" = 0;
+        "outline-width" = 0;
+        "padding-left" = "35%";
+        "padding-top" = "35%";
+        "result-spacing" = 25;
+        "num-results" = 5;
+        "font" = "${pkgs.fira-code}share/fonts/truetype/FiraCode-VF.ttf";
+        "background-color" = lib.mkForce "#000A";
+      };
+    };
+
     alacritty = {
       enable = !isHeadless;
       settings = {
-        font.normal.family = "Fira Code";
         window = {
           dynamic_padding = true;
           option_as_alt = "OnlyLeft";
@@ -53,28 +69,9 @@ in {
       historyFile = "${config.xdg.cacheHome}/bash/history";
     };
 
-    bat = {
-      enable = true;
-
-      config = {
-        theme = "ayu";
-      };
-
-      themes = {
-        ayu = {
-          src = pkgs.fetchFromGitHub {
-            owner = "dempfi";
-            repo = "ayu";
-            rev = "4.0.3";
-            hash = "sha256-O0zoKAmCgSAHv2gcORYrorIlw0kdXN1+2k2Emtntc2g=";
-          };
-          file = "ayu-dark.tmTheme";
-        };
-      };
-    };
-
     beets = {
       enable = true;
+      package = pkgs.stable.beets;
       settings = {
         directory = config.xdg.userDirs.music;
       };
@@ -83,7 +80,6 @@ in {
     btop = {
       enable = true;
       settings = {
-        color_theme = "ayu";
         rounded_corners = false;
         vim_keys = true;
         log_level = "WARNING";
@@ -98,14 +94,22 @@ in {
     emacs = {
       enable = true;
       package = pkgs.emacsWithPackagesFromUsePackage {
-        config = "${root}/conf/emacs/init.el";
+        config = pkgs.writeTextFile {
+          text = ''
+            ${builtins.readFile "${root}/conf/emacs/init.el"}
+            ${config.programs.emacs.extraConfig}
+          '';
+          name = "config.el";
+        };
+
         defaultInitFile = true;
         alwaysEnsure = true;
+        alwaysTangle = true;
         package = pkgs.emacs-git-pgtk;
 
-        extraEmacsPackages = epkgs: with epkgs; [
+        extraEmacsPackages = epkgs: (config.programs.emacs.extraPackages epkgs) ++ (with epkgs; [
           treesit-grammars.with-all-grammars
-        ];
+        ]);
       };
     };
 
@@ -121,38 +125,12 @@ in {
       settings = {
         main = {
           term = "xterm-256color";
-          font = "Tamsyn:size=12";
           dpi-aware = "no";
           pad = "20x20";
         };
 
         mouse = {
           hide-when-typing = "yes";
-        };
-
-        colors = {
-          # TODO: Base16?
-          # Ayu dark theme.
-          background = "000919";
-          foreground = "c3c0bb";
-
-          regular0 = "242936"; # black
-          regular1 = "f28779"; # red
-          regular2 = "d5ff80"; # green
-          regular3 = "ffd173"; # yellow
-          regular4 = "73d0ff"; # blue
-          regular5 = "dfbfff"; # magenta
-          regular6 = "5ccfe6"; # cyan
-          regular7 = "cccac2"; # white
-
-          bright0 = "fcfcfc"; # bright black
-          bright1 = "f07171"; # bright red
-          bright2 = "86b300"; # bright gree
-          bright3 = "f2ae49"; # bright yellow
-          bright4 = "399ee6"; # bright blue
-          bright5 = "a37acc"; # bright magenta
-          bright6 = "55b4d4"; # bright cyan
-          bright7 = "5c6166"; # bright white
         };
       };
     };
@@ -212,30 +190,6 @@ in {
           hide_cursor = true;
           no_fade_in = false;
         };
-
-        background = [
-          {
-            path = "screenshot";
-            blur_passes = 5;
-            blur_size = 8;
-          }
-        ];
-
-        input-field = [
-          {
-            size = "200, 50";
-            position = "0, -80";
-            monitor = "";
-            dots_center = true;
-            fade_on_empty = false;
-            font_color = "rgb(202, 211, 245)";
-            inner_color = "rgb(91, 96, 120)";
-            outer_color = "rgb(24, 25, 38)";
-            outline_thickness = 5;
-            placeholder_text = ''<span foreground="##cad3f5">Password...</span>'';
-            shadow_passes = 2;
-          }
-        ];
       };
     };
 
@@ -246,7 +200,7 @@ in {
         gpu-context = "wayland";
         hwdec = "vaapi";
         profile = "gpu-hq";
-        spirv-compiler = "shaderc";
+        spirv-compiler = "auto";
       };
     };
 
@@ -409,13 +363,6 @@ in {
       };
     };
 
-    wofi = {
-      enable = true;
-      settings = {
-        allow_markup = true;
-      };
-    };
-
     yt-dlp = {
       enable = !isHeadless;
       settings = {
@@ -480,7 +427,7 @@ in {
         if [[ -r "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh" ]]; then
           source "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh"
         fi
-        [[ ! -f ~/.config/zsh/.p10k.zsh ]] || source ~/.config/zsh/.p10k.zsh
+        [[ ! -f ~/.config/zsh/p10k.zsh ]] || source ~/.config/zsh/p10k.zsh
 
         function zshaddhistory() { return 1 }
 

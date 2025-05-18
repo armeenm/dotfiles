@@ -50,8 +50,8 @@ in {
           border_size = 2;
           resize_on_border = true;
           layout = "dwindle";
-          "col.active_border" = "rgba(9f40ffcc)";
-          "col.inactive_border" = "rgba(0b0e1411)";
+          #"col.active_border" = "rgba(9f40ffcc)";
+          #"col.inactive_border" = "rgba(0b0e1411)";
         };
 
         env = [
@@ -124,7 +124,8 @@ in {
           "SUPER,backspace,forcerendererreload"
           "SUPER,space,togglefloating,"
           "SUPER_SHIFT,space,pin"
-          "SUPER,D,exec,bemenu-run -b"
+          "SUPER,D,exec,systemd-run --user $(tofi-run)"
+          "SUPER_SHIFT,D,exec,systemd-run --user $(tofi-drun)"
           "SUPER,P,exec,systemd-run --user emacsclient -c -n"
           "SUPER,grave,hyprexpo:expo,toggle"
           "SUPER_SHIFT,P,pseudo,"

@@ -15,4 +15,6 @@ in {
   ];
 
   fonts.fontconfig.enable = !isHeadless;
+
+  stylix.targets.tofi.enable = false;
 }

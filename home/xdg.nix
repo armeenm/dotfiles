@@ -27,9 +27,9 @@ in
     ];
 
     configFile = {
-      "zsh/.p10k.zsh".source = "${conf}/zsh/p10k.zsh";
+      "zsh/p10k.zsh".source = "${conf}/zsh/p10k.zsh";
       "yt-dlp/config".source = "${conf}/yt-dlp/config";
-      "waybar/style.css".source = "${conf}/waybar/style.css";
+      #"waybar/style.css".source = "${conf}/waybar/style.css";
     };
   };
 }

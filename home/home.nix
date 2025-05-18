@@ -35,6 +35,8 @@ in
     homeDirectory = lib.mkOverride 500 "/home/${user.login}";
 
     packages = with pkgs; [
+      mpvpaper
+
       adwaita-icon-theme
       age-plugin-yubikey
       bacon
