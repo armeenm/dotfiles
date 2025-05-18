@@ -33,9 +33,9 @@ in {
         "padding-left" = "35%";
         "padding-top" = "35%";
         "result-spacing" = 25;
-        "num-results" = 5;
-        "font" = "${pkgs.fira-code}share/fonts/truetype/FiraCode-VF.ttf";
-        "background-color" = lib.mkForce "#000A";
+        "num-results" = 15;
+        "font" = lib.mkForce "${pkgs.fira-code}/share/fonts/truetype/FiraCode-VF.ttf";
+        "font-size" = lib.mkForce "";
       };
     };
 
@@ -125,7 +125,6 @@ in {
       settings = {
         main = {
           term = "xterm-256color";
-          dpi-aware = "no";
           pad = "20x20";
         };
 
@@ -274,7 +273,7 @@ in {
           position = "top";
           height = 24;
 
-          output = [ "DP-1" "DP-2" ];
+          output = [ "*" ];
 
           modules-left = [
             "hyprland/workspaces"
@@ -289,7 +288,6 @@ in {
             "cpu"
             "memory"
             "battery"
-            "tray"
             "clock"
           ];
 

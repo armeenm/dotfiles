@@ -121,7 +121,6 @@ in
       powertop
 
     ] ++ (lib.optionals (!isHeadless) [
-      bemenu
       brightnessctl
       discord
       easyeffects

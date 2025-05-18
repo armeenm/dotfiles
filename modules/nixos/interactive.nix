@@ -138,8 +138,10 @@
   stylix = {
     enable = true;
     base16Scheme = "${pkgs.base16-schemes}/share/themes/ayu-mirage.yaml";
+
     fonts = {
       sizes = {
+        desktop = 14;
         popups = 12;
       };
 
@@ -147,6 +149,13 @@
         package = pkgs.tamsyn;
         name = "Tamsyn";
       };
+    };
+
+    opacity = {
+      applications = 0.8;
+      desktop = 0.8;
+      popups = 0.5;
+      terminal = 0.8;
     };
   };
 

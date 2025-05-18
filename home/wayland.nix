@@ -45,13 +45,11 @@ in {
         };
 
         general = {
-          gaps_in = 5;
-          gaps_out = 10;
+          gaps_in = 10;
+          gaps_out = 20;
           border_size = 2;
           resize_on_border = true;
           layout = "dwindle";
-          #"col.active_border" = "rgba(9f40ffcc)";
-          #"col.inactive_border" = "rgba(0b0e1411)";
         };
 
         env = [

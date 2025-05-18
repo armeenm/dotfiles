@@ -58,7 +58,11 @@ in {
           Service = {
             ExecStart = ''
               /bin/sh -c " \
-                ${pkgs.mpvpaper}/bin/mpvpaper -o \"term-status-msg= input-ipc-server=/run/user/$(id -u)/mpvpaper.sock\" ALL /home/armeen/.config/wallpaper.mp4 \
+                ${pkgs.mpvpaper}/bin/mpvpaper -o \" \
+                  loop \
+                  term-status-msg= \
+                  input-ipc-server=/run/user/$(id -u)/mpvpaper.sock \
+                \" ALL /home/armeen/.config/wallpaper.mp4 \
               "
              '';
           };

@@ -426,6 +426,10 @@
   (setq smooth-scrolling-margin 5)
   (smooth-scrolling-mode))
 
+(use-package spacious-padding
+  :config
+  (spacious-padding-mode))
+
 (use-package treesit-auto)
 
 (use-package treemacs-evil
