@@ -19,6 +19,7 @@ in {
     home-manager.enable = true;
     nix-index.enable = true;
     noti.enable = true;
+    yazi.enable = true;
     zoxide.enable = true;
 
     alacritty = {
@@ -408,8 +409,11 @@ in {
       };
     };
 
-    yazi = {
+    wofi = {
       enable = true;
+      settings = {
+        allow_markup = true;
+      };
     };
 
     yt-dlp = {

@@ -12,6 +12,8 @@
     identityPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
   };
 
+  boot.initrd.verbose = false;
+
   i18n.defaultLocale = "en_US.UTF-8";
   time.timeZone = null;
 
@@ -51,7 +53,6 @@
     devmon.enable = true;
     fstrim.enable = true;
     fwupd.enable = true;
-    haveged.enable = true;
     pcscd.enable = true;
     rpcbind.enable = true;
     smartd.enable = true;
