@@ -175,7 +175,6 @@
   :config
   (add-to-list 'same-window-buffer-names "*Personal Keybindings*"))
 
-(use-package all-the-icons)
 (use-package avy)
 (use-package bazel)
 (use-package devdocs)
@@ -184,6 +183,7 @@
 (use-package haskell-mode)
 (use-package julia-mode)
 (use-package magit)
+(use-package markdown-mode)
 (use-package nix-mode)
 (use-package prism)
 (use-package rainbow-mode)
@@ -197,7 +197,10 @@
 (use-package vterm)
 (use-package vundo)
 (use-package wgrep)
-(use-package markdown-mode)
+
+(use-package nerd-icons
+  :custom
+  (nerd-icons-font-family "Cozette"))
 
 (use-package typescript-mode
   :config
@@ -464,9 +467,7 @@
   (vertico-mode))
 
 (use-package vertico-grid)
-
 (use-package vertico-indexed)
-
 (use-package vertico-quick)
 
 (use-package vertico-mouse

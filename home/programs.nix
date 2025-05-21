@@ -130,13 +130,12 @@ in {
       server.enable = true;
 
       settings = {
+        mouse.hide-when-typing = "yes";
+        key-bindings.pipe-command-output = ''[sh -c "f=$(mktemp); cat - > $f; emacsclient -c $f; rm $f"] Control+Shift+g'';
+
         main = {
           term = "xterm-256color";
           pad = "20x20";
-        };
-
-        mouse = {
-          hide-when-typing = "yes";
         };
       };
     };
@@ -287,41 +286,134 @@ in {
         mainBar = {
           layer = "top";
           position = "top";
-          height = 24;
+          height = 40;
 
           output = [ "*" ];
 
           modules-left = [
             "hyprland/workspaces"
-            "custom/separator0"
             "hyprland/submap"
+            "custom/separator0"
+            "group/mpris"
           ];
 
           modules-center = [ "hyprland/window" ];
 
           modules-right = [
+            "cava"
+            "custom/separator1"
+            "group/pulse"
+            "custom/separator0"
+            "bluetooth"
+            "custom/separator0"
             "network"
-            "custom/separator1"
+            "custom/separator0"
+            "cpu"
+            "temperature"
             "memory"
-            #"backlight"
-            "custom/separator1"
-            "pulseaudio/slider"
-            #"custom/separator1"
-            #"battery"
             "custom/separator0"
             "clock"
-            "custom/separator0"
-            #"temperature"
-            #"cpu"
-            "tray"
+            "custom/separator2"
+            #"backlight"
+            #"battery"
           ];
 
-          "custom/separator0".format = " | ";
-          "custom/separator1".format = " . ";
+          "group/pulse" = {
+            orientation = "inherit";
+            drawer = {};
+            modules = [
+              "pulseaudio"
+              "pulseaudio/slider"
+            ];
+          };
 
-          tray = {
-            icon-size = 16;
-            spacing = 10;
+          "group/mpris" = {
+            orientation = "inherit";
+            drawer = {
+              click-to-reveal = true;
+              transition-left-to-right = false;
+            };
+            modules = [
+              "custom/whitespace"
+              "mpris"
+            ];
+          };
+
+          "custom/separator0".format = " | ";
+          "custom/separator1".format = " ";
+          "custom/separator2".format = "  ";
+          "custom/whitespace".format = lib.strings.replicate 10 " ";
+
+          bluetooth = {
+            on-click = "footclient bluetuith";
+          };
+
+          cava = {
+            actions.on-click-right = "mode";
+            autosens = 1;
+            bar_delimiter = 0;
+            bars = 14;
+            format-icons = ["▁" "▂" "▃" "▄" "▅" "▆" "▇" "█"];
+            framerate = 60;
+            sleep_timer = 5;
+            hide_on_silence = true;
+            waves = false;
+            lower_cutoff_freq = 1;
+            higher_cutoff_freq = 10000;
+          };
+
+          clock = {
+            format = "{:%H:%M:%S %Z}";
+            format-alt = "{:%A, %B %d, %Y (%R %Z)}";
+            tooltip-format = "{tz_list}";
+            interval = 1;
+            timezones = [
+              "America/Los_Angeles"
+              "America/New_York"
+              "Asia/Kolkata"
+              "Etc/UTC"
+            ];
+          };
+
+          cpu = {
+            format = "CPU: {}%";
+          };
+
+          memory = {
+            format = "RAM: {}%";
+          };
+
+          pulseaudio = {
+            format = "{volume}% {icon}";
+            format-bluetooth = "{volume}% {icon}";
+            format-muted = "MUTE ";
+            format-icons = {
+              default = ["" ""];
+            };
+            on-click = "${pkgs.pavucontrol}/bin/pavucontrol";
+            on-click-middle = "${pkgs.pulseaudio}/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle";
+            scroll-step = 2.0;
+            ignored-sinks = [ "Easy Effects Sink" ];
+          };
+
+          mpris = {
+            format = "{player_icon} {status_icon} {dynamic}";
+            interval = 1;
+            dynamic-len = 100;
+            player-icons = {
+              default = "";
+              firefox = "";
+              Feishin = "";
+            };
+            status-icons = {
+              playing = "";
+              paused = "";
+            };
+          };
+
+          "hyprland/window" = {
+            separate-outputs = true;
+            rewrite."(\\[Sidebery\\] )?(.*) — Mozilla Firefox" = " $2";
           };
         };
       };
@@ -329,6 +421,29 @@ in {
       style = ''
         window#waybar {
           background: transparent;
+        }
+        #pulseaudio-slider slider {
+          min-height: 0px;
+          min-width: 0px;
+          opacity: 0;
+          background-image: none;
+          border: none;
+          box-shadow: none;
+        }
+        #pulseaudio-slider trough {
+          min-height: 2px;
+          min-width: 80px;
+          border-radius: 0px;
+          background-color: black;
+        }
+        #pulseaudio-slider highlight {
+          min-width: 2px;
+          border-radius: 0px;
+          background-color: white;
+        }
+        * {
+          font-family: "Cozette";
+          font-size: 11pt;
         }
       '';
     };
@@ -460,6 +575,28 @@ in {
 
         zle -N _sgpt_zsh
         bindkey ^p _sgpt_zsh
+
+        function precmd {
+          print -Pn "\e]133;A\e\\"
+          if ! builtin zle; then
+            print -n "\e]133;D\e\\"
+          fi
+        }
+
+        function preexec {
+          print -n "\e]133;C\e\\"
+          print -Pn "\e]0;''${(q)1}\e\\"
+        }
+
+        function scroll-top() {
+          local esc
+          local -i ROW COL OFFSET
+          IFS='[;' read -sdR $'esc?\e[6n' ROW COL <$TTY
+          OFFSET="''${#''${(@Af)PREBUFFER%$'\n'}}"+"''${#''${(@Af)LBUFFER:-1}}"
+          (( ROW-OFFSET )) && printf '\e[%1$dS\e[%1$dA' ROW-OFFSET
+          zle redisplay
+        }
+        zle -N clear-screen scroll-top
       '';
     };
   };

@@ -40,6 +40,7 @@ in
       bacon
       boxes
       comma
+      cozette
       direnv
       dos2unix
       duf
@@ -51,7 +52,6 @@ in
       fira-code-symbols
       git-filter-repo
       google-chrome
-      nerd-fonts.hack
       hicolor-icon-theme
       htop
       hyperfine
@@ -75,7 +75,6 @@ in
       nmap
       noto-fonts
       noto-fonts-cjk-sans
-      noto-fonts-emoji
       nurl
       onefetch
       pandoc
@@ -115,6 +114,7 @@ in
       pavucontrol
       playerctl
       powertop
+      pulseaudio
 
     ] ++ (lib.optionals (!isHeadless) [
       brightnessctl
