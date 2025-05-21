@@ -554,16 +554,6 @@ in {
           diff -u $@ | delta
         }
 
-        _sgpt_zsh() {
-        if [[ -n "$BUFFER" ]]; then
-          _sgpt_prev_cmd=$BUFFER
-          BUFFER+=" processing..."
-          zle -I && zle redisplay
-          BUFFER=$(sgpt --shell <<< "$_sgpt_prev_cmd")
-          zle end-of-line
-        fi
-        }
-
         function y() {
           local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
           yazi "$@" --cwd-file="$tmp"
@@ -572,9 +562,6 @@ in {
           fi
           rm -f -- "$tmp"
         }
-
-        zle -N _sgpt_zsh
-        bindkey ^p _sgpt_zsh
 
         function precmd {
           print -Pn "\e]133;A\e\\"
