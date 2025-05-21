@@ -86,7 +86,6 @@ in
       rclone
       ripgrep
       scc
-      shell-gpt
       shellcheck
       spek
       tamsyn
