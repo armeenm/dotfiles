@@ -16,7 +16,6 @@ let
 
   hyprland-qtutils = inputs.hyprland-qtutils.packages.${hostPlatform.system}.default;
   nix-misc = inputs.nix-misc.packages.${hostPlatform.system};
-  ragenix = inputs.ragenix.packages.${hostPlatform.system}.default;
 
   editor = lib.getBin (pkgs.writeShellScript "editor" ''
     exec ${lib.getBin config.services.emacs.package}/bin/emacsclient -ct $@
