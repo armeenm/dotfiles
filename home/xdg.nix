@@ -8,6 +8,13 @@ in
 {
   xdg = {
     enable = true;
+    portal.config.common.default = "hyprland";
+
+    configFile = {
+      "zsh/p10k.zsh".source = "${conf}/zsh/p10k.zsh";
+      "yt-dlp/config".source = "${conf}/yt-dlp/config";
+      "satty/config.toml".source = "${conf}/satty/config.toml";
+    };
 
     userDirs = {
       enable = hostPlatform.isLinux;
@@ -25,11 +32,5 @@ in
       "/var/lib/flatpak/exports/share"
       "${home}/.local/share/flatpak/exports/share"
     ];
-
-    configFile = {
-      "zsh/p10k.zsh".source = "${conf}/zsh/p10k.zsh";
-      "yt-dlp/config".source = "${conf}/yt-dlp/config";
-      #"waybar/style.css".source = "${conf}/waybar/style.css";
-    };
   };
 }

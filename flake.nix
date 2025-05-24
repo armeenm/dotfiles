@@ -73,6 +73,11 @@
       url = "github:hraban/mac-app-util";
     };
 
+    nixgl = {
+      url = "github:bb010g/nixGL";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nix-darwin = {
       url = "github:LnL7/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -110,9 +115,10 @@
     overlay = (import ./overlay { inherit inputs; });
 
     overlays = [
-      overlay
-      inputs.emacs-overlay.overlays.default
       inputs.brew-nix.overlays.default
+      inputs.emacs-overlay.overlays.default
+      inputs.nixgl.overlay
+      overlay
     ];
 
     forAllSystems = f: nixpkgs.lib.genAttrs [
@@ -134,12 +140,14 @@
       { _module.args = { inherit inputs root user; }; }
     ];
 
-    hmModules = baseModules ++ [
-      #inputs.stylix.homeModules.stylix
-    ];
+    hmModules = baseModules;
 
     hmDarwinModules = hmModules ++ [
       inputs.mac-app-util.homeManagerModules.default
+    ];
+
+    hmStandaloneModules = [
+      inputs.stylix.homeModules.stylix
     ];
 
     sysModules = [
@@ -215,18 +223,20 @@
       default = inputs.home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
 
-        modules = (if system == "aarch64-darwin" then hmDarwinModules else hmModules) ++ [
-          { nixpkgs = { inherit config overlays; }; }
-          ./home
-        ];
+        modules =
+          hmStandaloneModules
+          ++ (if system == "aarch64-darwin" then hmDarwinModules else hmModules)
+          ++ [
+            { nixpkgs = { inherit config overlays; }; }
+            ./home
+          ];
 
         extraSpecialArgs = {
           isHeadless = false;
+          isStandalone = true;
+          enableSocial = false;
           stateVersion = "24.11";
-
-          osConfig = {
-            nixpkgs = pkgs;
-          };
+          osConfig.nixpkgs = pkgs;
         };
       };
     });
@@ -300,5 +310,9 @@
     });
 
     checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) inputs.deploy-rs.lib;
+
+    lib = {
+      inherit forAllSystems;
+    };
   };
 }

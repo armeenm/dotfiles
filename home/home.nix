@@ -1,6 +1,7 @@
 { config
 , osConfig
 , isHeadless
+, enableSocial
 , pkgs
 , lib
 , root
@@ -13,9 +14,9 @@
 let
   inherit (osConfig.nixpkgs) hostPlatform;
 
+  hyprland-qtutils = inputs.hyprland-qtutils.packages.${hostPlatform.system}.default;
   nix-misc = inputs.nix-misc.packages.${hostPlatform.system};
   ragenix = inputs.ragenix.packages.${hostPlatform.system}.default;
-  hyprland-qtutils = inputs.hyprland-qtutils.packages.${hostPlatform.system}.default;
 
   editor = lib.getBin (pkgs.writeShellScript "editor" ''
     exec ${lib.getBin config.services.emacs.package}/bin/emacsclient -ct $@
@@ -35,12 +36,10 @@ in
     homeDirectory = lib.mkOverride 500 "/home/${user.login}";
 
     packages = with pkgs; [
-      adwaita-icon-theme
       age-plugin-yubikey
       bacon
       boxes
       comma
-      cozette
       direnv
       dos2unix
       duf
@@ -48,21 +47,15 @@ in
       fd
       ffmpeg
       file
-      fira-code
-      fira-code-symbols
       git-filter-repo
-      google-chrome
-      hicolor-icon-theme
+      hexyl
       htop
       hyperfine
       iperf
       jq
-      kdePackages.breeze-icons
       killall
       ldns
-      libnotify
       lsof
-      material-design-icons
       mediainfo
       miniserve
       mkpasswd
@@ -73,8 +66,6 @@ in
       nix-tree
       nixd
       nmap
-      noto-fonts
-      noto-fonts-cjk-sans
       nurl
       onefetch
       pandoc
@@ -87,8 +78,6 @@ in
       ripgrep
       scc
       shellcheck
-      spek
-      tamsyn
       tcpdump
       tig
       toilet
@@ -99,7 +88,6 @@ in
       zip
 
     ] ++ (lib.optionals (hostPlatform.isLinux) [
-      bluetuith
       bubblewrap
       cfspeedtest
       dosfstools
@@ -109,20 +97,20 @@ in
       libva-utils
       monero-cli
       ntfs3g
-      pamixer
-      pavucontrol
-      playerctl
       powertop
-      pulseaudio
+      strace
 
     ] ++ (lib.optionals (!isHeadless) [
+      bluetuith
       brightnessctl
-      discord
+      cozette
       easyeffects
-      element-desktop
       feishin
+      fira-code
+      fira-code-symbols
       firefox-wayland
       gimp-with-plugins
+      google-chrome
       grim
       gtk3
       httpie-desktop
@@ -130,23 +118,30 @@ in
       hyprpicker
       hyprshot
       imv
+      libnotify
       libreoffice-fresh
+      material-design-icons
       moonlight-qt
       nomacs
+      noto-fonts
+      noto-fonts-cjk-sans
       obs-studio
       obs-studio-plugins.obs-pipewire-audio-capture
       obs-studio-plugins.wlrobs
+      pamixer
+      pavucontrol
+      playerctl
+      pulseaudio
       remmina
       rose-pine-hyprcursor
       satty
       simple-scan
       slurp
-      strace
+      spek
       swaylock
-      telegram-desktop
+      tamsyn
       vial
       vlc
-      whatsapp-for-linux
       wireshark
       wl-clipboard
       wlr-randr
@@ -155,9 +150,16 @@ in
       xorg.xeyes
       xorg.xkill
       yubikey-manager
+
+    ] ++ (lib.optionals enableSocial [
+      discord
+      element-desktop
+      monero-gui
+      telegram-desktop
+      whatsapp-for-linux
       zoom-us
 
-    ])) ++ (lib.optionals (hostPlatform.isDarwin) ([
+    ]))) ++ (lib.optionals (hostPlatform.isDarwin) ([
       mas
 
     ] ++ (with brewCasks; [
@@ -166,9 +168,15 @@ in
     ])));
 
     file = {
-      dnsCheck = {
+      dnscheck = {
         source = "${root}/conf/bin/dnscheck.sh";
         target = ".local/bin/dnscheck";
+        executable = true;
+      };
+
+      sshrc = {
+        source = "${root}/conf/ssh/rc";
+        target = ".ssh/rc";
         executable = true;
       };
 
@@ -181,11 +189,6 @@ in
           / forw-search ^W
         '';
       };
-
-      emacs-ayu-dark = {
-        source = "${root}/conf/emacs/ayu-dark-theme.el";
-        target = ".emacs.d/ayu-dark-theme.el";
-      };
     };
 
     sessionPath = [ "${config.home.homeDirectory}/.local/bin" ];
@@ -197,8 +200,9 @@ in
 
       # Wayland
       MOZ_ENABLE_WAYLAND = "1";
-      XKB_DEFAULT_OPTIONS = "caps:escape";
       NIXOS_OZONE_WL = "1";
+      XKB_DEFAULT_OPTIONS = "caps:escape";
+      _JAVA_AWT_WM_NONREPARENTING = 1;
 
       EDITOR = editor;
     };
@@ -206,6 +210,7 @@ in
     shellAliases = {
       b2 = "buck2";
       bz = "bazel";
+      ibz = "ibazel";
       cat = "bat";
       g = "git";
       ms = "miniserve -HWqrgzl --readme --index index.html";

@@ -160,6 +160,28 @@
       acceptTerms = true;
       defaults.email = user.email;
     };
+
+    krb5 = {
+      enable = true;
+      settings = {
+        libdefaults = {
+          default_realm = "ARMEEN.XYZ";
+        };
+
+        domain_realm = {
+          "armeen.xyz" = "ARMEEN.XYZ";
+        };
+
+        realms = {
+          "ARMEEN.XYZ" = {
+            admin_server = "cobalt.armeen.xyz";
+            kdc = [
+              "cobalt.armeen.xyz"
+            ];
+          };
+        };
+      };
+    };
   };
 
   services = {

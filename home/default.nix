@@ -1,4 +1,10 @@
-{ lib, osConfig, isHeadless, ... }:
+{ lib
+, inputs
+, osConfig
+, isHeadless
+, isStandalone
+, ...
+}:
 
 let
   inherit (osConfig.nixpkgs) hostPlatform;
@@ -11,10 +17,17 @@ in {
     ./services.nix
     ./systemd.nix
     ./wayland.nix
-    ./gtk.nix
+  ] ++ lib.optionals (!isHeadless && isStandalone) [
+    ../shared/stylix.nix
   ];
 
   fonts.fontconfig.enable = !isHeadless;
+  gtk.enable = !isHeadless;
 
-  #stylix.targets.tofi.enable = false;
+  nix = lib.optionalAttrs isStandalone {
+    registry = {
+      nixpkgs.flake = inputs.nixpkgs;
+      nixpkgs-stable.flake = inputs.nixpkgs-stable;
+    };
+  };
 }

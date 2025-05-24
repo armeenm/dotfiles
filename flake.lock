@@ -438,6 +438,21 @@
       }
     },
     "flake-utils_2": {
+      "locked": {
+        "lastModified": 1659877975,
+        "narHash": "sha256-zllb8aq3YO3h8B/U0/J1WBgAL8EX5yWf5pMj3G0NAmc=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "c0e246b9b83f637f4681389ecabcb2681b4f3af0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
+    "flake-utils_3": {
       "inputs": {
         "systems": "systems_7"
       },
@@ -1239,6 +1254,27 @@
         "type": "github"
       }
     },
+    "nixgl": {
+      "inputs": {
+        "flake-utils": "flake-utils_2",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1736159088,
+        "narHash": "sha256-WDBc35XdHCdmgVYbPOtd2IeUtUHCYwNyEpIr5vLZMng=",
+        "owner": "bb010g",
+        "repo": "nixGL",
+        "rev": "3865170cbc23b32ec7cc8df1ec811fd44b6c2a58",
+        "type": "github"
+      },
+      "original": {
+        "owner": "bb010g",
+        "repo": "nixGL",
+        "type": "github"
+      }
+    },
     "nixos-hardware": {
       "locked": {
         "lastModified": 1747129300,
@@ -1484,7 +1520,7 @@
       "inputs": {
         "agenix": "agenix",
         "crane": "crane_2",
-        "flake-utils": "flake-utils_2",
+        "flake-utils": "flake-utils_3",
         "nixpkgs": [
           "nixpkgs"
         ],
@@ -1522,6 +1558,7 @@
         "nix-darwin": "nix-darwin",
         "nix-misc": "nix-misc",
         "nix-on-droid": "nix-on-droid",
+        "nixgl": "nixgl",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_3",
         "nixpkgs-stable": "nixpkgs-stable_2",

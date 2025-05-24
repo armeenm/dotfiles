@@ -1,9 +1,9 @@
 { config
 , osConfig
 , isHeadless
+, enableSocial
 , pkgs
 , lib
-, inputs
 , root
 , user
 , ...
@@ -131,7 +131,10 @@ in {
 
       settings = {
         mouse.hide-when-typing = "yes";
-        key-bindings.pipe-command-output = ''[sh -c "f=$(mktemp); cat - > $f; emacsclient -c $f; rm $f"] Control+Shift+g'';
+        scrollback.lines = 1000000;
+
+        key-bindings.pipe-command-output =
+          ''[sh -c "f=$(mktemp); cat - > $f; emacsclient -c $f; rm $f"] Control+Shift+g'';
 
         main = {
           term = "xterm-256color";
@@ -165,6 +168,7 @@ in {
         pl = "pull";
         ps = "push";
         psf = "push --force-with-lease";
+        r = "rebase";
         st = "status";
         sw = "switch";
         wt = "worktree";
@@ -190,10 +194,8 @@ in {
       enable = hostPlatform.isLinux && !isHeadless;
       settings = {
         general = {
-          disable_loading_bar = true;
           grace = 3;
           hide_cursor = true;
-          no_fade_in = false;
         };
       };
     };
@@ -313,7 +315,7 @@ in {
             "memory"
             "custom/separator0"
             "clock"
-            "custom/separator2"
+            "group/tray"
             #"backlight"
             #"battery"
           ];
@@ -336,6 +338,15 @@ in {
             modules = [
               "custom/whitespace"
               "mpris"
+            ];
+          };
+
+          "group/tray" = {
+            orientation = "inherit";
+            drawer = {};
+            modules = [
+              "custom/separator2"
+              "tray"
             ];
           };
 
@@ -400,6 +411,12 @@ in {
             format = "{player_icon} {status_icon} {dynamic}";
             interval = 1;
             dynamic-len = 100;
+            dynamic-order = [
+              "position"
+              "length"
+              "artist"
+              "title"
+            ];
             player-icons = {
               default = "";
               firefox = "";
@@ -449,7 +466,7 @@ in {
     };
 
     yt-dlp = {
-      enable = !isHeadless;
+      enable = enableSocial;
       settings = {
         embed-thumbnail = true;
         downloader = "aria2c";

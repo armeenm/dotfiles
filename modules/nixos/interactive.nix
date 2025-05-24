@@ -1,6 +1,8 @@
 { inputs, user, root, config, pkgs, ... }:
 
 {
+  imports = [ ../shared/stylix.nix ];
+
   boot = {
     initrd = {
       systemd = {
@@ -25,6 +27,11 @@
     initrd.verbose = false;
   };
 
+  environment.pathsToLink = [
+    "/share/applications"
+    "/share/xdg-desktop-portal"
+  ];
+
   hardware = {
     sane = {
       enable = true;
@@ -46,6 +53,8 @@
       inherit inputs root user;
       stateVersion = config.system.stateVersion;
       isHeadless = false;
+      isStandalone = false;
+      enableSocial = true;
     };
   };
 
@@ -67,37 +76,21 @@
   security = {
     pam = {
       u2f.enable = true;
+
       services = {
-        swaylock.fprintAuth = true;
-        hyprlock.fprintAuth = true;
-        login.fprintAuth = true;
-        doas.fprintAuth = true;
-
-        swaylock.u2fAuth = true;
-        hyprlock.u2fAuth = true;
-        login.u2fAuth = true;
-        doas.u2fAuth = true;
-      };
-    };
-
-    krb5 = {
-      enable = true;
-      settings = {
-        libdefaults = {
-          default_realm = "ARMEEN.XYZ";
+        doas = {
+          fprintAuth = true;
+          u2fAuth = true;
         };
 
-        domain_realm = {
-          "armeen.xyz" = "ARMEEN.XYZ";
+        hyprlock = {
+          fprintAuth = true;
+          u2fAuth = true;
         };
 
-        realms = {
-          "ARMEEN.XYZ" = {
-            admin_server = "cobalt.armeen.xyz";
-            kdc = [
-              "cobalt.armeen.xyz"
-            ];
-          };
+        login = {
+          fprintAuth = true;
+          u2fAuth = true;
         };
       };
     };
@@ -132,40 +125,6 @@
         vial
         yubikey-personalization
       ];
-    };
-  };
-
-  stylix = {
-    enable = true;
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/ayu-mirage.yaml";
-
-    fonts = {
-      sizes = {
-        desktop = 14;
-        popups = 12;
-      };
-
-      serif = {
-        package = pkgs.crimson;
-        name = "Crimson Pro";
-      };
-
-      sansSerif = {
-        package = pkgs.lato;
-        name = "Lato";
-      };
-
-      monospace = {
-        package = pkgs.tamsyn;
-        name = "Tamsyn";
-      };
-    };
-
-    opacity = {
-      applications = 0.8;
-      desktop = 0.8;
-      popups = 0.75;
-      terminal = 0.8;
     };
   };
 

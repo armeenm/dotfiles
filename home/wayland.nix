@@ -1,4 +1,5 @@
 { isHeadless
+, isStandalone
 , pkgs
 , inputs
 , ...
@@ -8,14 +9,21 @@ let
   left = "DP-2";
   right = "DP-1";
 
+  hyprPkgs = inputs.hyprland.packages.${pkgs.system};
   hyprland-plugins = inputs.hyprland-plugins.packages.${pkgs.system};
 
 in {
   wayland = {
     windowManager.hyprland = {
       enable = !isHeadless;
-      package = null;
-      systemd.enable = false;
+
+      package = if isStandalone then hyprPkgs.hyprland else null;
+      portalPackage = if isStandalone then hyprPkgs.xdg-desktop-portal-hyprland else null;
+
+      systemd = {
+        enable = isStandalone;
+        variables = ["--all"];
+      };
 
       plugins = [
         hyprland-plugins.hyprscrolling

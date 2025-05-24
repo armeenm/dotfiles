@@ -9,9 +9,10 @@
 
 {
   services = {
-    mpd-mpris.enable = true;
-    mpris-proxy.enable = true;
-    playerctld.enable = true;
+    mpd-mpris.enable = !isHeadless;
+    mpris-proxy.enable = !isHeadless;
+    playerctld.enable = !isHeadless;
+    wob.enable = !isHeadless;
 
     emacs = {
       enable = true;
@@ -49,10 +50,13 @@
 
     mako = {
       enable = !isHeadless;
+      settings = {
+        "mode=do-not-disturb".invisible = 1;
+      };
     };
 
     mpd = {
-      enable = true;
+      enable = !isHeadless;
       network.startWhenNeeded = true;
       extraConfig = ''
       audio_output {

@@ -62,7 +62,7 @@ in {
                   loop \
                   term-status-msg= \
                   input-ipc-server=/run/user/$(id -u)/mpvpaper.sock \
-                \" ALL /home/armeen/.config/wallpaper.mp4 \
+                \" ALL $HOME/.config/wallpaper.mp4 \
               "
              '';
           };

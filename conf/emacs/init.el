@@ -70,6 +70,7 @@
  js-indent-level 2
  c-default-style "k&r"
  c-basic-offset 2
+ tcl-indent-level 2
  verilog-indent-level 2
  verilog-indent-level-declaration 2
  verilog-indent-level-directive 2
@@ -197,6 +198,14 @@
 (use-package vterm)
 (use-package vundo)
 (use-package wgrep)
+
+(use-package bazel
+  :config
+  (add-to-list 'auto-mode-alist '("\\.bazel\\'" . bazel-starlark-mode)))
+
+(use-package fpga
+  :init
+  (setq fpga-feture-list '(xilinx)))
 
 (use-package nerd-icons
   :custom

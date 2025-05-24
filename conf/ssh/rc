@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+if test "$SSH_AUTH_SOCK"; then
+  ln -sf "$SSH_AUTH_SOCK" ~/.ssh/ssh_auth_sock
+fi
+
+# Default contents for making X forwarding function.
+if read proto cookie && [ -n "$DISPLAY" ]; then
+  echo "add ${DISPLAY#localhost:} $proto $cookie" | xauth -q -
+fi

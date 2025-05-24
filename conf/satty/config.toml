@@ -1,0 +1,9 @@
+[general]
+fullscreen = false
+early-exit = false
+copy-command = "wl-copy"
+action-on-enter = "save-to-clipboard"
+
+[font]
+family = "Lato"
+style = "Regular"
