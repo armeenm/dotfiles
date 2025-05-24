@@ -17,8 +17,9 @@ in {
     ./services.nix
     ./systemd.nix
     ./wayland.nix
-  ] ++ lib.optionals (!isHeadless && isStandalone) [
-    ../shared/stylix.nix
+  ] ++ lib.optionals isStandalone [
+    ./wrappers.nix
+    ../modules/shared/stylix.nix
   ];
 
   fonts.fontconfig.enable = !isHeadless;

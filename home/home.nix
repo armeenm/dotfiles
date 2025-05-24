@@ -28,16 +28,40 @@ let
       url = old.src.url;
     };
   }));
-in
-{
+
+in {
   home = {
     inherit stateVersion;
-    username = lib.mkOverride 500 user.login;
+    extraOutputsToInstall = [ "devdoc" "doc" "info" ];
     homeDirectory = lib.mkOverride 500 "/home/${user.login}";
+    username = lib.mkOverride 500 user.login;
+
+    file = {
+      dnscheck = {
+        source = "${root}/conf/bin/dnscheck.sh";
+        target = ".local/bin/dnscheck";
+        executable = true;
+      };
+
+      sshrc = {
+        source = "${root}/conf/ssh/rc";
+        target = ".ssh/rc";
+        executable = true;
+      };
+
+      lesskey = {
+        target = ".lesskey";
+        text = ''
+          #env
+
+          #command
+          / forw-search ^W
+        '';
+      };
+    };
 
     packages = with pkgs; [
       age-plugin-yubikey
-      bacon
       boxes
       comma
       direnv
@@ -64,11 +88,9 @@ in
       nix-misc.git-fuzzy
       nix-output-monitor
       nix-tree
-      nixd
       nmap
       nurl
       onefetch
-      pandoc
       patchutils
       procs
       python3
@@ -167,28 +189,11 @@ in
       linearmouse
     ])));
 
-    file = {
-      dnscheck = {
-        source = "${root}/conf/bin/dnscheck.sh";
-        target = ".local/bin/dnscheck";
-        executable = true;
-      };
-
-      sshrc = {
-        source = "${root}/conf/ssh/rc";
-        target = ".ssh/rc";
-        executable = true;
-      };
-
-      lesskey = {
-        target = ".lesskey";
-        text = ''
-          #env
-
-          #command
-          / forw-search ^W
-        '';
-      };
+    pointerCursor = {
+      gtk.enable = hostPlatform.isLinux && !isHeadless;
+      package = pkgs.rose-pine-cursor;
+      name = "Rose Pine";
+      size = 16;
     };
 
     sessionPath = [ "${config.home.homeDirectory}/.local/bin" ];
@@ -238,14 +243,6 @@ in
       udc = "udisksctl";
     } // lib.optionalAttrs (hostPlatform.isDarwin) {
       lc = "launchctl";
-    };
-
-  } // lib.optionalAttrs (hostPlatform.isLinux) {
-    pointerCursor = {
-      gtk.enable = !isHeadless;
-      package = pkgs.rose-pine-cursor;
-      name = "Rose Pine";
-      size = 16;
     };
   };
 }
