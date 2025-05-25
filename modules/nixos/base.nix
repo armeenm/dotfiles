@@ -44,7 +44,7 @@
 
       settings = {
         PasswordAuthentication = false;
-        PermitRootLogin = "without-password";
+        PermitRootLogin = "prohibit-password";
       };
     };
   };

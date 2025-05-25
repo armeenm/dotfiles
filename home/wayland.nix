@@ -122,7 +122,7 @@ in {
         ];
 
         bind = [
-          "SUPER_SHIFT,return,exec,systemd-run --user footclient"
+          "SUPER_SHIFT,return,exec,footclient"
           "SUPER,Q,killactive,"
           "SUPER_SHIFT,backspace,exit,"
           "SUPER,backspace,forcerendererreload"
@@ -130,7 +130,7 @@ in {
           "SUPER_SHIFT,space,pin"
           "SUPER,D,exec,systemd-run --user $(tofi-run)"
           "SUPER_SHIFT,D,exec,systemd-run --user $(tofi-drun)"
-          "SUPER,P,exec,systemd-run --user emacsclient -c -n"
+          "SUPER,P,exec,emacsclient -c -n"
           "SUPER,grave,hyprexpo:expo,toggle"
           "SUPER_SHIFT,P,pseudo,"
           "SUPER,F,fullscreen,1"

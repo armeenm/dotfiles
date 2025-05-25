@@ -30,7 +30,10 @@
     services.wluma.enable = true;
   };
 
-  networking.hostname = "argentum";
+  networking = {
+    hostName = "argentum";
+    networkmanager.wifi.powersave = true;
+  };
 
   nixpkgs.hostPlatform = "x86_64-linux";
 
@@ -54,6 +57,7 @@
     "adbusers"
     "i2c"
     "lp" # Printing
+    "networkmanager"
     "plugdev"
     "scanner"
   ];

@@ -197,6 +197,7 @@ in {
     };
 
     shellAliases = {
+      lg = "ls -laahg";
       ms = "miniserve -HWqrgzl --readme --index index.html";
 
       noti = "noti ";

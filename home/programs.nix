@@ -703,7 +703,6 @@ in {
           cat = "bat";
           ccm = "clipcat-menu";
           g = "git";
-          lg = "ls -laahg";
           nb = "numbat";
           nfu = "nix flake update";
           rlf = "readlink -f";

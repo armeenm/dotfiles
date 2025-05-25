@@ -276,6 +276,7 @@
     "adbusers"
     "i2c"
     "lp" # Printing
+    "networkmanager"
     "plugdev"
     "scanner"
   ];
