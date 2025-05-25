@@ -33,6 +33,7 @@ in {
     extraOutputsToInstall = [ "devdoc" "doc" "info" ];
     homeDirectory = lib.mkOverride 500 "/home/${user.login}";
     preferXdgDirectories = true;
+    shell.enableZshIntegration = true;
     username = lib.mkOverride 500 user.login;
 
     file = {
@@ -46,16 +47,6 @@ in {
         source = "${root}/conf/ssh/rc";
         target = ".ssh/rc";
         executable = true;
-      };
-
-      lesskey = {
-        target = ".lesskey";
-        text = ''
-          #env
-
-          #command
-          / forw-search ^W
-        '';
       };
     };
 
@@ -71,7 +62,6 @@ in {
       file
       git-filter-repo
       hexyl
-      htop
       hyperfine
       iperf
       jq
@@ -95,13 +85,10 @@ in {
       rage
       ragenix
       rclone
-      ripgrep
       scc
       shellcheck
       tcpdump
-      tig
       toilet
-      tty-clock
       unzip
       wget
       whois
@@ -137,7 +124,6 @@ in {
       hyprland-qtutils
       hyprpicker
       hyprshot
-      imv
       libnotify
       libreoffice-fresh
       material-design-icons
@@ -152,7 +138,6 @@ in {
       pavucontrol
       playerctl
       pulseaudio
-      remmina
       rose-pine-hyprcursor
       satty
       simple-scan
@@ -163,6 +148,7 @@ in {
       vial
       vlc
       wireshark
+      wlogout
       wl-clipboard
       wlr-randr
       xdg-user-dirs
@@ -211,19 +197,7 @@ in {
     };
 
     shellAliases = {
-      b2 = "buck2";
-      bz = "bazel";
-      ibz = "ibazel";
-      cat = "bat";
-      g = "git";
       ms = "miniserve -HWqrgzl --readme --index index.html";
-      rlf = "readlink -f";
-      tf = "terraform";
-      zc = "zcalc -r";
-      zj = "zellij";
-      lg = "ls -laahg";
-      rscp = "rsync -ahvP";
-      ccm = "clipcat-menu";
 
       noti = "noti ";
       sudo = "sudo ";
@@ -232,15 +206,6 @@ in {
       vim = "${editor} -t";
     } // lib.optionalAttrs hostPlatform.isLinux {
       doas = "doas ";
-      open = "xdg-open";
-
-      jc = "journalctl";
-      jcu = "journalctl --user";
-      sc = "systemctl";
-      uc = "systemctl --user";
-      udc = "udisksctl";
-    } // lib.optionalAttrs hostPlatform.isDarwin {
-      lc = "launchctl";
     };
   };
 }

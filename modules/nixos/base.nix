@@ -49,6 +49,13 @@
   };
 
   systemd = {
+    oomd = {
+      enable = true;
+      enableRootSlice = true;
+      enableSystemSlice = true;
+      enableUserSlices = true;
+    };
+
     watchdog.rebootTime = "15s";
 
     suppressedSystemUnits = [
@@ -146,6 +153,8 @@
 
   environment = {
     defaultPackages = lib.mkForce [ ];
+
+    pathsToLink = [ "/share/zsh" ];
 
     systemPackages = with pkgs; [
       doas-sudo-shim

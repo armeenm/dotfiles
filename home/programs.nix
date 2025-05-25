@@ -13,12 +13,30 @@ let
 in {
   programs = {
     aria2.enable = true;
+    bacon.enable = true;
+    bashmount.enable = true;
     bat.enable = true;
+    carapace.enable = true;
+    clock-rs.enable = true;
     dircolors.enable = true;
-    fzf.enable = true;
+    fastfetch.enable = true;
+    git-worktree-switcher.enable = true;
+    gitui.enable = true;
     home-manager.enable = true;
+    htop.enable = true;
+    imv.enable = !isHeadless;
+    mergiraf.enable = true;
+    mods.enable = enableSocial;
+    navi.enable = true;
     nix-index-database.comma.enable = true;
-    noti.enable = true;
+    nix-init.enable = true;
+    nix-your-shell.enable = true;
+    noti.enable = !isHeadless;
+    pay-respects.enable = true;
+    ripgrep-all.enable = true;
+    ripgrep.enable = true;
+    scmpuff.enable = true;
+    tmate.enable = enableSocial;
     yazi.enable = true;
     zoxide.enable = true;
 
@@ -145,10 +163,11 @@ in {
     gh = {
       enable = true;
       extensions = with pkgs; [
-        gh-dash
         gh-eco
       ];
     };
+
+    gh-dash.enable = true;
 
     git = {
       enable = true;
@@ -199,6 +218,18 @@ in {
       };
     };
 
+    less = {
+      enable = true;
+      keys = ''
+        #env
+
+        #command
+        / forw-search ^W
+      '';
+    };
+
+    lesspipe.enable = true;
+
     mpv = {
       enable = !isHeadless;
       config = {
@@ -220,25 +251,17 @@ in {
       ];
     };
 
-    nushell = {
-      enable = false;
-      shellAliases = config.home.shellAliases;
+    nh = {
+      enable = true;
+      flake = "${config.home.homeDirectory}/src/dotfiles";
+    };
 
-      envFile.text = ''
-      $env.PROMPT_INDICATOR_VI_INSERT = ""
-      $env.PROMPT_INDICATOR_VI_NORMAL = ""
-
-      $env.config = {
-        show_banner: false,
-        keybindings: [],
-        edit_mode: vi,
-        cursor_shape: {
-          emacs: line,
-          vi_insert: line,
-          vi_normal: underscore,
-        }
-      }
-    '';
+    numbat = {
+      enable = true;
+      settings = {
+        intro-banner = "short";
+        prompt = "> ";
+      };
     };
 
     readline = {
@@ -246,6 +269,11 @@ in {
       extraConfig = ''
       set editing-mode vi
     '';
+    };
+
+    skim = {
+      enable = true;
+      defaultOptions = [ "--ansi" ];
     };
 
     ssh = {
@@ -260,6 +288,14 @@ in {
       enable = true;
       settings = {
         updates.auto_update = true;
+      };
+    };
+
+    translate-shell = {
+      enable = enableSocial;
+      settings = {
+        hl = "en";
+        tl = [ "hi" ];
       };
     };
 
@@ -313,6 +349,8 @@ in {
             "temperature"
             "memory"
             "custom/separator0"
+            "systemd-failed-units"
+            "custom/dnd"
             "clock"
             "group/tray"
             #"backlight"
@@ -346,6 +384,9 @@ in {
             modules = [
               "custom/separator2"
               "tray"
+              "custom/separator0"
+              "custom/power"
+              "custom/separator1"
             ];
           };
 
@@ -354,8 +395,26 @@ in {
           "custom/separator2".format = "  ";
           "custom/whitespace".format = lib.strings.replicate 10 " ";
 
+          "custom/dnd" = {
+            format = " {} ";
+            interval = "once";
+            signal = 1;
+            exec = pkgs.writeShellScript "waybar-dnd" ''
+              if [ $(makoctl mode) = "do-not-disturb" ]; then
+                echo 󰂛
+              else
+                echo 󰂚
+              fi
+            '';
+          };
+
+          "custom/power" = {
+            format = " ⏻ ";
+            on-click = "wlogout";
+          };
+
           bluetooth = {
-            on-click = "footclient bluetuith";
+            on-click = "hyprctl dispatch exec [float] foot bluetuith";
           };
 
           cava = {
@@ -377,6 +436,7 @@ in {
             format-alt = "{:%A, %B %d, %Y (%R %Z)}";
             tooltip-format = "{tz_list}";
             interval = 1;
+            on-click-middle = "hyprctl dispatch exec [float] foot clock-rs";
             timezones = [
               "America/Los_Angeles"
               "America/New_York"
@@ -389,21 +449,13 @@ in {
             format = "CPU: {}%";
           };
 
-          memory = {
-            format = "RAM: {}%";
+          "hyprland/window" = {
+            separate-outputs = true;
+            rewrite."(\\[Sidebery\\] )?(.*) — Mozilla Firefox" = " $2";
           };
 
-          pulseaudio = {
-            format = "{volume}% {icon}";
-            format-bluetooth = "{volume}% {icon}";
-            format-muted = "MUTE ";
-            format-icons = {
-              default = ["" ""];
-            };
-            on-click = "${pkgs.pavucontrol}/bin/pavucontrol";
-            on-click-middle = "${pkgs.pulseaudio}/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle";
-            scroll-step = 2.0;
-            ignored-sinks = [ "Easy Effects Sink" ];
+          memory = {
+            format = "RAM: {}%";
           };
 
           mpris = {
@@ -427,9 +479,31 @@ in {
             };
           };
 
-          "hyprland/window" = {
-            separate-outputs = true;
-            rewrite."(\\[Sidebery\\] )?(.*) — Mozilla Firefox" = " $2";
+          pulseaudio = {
+            format = "{volume}% {icon}";
+            format-bluetooth = "{volume}% {icon}";
+            format-muted = "MUTE ";
+            format-icons = {
+              default = ["" ""];
+            };
+            on-click = "${pkgs.pavucontrol}/bin/pavucontrol";
+            on-click-middle = "${pkgs.pulseaudio}/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle";
+            scroll-step = 2.0;
+            ignored-sinks = [ "Easy Effects Sink" ];
+          };
+
+          systemd-failed-units = {
+            format = "{nr_failed_user}/{nr_failed_system} failed ";
+
+            on-click = let
+              script = pkgs.writeShellScript "waybar-systemd" ''
+                echo "======== FAILED USER UNITS ========"
+                systemctl --user --state=failed --no-pager
+                echo "======== FAILED SYSTEM UNITS ========"
+                systemctl --state=failed --no-pager
+                read -p "Press enter to exit..."
+              '';
+            in "hyprctl dispatch exec [float] foot ${script}";
           };
         };
       };
@@ -502,23 +576,28 @@ in {
 
     zsh = {
       enable = true;
-      autosuggestion.enable = true;
-      enableCompletion = true;
-      enableVteIntegration = true;
-      syntaxHighlighting.enable = true;
-
       autocd = true;
+      autosuggestion.enable = true;
       defaultKeymap = "viins";
-
       dotDir = "${builtins.baseNameOf config.xdg.configHome}/zsh";
+      enableCompletion = false; # Handled by carapace.
+      enableVteIntegration = true;
 
       history = {
         path = "${config.xdg.cacheHome}/zsh/history";
         ignoreSpace = true;
       };
 
+      syntaxHighlighting = {
+        enable = true;
+        highlighters = [ "brackets" ];
+        patterns = {
+          "rm -rf *" = "fg=white,bold,bg=red";
+        };
+      };
+
       profileExtra = ''
-        if uwsm check may-start -q && uwsm select; then
+        if command -v uwsm &> /dev/null && uwsm check may-start -q && uwsm select; then
           exec uwsm start default
         fi
       '';
@@ -539,7 +618,6 @@ in {
 
         ZSH_AUTOSUGGEST_STRATEGY=atuin_top
 
-        autoload -Uz zcalc
         autoload -Uz edit-command-line
 
         zle-keymap-select () {
@@ -601,6 +679,52 @@ in {
         }
         zle -N clear-screen scroll-top
       '';
+
+      zsh-abbr = {
+        enable = true;
+
+        abbreviations = let
+          editor = config.home.sessionVariables.EDITOR;
+        in {
+          b2 = "buck2";
+          bz = "bazel";
+          ibz = "ibazel";
+
+          cat = "bat";
+          ccm = "clipcat-menu";
+          g = "git";
+          lg = "ls -laahg";
+          nb = "numbat";
+          rlf = "readlink -f";
+          rscp = "rsync -ahvP";
+          sw = "nh os switch";
+          tf = "terraform";
+          zj = "zellij";
+
+          noti = "noti ";
+          sudo = "sudo ";
+
+          vi = "${editor} -t";
+          vim = "${editor} -t";
+        } // lib.optionalAttrs hostPlatform.isLinux {
+          doas = "doas ";
+          open = "xdg-open";
+
+          jc = "journalctl";
+          jcu = "journalctl --user";
+          sc = "systemctl";
+          uc = "systemctl --user";
+          udc = "udisksctl";
+        } // lib.optionalAttrs hostPlatform.isDarwin {
+          lc = "launchctl";
+        };
+
+        globalAbbreviations = {
+          G = "| rg";
+          S = "| sk";
+          L = "| less -R";
+        };
+      };
     };
   };
 }

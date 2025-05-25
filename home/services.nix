@@ -1,4 +1,5 @@
-{ lib
+{ config
+, lib
 , pkgs
 , isHeadless
 , ...
@@ -9,10 +10,15 @@ let
 in {
   services = lib.optionalAttrs hostPlatform.isLinux {
     batsignal.enable = !isHeadless; # TODO: isPortable?
+    hyprpolkitagent.enable = !isHeadless;
     mpd-mpris.enable = !isHeadless;
     mpris-proxy.enable = !isHeadless;
     playerctld.enable = !isHeadless;
+    pueue.enable = true;
+    remmina.enable = !isHeadless;
+    safeeyes.enable = !isHeadless;
     wob.enable = !isHeadless;
+    #fusuma.enable = !isHeadless; # TODO: isPortable?
 
     clipcat = {
       enable = !isHeadless;
@@ -29,6 +35,10 @@ in {
         enable = true;
         arguments = [ "-n" "-t" "-c" ];
       };
+    };
+
+    gromit-mpx = {
+      #enable = !isHeadless;
     };
 
     hypridle = {
@@ -70,6 +80,33 @@ in {
         name "Pipewire Playback"
       }
     '';
+    };
+
+    recoll = {
+      enable = true;
+      settings = {
+        nocjk = true;
+
+        topdirs = with config.xdg.userDirs; [
+          "~/src"
+          desktop
+          documents
+          download
+        ];
+
+        "~/src" = {
+          "skippedNames+" = [
+            "build"
+            "node_modules"
+            "result"
+            "target"
+          ];
+        };
+      };
+    };
+
+    wluma = {
+      enable = !isHeadless;
     };
 
     wlsunset = {
