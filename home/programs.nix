@@ -486,7 +486,7 @@ in {
             format-icons = {
               default = ["" ""];
             };
-            on-click = "${pkgs.pavucontrol}/bin/pavucontrol";
+            on-click = "hyprctl dispatch exec [float] ${pkgs.pavucontrol}/bin/pavucontrol";
             on-click-middle = "${pkgs.pulseaudio}/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle";
             scroll-step = 2.0;
             ignored-sinks = [ "Easy Effects Sink" ];
