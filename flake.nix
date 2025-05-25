@@ -267,6 +267,7 @@
           hostname = "argentum";
           profiles.system = {
             user = "root";
+            sudo = "doas -u";
             path = inputs.deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.argentum;
           };
         };
@@ -274,8 +275,7 @@
         carbon = {
           hostname = "carbon";
           profiles.system = {
-            user = "root";
-            sudo = "doas -u";
+            sshUser = "root";
             path = inputs.deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.carbon;
           };
         };

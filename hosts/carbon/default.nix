@@ -180,6 +180,8 @@
       inherit inputs root user;
       stateVersion = config.system.stateVersion;
       isHeadless = true;
+      isStandalone = false;
+      enableSocial = false;
     };
   };
 

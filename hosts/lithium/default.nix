@@ -176,8 +176,8 @@
     domain = "armeen.xyz";
     hostId = "5a656e88";
     hostName = "lithium";
+
     firewall.interfaces.enp78s0.allowedTCPPorts = [ 8080 8888 7860 5201 11434 ];
-    wireless.iwd.enable = true;
   };
 
   nixpkgs = {
@@ -220,6 +220,7 @@
   services = {
     i2pd.enable = true;
     iperf3.enable = true;
+    xserver.videoDrivers = [ "amdgpu" "nvidia" ];
 
     hardware = {
       bolt.enable = true;
@@ -246,8 +247,6 @@
       enable = true;
       client.enable = true;
     };
-
-    xserver.videoDrivers = [ "amdgpu" "nvidia" ];
   };
 
   system.stateVersion = lib.mkForce "24.11";

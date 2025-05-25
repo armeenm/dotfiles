@@ -109,10 +109,6 @@ in {
       };
     };
 
-    wluma = {
-      enable = !isHeadless;
-    };
-
     wlsunset = {
         enable = !isHeadless;
         latitude = 47.76;

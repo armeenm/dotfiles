@@ -99,8 +99,9 @@
   services = {
     gnome.gnome-keyring.enable = true;
     gvfs.enable = true;
-    saned.enable = true;
     mozillavpn.enable = true;
+    saned.enable = true;
+    upower.enable = true;
 
     pipewire = {
       enable = true;

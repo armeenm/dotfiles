@@ -26,10 +26,11 @@
     sensor.iio.enable = true;
   };
 
-  networking = {
-    hostName = "argentum";
-    wireless.iwd.enable = true;
+  home-manager.users."${user.login}" = {
+    services.wluma.enable = true;
   };
+
+  networking.hostname = "argentum";
 
   nixpkgs.hostPlatform = "x86_64-linux";
 
@@ -39,24 +40,11 @@
 
   services = {
     hardware.bolt.enable = true;
+    xserver.videoDrivers = [ "intel" ];
 
     logind = {
       extraConfig = "HandlePowerKey=suspend";
       lidSwitch = "suspend";
-    };
-
-    displayManager = {
-      defaultSession = "plasma";
-      sddm = {
-        enable = true;
-        wayland.enable = true;
-      };
-    };
-
-    xserver = {
-      enable = true;
-      videoDrivers = [ "intel" ];
-      desktopManager.plasma6.enable = true;
     };
   };
 
@@ -69,4 +57,11 @@
     "plugdev"
     "scanner"
   ];
+
+  virtualisation = {
+    podman = {
+      enable = true;
+      defaultNetwork.settings.dns_enabled = true;
+    };
+  };
 }
