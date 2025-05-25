@@ -1,4 +1,8 @@
-{ lib, pkgs, inputs, ... }:
+{ lib
+, pkgs
+, inputs
+, ...
+}:
 
 let
   securityWrapper =
@@ -88,6 +92,6 @@ let
 
 in {
   home.activation.setupSunshine = lib.hm.dag.entryAfter ["writeBoundary"] ''
-    run setup-sunshine
+    run ${setup-sunshine}
   '';
 }

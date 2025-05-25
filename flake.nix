@@ -83,6 +83,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nix-index-database = {
+      url = "github:nix-community/nix-index-database";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nix-misc = {
       url = "github:armeenm/nix-misc";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -140,7 +145,9 @@
       { _module.args = { inherit inputs root user; }; }
     ];
 
-    hmModules = baseModules;
+    hmModules = baseModules ++ [
+      inputs.nix-index-database.hmModules.nix-index
+    ];
 
     hmDarwinModules = hmModules ++ [
       inputs.mac-app-util.homeManagerModules.default
@@ -236,7 +243,6 @@
           isStandalone = true;
           enableSocial = false;
           stateVersion = "24.11";
-          osConfig.nixpkgs = pkgs;
         };
       };
     });

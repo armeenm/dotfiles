@@ -1,6 +1,7 @@
 {
   imports = [
-    ./home-manager.nix
     ./cache.nix
+    ./home-manager.nix
+    ./nix.nix
   ];
 }

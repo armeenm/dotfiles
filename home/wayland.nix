@@ -1,11 +1,14 @@
-{ isHeadless
-, isStandalone
+{ lib
 , pkgs
 , inputs
+, isHeadless
+, isStandalone
 , ...
 }:
 
 let
+  inherit (pkgs.stdenv) hostPlatform;
+
   left = "DP-2";
   right = "DP-1";
 
@@ -13,7 +16,7 @@ let
   hyprland-plugins = inputs.hyprland-plugins.packages.${pkgs.system};
 
 in {
-  wayland = {
+  wayland = lib.optionalAttrs hostPlatform.isLinux {
     windowManager.hyprland = {
       enable = !isHeadless;
 
@@ -83,6 +86,7 @@ in {
           "bordersize 0, floating:0, onworkspace:f[1]"
           "rounding 0, floating:0, onworkspace:f[1]"
           "float, class:com.gabm.satty"
+          "idleinhibit fullscreen, fullscreen:1"
         ];
 
         gestures = {

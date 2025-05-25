@@ -1,34 +1,29 @@
 { lib
-, inputs
-, osConfig
+, pkgs
 , isHeadless
 , isStandalone
+, stateVersion
 , ...
 }:
 
 let
-  inherit (osConfig.nixpkgs) hostPlatform;
+  inherit (pkgs.stdenv) hostPlatform;
 in {
   imports = [
     ./home.nix
     ./programs.nix
-    ./xdg.nix
-  ] ++ lib.optionals (hostPlatform.isLinux) [
     ./services.nix
     ./systemd.nix
     ./wayland.nix
+    ./xdg.nix
   ] ++ lib.optionals isStandalone [
     ./wrappers.nix
+    ../modules/shared/nix.nix
     ../modules/shared/stylix.nix
   ];
 
   fonts.fontconfig.enable = !isHeadless;
   gtk.enable = !isHeadless;
-
-  nix = lib.optionalAttrs isStandalone {
-    registry = {
-      nixpkgs.flake = inputs.nixpkgs;
-      nixpkgs-stable.flake = inputs.nixpkgs-stable;
-    };
-  };
+  qt.enable = !isHeadless;
+  targets.genericLinux.enable = hostPlatform.isLinux && isStandalone;
 }

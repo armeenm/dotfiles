@@ -1,6 +1,11 @@
-{ config, pkgs, lib, root, user, ... }:
+{ lib
+, pkgs
+, ...
+}:
 
 let
+  inherit (pkgs.stdenv) hostPlatform;
+
   rclone = service: {
     Install.WantedBy = [ "graphical-session.target" ];
 
@@ -27,7 +32,7 @@ let
   };
 
 in {
-  systemd = {
+  systemd = lib.optionalAttrs hostPlatform.isLinux {
     user = {
       startServices = "sd-switch";
 

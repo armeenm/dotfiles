@@ -1,5 +1,4 @@
 { config
-, osConfig
 , isHeadless
 , enableSocial
 , pkgs
@@ -12,7 +11,7 @@
 }:
 
 let
-  inherit (osConfig.nixpkgs) hostPlatform;
+  inherit (pkgs.stdenv) hostPlatform;
 
   hyprland-qtutils = inputs.hyprland-qtutils.packages.${hostPlatform.system}.default;
   nix-misc = inputs.nix-misc.packages.${hostPlatform.system};
@@ -33,6 +32,7 @@ in {
     inherit stateVersion;
     extraOutputsToInstall = [ "devdoc" "doc" "info" ];
     homeDirectory = lib.mkOverride 500 "/home/${user.login}";
+    preferXdgDirectories = true;
     username = lib.mkOverride 500 user.login;
 
     file = {
@@ -62,7 +62,6 @@ in {
     packages = with pkgs; [
       age-plugin-yubikey
       boxes
-      comma
       direnv
       dos2unix
       duf
@@ -108,7 +107,7 @@ in {
       whois
       zip
 
-    ] ++ (lib.optionals (hostPlatform.isLinux) [
+    ] ++ (lib.optionals hostPlatform.isLinux [
       bubblewrap
       cfspeedtest
       dosfstools
@@ -180,7 +179,7 @@ in {
       whatsapp-for-linux
       zoom-us
 
-    ]))) ++ (lib.optionals (hostPlatform.isDarwin) ([
+    ]))) ++ (lib.optionals hostPlatform.isDarwin ([
       mas
 
     ] ++ (with brewCasks; [
@@ -223,15 +222,15 @@ in {
       zc = "zcalc -r";
       zj = "zellij";
       lg = "ls -laahg";
+      rscp = "rsync -ahvP";
+      ccm = "clipcat-menu";
 
       noti = "noti ";
       sudo = "sudo ";
 
       vi = "${editor} -t";
       vim = "${editor} -t";
-
-      rscp = "rsync -ahvP";
-    } // lib.optionalAttrs (hostPlatform.isLinux) {
+    } // lib.optionalAttrs hostPlatform.isLinux {
       doas = "doas ";
       open = "xdg-open";
 
@@ -240,7 +239,7 @@ in {
       sc = "systemctl";
       uc = "systemctl --user";
       udc = "udisksctl";
-    } // lib.optionalAttrs (hostPlatform.isDarwin) {
+    } // lib.optionalAttrs hostPlatform.isDarwin {
       lc = "launchctl";
     };
   };

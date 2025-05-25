@@ -1,5 +1,4 @@
 { config
-, osConfig
 , isHeadless
 , enableSocial
 , pkgs
@@ -10,7 +9,7 @@
 } @ args:
 
 let
-  inherit (osConfig.nixpkgs) hostPlatform;
+  inherit (pkgs.stdenv) hostPlatform;
 in {
   programs = {
     aria2.enable = true;
@@ -18,7 +17,7 @@ in {
     dircolors.enable = true;
     fzf.enable = true;
     home-manager.enable = true;
-    nix-index.enable = true;
+    nix-index-database.comma.enable = true;
     noti.enable = true;
     yazi.enable = true;
     zoxide.enable = true;
