@@ -9,9 +9,6 @@
 let
   inherit (pkgs.stdenv) hostPlatform;
 
-  left = "DP-2";
-  right = "DP-1";
-
   hyprPkgs = inputs.hyprland.packages.${pkgs.system};
   hyprland-plugins = inputs.hyprland-plugins.packages.${pkgs.system};
 
@@ -40,11 +37,7 @@ in {
         decoration.rounding = 0;
         animations.enabled = false;
 
-        monitor = [
-          "${left},highrr,0x525,1"
-          "${right},preferred,2560x0,1"
-          ",preferred,auto,1"
-        ];
+        monitor = [ ",preferred,auto,1" ];
 
         input = {
           kb_options = "caps:escape";
@@ -73,7 +66,6 @@ in {
         };
 
         workspace = [
-          "1, monitor:${left}"
           # "No gaps when only" functionality.
           "w[tv1], gapsout:0, gapsin:0"
           "f[1], gapsout:0, gapsin:0"
@@ -147,12 +139,12 @@ in {
           ''SUPER,C,exec,hyprshot -zm region -r - | satty -f - --fullscreen -o ~/ss/satty-$(date '+%Y%m%d-%H:%M:%S').png''
           ''SUPER_SHIFT,C,exec,hyprshot -zm window -r - | satty -f - --fullscreen -o ~/ss/satty-$(date '+%Y%m%d-%H:%M:%S').png''
 
-          "SUPER,W,focusmonitor,${left}"
-          "SUPER,E,focusmonitor,${right}"
-          "SUPER_SHIFT,W,movewindow,mon:${left}"
-          "SUPER_SHIFT,E,movewindow,mon:${right}"
-          "SUPER_ALT,W,movecurrentworkspacetomonitor,${left}"
-          "SUPER_ALT,E,movecurrentworkspacetomonitor,${right}"
+          "SUPER,W,focusmonitor,l"
+          "SUPER,E,focusmonitor,r"
+          "SUPER_SHIFT,W,movewindow,mon:l"
+          "SUPER_SHIFT,E,movewindow,mon:r"
+          "SUPER_ALT,W,movecurrentworkspacetomonitor,l"
+          "SUPER_ALT,E,movecurrentworkspacetomonitor,r"
 
           "SUPER_ALT,H,resizeactive,-30 0"
           "SUPER_ALT,J,resizeactive,0 30"

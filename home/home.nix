@@ -14,7 +14,6 @@ let
   inherit (pkgs.stdenv) hostPlatform;
 
   hyprland-qtutils = inputs.hyprland-qtutils.packages.${hostPlatform.system}.default;
-  nix-misc = inputs.nix-misc.packages.${hostPlatform.system};
 
   editor = lib.getBin (pkgs.writeShellScript "editor" ''
     exec ${lib.getBin config.services.emacs.package}/bin/emacsclient -ct $@
@@ -73,7 +72,6 @@ in {
       mkpasswd
       ncdu
       nix-inspect
-      nix-misc.git-fuzzy
       nix-output-monitor
       nix-tree
       nmap
@@ -140,6 +138,7 @@ in {
       pulseaudio
       rose-pine-hyprcursor
       satty
+      shikane
       simple-scan
       slurp
       spek
@@ -147,9 +146,10 @@ in {
       tamsyn
       vial
       vlc
+      wdisplays
       wireshark
-      wlogout
       wl-clipboard
+      wlogout
       wlr-randr
       xdg-user-dirs
       xdg-utils

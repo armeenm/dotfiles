@@ -139,6 +139,39 @@
     };
   };
 
+  home-manager.users."${user.login}" = {
+    services.shikane = {
+      enable = true;
+      settings = {
+        profile = [
+          {
+            name = "default";
+            output = [
+              {
+                enable = true;
+                search = [ "m=XG270QG" "s=#ASN3IWn/L/jd" "v=ViewSonic Corporation" ];
+                mode = "best";
+                position = {
+                  x = 0;
+                  y = 525;
+                };
+              }
+              {
+                enable = true;
+                search = [ "m=LG Ultra HD" "s=0x00028C0E" "v=LG Electronics" ];
+                mode = "best";
+                position = {
+                  x = 2560;
+                  y = 0;
+                };
+              }
+            ];
+          }
+        ];
+      };
+    };
+  };
+
   networking = {
     domain = "armeen.xyz";
     hostId = "5a656e88";

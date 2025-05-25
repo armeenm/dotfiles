@@ -3,6 +3,7 @@ fullscreen = false
 early-exit = false
 copy-command = "wl-copy"
 action-on-enter = "save-to-clipboard"
+disable-notifications = true
 
 [font]
 family = "Lato"

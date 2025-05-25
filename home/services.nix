@@ -9,16 +9,15 @@ let
   inherit (pkgs.stdenv) hostPlatform;
 in {
   services = lib.optionalAttrs hostPlatform.isLinux {
-    batsignal.enable = !isHeadless; # TODO: isPortable?
     hyprpolkitagent.enable = !isHeadless;
     mpd-mpris.enable = !isHeadless;
     mpris-proxy.enable = !isHeadless;
     playerctld.enable = !isHeadless;
+    poweralertd.enable = !isHeadless;
     pueue.enable = true;
     remmina.enable = !isHeadless;
     safeeyes.enable = !isHeadless;
     wob.enable = !isHeadless;
-    #fusuma.enable = !isHeadless; # TODO: isPortable?
 
     clipcat = {
       enable = !isHeadless;
@@ -35,6 +34,11 @@ in {
         enable = true;
         arguments = [ "-n" "-t" "-c" ];
       };
+    };
+
+    fusuma = {
+      enable = !isHeadless;
+      settings = {};
     };
 
     gromit-mpx = {

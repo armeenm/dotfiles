@@ -54,14 +54,14 @@ in {
       enable = true;
       settings = {
         auto_sync = false;
-        style = "compact";
         enter_accept = true;
+        filter_mode_shell_up_key_binding = "session";
         inline_height = 30;
         invert = false;
         show_preview = true;
+        style = "compact";
         update_check = false;
         workspaces = true;
-        filter_mode_shell_up_key_binding = "session";
       };
     };
 
@@ -273,6 +273,7 @@ in {
 
     skim = {
       enable = true;
+      enableZshIntegration = false;
       defaultOptions = [ "--ansi" ];
     };
 
@@ -288,6 +289,15 @@ in {
       enable = true;
       settings = {
         updates.auto_update = true;
+      };
+    };
+
+    television = {
+      enable = true;
+      settings = {
+        keybindings = {
+          quit = [ "esc" "ctrl-c" ];
+        };
       };
     };
 
@@ -695,19 +705,16 @@ in {
           g = "git";
           lg = "ls -laahg";
           nb = "numbat";
+          nfu = "nix flake update";
           rlf = "readlink -f";
           rscp = "rsync -ahvP";
           sw = "nh os switch";
           tf = "terraform";
           zj = "zellij";
 
-          noti = "noti ";
-          sudo = "sudo ";
-
           vi = "${editor} -t";
           vim = "${editor} -t";
         } // lib.optionalAttrs hostPlatform.isLinux {
-          doas = "doas ";
           open = "xdg-open";
 
           jc = "journalctl";
@@ -721,7 +728,7 @@ in {
 
         globalAbbreviations = {
           G = "| rg";
-          S = "| sk";
+          T = "| tv";
           L = "| less -R";
         };
       };
