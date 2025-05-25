@@ -711,9 +711,6 @@ in {
           sw = "nh os switch";
           tf = "terraform";
           zj = "zellij";
-
-          vi = "${editor} -t";
-          vim = "${editor} -t";
         } // lib.optionalAttrs hostPlatform.isLinux {
           open = "xdg-open";
 
