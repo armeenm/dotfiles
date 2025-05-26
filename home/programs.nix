@@ -1,5 +1,6 @@
 { config
 , isHeadless
+, isPortable
 , enableSocial
 , pkgs
 , lib
@@ -359,12 +360,15 @@ in {
             "temperature"
             "memory"
             "custom/separator0"
+          ] ++ (lib.optionals isPortable [
+            "backlight"
+            "battery"
+            "custom/separator0"
+          ]) ++ [
             "systemd-failed-units"
             "custom/dnd"
             "clock"
             "group/tray"
-            #"backlight"
-            #"battery"
           ];
 
           "group/pulse" = {

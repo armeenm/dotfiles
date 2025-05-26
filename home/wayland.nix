@@ -12,6 +12,18 @@ let
   hyprPkgs = inputs.hyprland.packages.${pkgs.system};
   hyprland-plugins = inputs.hyprland-plugins.packages.${pkgs.system};
 
+  backlight = pkgs.writeShellScript "hyprland-backlight" ''
+    set -euo pipefail
+    brightnessctl s "$1"
+    brightnessctl -m | awk -F',' '{print substr($4, 1, length($4)-1)}' > "$XDG_RUNTIME_DIR"/wob.sock
+  '';
+
+  volume = pkgs.writeShellScript "hyprland-volume" ''
+    set -euo pipefail
+    pamixer "$@"
+    pamixer --get-volume > "$XDG_RUNTIME_DIR"/wob.sock
+  '';
+
 in {
   wayland = lib.optionalAttrs hostPlatform.isLinux {
     windowManager.hyprland = {
@@ -217,10 +229,10 @@ in {
           ",xf86audiostop,exec,playerctl stop"
           ",xf86audioprev,exec,playerctl previous"
           ",xf86audionext,exec,playerctl next"
-          ",xf86monbrightnessup,exec,light -A 5"
-          ",xf86monbrightnessdown,exec,light -U 5"
-          ",xf86audioraisevolume,exec,pamixer -i 5"
-          ",xf86audiolowervolume,exec,pamixer -d 5"
+          ",xf86monbrightnessup,exec,${backlight} +5%"
+          ",xf86monbrightnessdown,exec,${backlight} 5%-"
+          ",xf86audioraisevolume,exec,${volume} -i 5"
+          ",xf86audiolowervolume,exec,${volume} -d 5"
           ",xf86audiomute,exec,pamixer -t"
           ",xf86audiomicmute,exec,pamixer --default-source -t"
         ];

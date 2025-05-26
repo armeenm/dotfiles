@@ -54,6 +54,7 @@
       stateVersion = config.system.stateVersion;
       isHeadless = false;
       isStandalone = false;
+      isPortable = false;
       enableSocial = true;
     };
   };

@@ -26,8 +26,12 @@
     sensor.iio.enable = true;
   };
 
-  home-manager.users."${user.login}" = {
-    services.wluma.enable = true;
+  home-manager = {
+    extraSpecialArgs.isPortable = true;
+
+    users."${user.login}" = {
+      services.wluma.enable = true;
+    };
   };
 
   networking = {
@@ -38,8 +42,6 @@
   nixpkgs.hostPlatform = "x86_64-linux";
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
-
-  programs.light.enable = true;
 
   services = {
     hardware.bolt.enable = true;
