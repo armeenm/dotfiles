@@ -2,6 +2,7 @@
 , lib
 , pkgs
 , isHeadless
+, isPortable
 , ...
 }:
 
@@ -49,21 +50,35 @@ in {
       enable = !isHeadless;
       settings = {
         general = {
+          before_sleep_cmd = "loginctl lock-session";
           after_sleep_cmd = "hyprctl dispatch dpms on";
-          ignore_dbus_inhibit = false;
-          lock_cmd = "pgrep hyprlock || hyprlock";
+          lock_cmd = "pidof hyprlock || hyprlock";
         };
 
         listener = [
           {
-            timeout = 900;
-            on-timeout = "hyprlock";
+            timeout = 30;
+            on-timeout = "pidof hyprlock && hyprctl dispatch dpms off";
+            on-resume = "pidof hyprlock && hyprctl dispatch dpms on";
+          }
+          (lib.optionalAttrs isPortable {
+            timeout = 60;
+            on-timeout = "brightnessctl -s set 10";
+            on-resume = "brightnessctl -r";
+          })
+          {
+            timeout = 300;
+            on-timeout = "loginctl lock-session";
           }
           {
-            timeout = 1200;
+            timeout = 330;
             on-timeout = "hyprctl dispatch dpms off";
             on-resume = "hyprctl dispatch dpms on";
           }
+          (lib.optionalAttrs isPortable {
+            timeout = 900;
+            on-timeout = "systemctl suspend";
+          })
         ];
       };
     };

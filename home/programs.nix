@@ -366,6 +366,7 @@ in {
             "custom/separator0"
           ]) ++ [
             "systemd-failed-units"
+            "idle_inhibitor"
             "custom/dnd"
             "clock"
             "group/tray"
