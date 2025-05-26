@@ -131,7 +131,36 @@ in {
         bind = let
           selectWindow = pkgs.writeShellScript "hyprland-selectwin" ''
             set -euo pipefail
-            hyprctl clients -j | jq --argjson active $(hyprctl monitors -j | jq -c '[.[].activeWorkspace.id]') '.[] | select((.hidden | not) and .workspace.id as $id | $active | contains([$id])) | "\(.at[0]),\(.at[1]) \(.size[0])x\(.size[1])"' -r | slurp
+            hyprctl clients -j \
+            | jq --argjson active $(hyprctl monitors -j \
+            | jq -c \
+                '[.[].activeWorkspace.id]') '.[] | select((.hidden | not) and .workspace.id as $id | $active | contains([$id])) | "\(.at[0]),\(.at[1]) \(.size[0])x\(.size[1])"' -r \
+            | slurp
+          '';
+
+          screenrec = pkgs.writeShellScript "hyprland-screenrec" ''
+            set -euo pipefail
+
+            mode=$1
+            shift 1
+
+            filepath=~/ss/wl-screenrec-$(date '+%Y%m%d-%H:%M:%S').mp4
+            cmd="wl-screenrec -f $filepath $@"
+
+            set +e
+            if [[ $mode = region ]]; then
+              $cmd -g "$(slurp)"
+            elif [[ $mode = window ]]; then
+              $cmd -g "$(${selectWindow})"
+            elif [[ $mode = screen ]]; then
+              $cmd -g "$(slurp -o)"
+            else
+              echo Unknown capture mode "$mode".
+              exit -1
+            fi
+            set -e
+
+            notify-send "Screen recording saved" "Recording saved to $filepath" -a wl-screenrec
           '';
 
           backlight = pkgs.writeShellScript "hyprland-backlight" ''
@@ -165,9 +194,9 @@ in {
           ''SUPER_SHIFT,C,exec,hyprshot -zm window -r - | satty -f - -o ~/ss/satty-$(date '+%Y%m%d-%H:%M:%S').png''
           ''SUPER_CTRL,C,exec,hyprshot -zm output -r - | satty -f - -o ~/ss/satty-$(date '+%Y%m%d-%H:%M:%S').png''
 
-          ''SUPER,V,exec,wl-screenrec -g "$(slurp)" -f ~/ss/wl-screenrec-$(date '+%Y%m%d-%H:%M:%S').mp4''
-          ''SUPER_SHIFT,V,exec,wl-screenrec -g "$(${selectWindow})" -f ~/ss/wl-screenrec-$(date '+%Y%m%d-%H:%M:%S').mp4''
-          ''SUPER_CTRL,V,exec,wl-screenrec -g "$(slurp -o)" -f ~/ss/wl-screenrec-$(date '+%Y%m%d-%H:%M:%S').mp4''
+          "SUPER,V,exec,${screenrec} region"
+          "SUPER_SHIFT,V,exec,${screenrec} window"
+          "SUPER_CTRL,V,exec,${screenrec} screen"
           "SUPER_ALT,V,exec,pkill -SIGINT wl-screenrec"
 
           "SUPER,W,focusmonitor,l"
@@ -203,9 +232,6 @@ in {
           "SUPER_SHIFT,K,movewindow,u"
           "SUPER_SHIFT,L,movewindow,r"
 
-          "SUPER,comma,layoutmsg,move -col"
-          "SUPER,period,layoutmsg,move +col"
-
           "SUPER,1,split:workspace,1"
           "SUPER,2,split:workspace,2"
           "SUPER,3,split:workspace,3"
@@ -231,15 +257,15 @@ in {
 
           "SUPER_CTRL,J,split:workspace,e-1"
           "SUPER_CTRL,K,split:workspace,e+1"
-          "SUPER,mouse_down,split:workspace,e-1"
-          "SUPER,mouse_up,split:workspace,e+1"
+          "SUPER,mouse_up,split:workspace,e-1"
+          "SUPER,mouse_down,split:workspace,e+1"
 
           "SUPER,A,exec,makoctl dismiss"
           "SUPER_SHIFT,A,exec,makoctl dismiss -a"
           "SUPER,S,exec,makoctl mode -s do-not-disturb && pkill -SIGRTMIN+1 waybar"
           "SUPER_SHIFT,S,exec,makoctl mode -s default && pkill -SIGRTMIN+1 waybar"
           "SUPER,X,exec,loginctl lock-session"
-          "SUPER_SHIFT,X,exec,sleep 3 && systemctl suspend"
+          "SUPER_SHIFT,X,exec,sleep 2 && systemctl suspend"
           "SUPER,B,exec,woomer"
 
           ",xf86audiopause,exec,playerctl play-pause"

@@ -113,7 +113,6 @@ in {
       feishin
       fira-code
       fira-code-symbols
-      firefox-wayland
       gimp-with-plugins
       google-chrome
       grim
@@ -133,6 +132,7 @@ in {
       obs-studio
       obs-studio-plugins.obs-pipewire-audio-capture
       obs-studio-plugins.wlrobs
+      open-in-mpv
       pamixer
       pavucontrol
       playerctl

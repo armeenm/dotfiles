@@ -143,6 +143,14 @@ in {
       git = true;
     };
 
+    firefox = {
+      enable = true;
+
+      nativeMessagingHosts = with pkgs; [
+        fx-cast-bridge
+      ];
+    };
+
     foot = {
       enable = hostPlatform.isLinux && !isHeadless;
       server.enable = true;
