@@ -150,8 +150,10 @@ in {
       wdisplays
       wireshark
       wl-clipboard
+      wl-screenrec
       wlogout
       wlr-randr
+      woomer
       xdg-user-dirs
       xdg-utils
       xorg.xeyes

@@ -12,19 +12,6 @@ let
   inherit (pkgs.stdenv) hostPlatform;
 
   hyprPkgs = inputs.hyprland.packages.${pkgs.system};
-  hyprland-plugins = inputs.hyprland-plugins.packages.${pkgs.system};
-
-  backlight = pkgs.writeShellScript "hyprland-backlight" ''
-    set -euo pipefail
-    brightnessctl s "$1"
-    brightnessctl -m | awk -F',' '{print substr($4, 1, length($4)-1)}' > "$XDG_RUNTIME_DIR"/wob.sock
-  '';
-
-  volume = pkgs.writeShellScript "hyprland-volume" ''
-    set -euo pipefail
-    pamixer "$@"
-    pamixer --get-volume > "$XDG_RUNTIME_DIR"/wob.sock
-  '';
 
 in {
   wayland = lib.optionalAttrs hostPlatform.isLinux {
@@ -39,12 +26,15 @@ in {
         variables = ["--all"];
       };
 
-      plugins = [
+      plugins = let
+        hyprland-plugins = inputs.hyprland-plugins.packages.${pkgs.system};
+      in [
         hyprland-plugins.hyprscrolling
-        hyprland-plugins.hyprexpo
         hyprland-plugins.xtra-dispatchers
-        inputs.hyprsplit.packages.${pkgs.system}.hyprsplit
         inputs.hypr-darkwindow.packages.${pkgs.system}.Hypr-DarkWindow
+        inputs.hypr-dynamic-cursors.packages.${pkgs.system}.default
+        inputs.hyprspace.packages.${pkgs.system}.Hyprspace
+        inputs.hyprsplit.packages.${pkgs.system}.hyprsplit
       ];
 
       settings = {
@@ -116,19 +106,13 @@ in {
         };
 
         plugin = {
-          hyprexpo = {
-            columns = 3;
-            gap_size = 5;
-            workspace_method = "center current";
+          hyprscrolling.fullscreen_on_one_column = true;
 
-            enable_gesture = true;
-            gesture_fingers = 3;
-            gesture_distance = 300;
-            gesture_positive = true;
-          };
-
-          hyprscrolling = {
-            fullscreen_on_one_column = true;
+          dynamic-cursors = {
+            enabled = true;
+            mode = "none";
+            hyprcursor.enabled = true;
+            shake.enabled = true;
           };
         };
 
@@ -144,7 +128,25 @@ in {
           "SUPER,mouse:273,resizewindow"
         ];
 
-        bind = [
+        bind = let
+          selectWindow = pkgs.writeShellScript "hyprland-selectwin" ''
+            set -euo pipefail
+            hyprctl clients -j | jq --argjson active $(hyprctl monitors -j | jq -c '[.[].activeWorkspace.id]') '.[] | select((.hidden | not) and .workspace.id as $id | $active | contains([$id])) | "\(.at[0]),\(.at[1]) \(.size[0])x\(.size[1])"' -r | slurp
+          '';
+
+          backlight = pkgs.writeShellScript "hyprland-backlight" ''
+            set -euo pipefail
+            brightnessctl s "$1"
+            brightnessctl -m | awk -F',' '{print substr($4, 1, length($4)-1)}' > "$XDG_RUNTIME_DIR"/wob.sock
+          '';
+
+          volume = pkgs.writeShellScript "hyprland-volume" ''
+            set -euo pipefail
+            pamixer "$@"
+            pamixer --get-volume > "$XDG_RUNTIME_DIR"/wob.sock
+          '';
+
+        in [
           "SUPER_SHIFT,return,exec,footclient"
           "SUPER,Q,killactive,"
           "SUPER_SHIFT,backspace,exit,"
@@ -154,13 +156,18 @@ in {
           "SUPER,D,exec,systemd-run --user $(tofi-run)"
           "SUPER_SHIFT,D,exec,systemd-run --user $(tofi-drun)"
           "SUPER,P,exec,emacsclient -c -n"
-          "SUPER,grave,hyprexpo:expo,toggle"
+          "SUPER,grave,overview:toggle"
           "SUPER_SHIFT,P,pseudo,"
           "SUPER,F,fullscreen,1"
           "SUPER_SHIFT,F,fullscreen,0"
 
           ''SUPER,C,exec,hyprshot -zm region -r - | satty -f - --fullscreen -o ~/ss/satty-$(date '+%Y%m%d-%H:%M:%S').png''
           ''SUPER_SHIFT,C,exec,hyprshot -zm window -r - | satty -f - --fullscreen -o ~/ss/satty-$(date '+%Y%m%d-%H:%M:%S').png''
+
+          ''SUPER,Y,exec,wl-screenrec -g "$(slurp)" -f ~/ss/wl-screenrec-$(date '+%Y%m%d-%H:%M:%S').mp4''
+          ''SUPER_SHIFT,Y,exec,wl-screenrec -g "$(slurp -o)" -f ~/ss/wl-screenrec-$(date '+%Y%m%d-%H:%M:%S').mp4''
+          ''SUPER,U,exec,wl-screenrec -g "$(${selectWindow})" -f ~/ss/wl-screenrec-$(date '+%Y%m%d-%H:%M:%S').mp4''
+          "SUPER,I,exec,pkill -SIGINT wl-screenrec"
 
           "SUPER,W,focusmonitor,l"
           "SUPER,E,focusmonitor,r"
@@ -232,6 +239,7 @@ in {
           "SUPER,S,exec,makoctl mode -s do-not-disturb && pkill -SIGRTMIN+1 waybar"
           "SUPER_SHIFT,S,exec,makoctl mode -s default && pkill -SIGRTMIN+1 waybar"
           "SUPER_SHIFT,X,exec,hyprlock"
+          "SUPER,B,exec,woomer"
 
           ",xf86audiopause,exec,playerctl play-pause"
           ",xf86audioplay,exec,playerctl play-pause"

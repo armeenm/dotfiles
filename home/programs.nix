@@ -233,13 +233,6 @@ in {
 
     mpv = {
       enable = !isHeadless;
-      config = {
-        gpu-api = "vulkan";
-        gpu-context = "wayland";
-        hwdec = "vaapi";
-        profile = "gpu-hq";
-        spirv-compiler = "auto";
-      };
     };
 
     ncmpcpp = {
@@ -274,7 +267,6 @@ in {
 
     skim = {
       enable = true;
-      enableZshIntegration = false;
       defaultOptions = [ "--ansi" ];
     };
 
@@ -295,6 +287,7 @@ in {
 
     television = {
       enable = true;
+      enableZshIntegration = false;
       settings = {
         keybindings = {
           quit = [ "esc" "ctrl-c" ];
