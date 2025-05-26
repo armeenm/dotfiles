@@ -161,13 +161,14 @@ in {
           "SUPER,F,fullscreen,1"
           "SUPER_SHIFT,F,fullscreen,0"
 
-          ''SUPER,C,exec,hyprshot -zm region -r - | satty -f - --fullscreen -o ~/ss/satty-$(date '+%Y%m%d-%H:%M:%S').png''
-          ''SUPER_SHIFT,C,exec,hyprshot -zm window -r - | satty -f - --fullscreen -o ~/ss/satty-$(date '+%Y%m%d-%H:%M:%S').png''
+          ''SUPER,C,exec,hyprshot -zm region -r - | satty -f - -o ~/ss/satty-$(date '+%Y%m%d-%H:%M:%S').png''
+          ''SUPER_SHIFT,C,exec,hyprshot -zm window -r - | satty -f - -o ~/ss/satty-$(date '+%Y%m%d-%H:%M:%S').png''
+          ''SUPER_CTRL,C,exec,hyprshot -zm output -r - | satty -f - -o ~/ss/satty-$(date '+%Y%m%d-%H:%M:%S').png''
 
-          ''SUPER,Y,exec,wl-screenrec -g "$(slurp)" -f ~/ss/wl-screenrec-$(date '+%Y%m%d-%H:%M:%S').mp4''
-          ''SUPER_SHIFT,Y,exec,wl-screenrec -g "$(slurp -o)" -f ~/ss/wl-screenrec-$(date '+%Y%m%d-%H:%M:%S').mp4''
-          ''SUPER,U,exec,wl-screenrec -g "$(${selectWindow})" -f ~/ss/wl-screenrec-$(date '+%Y%m%d-%H:%M:%S').mp4''
-          "SUPER,I,exec,pkill -SIGINT wl-screenrec"
+          ''SUPER,V,exec,wl-screenrec -g "$(slurp)" -f ~/ss/wl-screenrec-$(date '+%Y%m%d-%H:%M:%S').mp4''
+          ''SUPER_SHIFT,V,exec,wl-screenrec -g "$(${selectWindow})" -f ~/ss/wl-screenrec-$(date '+%Y%m%d-%H:%M:%S').mp4''
+          ''SUPER_CTRL,V,exec,wl-screenrec -g "$(slurp -o)" -f ~/ss/wl-screenrec-$(date '+%Y%m%d-%H:%M:%S').mp4''
+          "SUPER_ALT,V,exec,pkill -SIGINT wl-screenrec"
 
           "SUPER,W,focusmonitor,l"
           "SUPER,E,focusmonitor,r"
@@ -187,8 +188,7 @@ in {
           "SUPER_SHIFT,Z,togglesplit"
           "SUPER,Z,swapsplit"
           "SUPER,T,togglegroup"
-          "SUPER,X,movecursortocorner,0"
-          "SUPER,V,invertactivewindow"
+          "SUPER,I,invertactivewindow"
 
           "SUPER,N,changegroupactive,b"
           "SUPER,M,changegroupactive,f"
@@ -238,7 +238,8 @@ in {
           "SUPER_SHIFT,A,exec,makoctl dismiss -a"
           "SUPER,S,exec,makoctl mode -s do-not-disturb && pkill -SIGRTMIN+1 waybar"
           "SUPER_SHIFT,S,exec,makoctl mode -s default && pkill -SIGRTMIN+1 waybar"
-          "SUPER_SHIFT,X,exec,hyprlock"
+          "SUPER,X,exec,loginctl lock-session"
+          "SUPER_SHIFT,X,exec,sleep 3 && systemctl suspend"
           "SUPER,B,exec,woomer"
 
           ",xf86audiopause,exec,playerctl play-pause"
