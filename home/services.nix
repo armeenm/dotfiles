@@ -83,6 +83,30 @@ in {
       };
     };
 
+    hyprsunset = {
+      enable = true;
+      transitions = {
+        sunrise = {
+          calendar = "*-*-* 06:00:00";
+          requests = [
+            [ "temperature" "6500" ]
+          ];
+        };
+        daytime = {
+          calendar = "*-*-* 09:00:00";
+          requests = [
+            [ "identity" ]
+          ];
+        };
+        sunset = {
+          calendar = "*-*-* 19:00:00";
+          requests = [
+            [ "temperature" "3500" ]
+          ];
+        };
+      };
+    };
+
     mako = {
       enable = !isHeadless;
       settings = {
@@ -122,12 +146,6 @@ in {
           ];
         };
       };
-    };
-
-    wlsunset = {
-        enable = !isHeadless;
-        latitude = 47.76;
-        longitude = -122;
     };
   };
 }

@@ -73,6 +73,20 @@ in {
           };
         };
 
+        hyprswitch = {
+          Install.WantedBy = [ "graphical-session.target" ];
+
+          Unit = {
+            Description = "A CLI/GUI that allows switching between windows in Hyprland";
+            Documentation = "https://github.com/H3rmt/hyprswitch";
+            PartOf = [ "graphical-session.target" ];
+          };
+
+          Service = {
+            ExecStart = "${pkgs.hyprswitch}/bin/hyprswitch init";
+          };
+        };
+
         rclone-cobalt = rclone "cobalt";
         rclone-oxygen = rclone "oxygen";
       };

@@ -93,6 +93,7 @@ in {
       zip
 
     ] ++ (lib.optionals hostPlatform.isLinux [
+      bluetuith
       bubblewrap
       cfspeedtest
       dosfstools
@@ -106,7 +107,6 @@ in {
       strace
 
     ] ++ (lib.optionals (!isHeadless) [
-      bluetuith
       brightnessctl
       cozette
       easyeffects
@@ -122,6 +122,7 @@ in {
       hyprland-qtutils
       hyprpicker
       hyprshot
+      hyprswitch
       libnotify
       libreoffice-fresh
       material-design-icons

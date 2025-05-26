@@ -1,8 +1,10 @@
 { lib
 , pkgs
 , inputs
+, osConfig
 , isHeadless
 , isStandalone
+, isPortable
 , ...
 }:
 
@@ -29,8 +31,8 @@ in {
     windowManager.hyprland = {
       enable = !isHeadless;
 
-      package = if isStandalone then hyprPkgs.hyprland else null;
-      portalPackage = if isStandalone then hyprPkgs.xdg-desktop-portal-hyprland else null;
+      package = if isStandalone then hyprPkgs.hyprland else osConfig.programs.hyprland.package;
+      portalPackage = if isStandalone then hyprPkgs.xdg-desktop-portal-hyprland else osConfig.programs.hyprland.portalPackage;
 
       systemd = {
         enable = isStandalone;
@@ -46,10 +48,19 @@ in {
       ];
 
       settings = {
-        decoration.rounding = 0;
-        animations.enabled = false;
-
+        misc.vfr = true;
         monitor = [ ",preferred,auto,1" ];
+
+        animation = [
+          "global,1,2,default"
+          "specialWorkspace,0"
+        ];
+
+        decoration = {
+          rounding = 0;
+          blur.enabled = !isPortable;
+          shadow.enabled = !isPortable;
+        };
 
         input = {
           kb_options = "caps:escape";
@@ -163,7 +174,8 @@ in {
           "SUPER_ALT,K,resizeactive,0 -30"
           "SUPER_ALT,L,resizeactive,30 0"
 
-          "SUPER,tab,workspace,previous"
+          "SUPER,tab,exec,hyprswitch gui --mod-key super --key tab --close mod-key-release --reverse-key=key=grave --sort-recent && hyprswitch dispatch"
+
           "SUPER,minus,togglespecialworkspace"
           "SUPER_SHIFT,Z,togglesplit"
           "SUPER,Z,swapsplit"
@@ -183,11 +195,6 @@ in {
           "SUPER_SHIFT,J,movewindow,d"
           "SUPER_SHIFT,K,movewindow,u"
           "SUPER_SHIFT,L,movewindow,r"
-
-          "SUPER_CTRL,H,layoutmsg,movewindowto l"
-          "SUPER_CTRL,J,layoutmsg,movewindowto d"
-          "SUPER_CTRL,K,layoutmsg,movewindowto u"
-          "SUPER_CTRL,L,layoutmsg,movewindowto r"
 
           "SUPER,comma,layoutmsg,move -col"
           "SUPER,period,layoutmsg,move +col"
@@ -215,8 +222,10 @@ in {
           "SUPER_SHIFT,0,split:movetoworkspacesilent,10"
           "SUPER_SHIFT,minus,movetoworkspacesilent,special"
 
-          "SUPER,mouse_down,workspace,m+1"
-          "SUPER,mouse_up,workspace,m-1"
+          "SUPER_CTRL,J,split:workspace,e-1"
+          "SUPER_CTRL,K,split:workspace,e+1"
+          "SUPER,mouse_down,split:workspace,e-1"
+          "SUPER,mouse_up,split:workspace,e+1"
 
           "SUPER,A,exec,makoctl dismiss"
           "SUPER_SHIFT,A,exec,makoctl dismiss -a"
