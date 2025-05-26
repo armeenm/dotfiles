@@ -58,6 +58,13 @@
     };
   };
 
+  networking = {
+    networkmanager = {
+      enable = true;
+      wifi.backend = "iwd";
+    };
+  };
+
   programs = {
     adb.enable = true;
     dconf.enable = true;
