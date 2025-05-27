@@ -58,6 +58,7 @@
   users.users."${user.login}".extraGroups = [
     "adbusers"
     "i2c"
+    "input"
     "lp" # Printing
     "networkmanager"
     "plugdev"
