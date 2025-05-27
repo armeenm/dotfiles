@@ -375,7 +375,9 @@ in {
 
           "group/pulse" = {
             orientation = "inherit";
-            drawer = {};
+            drawer = {
+              transition-left-to-right = false;
+            };
             modules = [
               "pulseaudio"
               "pulseaudio/slider"

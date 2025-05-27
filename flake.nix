@@ -246,6 +246,7 @@
         extraSpecialArgs = {
           isHeadless = false;
           isStandalone = true;
+          isPortable = false;
           enableSocial = false;
           stateVersion = "24.11";
         };
