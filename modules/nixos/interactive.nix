@@ -46,17 +46,9 @@
     };
   };
 
-  home-manager = {
-    users."${user.login}" = import "${root}/home";
-
-    extraSpecialArgs = {
-      inherit inputs root user;
-      stateVersion = config.system.stateVersion;
-      isHeadless = false;
-      isStandalone = false;
-      isPortable = false;
-      enableSocial = true;
-    };
+  home-manager.extraSpecialArgs = {
+    isHeadless = false;
+    enableSocial = true;
   };
 
   networking = {

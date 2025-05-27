@@ -24,6 +24,19 @@
     earlySetup = false;
   };
 
+  home-manager = {
+    users."${user.login}" = import "${root}/home";
+
+    extraSpecialArgs = {
+      inherit inputs root user;
+      stateVersion = config.system.stateVersion;
+      isHeadless = true;
+      isStandalone = false;
+      isPortable = false;
+      enableSocial = false;
+    };
+  };
+
   services = {
     devmon.enable = true;
     fstrim.enable = true;

@@ -161,29 +161,14 @@
     };
   };
 
-  environment = {
-    systemPackages = with pkgs; [
-      bcachefs-tools
-      conntrack-tools
-    ];
-  };
+  environment.systemPackages = with pkgs; [
+    bcachefs-tools
+    conntrack-tools
+  ];
 
   hardware = {
     enableAllFirmware = true;
     cpu.intel.updateMicrocode = true;
-  };
-
-  home-manager = {
-    users."${user.login}" = import "${root}/home";
-
-    extraSpecialArgs = {
-      inherit inputs root user;
-      stateVersion = config.system.stateVersion;
-      isHeadless = true;
-      isStandalone = false;
-      isPortable = false;
-      enableSocial = false;
-    };
   };
 
   nixpkgs.hostPlatform = "x86_64-linux";
