@@ -223,6 +223,8 @@
       };
     };
 
+    nixosModules = import ./modules;
+
     darwinConfigurations = {
       rhenium = inputs.nix-darwin.lib.darwinSystem {
         modules = darwinModules ++ [

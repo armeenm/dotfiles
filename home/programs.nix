@@ -711,6 +711,7 @@ in {
           cat = "bat";
           ccm = "clipcat-menu";
           g = "git";
+          n = "nix";
           nb = "numbat";
           nfu = "nix flake update";
           rlf = "readlink -f";
