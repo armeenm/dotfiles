@@ -147,7 +147,6 @@ in {
             filepath=~/ss/wl-screenrec-$(date '+%Y%m%d-%H:%M:%S').mp4
             cmd="wl-screenrec -f $filepath $@"
 
-            set +e
             if [[ $mode = region ]]; then
               $cmd -g "$(slurp)"
             elif [[ $mode = window ]]; then
@@ -158,7 +157,6 @@ in {
               echo Unknown capture mode "$mode".
               exit -1
             fi
-            set -e
 
             notify-send "Screen recording saved" "Recording saved to $filepath" -a wl-screenrec
           '';

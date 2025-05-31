@@ -38,7 +38,7 @@ in {
     };
 
     fusuma = {
-      enable = !isHeadless;
+      enable = !isHeadless && isPortable;
       settings = {};
     };
 
