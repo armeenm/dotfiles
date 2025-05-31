@@ -1,7 +1,17 @@
-{ config, inputs, lib, pkgs, modulesPath, user, root, ... }:
+{ config
+, inputs
+, lib
+, pkgs
+, modulesPath
+, user
+, root
+, ...
+}:
 
 {
-  imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
+  imports = [
+    (modulesPath + "/installer/scan/not-detected.nix")
+  ];
 
   age = {
     secrets = {
@@ -85,8 +95,8 @@
 
     apparmor.enable = true;
     auditd.enable = true;
-    rtkit.enable = true;
     polkit.enable = true;
+    rtkit.enable = true;
     sudo.enable = false;
 
     audit = {

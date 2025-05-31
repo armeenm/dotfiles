@@ -148,68 +148,42 @@
 
     baseModules = [
       { _module.args = { inherit inputs root user; }; }
-    ];
-
-    hmModules = baseModules ++ [
-      inputs.nix-index-database.hmModules.nix-index
-    ];
-
-    hmDarwinModules = hmModules ++ [
-      inputs.mac-app-util.homeManagerModules.default
-    ];
-
-    hmStandaloneModules = [
-      inputs.stylix.homeModules.stylix
-    ];
-
-    sysModules = [
       { nixpkgs = { inherit config overlays; }; }
     ];
 
-    darwinModules = baseModules ++ sysModules ++ [
+    /*
+    darwinModules = baseModules ++ [
       inputs.home-manager.darwinModules.default
       inputs.mac-app-util.darwinModules.default
       inputs.stylix.darwinModules.stylix
       { home-manager.sharedModules = hmDarwinModules; }
       ./modules/darwin
     ];
+*/
 
-    nixosModules = baseModules ++ sysModules ++ [
-      inputs.home-manager.nixosModules.default
-      inputs.lanzaboote.nixosModules.lanzaboote
-      inputs.ragenix.nixosModules.default
-      inputs.stylix.nixosModules.stylix
-      { home-manager.sharedModules = hmModules; }
-      ./modules/nixos
-    ];
-
-  in {
+  in rec {
     overlays.default = overlay;
 
     nixosConfigurations = {
       lithium = nixpkgs.lib.nixosSystem {
-        modules = nixosModules ++ [
+        modules = baseModules ++ [
+          nixosModules.nixosInteractive
+          inputs.lanzaboote.nixosModules.lanzaboote
           ./hosts/lithium
-          ./modules/nixos/interactive.nix
         ];
       };
 
       argentum = nixpkgs.lib.nixosSystem {
-        modules = nixosModules ++ [
-          ./hosts/argentum
-          ./modules/nixos/interactive.nix
+        modules = baseModules ++ [
+          nixosModules.nixosInteractive
           inputs.nixos-hardware.nixosModules.framework-12th-gen-intel
-        ];
-      };
-
-      boron = nixpkgs.lib.nixosSystem {
-        modules = nixosModules ++ [
-          ./hosts/boron
+          ./hosts/argentum
         ];
       };
 
       carbon = nixpkgs.lib.nixosSystem {
-        modules = nixosModules ++ [
+        modules = baseModules ++ [
+          nixosModules.nixosBase
           ./hosts/carbon
         ];
       };
@@ -223,8 +197,9 @@
       };
     };
 
-    nixosModules = import ./modules;
+    nixosModules = import ./modules { inherit inputs; };
 
+    /*
     darwinConfigurations = {
       rhenium = inputs.nix-darwin.lib.darwinSystem {
         modules = darwinModules ++ [
@@ -232,18 +207,17 @@
         ];
       };
     };
+*/
 
     homeConfigurations = forAllSystems (system: pkgs: {
       default = inputs.home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
 
-        modules =
-          hmStandaloneModules
-          ++ (if system == "aarch64-darwin" then hmDarwinModules else hmModules)
-          ++ [
-            { nixpkgs = { inherit config overlays; }; }
-            ./home
-          ];
+        modules = baseModules ++ [
+          inputs.stylix.homeModules.stylix
+          (if system == "aarch64-darwin" then nixosModules.hmDarwinBase else nixosModules.hmBase)
+          ./home
+        ];
 
         extraSpecialArgs = {
           isHeadless = false;

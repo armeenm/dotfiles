@@ -1,4 +1,4 @@
-{ config, pkgs, lib, user, ... }:
+{ config, pkgs, inputs, lib, user, ... }:
 
 {
   boot = {
@@ -139,6 +139,7 @@
     };
   };
 
+  /*
   home-manager.users."${user.login}" = {
     services.shikane = {
       enable = true;
@@ -171,6 +172,7 @@
       };
     };
   };
+*/
 
   networking = {
     domain = "armeen.xyz";
