@@ -162,8 +162,6 @@
 */
 
   in rec {
-    overlays.default = overlay;
-
     nixosConfigurations = {
       lithium = nixpkgs.lib.nixosSystem {
         modules = baseModules ++ [
