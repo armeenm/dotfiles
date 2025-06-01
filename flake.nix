@@ -124,7 +124,7 @@
 
     overlay = (import ./overlay { inherit inputs; });
 
-    overlays = [
+    allOverlays = [
       inputs.brew-nix.overlays.default
       inputs.emacs-overlay.overlays.default
       inputs.nixgl.overlay
@@ -136,7 +136,10 @@
       "aarch64-linux"
       "aarch64-darwin"
     ] (system: f system (
-      import nixpkgs { inherit system config overlays; }
+      import nixpkgs {
+        inherit system config;
+        overlays = allOverlays;
+      }
     ));
 
     root = ./.;
@@ -148,7 +151,7 @@
 
     baseModules = [
       { _module.args = { inherit inputs root user; }; }
-      { nixpkgs = { inherit config overlays; }; }
+      { nixpkgs = { inherit config; overlays = allOverlays; }; }
     ];
 
     /*
@@ -241,7 +244,7 @@
       };
     };
 
-    overlays.default = lib.composeManyExtensions overlays;
+    overlays.default = nixpkgs.lib.composeManyExtensions allOverlays;
 
     deploy = {
       nodes = {
