@@ -48,7 +48,7 @@
     xserver.videoDrivers = [ "intel" ];
 
     logind = {
-      extraConfig = "HandlePowerKey=suspend";
+      powerKey = "suspend";
       lidSwitch = "suspend";
     };
   };
