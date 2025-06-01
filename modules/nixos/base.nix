@@ -143,21 +143,21 @@
       defaultEditor = true;
       configure = {
         customRC = ''
-          set number
-          set hidden
-          set shell=bash
-          set cmdheight=2
-          set nocompatible
-          set shortmess+=c
-          set updatetime=300
           set background=dark
+          set cmdheight=2
           set foldmethod=marker
-          set signcolumn=yes
+          set hidden
+          set mouse=a
           set nobackup nowritebackup
+          set nocompatible
+          set number
+          set shell=bash
+          set shortmess+=c
+          set signcolumn=yes
           set tabstop=2 shiftwidth=2 expandtab
           set tagrelative
           set tags^=./.git/tags;
-          set mouse=a
+          set updatetime=300
         '';
       };
     };

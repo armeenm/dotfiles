@@ -219,6 +219,7 @@ in {
     hyprlock = {
       enable = hostPlatform.isLinux && !isHeadless;
       settings = {
+        auth."fingerprint:enabled" = true;
         general = {
           grace = 3;
           hide_cursor = true;

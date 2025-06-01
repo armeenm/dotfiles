@@ -160,6 +160,7 @@ in {
       yubikey-manager
 
     ] ++ (lib.optionals enableSocial [
+      aider-chat-full
       discord
       element-desktop
       monero-gui
@@ -205,6 +206,7 @@ in {
       noti = "noti ";
       sudo = "sudo ";
 
+      e = editor;
       vi = "${editor} -t";
       vim = "${editor} -t";
     } // lib.optionalAttrs hostPlatform.isLinux {
