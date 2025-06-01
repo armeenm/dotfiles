@@ -206,7 +206,7 @@ in {
       noti = "noti ";
       sudo = "sudo ";
 
-      e = editor;
+      e = "${editor}";
       vi = "${editor} -t";
       vim = "${editor} -t";
     } // lib.optionalAttrs hostPlatform.isLinux {
