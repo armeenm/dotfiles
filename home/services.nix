@@ -17,7 +17,7 @@ in {
     poweralertd.enable = !isHeadless;
     pueue.enable = true;
     remmina.enable = !isHeadless;
-    #safeeyes.enable = !isHeadless;
+    safeeyes.enable = !isHeadless;
     wob.enable = !isHeadless;
 
     clipcat = {

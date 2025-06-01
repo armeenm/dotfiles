@@ -129,11 +129,6 @@
     users = {
       root.hashedPassword = null;
 
-      arash = {
-        isNormalUser = true;
-        hashedPasswordFile = config.age.secrets.arash-pw.path;
-      };
-
       "${user.login}" = {
         isNormalUser = true;
         hashedPasswordFile = config.age.secrets."${user.login}-pw".path;

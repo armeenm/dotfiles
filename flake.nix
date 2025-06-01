@@ -243,6 +243,8 @@
       };
     };
 
+    overlays.default = lib.composeManyExtensions overlays;
+
     deploy = {
       nodes = {
         argentum = {
