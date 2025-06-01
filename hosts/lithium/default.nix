@@ -1,10 +1,6 @@
 { config, pkgs, inputs, lib, user, ... }:
 
 {
-  age.secrets = {
-    "${user.login}-pw".file = ../../secrets/${user.login}-pw.age;
-  };
-
   boot = {
     supportedFilesystems = [ "nfs" "nfs4" ];
     loader.systemd-boot.enable = lib.mkForce false; # NOTE: Conflicts with lanzaboote.

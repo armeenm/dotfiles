@@ -1,10 +1,6 @@
 { lib, user, ... }:
 
 {
-  age.secrets = {
-    "${user.login}-pw".file = ../../secrets/${user.login}-pw.age;
-  };
-
   boot = {
     initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "nvme" "usb_storage" "sd_mod" ];
     kernelModules = [ "kvm-intel" ];

@@ -26,4 +26,5 @@ in {
   hmDarwinBase = { ... }: { imports = hmDarwinBase; };
   nixosBase = { ... }: { imports = nixosBase; };
   nixosInteractive = { ... }: { imports = nixosInteractive; };
+  nixosUser = { ... }: { imports = [ ./nixos/user.nix ]; };
 }

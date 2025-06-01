@@ -125,7 +125,6 @@
 
       "${user.login}" = {
         isNormalUser = true;
-        hashedPasswordFile = config.age.secrets."${user.login}-pw".path;
         extraGroups = [
           "wheel"
         ];

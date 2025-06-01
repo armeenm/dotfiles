@@ -168,6 +168,7 @@
       lithium = nixpkgs.lib.nixosSystem {
         modules = baseModules ++ [
           nixosModules.nixosInteractive
+          nixosModules.nixosUser
           inputs.lanzaboote.nixosModules.lanzaboote
           ./hosts/lithium
         ];
@@ -176,6 +177,7 @@
       argentum = nixpkgs.lib.nixosSystem {
         modules = baseModules ++ [
           nixosModules.nixosInteractive
+          nixosModules.nixosUser
           inputs.nixos-hardware.nixosModules.framework-12th-gen-intel
           ./hosts/argentum
         ];
