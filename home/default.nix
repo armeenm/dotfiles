@@ -13,6 +13,7 @@ in {
     ./home.nix
     ./programs.nix
     ./services.nix
+    ./starship.nix
     ./systemd.nix
     ./wayland.nix
     ./xdg.nix

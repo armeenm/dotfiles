@@ -4,7 +4,6 @@
 , pkgs
 , modulesPath
 , user
-, root
 , ...
 }:
 
@@ -14,11 +13,6 @@
   ];
 
   age = {
-    secrets = {
-      "${user.login}-pw".file = "${root}/secrets/${user.login}-pw.age";
-      "arash-pw".file = "${root}/secrets/arash-pw.age";
-    };
-
     identityPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
   };
 
@@ -35,10 +29,10 @@
   };
 
   home-manager = {
-    users."${user.login}" = import "${root}/home";
+    users."${user.login}" = import ../../home;
 
     extraSpecialArgs = {
-      inherit inputs root user;
+      inherit inputs user;
       stateVersion = config.system.stateVersion;
       isHeadless = true;
       isStandalone = false;

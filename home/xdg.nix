@@ -1,13 +1,12 @@
 { config
 , pkgs
 , lib
-, root
 , ...
 }:
 
 let
   inherit (pkgs.stdenv) hostPlatform;
-  conf = "${root}/conf";
+  conf = ../conf;
   home = config.home.homeDirectory;
 in
 {
@@ -16,9 +15,8 @@ in
     portal.config.common.default = "hyprland";
 
     configFile = {
-      "zsh/p10k.zsh".source = "${conf}/zsh/p10k.zsh";
-      "yt-dlp/config".source = "${conf}/yt-dlp/config";
-      "satty/config.toml".source = "${conf}/satty/config.toml";
+      "zsh/p10k.zsh".source = ../conf/zsh/p10k.zsh;
+      "satty/config.toml".source = ../conf/satty/config.toml;
     };
 
     userDirs = {

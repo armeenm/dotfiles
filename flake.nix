@@ -142,7 +142,6 @@
       }
     ));
 
-    root = ./.;
     user = {
       login = "armeen";
       name = "Armeen Mahdian";
@@ -150,7 +149,7 @@
     };
 
     baseModules = [
-      { _module.args = { inherit inputs root user; }; }
+      { _module.args = { inherit inputs user; }; }
       { nixpkgs = { inherit config; overlays = allOverlays; }; }
     ];
 

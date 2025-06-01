@@ -1,4 +1,4 @@
-{ inputs, user, root, config, pkgs, ... }:
+{ inputs, user, config, pkgs, ... }:
 
 {
   imports = [ ../shared/stylix.nix ];

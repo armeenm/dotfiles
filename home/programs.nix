@@ -4,10 +4,9 @@
 , enableSocial
 , pkgs
 , lib
-, root
 , user
 , ...
-} @ args:
+}:
 
 let
   inherit (pkgs.stdenv) hostPlatform;
@@ -105,7 +104,7 @@ in {
       package = pkgs.emacsWithPackagesFromUsePackage {
         config = pkgs.writeTextFile {
           text = ''
-            ${builtins.readFile "${root}/conf/emacs/init.el"}
+            ${builtins.readFile ../conf/emacs/init.el}
             ${config.programs.emacs.extraConfig}
           '';
           name = "config.el";
@@ -283,8 +282,6 @@ in {
       compression = true;
       controlMaster = "auto";
     };
-
-    starship = import ./starship.nix args;
 
     tealdeer = {
       enable = true;

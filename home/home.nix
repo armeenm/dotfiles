@@ -3,7 +3,6 @@
 , enableSocial
 , pkgs
 , lib
-, root
 , user
 , inputs
 , stateVersion
@@ -37,13 +36,13 @@ in {
 
     file = {
       dnscheck = {
-        source = "${root}/conf/bin/dnscheck.sh";
+        source = ../conf/bin/dnscheck.sh;
         target = ".local/bin/dnscheck";
         executable = true;
       };
 
       sshrc = {
-        source = "${root}/conf/ssh/rc";
+        source = ../conf/ssh/rc;
         target = ".ssh/rc";
         executable = true;
       };
