@@ -162,6 +162,7 @@ in {
           ''[sh -c "f=$(mktemp); cat - > $f; emacsclient -c $f; rm $f"] Control+Shift+g'';
 
         main = {
+          font = lib.mkForce "Tamsyn:size=12";
           term = "xterm-256color";
           pad = "20x20";
         };
@@ -554,6 +555,11 @@ in {
       '';
     };
 
+    vscode = {
+      enable = true;
+      package = pkgs.vscode.fhs;
+    };
+
     yt-dlp = {
       enable = enableSocial;
       settings = {
@@ -694,6 +700,8 @@ in {
           zle redisplay
         }
         zle -N clear-screen scroll-top
+
+        . $HOME/.env
       '';
 
       zsh-abbr = {

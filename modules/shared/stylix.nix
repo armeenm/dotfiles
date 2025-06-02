@@ -22,8 +22,8 @@
       };
 
       monospace = {
-        package = pkgs.tamsyn;
-        name = "Tamsyn";
+        package = pkgs.fira-code;
+        name = "Fira Code";
       };
     };
 

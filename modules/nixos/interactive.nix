@@ -97,6 +97,7 @@
   };
 
   services = {
+    fprintd.enable = true;
     gnome.gnome-keyring.enable = true;
     gvfs.enable = true;
     mozillavpn.enable = true;

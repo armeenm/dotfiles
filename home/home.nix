@@ -15,7 +15,11 @@ let
   hyprland-qtutils = inputs.hyprland-qtutils.packages.${hostPlatform.system}.default;
 
   editor = lib.getBin (pkgs.writeShellScript "editor" ''
-    exec ${lib.getBin config.services.emacs.package}/bin/emacsclient -ct $@
+    if [ -z "''${WAYLAND_DISPLAY+x}" ]; then
+      exec ${lib.getBin config.services.emacs.package}/bin/emacsclient -ct $@
+    else
+      exec ${lib.getBin config.services.emacs.package}/bin/emacsclient -c $@
+    fi
   '');
 
   hashOverride = drv: hash: (drv.overrideAttrs (old: {
@@ -59,6 +63,7 @@ in {
       ffmpeg
       file
       git-filter-repo
+      glow
       hexyl
       hyperfine
       iperf
@@ -206,9 +211,8 @@ in {
       noti = "noti ";
       sudo = "sudo ";
 
-      e = "${editor}";
-      vi = "${editor} -t";
-      vim = "${editor} -t";
+      vi = "${editor}";
+      vim = "${editor}";
     } // lib.optionalAttrs hostPlatform.isLinux {
       doas = "doas ";
     };
