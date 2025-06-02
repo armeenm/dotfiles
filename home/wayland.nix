@@ -29,7 +29,6 @@ in {
       plugins = let
         hyprland-plugins = inputs.hyprland-plugins.packages.${pkgs.system};
       in [
-        hyprland-plugins.hyprscrolling
         hyprland-plugins.xtra-dispatchers
         inputs.hypr-darkwindow.packages.${pkgs.system}.Hypr-DarkWindow
         inputs.hypr-dynamic-cursors.packages.${pkgs.system}.default
@@ -38,7 +37,6 @@ in {
       ];
 
       settings = {
-        misc.vfr = true;
         monitor = [ ",preferred,auto,1" ];
 
         animation = [
@@ -106,8 +104,6 @@ in {
         };
 
         plugin = {
-          hyprscrolling.fullscreen_on_one_column = true;
-
           dynamic-cursors = {
             enabled = true;
             mode = "none";

@@ -89,6 +89,7 @@ in
             iifname "${wan}" ct state { established, related } counter accept
             iifname "${wan}" tcp dport 443 counter accept
             iifname "${wan}" tcp dport 80 counter accept
+            iifname "${wan}" tcp dport 22 counter accept
             iifname "${wan}" drop
           }
 

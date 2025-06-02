@@ -701,7 +701,7 @@ in {
         }
         zle -N clear-screen scroll-top
 
-        . $HOME/.env
+        [[ ! -f ~/.env ]] || source ~/.env
       '';
 
       zsh-abbr = {

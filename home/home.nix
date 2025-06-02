@@ -165,7 +165,7 @@ in {
       yubikey-manager
 
     ] ++ (lib.optionals enableSocial [
-      aider-chat-full
+      #aider-chat-full
       discord
       element-desktop
       monero-gui
