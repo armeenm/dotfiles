@@ -78,6 +78,7 @@ in {
       nix-inspect
       nix-output-monitor
       nix-tree
+      nixd
       nmap
       nurl
       onefetch

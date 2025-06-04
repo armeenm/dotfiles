@@ -43,6 +43,8 @@
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
 
+  programs.fw-fanctrl.enable = true;
+
   services = {
     hardware.bolt.enable = true;
     xserver.videoDrivers = [ "intel" ];

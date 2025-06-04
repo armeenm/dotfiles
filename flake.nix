@@ -29,6 +29,11 @@
       inputs.nixpkgs-stable.follows = "nixpkgs-stable";
     };
 
+    fw-fanctrl = {
+      url = "github:TamtamHero/fw-fanctrl/packaging/nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -179,6 +184,7 @@
           nixosModules.nixosInteractive
           nixosModules.nixosUser
           inputs.nixos-hardware.nixosModules.framework-12th-gen-intel
+          inputs.fw-fanctrl.nixosModules.default
           ./hosts/argentum
         ];
       };
