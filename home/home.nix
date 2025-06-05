@@ -130,6 +130,7 @@ in {
       libnotify
       libreoffice-fresh
       material-design-icons
+      meld
       moonlight-qt
       nomacs
       noto-fonts
@@ -166,7 +167,7 @@ in {
       yubikey-manager
 
     ] ++ (lib.optionals enableSocial [
-      #aider-chat-full
+      aider-chat
       discord
       element-desktop
       monero-gui

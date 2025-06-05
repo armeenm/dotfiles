@@ -201,6 +201,12 @@ in {
         wt = "worktree";
       };
 
+      ignores = [
+        ".aider*"
+        "!.aider.conf.yml"
+        "!.aiderignore"
+      ];
+
       delta = {
         enable = true;
         options = {
@@ -210,10 +216,16 @@ in {
       };
 
       extraConfig = {
-        init.defaultBranch = "master";
-        credential.helper = "store";
         core.editor = ''${config.home.sessionVariables.EDITOR}'';
+        credential.helper = "store";
+        init.defaultBranch = "master";
         push.autoSetupRemote = true;
+
+        diff.guitool = "meld";
+        "difftool \"meld\"".cmd = ''meld "$LOCAL" "$REMOTE"'';
+
+        merge.guitool = "meld";
+        "mergetool \"meld\"".cmd = ''meld "$LOCAL" "$BASE" "$REMOTE" --output "$MERGED"'';
       };
     };
 
