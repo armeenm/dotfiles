@@ -59,6 +59,7 @@ in {
       dos2unix
       duf
       fasd
+      fastmod
       fd
       ffmpeg
       file
@@ -129,7 +130,6 @@ in {
       hyprswitch
       libnotify
       libreoffice-fresh
-      material-design-icons
       meld
       moonlight-qt
       nomacs

@@ -1,4 +1,4 @@
-{ lib, user, ... }:
+{ lib, user, pkgs, ... }:
 
 {
   boot = {
@@ -30,7 +30,16 @@
     extraSpecialArgs.isPortable = true;
 
     users."${user.login}" = {
-      services.wluma.enable = true;
+      systemd.user.services = {
+        mpvpaper = lib.mkForce {};
+        rclone-cobalt = lib.mkForce {};
+        rclone-oxygen = lib.mkForce {};
+      };
+
+      services = {
+        wluma.enable = true;
+        safeeyes.enable = false;
+      };
     };
   };
 
@@ -47,7 +56,7 @@
 
   services = {
     hardware.bolt.enable = true;
-    xserver.videoDrivers = [ "intel" ];
+    xserver.videoDrivers = [ "intel" "displaylink" "modesetting" ];
 
     logind = {
       powerKey = "suspend";
@@ -73,4 +82,10 @@
       defaultNetwork.settings.dns_enabled = true;
     };
   };
+
+  environment.systemPackages = with pkgs; [
+    displaylink
+  ];
+
+  systemd.services.dlm.wantedBy = [ "multi-user.target" ];
 }

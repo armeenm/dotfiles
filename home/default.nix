@@ -24,7 +24,14 @@ in {
   ];
 
   fonts.fontconfig.enable = !isHeadless;
-  gtk.enable = !isHeadless;
   qt.enable = !isHeadless;
   targets.genericLinux.enable = hostPlatform.isLinux && isStandalone;
+
+  gtk = {
+    enable = !isHeadless;
+    iconTheme = {
+      name = "Rose Pine";
+      package = pkgs.rose-pine-icon-theme;
+    };
+  };
 }

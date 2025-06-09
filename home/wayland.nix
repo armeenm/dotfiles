@@ -37,7 +37,7 @@ in {
       ];
 
       settings = {
-        monitor = [ ",preferred,auto,1" ];
+        monitor = [ ",preferred,auto,1.25" ];
 
         animation = [
           "global,1,2,default"

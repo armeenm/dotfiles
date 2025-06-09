@@ -26,7 +26,6 @@ in {
     htop.enable = true;
     imv.enable = !isHeadless;
     mergiraf.enable = true;
-    mods.enable = enableSocial;
     navi.enable = true;
     nix-index-database.comma.enable = true;
     nix-init.enable = true;
@@ -36,7 +35,6 @@ in {
     ripgrep-all.enable = true;
     ripgrep.enable = true;
     scmpuff.enable = true;
-    tmate.enable = enableSocial;
     yazi.enable = true;
     zoxide.enable = true;
 
@@ -162,7 +160,7 @@ in {
           ''[sh -c "f=$(mktemp); cat - > $f; emacsclient -c $f; rm $f"] Control+Shift+g'';
 
         main = {
-          font = lib.mkForce "Tamsyn:size=12";
+          #font = lib.mkForce "Tamsyn:size=12";
           term = "xterm-256color";
           pad = "20x20";
         };
@@ -251,6 +249,37 @@ in {
     };
 
     lesspipe.enable = true;
+
+    mods = {
+      enable = enableSocial;
+      settings = {
+        default-api = "openrouter";
+        default-model = "gemini-flash";
+
+        apis.openrouter = {
+          base-url = "https://openrouter.ai/api/v1";
+          api-key-env = "OPENROUTER_API_KEY";
+          models = {
+            "google/gemini-2.5-pro-preview" = {
+              aliases = [ "gemini-pro" ];
+              max-input-chars = 600000;
+            };
+
+            "google/gemini-2.5-flash-preview-05-20" = {
+              aliases = [ "gemini-flash" ];
+              max-input-chars = 600000;
+            };
+          };
+        };
+
+        roles.shell = [
+          "you are a shell expert"
+          "you do not explain anything"
+          "you simply output one liners to solve the problems you're asked"
+          "you do not provide any explanation whatsoever, ONLY the command"
+        ];
+      };
+    };
 
     mpv = {
       enable = !isHeadless;
@@ -570,6 +599,11 @@ in {
     vscode = {
       enable = true;
       package = pkgs.vscode.fhs;
+      profiles.default = {
+        userSettings = {
+          "vim.foldfix" = true;
+        };
+      };
     };
 
     yt-dlp = {
