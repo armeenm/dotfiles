@@ -37,7 +37,7 @@ in {
       ];
 
       settings = {
-        monitor = [ ",preferred,auto,1.25" ];
+        monitor = [ ",preferred,auto,1" ];
 
         animation = [
           "global,1,2,default"
@@ -172,7 +172,7 @@ in {
         in [
           "SUPER_SHIFT,return,exec,footclient"
           "SUPER,Q,killactive,"
-          "SUPER_SHIFT,backspace,exit,"
+          "SUPER_SHIFT,equal,exit,"
           "SUPER,backspace,forcerendererreload"
           "SUPER,space,togglefloating,"
           "SUPER_SHIFT,space,pin"

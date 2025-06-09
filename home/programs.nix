@@ -766,6 +766,7 @@ in {
           n = "nix";
           nb = "numbat";
           nfu = "nix flake update";
+          pls = "sudo !!";
           rlf = "readlink -f";
           rscp = "rsync -ahvP";
           sw = "nh os switch";

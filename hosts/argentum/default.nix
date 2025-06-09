@@ -38,8 +38,11 @@
 
       services = {
         wluma.enable = true;
-        safeeyes.enable = false;
+        safeeyes.enable = lib.mkForce false;
       };
+
+
+      wayland.windowManager.hyprland.settings.monitor = lib.mkForce [ ",preferred,auto,1.25" ];
     };
   };
 

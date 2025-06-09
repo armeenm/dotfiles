@@ -128,6 +128,8 @@ in {
       hyprpicker
       hyprshot
       hyprswitch
+      kdePackages.breeze-icons
+      kdePackages.dolphin
       libnotify
       libreoffice-fresh
       meld
@@ -145,6 +147,7 @@ in {
       pulseaudio
       rose-pine-hyprcursor
       satty
+      scrcpy
       shikane
       simple-scan
       slurp
@@ -170,8 +173,8 @@ in {
       aider-chat
       discord
       element-desktop
+      kotatogram-desktop
       monero-gui
-      telegram-desktop
       whatsapp-for-linux
       zoom-us
 
@@ -198,8 +201,8 @@ in {
       MANROFFOPT = "-c";
 
       # Wayland
-      MOZ_ENABLE_WAYLAND = "1";
-      NIXOS_OZONE_WL = "1";
+      MOZ_ENABLE_WAYLAND = 1;
+      NIXOS_OZONE_WL = 1;
       XKB_DEFAULT_OPTIONS = "caps:escape";
       _JAVA_AWT_WM_NONREPARENTING = 1;
 
