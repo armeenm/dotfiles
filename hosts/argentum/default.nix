@@ -41,7 +41,6 @@
         safeeyes.enable = lib.mkForce false;
       };
 
-
       wayland.windowManager.hyprland.settings.monitor = lib.mkForce [ ",preferred,auto,1.25" ];
     };
   };

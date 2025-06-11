@@ -1,14 +1,14 @@
-(setq debug-on-error nil)
+(setq debug-on-error t)
 (auto-compression-mode 1)
 (push '(menu-bar-lines . 0) default-frame-alist)
 (push '(tool-bar-lines . nil) default-frame-alist)
 (push '(vertical-scroll-bars . nil) default-frame-alist)
 
-(set-face-attribute 'default nil
-                    :family "Tamsyn"
-                    :height 120
-                    :weight 'normal
-                    :width 'normal)
+;; (set-face-attribute 'default nil
+;;                     :family "Tamsyn"
+;;                     :height 120
+;;                     :weight 'normal
+;;                     :width 'normal)
 
 (setq gc-cons-threshold most-positive-fixnum)
 
@@ -243,8 +243,7 @@
   (add-to-list 'completion-at-point-functions #'cape-rfc1345)
   (add-to-list 'completion-at-point-functions #'cape-abbrev)
   (add-to-list 'completion-at-point-functions #'cape-dict)
-  (add-to-list 'completion-at-point-functions #'cape-elisp-symbol)
-  (add-to-list 'completion-at-point-functions #'cape-line))
+  (add-to-list 'completion-at-point-functions #'cape-elisp-symbol))
 
 (use-package color-identifiers-mode
   :config
@@ -396,6 +395,19 @@
   (general-def 'visual
     "A" 'evil-mc-make-cursor-in-visual-selection-end
     "I" 'evil-mc-make-cursor-in-visual-selection-beg))
+
+(use-package gptel
+  :config
+  (setq gptel-model 'google/gemini-2.5-flash-preview-05-20
+        gptel-backend
+        (gptel-make-openai "OpenRouter"
+                           :host "openrouter.ai"
+                           :endpoint "/api/v1/chat/completions"
+                           :stream t
+                           :key "foo"
+                           :models '(google/gemini-2.5-pro-preview
+                                     google/gemini-2.5-flash-preview-05-20
+                                     x-ai/grok-3-beta))))
 
 (use-package highlight-thing
   :config
