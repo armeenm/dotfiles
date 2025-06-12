@@ -208,7 +208,7 @@ in {
       delta = {
         enable = true;
         options = {
-          syntax-theme = "ayu";
+          syntax-theme = "base16-stylix";
           line-numbers = true;
         };
       };
