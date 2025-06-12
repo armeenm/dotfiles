@@ -34,6 +34,22 @@
       auto-save-timeout 20
       auto-save-interval 200)
 
+;; Move autosave and lockfiles to .emacs.d
+
+(let ((save-files-directory
+          (file-name-concat user-emacs-directory
+                               "auto-save/")))
+  (make-directory save-files-directory :parents)
+  (setq auto-save-file-name-transforms
+    `((".*" ,save-files-directory t))))
+
+(let ((lock-files-directory
+          (file-name-concat user-emacs-directory
+                               "lock-files/")))
+  (make-directory lock-files-directory :parents)
+  (setq lock-file-name-transforms
+    `((".*" ,lock-files-directory t))))
+
 (setq visual-bell 1)
 
 ;; TODO DEBUGGING
@@ -299,6 +315,10 @@
 (use-package diff-hl
   :config
   (global-diff-hl-mode))
+
+(use-package editorconfig
+  :config
+  (editorconfig-mode 1))
 
 (use-package embark
   :after frames-only-mode

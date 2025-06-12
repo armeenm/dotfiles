@@ -13,6 +13,7 @@ let
   inherit (pkgs.stdenv) hostPlatform;
 
   hyprland-qtutils = inputs.hyprland-qtutils.packages.${hostPlatform.system}.default;
+  hyprshell = inputs.hyprshell.packages.${hostPlatform.system}.hyprshell;
 
   editor = lib.getBin (pkgs.writeShellScript "editor" ''
     if [ -z "''${WAYLAND_DISPLAY+x}" ]; then
@@ -49,6 +50,11 @@ in {
         source = ../conf/ssh/rc;
         target = ".ssh/rc";
         executable = true;
+      };
+
+      aider = {
+        source = ../conf/aider/aider.conf.yml;
+        target = ".aider.conf.yml";
       };
     };
 
@@ -126,8 +132,8 @@ in {
       httpie-desktop
       hyprland-qtutils
       hyprpicker
+      hyprshell
       hyprshot
-      hyprswitch
       kdePackages.breeze-icons
       kdePackages.dolphin
       libnotify

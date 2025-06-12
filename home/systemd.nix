@@ -73,7 +73,8 @@ in {
           };
         };
 
-        hyprswitch = {
+        /*
+        hyprshell = {
           Install.WantedBy = [ "graphical-session.target" ];
 
           Unit = {
@@ -86,6 +87,7 @@ in {
             ExecStart = "${pkgs.hyprswitch}/bin/hyprswitch init";
           };
         };
+*/
 
         rclone-cobalt = rclone "cobalt";
         rclone-oxygen = rclone "oxygen";
