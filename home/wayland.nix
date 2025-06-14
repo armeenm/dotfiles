@@ -171,7 +171,7 @@ in {
 
         in [
           "SUPER_SHIFT,return,exec,footclient"
-          "SUPER,Q,killactive,"
+          "SUPER_SHIFT,Q,killactive,"
           "SUPER_SHIFT,equal,exit,"
           "SUPER,backspace,forcerendererreload"
           "SUPER,space,togglefloating,"

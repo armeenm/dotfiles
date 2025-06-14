@@ -15,8 +15,10 @@ in {
     ./services.nix
     ./starship.nix
     ./systemd.nix
+    ./waybar.nix
     ./wayland.nix
     ./xdg.nix
+    ./zsh.nix
   ] ++ lib.optionals isStandalone [
     ./wrappers.nix
     ../modules/shared/nix.nix
