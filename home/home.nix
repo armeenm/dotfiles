@@ -151,6 +151,7 @@ in {
       pavucontrol
       playerctl
       pulseaudio
+      remmina
       rose-pine-hyprcursor
       satty
       scrcpy

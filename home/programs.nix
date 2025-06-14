@@ -254,20 +254,55 @@ in {
       enable = enableSocial;
       settings = {
         default-api = "openrouter";
-        default-model = "gemini-flash";
+        default-model = "sonnet";
 
         apis.openrouter = {
           base-url = "https://openrouter.ai/api/v1";
           api-key-env = "OPENROUTER_API_KEY";
           models = {
+            "anthropic/claude-3.5-haiku" = {
+              aliases = [ "haiku" ];
+              max-input-chars = 200000;
+            };
+
+            "anthropic/claude-sonnet-4" = {
+              aliases = [ "sonnet" ];
+              max-input-chars = 200000;
+            };
+
+            "anthropic/claude-opus-4" = {
+              aliases = [ "opus" ];
+              max-input-chars = 200000;
+            };
+
+            "deepseek/deepseek-r1-0528" = {
+              aliases = [ "r1" ];
+              max-input-chars = 128000;
+            };
+
             "google/gemini-2.5-pro-preview" = {
               aliases = [ "gemini-pro" ];
-              max-input-chars = 600000;
+              max-input-chars = 1048576;
             };
 
             "google/gemini-2.5-flash-preview-05-20" = {
               aliases = [ "gemini-flash" ];
-              max-input-chars = 600000;
+              max-input-chars = 1048576;
+            };
+
+            "openai/gpt-4.1" = {
+              aliases = [ "gpt" ];
+              max-input-chars = 1047576;
+            };
+
+            "openai/o3-mini-high" = {
+              aliases = [ "o3mini" ];
+              max-input-chars = 200000;
+            };
+
+            "x-ai/grok-3-beta" = {
+              aliases = [ "grok" ];
+              max-input-chars = 131072;
             };
           };
         };
