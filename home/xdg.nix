@@ -12,6 +12,7 @@ in
 {
   xdg = {
     enable = true;
+    autostart.enable = false;
     portal.config.common.default = "hyprland";
 
     configFile = {

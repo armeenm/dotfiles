@@ -55,14 +55,14 @@ function precmd {
 
 function preexec {
   print -n "\e]133;C\e\\"
-  print -Pn "\e]0;''${(q)1}\e\\"
+  print -Pn "\e]0;${(q)1}\e\\"
 }
 
 function scroll-top() {
   local esc
   local -i ROW COL OFFSET
   IFS='[;' read -sdR $'esc?\e[6n' ROW COL <$TTY
-  OFFSET="''${#''${(@Af)PREBUFFER%$'\n'}}"+"''${#''${(@Af)LBUFFER:-1}}"
+  OFFSET="${#${(@Af)PREBUFFER%$'\n'}}"+"${#${(@Af)LBUFFER:-1}}"
   (( ROW-OFFSET )) && printf '\e[%1$dS\e[%1$dA' ROW-OFFSET
   zle redisplay
 }

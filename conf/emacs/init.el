@@ -1,4 +1,4 @@
-(setq debug-on-error t)
+;; (setq debug-on-error t)
 (auto-compression-mode 1)
 (push '(menu-bar-lines . 0) default-frame-alist)
 (push '(tool-bar-lines . nil) default-frame-alist)

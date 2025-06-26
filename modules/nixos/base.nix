@@ -42,6 +42,7 @@
   };
 
   services = {
+    chrony.enable = true;
     devmon.enable = true;
     fstrim.enable = true;
     fwupd.enable = true;
@@ -79,6 +80,8 @@
     suppressedSystemUnits = [
       "sys-kernel-debug.mount"
     ];
+
+    services.systemd-timesyncd.enable = false;
   };
 
   security = {
@@ -92,20 +95,11 @@
     polkit.enable = true;
     rtkit.enable = true;
     sudo.enable = false;
+    sudo-rs.enable = true;
 
     audit = {
       enable = false;
       rules = [ ];
-    };
-
-    doas = {
-      enable = true;
-      extraRules = [{
-        groups = [ "wheel" ];
-        keepEnv = true;
-        noPass = false;
-        persist = true;
-      }];
     };
 
     tpm2 = {
@@ -169,7 +163,6 @@
     pathsToLink = [ "/share/zsh" ];
 
     systemPackages = with pkgs; [
-      doas-sudo-shim
       ethtool
       hdparm
       keyutils
@@ -199,6 +192,8 @@
         nvd diff $(ls -dv /nix/var/nix/profiles/system-*-link | tail -2)
     '';
   };
+
+  xdg.autostart.enable = lib.mkForce false;
 
   zramSwap.enable = true;
 }

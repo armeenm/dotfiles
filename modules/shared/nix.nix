@@ -24,6 +24,7 @@
         "auto-allocate-uids"
         "ca-derivations"
         "flakes"
+        "impure-derivations"
         "nix-command"
         "recursive-nix"
       ];

@@ -30,7 +30,7 @@ in {
         hyprland-plugins = inputs.hyprland-plugins.packages.${pkgs.system};
       in [
         hyprland-plugins.xtra-dispatchers
-        inputs.hypr-darkwindow.packages.${pkgs.system}.Hypr-DarkWindow
+        #inputs.hypr-darkwindow.packages.${pkgs.system}.Hypr-DarkWindow
         inputs.hypr-dynamic-cursors.packages.${pkgs.system}.default
         inputs.hyprspace.packages.${pkgs.system}.Hyprspace
         inputs.hyprsplit.packages.${pkgs.system}.hyprsplit
@@ -40,8 +40,8 @@ in {
         monitor = [ ",preferred,auto,1" ];
 
         animation = [
-          "global,1,2,default"
-          "specialWorkspace,0"
+          "global, 1, 2, default"
+          "specialWorkspace, 0"
         ];
 
         decoration = {
@@ -68,7 +68,7 @@ in {
         };
 
         env = [
-          "HYPRCURSOR_THEME,rose-pine-hyprcursor"
+          "HYPRCURSOR_THEME, rose-pine-hyprcursor"
         ];
 
         dwindle = {
@@ -76,18 +76,7 @@ in {
           preserve_split = true;
         };
 
-        workspace = [
-          # "No gaps when only" functionality.
-          "w[tv1], gapsout:0, gapsin:0"
-          "f[1], gapsout:0, gapsin:0"
-        ];
-
-        # "No gaps when only" functionality.
         windowrulev2 = [
-          "bordersize 0, floating:0, onworkspace:w[tv1]"
-          "rounding 0, floating:0, onworkspace:w[tv1]"
-          "bordersize 0, floating:0, onworkspace:f[1]"
-          "rounding 0, floating:0, onworkspace:f[1]"
           "float, class:com.gabm.satty"
           "idleinhibit fullscreen, fullscreen:1"
         ];
@@ -120,8 +109,32 @@ in {
         };
 
         bindm = [
-          "SUPER,mouse:272,movewindow"
-          "SUPER,mouse:273,resizewindow"
+          "SUPER, mouse:272, movewindow"
+          "SUPER, mouse:273, resizewindow"
+        ];
+
+        binde = let
+          backlight = pkgs.writeShellScript "hyprland-backlight" ''
+            set -euo pipefail
+            brightnessctl s "$1"
+            brightnessctl -m | awk -F',' '{print substr($4, 1, length($4)-1)}' > "$XDG_RUNTIME_DIR"/wob.sock
+          '';
+
+          volume = pkgs.writeShellScript "hyprland-volume" ''
+            set -euo pipefail
+            wpctl set-volume @DEFAULT_AUDIO_SINK@ "$@"
+            wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{ print $2*100 }' > "$XDG_RUNTIME_DIR"/wob.sock
+          '';
+        in [
+          ",XF86AudioRaiseVolume,  exec, ${volume} -l 1.5 5%+"
+          ",XF86AudioRaiseVolume,  exec, ${volume} 5%-"
+          ",XF86MonBrightnessUp,   exec, ${backlight} +5%"
+          ",XF86MonBrightnessDown, exec, ${backlight} 5%-"
+
+          "SUPER_ALT, H, resizeactive, -30 0"
+          "SUPER_ALT, J, resizeactive, 0 30"
+          "SUPER_ALT, K, resizeactive, 0 -30"
+          "SUPER_ALT, L, resizeactive, 30 0"
         ];
 
         bind = let
@@ -157,123 +170,91 @@ in {
             notify-send "Screen recording saved" "Recording saved to $filepath" -a wl-screenrec
           '';
 
-          backlight = pkgs.writeShellScript "hyprland-backlight" ''
-            set -euo pipefail
-            brightnessctl s "$1"
-            brightnessctl -m | awk -F',' '{print substr($4, 1, length($4)-1)}' > "$XDG_RUNTIME_DIR"/wob.sock
-          '';
-
-          volume = pkgs.writeShellScript "hyprland-volume" ''
-            set -euo pipefail
-            pamixer "$@"
-            pamixer --get-volume > "$XDG_RUNTIME_DIR"/wob.sock
-          '';
+          screenshot = x: ''hyprshot -zm ${x} -r - | satty -f - -o ~/ss/satty-$(date '+%Y%m%d-%H:%M:%S').png'';
 
         in [
-          "SUPER_SHIFT,return,exec,footclient"
-          "SUPER_SHIFT,Q,killactive,"
-          "SUPER_SHIFT,equal,exit,"
-          "SUPER,backspace,forcerendererreload"
-          "SUPER,space,togglefloating,"
-          "SUPER_SHIFT,space,pin"
-          "SUPER,D,exec,exec $(tofi-run)"
-          "SUPER_SHIFT,D,exec,exec $(tofi-drun)"
-          "SUPER,P,exec,emacsclient -c -n"
-          "SUPER,grave,overview:toggle"
-          "SUPER_SHIFT,P,pseudo,"
-          "SUPER,F,fullscreen,1"
-          "SUPER_SHIFT,F,fullscreen,0"
+          "SUPER, Q,         killactive,"
+          "SUPER, backspace, forcerendererreload"
+          "SUPER, space,     togglefloating,"
+          "SUPER, D,         exec, exec $(tofi-run)"
+          "SUPER, P,         exec, emacsclient -c -n"
+          "SUPER, grave,     overview:toggle"
+          "SUPER, F,         fullscreen, 1"
 
-          ''SUPER,C,exec,hyprshot -zm region -r - | satty -f - -o ~/ss/satty-$(date '+%Y%m%d-%H:%M:%S').png''
-          ''SUPER_SHIFT,C,exec,hyprshot -zm window -r - | satty -f - -o ~/ss/satty-$(date '+%Y%m%d-%H:%M:%S').png''
-          ''SUPER_CTRL,C,exec,hyprshot -zm output -r - | satty -f - -o ~/ss/satty-$(date '+%Y%m%d-%H:%M:%S').png''
+          "SUPER_SHIFT, return, exec,footclient"
+          "SUPER_SHIFT, Q,      killactive,"
+          "SUPER_SHIFT, equal,  exit,"
+          "SUPER_SHIFT, space,  pin"
+          "SUPER_SHIFT, D,      exec,exec $(tofi-drun)"
+          "SUPER_SHIFT, P,      pseudo,"
+          "SUPER_SHIFT, F,      fullscreen,0"
 
-          "SUPER,V,exec,${screenrec} region"
-          "SUPER_SHIFT,V,exec,${screenrec} window"
-          "SUPER_CTRL,V,exec,${screenrec} screen"
-          "SUPER_ALT,V,exec,pkill -SIGINT wl-screenrec"
+          "SUPER,       C, exec, ${screenshot "region"}"
+          "SUPER_SHIFT, C, exec, ${screenshot "window"}"
+          "SUPER_CTRL,  C, exec, ${screenshot "output"}"
 
-          "SUPER,W,focusmonitor,l"
-          "SUPER,E,focusmonitor,r"
-          "SUPER_SHIFT,W,movewindow,mon:l"
-          "SUPER_SHIFT,E,movewindow,mon:r"
-          "SUPER_ALT,W,movecurrentworkspacetomonitor,l"
-          "SUPER_ALT,E,movecurrentworkspacetomonitor,r"
+          "SUPER,       V, exec, ${screenrec} region"
+          "SUPER_SHIFT, V, exec, ${screenrec} window"
+          "SUPER_CTRL,  V, exec, ${screenrec} screen"
+          "SUPER_ALT,   V, exec, pkill -SIGINT wl-screenrec"
 
-          "SUPER_ALT,H,resizeactive,-30 0"
-          "SUPER_ALT,J,resizeactive,0 30"
-          "SUPER_ALT,K,resizeactive,0 -30"
-          "SUPER_ALT,L,resizeactive,30 0"
+          "SUPER,       W, focusmonitor, l"
+          "SUPER,       E, focusmonitor, r"
+          "SUPER_SHIFT, W, movewindow, mon:l"
+          "SUPER_SHIFT, E, movewindow, mon:r"
+          "SUPER_ALT,   W, movecurrentworkspacetomonitor, l"
+          "SUPER_ALT,   E, movecurrentworkspacetomonitor, r"
 
-          "SUPER,tab,exec,hyprswitch gui --mod-key super --key tab --close mod-key-release --reverse-key=key=grave --sort-recent && hyprswitch dispatch"
+          "SUPER, tab, exec, hyprswitch gui --mod-key super --key tab --close mod-key-release --reverse-key=key=grave --sort-recent && hyprswitch dispatch"
 
-          "SUPER,minus,togglespecialworkspace"
-          "SUPER_SHIFT,Z,togglesplit"
-          "SUPER,Z,swapsplit"
-          "SUPER,T,togglegroup"
-          "SUPER,I,invertactivewindow"
+          "SUPER_SHIFT, Z, togglesplit"
+          "SUPER, Z, swapsplit"
+          "SUPER, T, togglegroup"
+          "SUPER, I, invertactivewindow"
 
-          "SUPER,N,changegroupactive,b"
-          "SUPER,M,changegroupactive,f"
+          "SUPER, N, changegroupactive,b"
+          "SUPER, M, changegroupactive,f"
 
-          "SUPER,H,movefocus,l"
-          "SUPER,J,movefocus,d"
-          "SUPER,K,movefocus,u"
-          "SUPER,L,movefocus,r"
+          "SUPER, H, movefocus,l"
+          "SUPER, J, movefocus,d"
+          "SUPER, K, movefocus,u"
+          "SUPER, L, movefocus,r"
 
-          "SUPER_SHIFT,H,movewindow,l"
-          "SUPER_SHIFT,J,movewindow,d"
-          "SUPER_SHIFT,K,movewindow,u"
-          "SUPER_SHIFT,L,movewindow,r"
+          "SUPER_SHIFT, H, movewindow,l"
+          "SUPER_SHIFT, J, movewindow,d"
+          "SUPER_SHIFT, K, movewindow,u"
+          "SUPER_SHIFT, L, movewindow,r"
 
-          "SUPER,1,split:workspace,1"
-          "SUPER,2,split:workspace,2"
-          "SUPER,3,split:workspace,3"
-          "SUPER,4,split:workspace,4"
-          "SUPER,5,split:workspace,5"
-          "SUPER,6,split:workspace,6"
-          "SUPER,7,split:workspace,7"
-          "SUPER,8,split:workspace,8"
-          "SUPER,9,split:workspace,9"
-          "SUPER,0,split:workspace,10"
+          "SUPER,       minus, togglespecialworkspace"
+          "SUPER_SHIFT, minus, movetoworkspacesilent,special"
 
-          "SUPER_SHIFT,1,split:movetoworkspacesilent,1"
-          "SUPER_SHIFT,2,split:movetoworkspacesilent,2"
-          "SUPER_SHIFT,3,split:movetoworkspacesilent,3"
-          "SUPER_SHIFT,4,split:movetoworkspacesilent,4"
-          "SUPER_SHIFT,5,split:movetoworkspacesilent,5"
-          "SUPER_SHIFT,6,split:movetoworkspacesilent,6"
-          "SUPER_SHIFT,7,split:movetoworkspacesilent,7"
-          "SUPER_SHIFT,8,split:movetoworkspacesilent,8"
-          "SUPER_SHIFT,9,split:movetoworkspacesilent,9"
-          "SUPER_SHIFT,0,split:movetoworkspacesilent,10"
-          "SUPER_SHIFT,minus,movetoworkspacesilent,special"
+          "SUPER_CTRL, J, split:workspace,e-1"
+          "SUPER_CTRL, K, split:workspace,e+1"
 
-          "SUPER_CTRL,J,split:workspace,e-1"
-          "SUPER_CTRL,K,split:workspace,e+1"
-          "SUPER,mouse_up,split:workspace,e-1"
-          "SUPER,mouse_down,split:workspace,e+1"
+          "SUPER, mouse_up, split:workspace,e-1"
+          "SUPER, mouse_down, split:workspace,e+1"
 
-          "SUPER,A,exec,makoctl dismiss"
-          "SUPER_SHIFT,A,exec,makoctl dismiss -a"
-          "SUPER,S,exec,makoctl mode -s do-not-disturb && pkill -SIGRTMIN+1 waybar"
-          "SUPER_SHIFT,S,exec,makoctl mode -s default && pkill -SIGRTMIN+1 waybar"
-          "SUPER,X,exec,loginctl lock-session"
-          "SUPER_SHIFT,X,exec,sleep 2 && systemctl suspend"
-          "SUPER,B,exec,woomer"
+          "SUPER,       A, exec, makoctl dismiss"
+          "SUPER_SHIFT, A, exec, makoctl dismiss -a"
+          "SUPER,       S, exec, makoctl mode -s do-not-disturb && pkill -SIGRTMIN+1 waybar"
+          "SUPER_SHIFT, S, exec, makoctl mode -s default && pkill -SIGRTMIN+1 waybar"
+          "SUPER,       X, exec, loginctl lock-session"
+          "SUPER_SHIFT, X, exec, sleep 2 && systemctl suspend"
+          "SUPER,       B, exec, woomer"
 
-          ",xf86audiopause,exec,playerctl play-pause"
-          ",xf86audioplay,exec,playerctl play-pause"
-          ",xf86audiostop,exec,playerctl stop"
-          ",xf86audioprev,exec,playerctl previous"
-          ",xf86audionext,exec,playerctl next"
-          ",xf86monbrightnessup,exec,${backlight} +5%"
-          ",xf86monbrightnessdown,exec,${backlight} 5%-"
-          ",xf86audioraisevolume,exec,${volume} -i 5"
-          ",xf86audiolowervolume,exec,${volume} -d 5"
-          ",xf86audiomute,exec,pamixer -t"
-          ",xf86audiomicmute,exec,pamixer --default-source -t"
-        ];
+          ",XF86AudioPause,   exec, playerctl play-pause"
+          ",XF86AudioPlay,    exec, playerctl play-pause"
+          ",XF86AudioStop,    exec, playerctl stop"
+          ",XF86AudioPrev,    exec, playerctl previous"
+          ",XF86AudioNext,    exec, playerctl next"
+          ",XF86AudioMute,    exec, pamixer -t"
+          ",XF86AudioMicMute, exec, pamixer --default-source -t"
+        ] ++ builtins.concatMap
+          (x: [
+            "SUPER,       ${toString (lib.mod x 10)}, split:workspace, ${toString x}"
+            "SUPER_SHIFT, ${toString (lib.mod x 10)}, split:movetoworkspacesilent, ${toString x}"
+          ])
+          (lib.range 1 10);
       };
     };
   };
