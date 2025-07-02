@@ -177,7 +177,7 @@
       git
       rsync
 
-      (hunspellWithDicts [ hunspellDicts.en_US hunspellDicts.en_US-large ])
+      #(hunspellWithDicts [ hunspellDicts.en_US hunspellDicts.en_US-large ])
     ];
   };
 

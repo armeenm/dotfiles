@@ -215,6 +215,7 @@ in {
       };
 
       extraConfig = {
+        advice.addEmptyPathspec = false;
         core.editor = ''${config.home.sessionVariables.EDITOR}'';
         credential.helper = "store";
         init.defaultBranch = "master";

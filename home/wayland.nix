@@ -210,7 +210,7 @@ in {
           "SUPER_SHIFT, Z, togglesplit"
           "SUPER, Z, swapsplit"
           "SUPER, T, togglegroup"
-          "SUPER, I, invertactivewindow"
+          #"SUPER, I, invertactivewindow"
 
           "SUPER, N, changegroupactive,b"
           "SUPER, M, changegroupactive,f"
