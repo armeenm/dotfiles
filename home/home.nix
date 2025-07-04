@@ -120,6 +120,7 @@ in {
 
     ] ++ (lib.optionals (!isHeadless) [
       brightnessctl
+      bruno
       cozette
       easyeffects
       feishin

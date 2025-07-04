@@ -182,7 +182,7 @@ in {
           };
           on-click = "hyprctl dispatch exec [float] ${pkgs.pavucontrol}/bin/pavucontrol";
           on-click-right = "${pkgs.pulseaudio}/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle";
-          scroll-step = 2.0;
+          scroll-step = 5.0;
           ignored-sinks = [ "Easy Effects Sink" ];
         };
 

@@ -61,6 +61,8 @@ in {
           };
 
           Service = {
+            Restart = "always";
+            RuntimeMaxSec = "1800";
             ExecStart = ''
               /bin/sh -c " \
                 ${pkgs.mpvpaper}/bin/mpvpaper -o \" \
