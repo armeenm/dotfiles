@@ -108,13 +108,10 @@ in {
       bluetuith
       bubblewrap
       cfspeedtest
-      dosfstools
-      exfatprogs
       gnuapl
       httpie
       libva-utils
       monero-cli
-      ntfs3g
       powertop
       strace
 
@@ -128,6 +125,7 @@ in {
       fira-code-symbols
       gimp-with-plugins
       google-chrome
+      gparted
       grim
       gtk3
       httpie-desktop

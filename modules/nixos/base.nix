@@ -177,6 +177,12 @@
       git
       rsync
 
+      bcachefs-tools
+      dosfstools
+      exfatprogs
+      f2fs-tools
+      ntfs3g
+
       #(hunspellWithDicts [ hunspellDicts.en_US hunspellDicts.en_US-large ])
     ];
   };

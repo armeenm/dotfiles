@@ -281,6 +281,7 @@
     "networkmanager"
     "plugdev"
     "scanner"
+    "wireshark"
   ];
 
   virtualisation = {
