@@ -132,8 +132,8 @@ in {
           interval = 1;
           on-click-middle = "hyprctl dispatch exec [float] foot clock-rs";
           timezones = [
+            ""
             "America/Los_Angeles"
-            "America/New_York"
             "Asia/Kolkata"
             "Etc/UTC"
           ];

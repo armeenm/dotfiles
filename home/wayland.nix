@@ -127,7 +127,7 @@ in {
           '';
         in [
           ",XF86AudioRaiseVolume,  exec, ${volume} -l 1.5 5%+"
-          ",XF86AudioRaiseVolume,  exec, ${volume} 5%-"
+          ",XF86AudioLowerVolume,  exec, ${volume} 5%-"
           ",XF86MonBrightnessUp,   exec, ${backlight} +5%"
           ",XF86MonBrightnessDown, exec, ${backlight} 5%-"
 
