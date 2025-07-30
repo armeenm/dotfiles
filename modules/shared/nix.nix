@@ -6,14 +6,8 @@
     nixPath = lib.mkForce [ "nixpkgs=${config.nix.registry.nixpkgs.flake}" ];
 
     registry = {
-      nixpkgs = {
-        flake = inputs.nixpkgs;
-        to = inputs.nixpkgs;
-      };
-      nixpkgs-stable = {
-        flake = inputs.nixpkgs-stable;
-        to = inputs.nixpkgs-stable;
-      };
+      nixpkgs.flake = inputs.nixpkgs;
+      nixpkgs-stable.flake = inputs.nixpkgs-stable;
     };
 
     settings = {
