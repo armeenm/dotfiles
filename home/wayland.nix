@@ -30,14 +30,14 @@ in {
         hyprland-plugins = inputs.hyprland-plugins.packages.${pkgs.system};
       in [
         hyprland-plugins.xtra-dispatchers
-        #inputs.hypr-darkwindow.packages.${pkgs.system}.Hypr-DarkWindow
+        inputs.hypr-darkwindow.packages.${pkgs.system}.Hypr-DarkWindow
         inputs.hypr-dynamic-cursors.packages.${pkgs.system}.default
-        inputs.hyprspace.packages.${pkgs.system}.Hyprspace
+        #inputs.hyprspace.packages.${pkgs.system}.Hyprspace
         inputs.hyprsplit.packages.${pkgs.system}.hyprsplit
       ];
 
       settings = {
-        monitor = [ ",preferred,auto,1" ];
+        monitor = [ ", preferred, auto, 1, bitdepth, 10" ];
 
         animation = [
           "global, 1, 2, default"
@@ -79,6 +79,7 @@ in {
         windowrulev2 = [
           "float, class:com.gabm.satty"
           "idleinhibit fullscreen, fullscreen:1"
+          "stayfocused, class:(zoom), initialTitle:(menu window)"
         ];
 
         gestures = {

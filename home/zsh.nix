@@ -8,7 +8,7 @@ in {
     autocd = true;
     autosuggestion.enable = true;
     defaultKeymap = "viins";
-    dotDir = "${builtins.baseNameOf config.xdg.configHome}/zsh";
+    dotDir = "${config.xdg.configHome}/zsh";
     enableCompletion = false; # Handled by carapace.
     enableVteIntegration = true;
 

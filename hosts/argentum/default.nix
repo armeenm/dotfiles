@@ -30,6 +30,8 @@
     extraSpecialArgs.isPortable = true;
 
     users."${user.login}" = {
+      wayland.windowManager.hyprland.settings.monitor = lib.mkForce [ ",preferred,auto,1.25" ];
+
       systemd.user.services = {
         mpvpaper = lib.mkForce {};
         rclone-cobalt = lib.mkForce {};
@@ -39,9 +41,42 @@
       services = {
         wluma.enable = true;
         safeeyes.enable = lib.mkForce false;
-      };
 
-      wayland.windowManager.hyprland.settings.monitor = lib.mkForce [ ",preferred,auto,1.25" ];
+        shikane = {
+          enable = true;
+          settings = {
+            profile = [
+              {
+                name = "default";
+                output = [
+                  {
+                    match = "eDP-1";
+                    enable = true;
+                    scale = 1.25;
+                  }
+                ];
+              }
+              {
+                name = "docked";
+                output = [
+                  {
+                    match = "eDP-1";
+                    enable = true;
+                    scale = 1.25;
+                    position = "0,1273";
+                  }
+                  {
+                    search = [ "m=MSI MD271UL" "s=PB8H065500413" "v=Microstep" ];
+                    enable = true;
+                    scale = 1.0;
+                    position = "2304,0"; # 2880 (xres) / 1.25 (scale)
+                  }
+                ];
+              }
+            ];
+          };
+        };
+      };
     };
   };
 
@@ -54,15 +89,16 @@
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
 
-  programs.fw-fanctrl.enable = true;
+  #programs.fw-fanctrl.enable = true;
 
   services = {
+    cloudflare-warp.enable = true;
     hardware.bolt.enable = true;
     xserver.videoDrivers = [ "intel" "displaylink" "modesetting" ];
 
-    logind = {
-      powerKey = "suspend";
-      lidSwitch = "suspend";
+    logind.settings.Login = {
+      HandlePowerKey = "suspend";
+      HandleLidSwitch = "suspend";
     };
   };
 

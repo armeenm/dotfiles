@@ -177,6 +177,7 @@ in {
 
     ] ++ (lib.optionals enableSocial [
       aider-chat
+      claude-code
       discord
       element-desktop
       kotatogram-desktop

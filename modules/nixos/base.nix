@@ -75,13 +75,15 @@
       enableUserSlices = true;
     };
 
-    watchdog.rebootTime = "15s";
-
     suppressedSystemUnits = [
       "sys-kernel-debug.mount"
     ];
 
     services.systemd-timesyncd.enable = false;
+
+    settings = {
+      Manager.RebootWatchdogSec = 15;
+    };
   };
 
   security = {

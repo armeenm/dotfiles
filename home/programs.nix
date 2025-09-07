@@ -202,6 +202,7 @@ in {
 
       ignores = [
         ".aider*"
+        ".claude"
         "!.aider.conf.yml"
         "!.aiderignore"
       ];
@@ -242,7 +243,7 @@ in {
 
     less = {
       enable = true;
-      keys = ''
+      config = ''
         #env
 
         #command
@@ -272,7 +273,7 @@ in {
               max-input-chars = 200000;
             };
 
-            "anthropic/claude-opus-4" = {
+            "anthropic/claude-opus-4.1" = {
               aliases = [ "opus" ];
               max-input-chars = 200000;
             };
@@ -282,19 +283,24 @@ in {
               max-input-chars = 128000;
             };
 
-            "google/gemini-2.5-pro-preview" = {
+            "qwen/qwen3-235b-a22b-thinking-2507" = {
+              aliases = [ "qwen" ];
+              max-input-chars = 262144;
+            };
+
+            "google/gemini-2.5-pro" = {
               aliases = [ "gemini-pro" ];
               max-input-chars = 1048576;
             };
 
-            "google/gemini-2.5-flash-preview-05-20" = {
+            "google/gemini-2.5-flash" = {
               aliases = [ "gemini-flash" ];
               max-input-chars = 1048576;
             };
 
-            "openai/gpt-4.1" = {
+            "openai/gpt-5" = {
               aliases = [ "gpt" ];
-              max-input-chars = 1047576;
+              max-input-chars = 400000;
             };
 
             "openai/o3-mini-high" = {
@@ -302,9 +308,9 @@ in {
               max-input-chars = 200000;
             };
 
-            "x-ai/grok-3-beta" = {
+            "x-ai/grok-4" = {
               aliases = [ "grok" ];
-              max-input-chars = 131072;
+              max-input-chars = 256000;
             };
           };
         };
@@ -345,8 +351,11 @@ in {
 
     ssh = {
       enable = true;
-      compression = true;
-      controlMaster = "auto";
+      enableDefaultConfig = false;
+      matchBlocks."*" = {
+        compression = true;
+        controlMaster = "auto";
+      };
     };
 
     tealdeer = {

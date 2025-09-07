@@ -55,7 +55,7 @@ in {
             on-resume = "pidof hyprlock && hyprctl dispatch dpms on";
           }
           (lib.optionalAttrs isPortable {
-            timeout = 60;
+            timeout = 150;
             on-timeout = "brightnessctl -s set 10";
             on-resume = "brightnessctl -r";
           })
@@ -78,25 +78,21 @@ in {
 
     hyprsunset = {
       enable = true;
-      transitions = {
-        sunrise = {
-          calendar = "*-*-* 06:00:00";
-          requests = [
-            [ "temperature" "6500" ]
-          ];
-        };
-        daytime = {
-          calendar = "*-*-* 09:00:00";
-          requests = [
-            [ "identity" ]
-          ];
-        };
-        sunset = {
-          calendar = "*-*-* 19:00:00";
-          requests = [
-            [ "temperature" "3500" ]
-          ];
-        };
+      settings = {
+        profile = [
+          {
+            time = "6:00";
+            temperature = 6500;
+          }
+          {
+            time = "9:00";
+            identity = true;
+          }
+          {
+            time = "19:00";
+            temperature = 3500;
+          }
+        ];
       };
     };
 
