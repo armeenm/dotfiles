@@ -60,6 +60,7 @@ in {
 
     packages = with pkgs; [
       age-plugin-yubikey
+      bitwarden-cli
       boxes
       direnv
       dos2unix
@@ -80,6 +81,7 @@ in {
       lsof
       mediainfo
       miniserve
+      miraclecast
       mkpasswd
       ncdu
       nix-inspect
@@ -163,7 +165,6 @@ in {
       vial
       vlc
       wdisplays
-      wireshark
       wl-clipboard
       wl-screenrec
       wlogout

@@ -82,9 +82,9 @@ in {
           "stayfocused, class:(zoom), initialTitle:(menu window)"
         ];
 
-        gestures = {
-          workspace_swipe = true;
-        };
+        gesture = [
+          "3, horizontal, workspace"
+        ];
 
         group = {
           groupbar = {
@@ -179,7 +179,7 @@ in {
           "SUPER, space,     togglefloating,"
           "SUPER, D,         exec, exec $(tofi-run)"
           "SUPER, P,         exec, emacsclient -c -n"
-          "SUPER, grave,     overview:toggle"
+          #"SUPER, grave,     overview:toggle"
           "SUPER, F,         fullscreen, 1"
 
           "SUPER_SHIFT, return, exec,footclient"
@@ -211,7 +211,7 @@ in {
           "SUPER_SHIFT, Z, togglesplit"
           "SUPER, Z, swapsplit"
           "SUPER, T, togglegroup"
-          #"SUPER, I, invertactivewindow"
+          "SUPER, I, invertactivewindow"
 
           "SUPER, N, changegroupactive,b"
           "SUPER, M, changegroupactive,f"

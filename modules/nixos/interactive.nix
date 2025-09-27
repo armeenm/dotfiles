@@ -71,6 +71,12 @@
       package = hyprPkgs.hyprland;
       portalPackage = hyprPkgs.xdg-desktop-portal-hyprland;
     };
+
+    wireshark = {
+      enable = true;
+      usbmon.enable = true;
+      package = pkgs.wireshark;
+    };
   };
 
   security = {
