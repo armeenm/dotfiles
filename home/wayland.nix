@@ -51,7 +51,6 @@ in {
         };
 
         input = {
-          kb_options = "caps:escape";
           repeat_rate = 60;
           repeat_delay = 200;
           follow_mouse = true;

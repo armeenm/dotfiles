@@ -102,12 +102,25 @@
       HandlePowerKey = "suspend";
       HandleLidSwitch = "suspend";
     };
+
+    kmonad = {
+      enable = true;
+      keyboards.bulitin = {
+        device = "/dev/input/by-path/platform-i8042-serio-0-event-kbd";
+        config = builtins.readFile ./builtin.kbd;
+        defcfg = {
+          enable = true;
+          fallthrough = true;
+        };
+      };
+    };
   };
 
   system.stateVersion = lib.mkForce "24.11";
 
   users.users."${user.login}".extraGroups = [
     "adbusers"
+    "docker"
     "i2c"
     "input"
     "lp" # Printing
@@ -118,8 +131,9 @@
   ];
 
   virtualisation = {
+    docker.enable = true;
     podman = {
-      enable = true;
+      enable = false;
       defaultNetwork.settings.dns_enabled = true;
     };
   };

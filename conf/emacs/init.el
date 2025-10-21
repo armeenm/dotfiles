@@ -75,6 +75,7 @@
 (line-number-mode)
 (column-number-mode)
 (global-display-line-numbers-mode)
+(electric-pair-mode)
 
 (put 'narrow-to-region 'disabled nil)
 (put 'upcase-region 'disabled nil)
@@ -377,6 +378,7 @@
    "g" 'magit
    "w" 'evil-window-map
    "p" 'projectile-command-map
+   "e" 'eglot-mode-map
    "r" 'vertico-repeat
    "s i" 'symbol-overlay-put
    "s n" 'symbol-overlay-switch-forward

@@ -1,0 +1,20 @@
+(defsrc
+  caps
+  lctrl
+  lalt
+  h j k l
+)
+
+(deflayer default
+  (tap-hold 200 esc lctl)
+  lalt
+  (layer-toggle nav)
+  h j k l
+)
+
+(deflayer nav
+  _
+  _
+  XX
+  lft down up right
+)
