@@ -6,10 +6,6 @@ let
     inputs.nix-index-database.homeModules.nix-index
   ];
 
-  hmDarwinBase = hmBase ++ [
-    inputs.mac-app-util.homeManagerModules.default
-  ];
-
   nixosBase = [
     inputs.home-manager.nixosModules.default
     inputs.ragenix.nixosModules.default
@@ -22,10 +18,29 @@ let
     ./nixos/interactive.nix
   ];
 
+  hmDarwinBase = hmBase ++ [
+    #inputs.mac-app-util.homeManagerModules.default
+  ];
+
+  darwinBase = [
+    inputs.home-manager.darwinModules.default
+    inputs.ragenix.darwinModules.default
+    { home-manager.sharedModules = hmDarwinBase; }
+    ./darwin
+  ];
+
+  darwinInteractive = darwinBase ++ [
+    inputs.stylix.darwinModules.stylix
+    ./darwin/interactive.nix
+  ];
+
 in {
   hmBase = { ... }: { imports = hmBase; };
-  hmDarwinBase = { ... }: { imports = hmDarwinBase; };
   nixosBase = { ... }: { imports = nixosBase; };
   nixosInteractive = { ... }: { imports = nixosInteractive; };
   nixosUser = { ... }: { imports = [ ./nixos/user.nix ]; };
+
+  hmDarwinBase = { ... }: { imports = hmDarwinBase; };
+  darwinBase = { ... }: { imports = darwinBase; };
+  darwinInteractive = { ... }: { imports = darwinInteractive; };
 }

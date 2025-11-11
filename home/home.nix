@@ -80,7 +80,6 @@ in {
       lsof
       mediainfo
       miniserve
-      miraclecast
       mkpasswd
       ncdu
       nix-inspect
@@ -112,6 +111,7 @@ in {
       gnuapl
       httpie
       libva-utils
+      miraclecast
       monero-cli
       powertop
       strace
@@ -189,12 +189,14 @@ in {
       mas
 
     ] ++ (with brewCasks; [
-      (hashOverride firefox "sha256-yJ7pq896NVSVmn0tsKWnSL464sMNfBcLh53hDkYSdgI=")
       linearmouse
     ])));
 
     pointerCursor = {
-      gtk.enable = hostPlatform.isLinux && !isHeadless;
+      enable = hostPlatform.isLinux && !isHeadless;
+      gtk.enable = true;
+      hyprcursor.enable = true;
+      x11.enable = true;
       package = pkgs.rose-pine-cursor;
       name = "Rose Pine";
       size = 16;

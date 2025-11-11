@@ -1,43 +1,13 @@
 { config, pkgs, lib, inputs, root, user, ... }:
 
 {
-  nixpkgs = {
-    hostPlatform = "aarch64-darwin";
-    config.allowUnfree = true;
-  };
-
-  nix = {
-    package = pkgs.nixVersions.latest;
-    channel.enable = true;
-    nixPath = lib.mkForce [ "nixpkgs=${inputs.nixpkgs}" ];
-
-    settings = {
-      allowed-users = lib.mkForce [ "@everyone" ];
-      trusted-users = lib.mkForce [ "@admin" ];
-
-      experimental-features = [
-        "ca-derivations"
-        "flakes"
-        "nix-command"
-        "recursive-nix"
-      ];
-
-      warn-dirty = false;
-    };
-  };
+  nixpkgs.hostPlatform = "aarch64-darwin";
+  # This machine uses Determinate.
+  nix.enable = lib.mkForce false;
 
   users.users.${user.login} = {
     name = "armeen";
     home = "/Users/armeen";
-  };
-
-  home-manager = {
-    users."${user.login}" = import "${root}/home";
-
-    extraSpecialArgs = {
-      inherit pkgs inputs root user;
-      stateVersion = "24.11";
-    };
   };
 
   environment = {
@@ -46,41 +16,21 @@
     ];
   };
 
-  programs = {
-    zsh.enable = true;
-    vim = {
-      enable = true;
-      enableSensible = true;
-      vimConfig = ''
-        set number
-        set hidden
-        set shell=bash
-        set cmdheight=2
-        set nocompatible
-        set shortmess+=c
-        set updatetime=300
-        set background=dark
-        set foldmethod=marker
-        set signcolumn=yes
-        set nobackup nowritebackup
-        set tabstop=2 shiftwidth=2 expandtab
-        set tagrelative
-        set tags^=./.git/tags;
-        set mouse=a
-      '';
-    };
+  services = {
+    #nix-daemon.enable = true;
+    #emacs = {
+    #  enable = true;
+    #  package = config.home-manager.users.${user.login}.programs.emacs.package;
+    #};
   };
 
-  services = {
-    nix-daemon.enable = true;
-    emacs = {
-      enable = true;
-      package = config.home-manager.users.${user.login}.programs.emacs.package;
-    };
+  home-manager.users.${user.login} = {
+    home.stateVersion = lib.mkForce "25.11";
   };
 
   system = {
-    stateVersion = 5;
+    stateVersion = 6;
+    primaryUser = "armeen";
 
     keyboard = {
       enableKeyMapping = true;
@@ -95,11 +45,6 @@
       };
 
       SoftwareUpdate.AutomaticallyInstallMacOSUpdates = false;
-
-      alf = {
-        globalstate = 1;
-        stealthenabled = 1;
-      };
 
       dock = {
         autohide = true;

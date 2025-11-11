@@ -25,9 +25,10 @@ in {
     ../modules/shared/stylix.nix
   ];
 
+  targets.genericLinux.enable = hostPlatform.isLinux && isStandalone;
+
   fonts.fontconfig.enable = !isHeadless;
   qt.enable = !isHeadless;
-  targets.genericLinux.enable = hostPlatform.isLinux && isStandalone;
 
   gtk = {
     enable = !isHeadless;

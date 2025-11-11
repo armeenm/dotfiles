@@ -167,15 +167,12 @@
       { nixpkgs = { inherit config; overlays = allOverlays; }; }
     ];
 
-    /*
     darwinModules = baseModules ++ [
       inputs.home-manager.darwinModules.default
-      inputs.mac-app-util.darwinModules.default
+      #inputs.mac-app-util.darwinModules.default
       inputs.stylix.darwinModules.stylix
-      { home-manager.sharedModules = hmDarwinModules; }
       ./modules/darwin
     ];
-    */
 
   in rec {
     nixosConfigurations = {
@@ -216,15 +213,15 @@
 
     nixosModules = import ./modules { inherit inputs; };
 
-    /*
-    darwinConfigurations = {
+    darwinConfigurations = rec {
+      itmaclap = rhenium;
       rhenium = inputs.nix-darwin.lib.darwinSystem {
         modules = darwinModules ++ [
+          nixosModules.darwinInteractive
           ./hosts/rhenium
         ];
       };
     };
-    */
 
     homeConfigurations = forAllSystems (system: pkgs: {
       default = inputs.home-manager.lib.homeManagerConfiguration {

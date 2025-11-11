@@ -22,7 +22,7 @@ in {
     direnv-instant.enable = true;
     fastfetch.enable = true;
     git-worktree-switcher.enable = true;
-    gitui.enable = true;
+    gitui.enable = hostPlatform.isLinux;
     home-manager.enable = true;
     htop.enable = true;
     imv.enable = !isHeadless;
@@ -71,7 +71,7 @@ in {
     };
 
     beets = {
-      enable = true;
+      enable = hostPlatform.isLinux;
       package = pkgs.stable.beets;
       settings = {
         directory = config.xdg.userDirs.music;
@@ -88,7 +88,7 @@ in {
     };
 
     cava = {
-      enable = true;
+      enable = hostPlatform.isLinux;
       settings = {
         general.framerate = 144;
       };
@@ -104,7 +104,7 @@ in {
     };
 
     distrobox = {
-      enable = true;
+      enable = hostPlatform.isLinux;
 
       settings = let
         volumes = [
@@ -172,10 +172,6 @@ in {
 
     firefox = {
       enable = true;
-
-      nativeMessagingHosts = with pkgs; [
-        fx-cast-bridge
-      ];
     };
 
     foot = {
@@ -404,7 +400,7 @@ in {
     };
 
     tofi = {
-      enable = true;
+      enable = hostPlatform.isLinux && !isHeadless;
       settings = {
         "width" = "100%";
         "height" = "100%";
@@ -420,7 +416,7 @@ in {
     };
 
     vscode = {
-      enable = false;
+      enable = !isHeadless;
       package = pkgs.vscode.fhs;
       profiles.default = {
         userSettings = {
