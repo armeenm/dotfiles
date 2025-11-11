@@ -274,22 +274,14 @@
 
   users.users."${user.login}".extraGroups = [
     "adbusers"
-    "docker"
     "i2c"
     "input"
     "lp" # Printing
     "networkmanager"
     "plugdev"
+    "podman"
     "scanner"
     "wireshark"
   ];
 
-  virtualisation = {
-    docker.enable = true;
-
-    podman = {
-      enable = true;
-      defaultNetwork.settings.dns_enabled = true;
-    };
-  };
 }

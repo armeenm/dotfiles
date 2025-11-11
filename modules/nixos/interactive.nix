@@ -1,4 +1,4 @@
-{ inputs, user, config, pkgs, ... }:
+{ lib, inputs, user, config, pkgs, ... }:
 
 {
   imports = [ ../shared/stylix.nix ];
@@ -30,10 +30,12 @@
     initrd.verbose = false;
   };
 
-  environment.pathsToLink = [
-    "/share/applications"
-    "/share/xdg-desktop-portal"
-  ];
+  environment = {
+    pathsToLink = [
+      "/share/applications"
+      "/share/xdg-desktop-portal"
+    ];
+  };
 
   hardware = {
     sane = {
@@ -144,6 +146,14 @@
       "d /var/srv 0755 - - -"
       "L /srv - - - - /var/srv"
     ];
+  };
+
+  virtualisation = {
+    podman = {
+      enable = true;
+      dockerCompat = true;
+      defaultNetwork.settings.dns_enabled = true;
+    };
   };
 
   xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];

@@ -103,6 +103,30 @@ in {
       };
     };
 
+    distrobox = {
+      enable = true;
+
+      settings = let
+        volumes = [
+          "/nix/store"
+          "/etc/profiles/per-user"
+          "/etc/static/profiles/per-user"
+        ];
+      in {
+        container_additional_volumes = lib.concatStringsSep " " (map (x: "${x}:${x}:ro") volumes);
+      };
+
+      containers = {
+        alma.iamge = "almalinux:latest";
+        alpine.image = "alpine:latest";
+        arch.image = "archlinux:latest";
+        debian.image = "debian:latest";
+        rhel.image = "redhat/ubi9:latest";
+        suse.image = "opensuse/leap:latest";
+        ubuntu.image = "ubuntu:latest";
+      };
+    };
+
     emacs = {
       enable = true;
       package = pkgs.emacsWithPackagesFromUsePackage {

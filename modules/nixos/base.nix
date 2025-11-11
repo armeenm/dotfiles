@@ -124,6 +124,18 @@
         extraGroups = [
           "wheel"
         ];
+        subGidRanges = [
+          {
+            count = 65536;
+            startGid = 100000;
+          }
+        ];
+        subUidRanges = [
+          {
+            count = 65536;
+            startUid = 100000;
+          }
+        ];
       };
     };
   };
