@@ -39,7 +39,7 @@
       };
 
       services = {
-        wluma.enable = true;
+        #wluma.enable = true;
         safeeyes.enable = lib.mkForce false;
 
         shikane = {
@@ -96,7 +96,8 @@
     cloudflare-warp.enable = true;
     dbus.packages = [ pkgs.miraclecast ];
     hardware.bolt.enable = true;
-    xserver.videoDrivers = [ "intel" "displaylink" "modesetting" ];
+    xserver.videoDrivers = [ "intel" "modesetting" ];
+    flatpak.enable = true;
 
     logind.settings.Login = {
       HandlePowerKey = "suspend";
@@ -139,11 +140,11 @@
   };
 
   environment.systemPackages = with pkgs; [
-    displaylink
+    #displaylink
   ];
 
   # Start DisplayLink Manager on boot.
-  systemd.services.dlm.wantedBy = [ "multi-user.target" ];
+  #systemd.services.dlm.wantedBy = [ "multi-user.target" ];
 
   security.pki.certificateFiles = [
     (pkgs.writeText "foo-web-int-ca" ''

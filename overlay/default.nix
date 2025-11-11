@@ -1,7 +1,7 @@
 { inputs, ... }:
 
 final: prev: {
-  stable = inputs.nixpkgs-stable.legacyPackages.${final.system};
+  stable = inputs.nixpkgs-stable.legacyPackages.${final.stdenv.hostPlatform.system};
 
   miraclecast = (prev.miraclecast.overrideAttrs (_: {
     version = "1.0-unstable-2025-09-21";
@@ -23,4 +23,5 @@ final: prev: {
       ];
     });
   };
+
 }

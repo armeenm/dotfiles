@@ -21,7 +21,10 @@
     };
 
     supportedFilesystems = [ "ntfs" "nfs" "nfs4" ];
-    binfmt.emulatedSystems = [ "aarch64-linux" ];
+    binfmt.emulatedSystems = [
+      "aarch64-linux"
+      "riscv64-linux"
+    ];
     consoleLogLevel = 0;
     extraModulePackages = with config.boot.kernelPackages; [ ddcci-driver ];
     initrd.verbose = false;

@@ -122,7 +122,7 @@ in {
       bruno
       cozette
       easyeffects
-      feishin
+      #feishin
       fira-code
       fira-code-symbols
       gimp-with-plugins
@@ -183,7 +183,7 @@ in {
       element-desktop
       kotatogram-desktop
       monero-gui
-      whatsapp-for-linux
+      wasistlos
       zoom-us
 
     ]))) ++ (lib.optionals hostPlatform.isDarwin ([

@@ -19,6 +19,7 @@ in {
     carapace.enable = true;
     clock-rs.enable = true;
     dircolors.enable = true;
+    direnv-instant.enable = true;
     fastfetch.enable = true;
     git-worktree-switcher.enable = true;
     gitui.enable = true;
@@ -93,9 +94,13 @@ in {
       };
     };
 
-    direnv = {
+    delta = {
       enable = true;
-      nix-direnv.enable = true;
+      enableGitIntegration = true;
+      options = {
+        syntax-theme = "base16-stylix";
+        line-numbers = true;
+      };
     };
 
     emacs = {
@@ -179,27 +184,6 @@ in {
 
     git = {
       enable = true;
-      userEmail = user.email;
-      userName = user.name;
-
-      aliases = {
-        a = "add";
-        aa = "add -A";
-        br = "branch";
-        ci = "commit";
-        co = "checkout";
-        d = "diff";
-        ds = "diff --staged";
-        f = "fuzzy";
-        pl = "pull";
-        ps = "push";
-        psf = "push --force-with-lease";
-        r = "rebase";
-        st = "status";
-        sw = "switch";
-        wt = "worktree";
-      };
-
       ignores = [
         ".aider*"
         ".claude"
@@ -207,15 +191,9 @@ in {
         "!.aiderignore"
       ];
 
-      delta = {
-        enable = true;
-        options = {
-          syntax-theme = "base16-stylix";
-          line-numbers = true;
-        };
-      };
+      settings = {
+        inherit user;
 
-      extraConfig = {
         advice.addEmptyPathspec = false;
         core.editor = ''${config.home.sessionVariables.EDITOR}'';
         credential.helper = "store";
@@ -227,6 +205,24 @@ in {
 
         merge.guitool = "meld";
         "mergetool \"meld\"".cmd = ''meld "$LOCAL" "$BASE" "$REMOTE" --output "$MERGED"'';
+
+        alias = {
+          a = "add";
+          aa = "add -A";
+          br = "branch";
+          ci = "commit";
+          co = "checkout";
+          d = "diff";
+          ds = "diff --staged";
+          f = "fuzzy";
+          pl = "pull";
+          ps = "push";
+          psf = "push --force-with-lease";
+          r = "rebase";
+          st = "status";
+          sw = "switch";
+          wt = "worktree";
+        };
       };
     };
 
@@ -400,7 +396,7 @@ in {
     };
 
     vscode = {
-      enable = true;
+      enable = false;
       package = pkgs.vscode.fhs;
       profiles.default = {
         userSettings = {

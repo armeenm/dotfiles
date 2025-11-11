@@ -11,7 +11,7 @@
 let
   inherit (pkgs.stdenv) hostPlatform;
 
-  hyprPkgs = inputs.hyprland.packages.${pkgs.system};
+  hyprPkgs = inputs.hyprland.packages.${hostPlatform.system};
 
 in {
   wayland = lib.optionalAttrs hostPlatform.isLinux {
@@ -27,13 +27,14 @@ in {
       };
 
       plugins = let
-        hyprland-plugins = inputs.hyprland-plugins.packages.${pkgs.system};
+        system = pkgs.stdenv.hostPlatform.system;
+        hyprland-plugins = inputs.hyprland-plugins.packages.${system};
       in [
         hyprland-plugins.xtra-dispatchers
-        inputs.hypr-darkwindow.packages.${pkgs.system}.Hypr-DarkWindow
-        inputs.hypr-dynamic-cursors.packages.${pkgs.system}.default
-        #inputs.hyprspace.packages.${pkgs.system}.Hyprspace
-        inputs.hyprsplit.packages.${pkgs.system}.hyprsplit
+        inputs.hypr-darkwindow.packages.${system}.Hypr-DarkWindow
+        inputs.hypr-dynamic-cursors.packages.${system}.default
+        #inputs.hyprspace.packages.${system}.Hyprspace
+        inputs.hyprsplit.packages.${system}.hyprsplit
       ];
 
       settings = {
@@ -56,6 +57,7 @@ in {
           follow_mouse = true;
           touchpad.natural_scroll = true;
           sensitivity = 0;
+          scroll_factor = 1.0;
         };
 
         general = {

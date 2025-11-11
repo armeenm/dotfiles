@@ -2,6 +2,7 @@
 
 let
   hmBase = [
+    inputs.direnv-instant.homeModules.direnv-instant
     inputs.nix-index-database.homeModules.nix-index
   ];
 

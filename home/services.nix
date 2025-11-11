@@ -10,10 +10,10 @@ let
   inherit (pkgs.stdenv) hostPlatform;
 in {
   services = lib.optionalAttrs hostPlatform.isLinux {
+    batsignal.enable = !isHeadless;
     hyprpolkitagent.enable = !isHeadless;
     mpris-proxy.enable = !isHeadless;
     playerctld.enable = !isHeadless;
-    poweralertd.enable = !isHeadless;
     pueue.enable = true;
     safeeyes.enable = !isHeadless;
     wob.enable = !isHeadless;

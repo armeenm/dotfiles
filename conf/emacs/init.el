@@ -230,7 +230,8 @@
 
 (use-package typescript-mode
   :config
-  (setq typescript-indent-level 2))
+  (setq typescript-indent-level 2)
+  (add-to-list 'auto-mode-alist '("\\.tsx\\'" . tsx-ts-mode)))
 
 (use-package emsg-blame
   :config

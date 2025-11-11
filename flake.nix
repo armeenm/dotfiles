@@ -23,6 +23,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    direnv-instant = {
+      url = "github:Mic92/direnv-instant";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     emacs-overlay = {
       url = "github:nix-community/emacs-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -170,7 +175,7 @@
       { home-manager.sharedModules = hmDarwinModules; }
       ./modules/darwin
     ];
-*/
+    */
 
   in rec {
     nixosConfigurations = {
@@ -219,7 +224,7 @@
         ];
       };
     };
-*/
+    */
 
     homeConfigurations = forAllSystems (system: pkgs: {
       default = inputs.home-manager.lib.homeManagerConfiguration {
