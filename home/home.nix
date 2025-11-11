@@ -62,7 +62,6 @@ in {
       age-plugin-yubikey
       bitwarden-cli
       boxes
-      direnv
       dos2unix
       duf
       fasd
