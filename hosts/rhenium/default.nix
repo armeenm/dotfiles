@@ -27,6 +27,13 @@
     };
   };
 
+  security = {
+    pam.services.sudo_local = {
+      enable = true;
+      touchIdAuth = true;
+    };
+  };
+
   system = {
     stateVersion = 6;
     primaryUser = "armeen";
@@ -37,6 +44,8 @@
       swapLeftCtrlAndFn = true;
     };
     defaults = {
+      ActivityMonitor.IconType = 5;
+
       NSGlobalDomain = {
         AppleInterfaceStyleSwitchesAutomatically = true;
         AppleKeyboardUIMode = 3;
@@ -46,11 +55,25 @@
 
       SoftwareUpdate.AutomaticallyInstallMacOSUpdates = false;
 
+      controlcenter = {
+        BatteryShowPercentage = true;
+        Bluetooth = true;
+        Sound = true;
+      };
+
       dock = {
         autohide = true;
         wvous-bl-corner = 3; # Application Windows
         wvous-br-corner = 4; # Desktop
         wvous-tr-corner = 7; # Dashboard
+      };
+
+      finder = {
+        ShowPathbar = true;
+        ShowStatusBar = true;
+        FXPreferredViewStyle = "Nlsv"; # List view
+        _FXShowPosixPathInTitle = false;
+        AppleShowAllExtensions = true;
       };
 
       screencapture = {
@@ -62,12 +85,8 @@
         Clicking = true;
       };
 
-      finder = {
-        ShowPathbar = true;
-        ShowStatusBar = true;
-        FXPreferredViewStyle = "Nlsv"; # List view
-        _FXShowPosixPathInTitle = false;
-        AppleShowAllExtensions = true;
+      menuExtraClock = {
+        ShowSeconds = true;
       };
     };
   };
