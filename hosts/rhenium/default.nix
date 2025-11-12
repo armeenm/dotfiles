@@ -10,22 +10,21 @@
     home = "/Users/armeen";
   };
 
-  environment = {
-    systemPackages = with pkgs; [
-      git
-    ];
-  };
-
   services = {
-    #nix-daemon.enable = true;
-    #emacs = {
-    #  enable = true;
-    #  package = config.home-manager.users.${user.login}.programs.emacs.package;
-    #};
+    emacs = {
+      enable = true;
+      package = config.home-manager.users.${user.login}.programs.emacs.package;
+    };
   };
 
-  home-manager.users.${user.login} = {
-    home.stateVersion = lib.mkForce "25.11";
+  home-manager = {
+    users.${user.login} = {
+      home.stateVersion = lib.mkForce "25.11";
+    };
+
+    extraSpecialArgs = {
+      isHeadless = false;
+    };
   };
 
   system = {
@@ -35,6 +34,7 @@
     keyboard = {
       enableKeyMapping = true;
       remapCapsLockToEscape = true;
+      swapLeftCtrlAndFn = true;
     };
     defaults = {
       NSGlobalDomain = {

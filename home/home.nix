@@ -104,7 +104,7 @@ in {
       whois
       zip
 
-    ] ++ (lib.optionals hostPlatform.isLinux [
+    ] ++ lib.optionals hostPlatform.isLinux ([
       bluetuith
       bubblewrap
       cfspeedtest
@@ -152,7 +152,6 @@ in {
       playerctl
       pulseaudio
       remmina
-      rose-pine-hyprcursor
       satty
       scrcpy
       shikane
@@ -187,6 +186,7 @@ in {
 
     ]))) ++ (lib.optionals hostPlatform.isDarwin ([
       mas
+      google-chrome
 
     ] ++ (with brewCasks; [
       linearmouse
@@ -197,6 +197,7 @@ in {
       gtk.enable = true;
       hyprcursor.enable = true;
       x11.enable = true;
+
       package = pkgs.rose-pine-cursor;
       name = "Rose Pine";
       size = 16;

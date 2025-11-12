@@ -25,7 +25,7 @@ in {
     gitui.enable = hostPlatform.isLinux;
     home-manager.enable = true;
     htop.enable = true;
-    imv.enable = !isHeadless;
+    imv.enable = hostPlatform.isLinux && !isHeadless;
     mergiraf.enable = true;
     mpv.enable = !isHeadless;
     navi.enable = true;
@@ -417,7 +417,7 @@ in {
 
     vscode = {
       enable = !isHeadless;
-      package = pkgs.vscode.fhs;
+      package = if hostPlatform.isLinux then pkgs.vscode.fhs else pkgs.vscode;
       profiles.default = {
         userSettings = {
           "vim.foldfix" = true;

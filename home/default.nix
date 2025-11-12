@@ -28,10 +28,10 @@ in {
   targets.genericLinux.enable = hostPlatform.isLinux && isStandalone;
 
   fonts.fontconfig.enable = !isHeadless;
-  qt.enable = !isHeadless;
+  qt.enable = hostPlatform.isLinux && !isHeadless;
 
   gtk = {
-    enable = !isHeadless;
+    enable = hostPlatform.isLinux && !isHeadless;
     iconTheme = {
       name = "Rose Pine";
       package = pkgs.rose-pine-icon-theme;

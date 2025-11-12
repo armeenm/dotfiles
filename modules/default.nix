@@ -19,7 +19,7 @@ let
   ];
 
   hmDarwinBase = hmBase ++ [
-    #inputs.mac-app-util.homeManagerModules.default
+    inputs.mac-app-util.homeManagerModules.default
   ];
 
   darwinBase = [

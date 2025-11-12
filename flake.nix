@@ -91,6 +91,7 @@
 
     mac-app-util = {
       url = "github:hraban/mac-app-util";
+      inputs.cl-nix-lite.url = "github:r4v3n6101/cl-nix-lite/url-fix";
     };
 
     nixgl = {
@@ -299,7 +300,7 @@
     };
 
     devShells = forAllSystems (system: pkgs: with pkgs; {
-      default = mkShell {
+      default = (mkShell.override { stdenv = pkgs.stdenvNoCC; }) {
         packages = [
           inputs.deploy-rs.packages.${system}.default
           nix-output-monitor
@@ -309,6 +310,61 @@
 
         shellHook = ''
           export PATH=$PWD/util:$PATH
+          unset CONFIG_SHELL \
+            HOST_PATH \
+            MACOSX_DEPLOYMENT_TARGET \
+            NIX_BUILD_CORES \
+            NIX_BUILD_TOP \
+            NIX_CFLAGS_COMPILE \
+            NIX_DONT_SET_RPATH \
+            NIX_DONT_SET_RPATH_FOR_BUILD \
+            NIX_ENFORCE_NO_NATIVE \
+            NIX_IGNORE_LD_THROUGH_GCC \
+            NIX_NO_SELF_RPATH \
+            NIX_STORE \
+            PATH_LOCALE \
+            SOURCE_DATE_EPOCH \
+            TEMP \
+            TEMPDIR \
+            TMP \
+            __darwinAllowLocalNetworking \
+            __impureHostDeps \
+            __propagatedImpureHostDeps \
+            __propagatedSandboxProfile \
+            __sandboxProfile \
+            __structuredAttrs \
+            buildInputs \
+            buildPhase \
+            builder \
+            cmakeFlags \
+            configureFlags \
+            depsBuildBuild \
+            depsBuildBuildPropagated \
+            depsBuildTarget \
+            depsBuildTargetPropagated \
+            depsHostHost \
+            depsHostHostPropagated \
+            depsTargetTarget \
+            depsTargetTargetPropagated \
+            doCheck \
+            doInstallCheck \
+            dontAddDisableDepTrack \
+            mesonFlags \
+            name \
+            nativeBuildInputs \
+            out \
+            outputs \
+            p \
+            patches \
+            phases \
+            preferLocalBuild \
+            propagatedBuildInputs \
+            propagatedNativeBuildInputs \
+            shell \
+            shellHook \
+            stdenv \
+            strictDeps \
+            system
         '';
       };
     });

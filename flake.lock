@@ -169,15 +169,16 @@
     },
     "cl-nix-lite": {
       "locked": {
-        "lastModified": 1728174978,
-        "narHash": "sha256-Grqqg+xuicANB85j0gNEXxi9SBKY7bzGeTuyi95eGcY=",
-        "owner": "hraban",
+        "lastModified": 1762537751,
+        "narHash": "sha256-ozImtK2FcWBnjjiHn6p726HZOBpJoBYs6jKWMTnFTLM=",
+        "owner": "r4v3n6101",
         "repo": "cl-nix-lite",
-        "rev": "31cfe6275c341eb3120a99f4b1c8516c49a29d87",
+        "rev": "6deefd29913ad23b73db8f1ade0a397e1518619f",
         "type": "github"
       },
       "original": {
-        "owner": "hraban",
+        "owner": "r4v3n6101",
+        "ref": "url-fix",
         "repo": "cl-nix-lite",
         "type": "github"
       }

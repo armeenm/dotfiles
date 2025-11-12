@@ -28,19 +28,6 @@
     earlySetup = false;
   };
 
-  home-manager = {
-    users."${user.login}" = import ../../home;
-
-    extraSpecialArgs = {
-      inherit inputs user;
-      stateVersion = config.system.stateVersion;
-      isHeadless = true;
-      isStandalone = false;
-      isPortable = false;
-      enableSocial = false;
-    };
-  };
-
   services = {
     chrony.enable = true;
     devmon.enable = true;
