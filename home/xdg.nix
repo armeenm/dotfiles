@@ -15,6 +15,17 @@ in
     autostart.enable = false;
     portal.config.common.default = "hyprland";
 
+    mime.enable = true;
+    mimeApps = {
+      enable = true;
+      defaultApplications = {
+        "x-scheme-handler/http" = ["firefox.desktop"];
+        "x-scheme-handler/https" = ["firefox.desktop"];
+        "x-scheme-handler/pdf" = ["org.pwmt.zathura.desktop"];
+        "inode/directory" = ["dolphin.desktop"];
+      };
+    }; 
+
     configFile = {
       "zsh/p10k.zsh".source = ../conf/zsh/p10k.zsh;
       "satty/config.toml".source = ../conf/satty/config.toml;
