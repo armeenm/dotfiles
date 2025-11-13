@@ -1,5 +1,6 @@
 {
   imports = [
     ../shared
+    ./base.nix
   ];
 }

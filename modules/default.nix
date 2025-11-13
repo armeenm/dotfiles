@@ -23,6 +23,7 @@ let
   ];
 
   darwinBase = [
+    inputs.determinate.darwinModules.default
     inputs.home-manager.darwinModules.default
     inputs.ragenix.darwinModules.default
     { home-manager.sharedModules = hmDarwinBase; }
