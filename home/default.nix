@@ -27,11 +27,18 @@ in {
 
   targets.genericLinux.enable = hostPlatform.isLinux && isStandalone;
 
+  targets.darwin.currentHostDefaults = {
+    "com.microsoft.VSCode" = {
+      ApplePressAndHoldEnabled = false;
+    };
+  };
+
   fonts.fontconfig.enable = !isHeadless;
-  qt.enable = hostPlatform.isLinux && !isHeadless;
+  qt.enable = !isHeadless;
 
   gtk = {
-    enable = hostPlatform.isLinux && !isHeadless;
+    enable = !isHeadless;
+  } // lib.optionalAttrs hostPlatform.isLinux {
     iconTheme = {
       name = "Rose Pine";
       package = pkgs.rose-pine-icon-theme;

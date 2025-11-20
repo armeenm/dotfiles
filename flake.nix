@@ -173,13 +173,6 @@
       { nixpkgs = { inherit config; overlays = allOverlays; }; }
     ];
 
-    darwinModules = baseModules ++ [
-      inputs.home-manager.darwinModules.default
-      #inputs.mac-app-util.darwinModules.default
-      inputs.stylix.darwinModules.stylix
-      ./modules/darwin
-    ];
-
   in rec {
     nixosConfigurations = {
       lithium = nixpkgs.lib.nixosSystem {
@@ -220,9 +213,15 @@
     nixosModules = import ./modules { inherit inputs; };
 
     darwinConfigurations = rec {
-      itmaclap = rhenium;
+      itmaclap = inputs.nix-darwin.lib.darwinSystem {
+        modules = baseModules ++ [
+          nixosModules.darwinInteractive
+          ./hosts/itmaclap
+        ];
+      };
+
       rhenium = inputs.nix-darwin.lib.darwinSystem {
-        modules = darwinModules ++ [
+        modules = baseModules ++ [
           nixosModules.darwinInteractive
           ./hosts/rhenium
         ];

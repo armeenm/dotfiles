@@ -1,6 +1,8 @@
 { user, ... }:
 
 {
+  imports = [ ../shared/stylix.nix ];
+
   home-manager = {
     extraSpecialArgs = {
       isHeadless = false;

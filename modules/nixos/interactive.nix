@@ -53,7 +53,6 @@
 
   home-manager.extraSpecialArgs = {
     isHeadless = false;
-    enableSocial = true;
   };
 
   networking = {

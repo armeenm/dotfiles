@@ -27,7 +27,10 @@
   };
 
   home-manager = {
-    extraSpecialArgs.isPortable = true;
+    extraSpecialArgs = {
+      isPortable = true;
+      enableSocial = true;
+    };
 
     users."${user.login}" = {
       wayland.windowManager.hyprland.settings.monitor = lib.mkForce [ ",preferred,auto,1.25" ];

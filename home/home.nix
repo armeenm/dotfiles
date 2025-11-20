@@ -30,6 +30,27 @@ let
     };
   }));
 
+  sharedGraphicalApps = with pkgs; [
+    bruno
+    cozette
+    fira-code
+    fira-code-symbols
+    google-chrome
+    meld
+    moonlight-qt
+    noto-fonts
+    noto-fonts-cjk-sans
+    remmina
+    spek
+    tamsyn
+    yubikey-manager
+  ] ++ lib.optionals enableSocial [
+    aider-chat
+    claude-code
+    discord
+    element-desktop
+  ];
+
 in {
   home = {
     inherit stateVersion;
@@ -116,20 +137,14 @@ in {
       powertop
       strace
 
-    ] ++ (lib.optionals (!isHeadless) [
-      brightnessctl
-      bruno
-      cozette
-      easyeffects
+    ] ++ (lib.optionals (!isHeadless) sharedGraphicalApps ++ [
       #feishin
-      fira-code
-      fira-code-symbols
+      brightnessctl
+      easyeffects
       gimp-with-plugins
-      google-chrome
       gparted
       grim
       gtk3
-      httpie-desktop
       hyprland-qtutils
       hyprpicker
       hyprshell
@@ -138,28 +153,20 @@ in {
       kdePackages.dolphin
       libnotify
       libreoffice-fresh
-      meld
-      moonlight-qt
       nomacs
-      noto-fonts
-      noto-fonts-cjk-sans
       obs-studio
       obs-studio-plugins.obs-pipewire-audio-capture
       obs-studio-plugins.wlrobs
-      open-in-mpv
       pamixer
       pavucontrol
       playerctl
       pulseaudio
-      remmina
       satty
       scrcpy
       shikane
       simple-scan
       slurp
-      spek
       swaylock
-      tamsyn
       vial
       vlc
       wdisplays
@@ -172,25 +179,29 @@ in {
       xdg-utils
       xorg.xeyes
       xorg.xkill
-      yubikey-manager
 
     ] ++ (lib.optionals enableSocial [
-      aider-chat
-      claude-code
-      discord
-      element-desktop
       kotatogram-desktop
       monero-gui
       wasistlos
       zoom-us
 
-    ]))) ++ (lib.optionals hostPlatform.isDarwin ([
+    ]))) ++ (lib.optionals hostPlatform.isDarwin (sharedGraphicalApps ++ [
       mas
-      google-chrome
 
     ] ++ (with brewCasks; [
+      gimp
+      libreoffice
       linearmouse
-    ])));
+      obs
+      vlc
+
+    ] ++ (lib.optionals enableSocial [
+      monero-wallet
+      telegram
+      whatsapp
+      zoom
+    ]))));
 
     pointerCursor = {
       enable = hostPlatform.isLinux && !isHeadless;

@@ -1,14 +1,7 @@
-;; (setq debug-on-error t)
 (auto-compression-mode 1)
 (push '(menu-bar-lines . 0) default-frame-alist)
 (push '(tool-bar-lines . nil) default-frame-alist)
 (push '(vertical-scroll-bars . nil) default-frame-alist)
-
-;; (set-face-attribute 'default nil
-;;                     :family "Tamsyn"
-;;                     :height 120
-;;                     :weight 'normal
-;;                     :width 'normal)
 
 (setq gc-cons-threshold most-positive-fixnum)
 
@@ -52,7 +45,6 @@
 
 (setq visual-bell 1)
 
-;; TODO DEBUGGING
 (setq save-place-mode t)
 
 (setq inhibit-startup-screen t

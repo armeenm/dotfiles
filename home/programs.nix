@@ -98,8 +98,9 @@ in {
       enable = true;
       enableGitIntegration = true;
       options = {
-        syntax-theme = "base16-stylix";
         line-numbers = true;
+        syntax-theme = "base16-stylix";
+        navigate = true;
       };
     };
 
@@ -206,9 +207,10 @@ in {
       enable = true;
       ignores = [
         ".aider*"
-        ".claude"
         "!.aider.conf.yml"
         "!.aiderignore"
+        ".claude"
+        ".vscode"
       ];
 
       settings = {
@@ -418,9 +420,34 @@ in {
     vscode = {
       enable = !isHeadless;
       package = if hostPlatform.isLinux then pkgs.vscode.fhs else pkgs.vscode;
+      mutableExtensionsDir = false;
+
+      extensions = with pkgs.vscode-extensions; [
+        eamodio.gitlens
+        llvm-vs-code-extensions.lldb-dap
+        llvm-vs-code-extensions.vscode-clangd
+        mkhl.direnv
+        ms-vscode.cpptools
+        ms-vscode.cpptools-extension-pack
+        ms-vscode.hexeditor
+        vscodevim.vim
+      ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
+        {
+          name = "llama-vscode";
+          publisher = "ggml-org";
+          version = "0.0.36";
+          sha256 = "sha256-26Lt4/Bajg3b3TSif6k/o1l0adgRkmXA37QZxP1X3eU=";
+        }
+      ];
+
       profiles.default = {
         userSettings = {
           "vim.foldfix" = true;
+          "clangd.path" = "${pkgs.llvmPackages_21.clang-tools}/bin/clangd";
+          "C_Cpp.intelliSenseEngine" = "disabled";
+          "[cpp]" = {
+            "editor.defaultFormatter" = "llvm-vs-code-extensions.vscode-clangd";
+          };
         };
       };
     };
