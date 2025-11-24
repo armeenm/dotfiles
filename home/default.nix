@@ -27,9 +27,11 @@ in {
 
   targets.genericLinux.enable = hostPlatform.isLinux && isStandalone;
 
-  targets.darwin.currentHostDefaults = {
-    "com.microsoft.VSCode" = {
-      ApplePressAndHoldEnabled = false;
+  targets.darwin = lib.optionalAttrs hostPlatform.isDarwin {
+    currentHostDefaults = {
+      "com.microsoft.VSCode" = {
+        ApplePressAndHoldEnabled = false;
+      };
     };
   };
 

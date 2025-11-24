@@ -78,7 +78,6 @@ in {
         };
 
         windowrulev2 = [
-          "float, class:com.gabm.satty"
           "idleinhibit fullscreen, fullscreen:1"
           "stayfocused, class:(zoom), initialTitle:(menu window)"
         ];
