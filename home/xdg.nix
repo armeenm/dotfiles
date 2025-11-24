@@ -15,9 +15,9 @@ in
     autostart.enable = false;
     portal.config.common.default = "hyprland";
 
-    mime.enable = true;
+    mime.enable = hostPlatform.isLinux;
     mimeApps = {
-      enable = true;
+      enable = hostPlatform.isLinux;
       defaultApplications = {
         "x-scheme-handler/http" = ["firefox.desktop"];
         "x-scheme-handler/https" = ["firefox.desktop"];

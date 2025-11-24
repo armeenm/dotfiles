@@ -158,6 +158,7 @@ in {
         defaultInitFile = true;
         alwaysEnsure = true;
         alwaysTangle = true;
+
         package = pkgs.emacs-git-pgtk;
 
         extraEmacsPackages = epkgs: (config.programs.emacs.extraPackages epkgs) ++ (with epkgs; [
