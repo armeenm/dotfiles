@@ -159,7 +159,10 @@ in {
         alwaysEnsure = true;
         alwaysTangle = true;
 
-        package = pkgs.emacs-git-pgtk;
+        package = pkgs.emacs-git-pgtk.overrideAttrs (old: {
+          configureFlags =
+            old.configureFlags ++ lib.optionals hostPlatform.isDarwin [ "ac_cv_prog_cc_c23=no" ];
+        });
 
         extraEmacsPackages = epkgs: (config.programs.emacs.extraPackages epkgs) ++ (with epkgs; [
           treesit-grammars.with-all-grammars
