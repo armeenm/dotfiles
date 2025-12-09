@@ -18,12 +18,17 @@ in {
     windowManager.hyprland = {
       enable = !isHeadless;
 
-      package = if isStandalone then hyprPkgs.hyprland else osConfig.programs.hyprland.package;
-      portalPackage = if isStandalone then hyprPkgs.xdg-desktop-portal-hyprland else osConfig.programs.hyprland.portalPackage;
+      package = if isStandalone
+                then hyprPkgs.hyprland
+                else osConfig.programs.hyprland.package;
+
+      portalPackage = if isStandalone
+                      then hyprPkgs.xdg-desktop-portal-hyprland
+                      else osConfig.programs.hyprland.portalPackage;
 
       systemd = {
         enable = isStandalone;
-        variables = ["--all"];
+        variables = [ "--all" ];
       };
 
       plugins = let
@@ -77,9 +82,9 @@ in {
           preserve_split = true;
         };
 
-        windowrulev2 = [
-          "idleinhibit fullscreen, fullscreen:1"
-          "stayfocused, class:(zoom), initialTitle:(menu window)"
+        windowrule = [
+          "idle_inhibit fullscreen, match:fullscreen 1"
+          "stay_focused on, match:class (zoom), match:initial_title (menu_window)"
         ];
 
         gesture = [
@@ -118,13 +123,16 @@ in {
           backlight = pkgs.writeShellScript "hyprland-backlight" ''
             set -euo pipefail
             brightnessctl s "$1"
-            brightnessctl -m | awk -F',' '{print substr($4, 1, length($4)-1)}' > "$XDG_RUNTIME_DIR"/wob.sock
+            brightnessctl -m \
+            | awk -F',' '{print substr($4, 1, length($4)-1)}' \
+            > "$XDG_RUNTIME_DIR"/wob.sock
           '';
 
           volume = pkgs.writeShellScript "hyprland-volume" ''
             set -euo pipefail
             wpctl set-volume @DEFAULT_AUDIO_SINK@ "$@"
-            wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{ print $2*100 }' > "$XDG_RUNTIME_DIR"/wob.sock
+            wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{ print $2*100 }' \
+            > "$XDG_RUNTIME_DIR"/wob.sock
           '';
         in [
           ",XF86AudioRaiseVolume,  exec, ${volume} -l 1.5 5%+"
@@ -171,7 +179,9 @@ in {
             notify-send "Screen recording saved" "Recording saved to $filepath" -a wl-screenrec
           '';
 
-          screenshot = x: ''hyprshot -zm ${x} -r - | satty -f - -o ~/ss/satty-$(date '+%Y%m%d-%H:%M:%S').png'';
+          screenshot = x: ''
+            hyprshot -zm ${x} -r - | satty -f - -o ~/ss/satty-$(date '+%Y%m%d-%H:%M:%S').png
+          '';
 
         in [
           "SUPER, Q,         killactive,"

@@ -2,7 +2,6 @@
 
 {
   nix = {
-    package = pkgs.nixVersions.latest;
     nixPath = lib.mkForce [ "nixpkgs=${config.nix.registry.nixpkgs.flake}" ];
 
     registry = {
@@ -13,6 +12,7 @@
     settings = {
       allowed-users = lib.mkForce [ "@users" "@wheel" ];
       trusted-users = lib.mkForce [ "@wheel" ];
+      eval-cores = 0;
 
       experimental-features = [
         "auto-allocate-uids"

@@ -209,8 +209,12 @@ in {
       hyprcursor.enable = true;
       x11.enable = true;
 
-      package = pkgs.rose-pine-cursor;
-      name = "Rose Pine";
+      package = pkgs.symlinkJoin {
+        name = "rose-pine-cursor-combo";
+        paths = with pkgs; [ rose-pine-cursor rose-pine-hyprcursor ];
+      };
+
+      name = "BreezeX-RoséPine";
       size = 16;
     };
 

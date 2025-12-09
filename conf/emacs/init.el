@@ -266,7 +266,7 @@
      This only works with orderless and for the first component of the search."
     (when (and (bound-and-true-p evil-mode)
                (eq evil-search-module 'evil-search))
-      (let ((pattern (car (orderless-pattern-compiler (car consult--line-history)))))
+      (let ((pattern (cadr (orderless-compile (car consult--line-history)))))
         (add-to-history 'evil-ex-search-history pattern)
         (setq evil-ex-search-pattern (list pattern t t))
         (setq evil-ex-search-direction 'forward)
@@ -284,17 +284,6 @@
    corfu-preselect 'directory)
   :bind (:map corfu-map ("RET" . nil))
   :init (global-corfu-mode))
-
-(use-package corfu-terminal
-  :defines corfu-terminal-mode
-  :config
-  (defun corfu-terminal-setup (frame)
-    (if (display-graphic-p frame)
-        (corfu-terminal-mode -1)
-      (corfu-terminal-mode)))
-
-  (mapc 'corfu-terminal-setup (frame-list))
-  (add-hook 'after-make-frame-functions 'corfu-terminal-setup))
 
 (use-package copilot)
 
@@ -337,6 +326,7 @@
   (setq evil-want-keybinding nil
         evil-want-Y-yank-to-eol t
         evil-search-wrap t
+        evil-search-module 'evil-search
         evil-regexp-search t)
   :config
   (evil-mode))
@@ -488,10 +478,8 @@
 (use-package treemacs-projectile
   :after (treemacs projectile))
 
-(use-package treemacs-icon-dired
-  :after (treemacs dired)
-  :config
-  (treemacs-icon-dired-mode))
+(use-package treemacs-icons-dired
+  :hook (dired-mode . treemacs-icons-dired-enable-once))
 
 (use-package undo-fu-session
   :config
