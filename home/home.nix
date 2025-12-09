@@ -1,6 +1,8 @@
 { config
 , isHeadless
 , enableSocial
+, cursorColor
+, cursorSize
 , pkgs
 , lib
 , user
@@ -211,11 +213,17 @@ in {
 
       package = pkgs.symlinkJoin {
         name = "rose-pine-cursor-combo";
-        paths = with pkgs; [ rose-pine-cursor rose-pine-hyprcursor ];
+        paths = let
+          xcursor = pkgs.rose-pine-cursor;
+          hyprcursor = inputs.rose-pine-hyprcursor.packages.${hostPlatform.system}.default;
+          hyprcursor-final = if cursorColor != null
+                             then hyprcursor.override { color = cursorColor; }
+                             else hyprcursor;
+        in [ hyprcursor-final xcursor ];
       };
 
       name = "BreezeX-RoséPine";
-      size = 16;
+      size = cursorSize;
     };
 
     sessionPath = [ "${config.home.homeDirectory}/.local/bin" ];

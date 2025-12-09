@@ -14,6 +14,8 @@
       isStandalone = false;
       isPortable = false;
       enableSocial = false;
+      cursorColor = null;
+      cursorSize = 32;
     };
   };
 }

@@ -245,6 +245,7 @@ in {
           ps = "push";
           psf = "push --force-with-lease";
           r = "rebase";
+          rev = "rev-parse HEAD";
           st = "status";
           sw = "switch";
           wt = "worktree";

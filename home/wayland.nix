@@ -73,10 +73,6 @@ in {
           layout = "dwindle";
         };
 
-        env = [
-          "HYPRCURSOR_THEME, rose-pine-hyprcursor"
-        ];
-
         dwindle = {
           pseudotile = true;
           preserve_split = true;

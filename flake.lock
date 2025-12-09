@@ -2399,7 +2399,28 @@
         "nixpkgs": "nixpkgs_7",
         "nixpkgs-stable": "nixpkgs-stable_2",
         "ragenix": "ragenix",
+        "rose-pine-hyprcursor": "rose-pine-hyprcursor",
         "stylix": "stylix"
+      }
+    },
+    "rose-pine-hyprcursor": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1765298491,
+        "narHash": "sha256-L1fNw9viLUiUFHttp2CqnSkCObAXGHGsT62zSI4suNc=",
+        "owner": "armeenm",
+        "repo": "rose-pine-hyprcursor",
+        "rev": "81dd1a9d4e721616b8671cbf2af5beb4cd971924",
+        "type": "github"
+      },
+      "original": {
+        "owner": "armeenm",
+        "repo": "rose-pine-hyprcursor",
+        "type": "github"
       }
     },
     "rust-overlay": {

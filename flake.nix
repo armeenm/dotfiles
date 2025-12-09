@@ -130,6 +130,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    rose-pine-hyprcursor = {
+      url = "github:armeenm/rose-pine-hyprcursor";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     stylix = {
       url = "github:danth/stylix";
       inputs.nixpkgs.follows = "nixpkgs";

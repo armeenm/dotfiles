@@ -30,6 +30,7 @@
     extraSpecialArgs = {
       isPortable = true;
       enableSocial = true;
+      cursorColor = "#b89b51";
     };
 
     users."${user.login}" = {
