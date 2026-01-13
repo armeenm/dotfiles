@@ -63,7 +63,6 @@
   };
 
   programs = {
-    adb.enable = true;
     dconf.enable = true;
     nix-ld.enable = true;
 

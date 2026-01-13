@@ -83,6 +83,7 @@ in {
 
     packages = with pkgs; [
       age-plugin-yubikey
+      android-tools
       bitwarden-cli
       boxes
       dos2unix
