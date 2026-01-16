@@ -6,7 +6,7 @@
 
   # Assume Determinate Nix on macOS.
   nix.enable = false;
-  determinate-nix.customSettings = {
+  determinateNix.customSettings = {
     eval-cores = 0;
   };
 
