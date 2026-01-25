@@ -3,7 +3,7 @@
 if [[ "$OSTYPE" == "darwin"* ]]; then
   cmd=("darwin-rebuild")
 elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
-  cmd=("nixos-rebuild" "--use-remote-sudo")
+  cmd=("nixos-rebuild" "--sudo")
 else
   echo "Unknown OS type: $OSTYPE"
   exit 1

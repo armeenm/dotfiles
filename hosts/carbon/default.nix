@@ -1,32 +1,32 @@
-{ config, pkgs, lib, inputs, user, ... }:
+{ config, pkgs, lib, inputs, user, root, ... }:
 
 {
   imports = [ ./router.nix ];
 
   age = {
     secrets = {
-      cloudflare-api-token.file = ../../secrets/cloudflare-api-token.env.age;
+      cloudflare-api-token.file = "${root}/secrets/cloudflare-api-token.age";
 
       restic-pw = {
-        file = ../../secrets/restic-pw.age;
+        file = "${root}/secrets/restic-pw.age";
         owner = "restic";
         group = "restic";
       };
 
       restic-b2-env = {
-        file =  ../../secrets/restic-b2-env.age;
+        file =  "${root}/secrets/restic-b2-env.age";
         owner = "restic";
         group = "restic";
       };
 
       vaultwarden-env = {
-        file = ../../secrets/vaultwarden-env.age;
+        file = "${root}/secrets/vaultwarden-env.age";
         owner = "vaultwarden";
         group = "vaultwarden";
       };
 
       cobalt-config = {
-        file = ../../secrets/cobalt.yaml.age;
+        file = "${root}/secrets/cobalt.yaml.age";
         owner = "dufs";
         group = "dufs";
       };
@@ -34,7 +34,7 @@
   };
 
   boot = {
-    kernelPackages = pkgs.linuxPackages_6_13;
+    kernelPackages = pkgs.linuxPackages_6_18;
 
     initrd = {
       supportedFilesystems = [ "bcachefs" ];
@@ -284,11 +284,10 @@
       enable = true;
       enableQuicBPF = true;
       enableReload = true;
+      recommendedBrotliSettings = true;
       recommendedOptimisation = true;
-      recommendedTlsSettings = true;
-      recommendedZstdSettings = true;
       recommendedProxySettings = true;
-      package = pkgs.nginxQuic;
+      recommendedTlsSettings = true;
 
       virtualHosts = {
         "\"\"" = {

@@ -13,5 +13,5 @@ in {
   "restic-b2-env.age".publicKeys = [ armeen-yk0 carbon ];
   "vaultwarden-env.age".publicKeys = [ armeen-yk0 carbon ];
   "cobalt.yaml.age".publicKeys = [ armeen-yk0 carbon ];
-  "cloudflare-api-token.env.age".publicKeys = [ armeen-yk0 carbon ];
+  "cloudflare-api-token.age".publicKeys = [ armeen-yk0 carbon ];
 }
