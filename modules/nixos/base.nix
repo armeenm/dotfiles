@@ -176,6 +176,7 @@
       usbutils
 
       git
+      htop
       rsync
 
       bcachefs-tools

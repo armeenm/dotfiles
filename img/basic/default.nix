@@ -1,11 +1,8 @@
-# Basic ISO for installation
+# Basic ISO for installation.
 { config, pkgs, ... }:
 
 {
-  nixpkgs.config.allowUnfree = true;
-
   networking = {
-    wireless.enable = false;
     networkmanager.enable = true;
   };
 
