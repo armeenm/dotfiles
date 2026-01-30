@@ -10,20 +10,18 @@
     };
 
     settings = {
-      allowed-users = lib.mkForce [ "@users" "@wheel" ];
-      trusted-users = lib.mkForce [ "@wheel" ];
       eval-cores = 0;
+      warn-dirty = false;
+      sandbox = true;
 
       experimental-features = [
         "auto-allocate-uids"
-        "ca-derivations"
+        #"ca-derivations"
         "flakes"
         "impure-derivations"
         "nix-command"
         "recursive-nix"
       ];
-
-      warn-dirty = false;
     };
   };
 }

@@ -179,6 +179,8 @@
     ];
 
   in rec {
+    nixosModules = import ./modules { inherit inputs; };
+
     nixosConfigurations = {
       lithium = nixpkgs.lib.nixosSystem {
         modules = baseModules ++ [
@@ -206,22 +208,21 @@
         ];
       };
 
-      basic-img = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
+      hydrogen = nixpkgs.lib.nixosSystem {
         modules = [
           "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
-          ./img/basic
+          ./hosts/hydrogen
         ];
       };
     };
 
-    nixosModules = import ./modules { inherit inputs; };
-
     darwinConfigurations = rec {
-      itmaclap = inputs.nix-darwin.lib.darwinSystem {
+      itmaclap = cadmium;
+
+      cadmium = inputs.nix-darwin.lib.darwinSystem {
         modules = baseModules ++ [
           nixosModules.darwinInteractive
-          ./hosts/itmaclap
+          ./hosts/cadmium
         ];
       };
 
@@ -232,6 +233,8 @@
         ];
       };
     };
+
+    configurations = nixosConfigurations // darwinConfigurations;
 
     homeConfigurations = forAllSystems (system: pkgs: {
       default = inputs.home-manager.lib.homeManagerConfiguration {
@@ -270,13 +273,14 @@
     overlays.default = nixpkgs.lib.composeManyExtensions allOverlays;
 
     deploy = {
-      nodes = {
+      nodes = with self.nixosConfigurations; let
+        inherit (inputs.deploy-rs) lib;
+      in {
         argentum = {
           hostname = "argentum";
           profiles.system = {
-            user = "root";
-            sudo = "doas -u";
-            path = inputs.deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.argentum;
+            sshUser = "root";
+            path = lib.x86_64-linux.activate.nixos argentum;
           };
         };
 
@@ -284,25 +288,23 @@
           hostname = "carbon";
           profiles.system = {
             sshUser = "root";
-            path = inputs.deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.carbon;
+            path = lib.x86_64-linux.activate.nixos carbon;
           };
         };
 
         lithium = {
           hostname = "lithium";
           profiles.system = {
-            user = "root";
-            sudo = "doas -u";
-            path = inputs.deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.lithium;
+            sshUser = "root";
+            path = lib.x86_64-linux.activate.nixos lithium;
           };
         };
 
         boron = {
           hostname = "boron";
           profiles.system = {
-            user = "root";
-            sudo = "doas -u";
-            path = inputs.deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.boron;
+            sshUser = "root";
+            path = lib.x86_64-linux.activate.nixos boron;
           };
         };
       };
@@ -378,7 +380,9 @@
       };
     });
 
-    checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) inputs.deploy-rs.lib;
+    checks = builtins.mapAttrs
+      (system: deployLib: deployLib.deployChecks self.deploy)
+      inputs.deploy-rs.lib;
 
     lib = {
       inherit forAllSystems;

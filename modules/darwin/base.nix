@@ -1,13 +1,16 @@
-{ config, user, ... }:
+{ config, lib, user, ... }:
 
 {
   # No more support for x86 macOS.
   nixpkgs.hostPlatform = "aarch64-darwin";
 
   # Assume Determinate Nix on macOS.
-  nix.enable = false;
-  determinateNix.customSettings = {
-    eval-cores = 0;
+  determinateNix = {
+    enable = true;
+    customSettings = config.nix.settings // {
+      allowed-users = lib.mkForce [ "@staff" ];
+      trusted-users = lib.mkForce [ "@admin" ];
+    };
   };
 
   power.restartAfterFreeze = true;

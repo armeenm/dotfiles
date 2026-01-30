@@ -190,6 +190,7 @@ in {
       zoom-us
 
     ]))) ++ (lib.optionals hostPlatform.isDarwin (sharedGraphicalApps ++ [
+      bluesnooze
       mas
 
     ] ++ (with brewCasks; [

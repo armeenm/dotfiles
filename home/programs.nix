@@ -27,7 +27,7 @@ in {
     htop.enable = true;
     imv.enable = hostPlatform.isLinux && !isHeadless;
     mergiraf.enable = true;
-    mpv.enable = !isHeadless;
+    mpv.enable = hostPlatform.isLinux && !isHeadless;
     navi.enable = true;
     nix-index-database.comma.enable = true;
     nix-init.enable = true;
@@ -374,6 +374,7 @@ in {
 
     ssh = {
       enable = true;
+      package = lib.optionals hostPlatform.isDarwin pkgs.openssh;
       enableDefaultConfig = false;
       matchBlocks."*" = {
         compression = true;
@@ -432,7 +433,6 @@ in {
         llvm-vs-code-extensions.lldb-dap
         llvm-vs-code-extensions.vscode-clangd
         mkhl.direnv
-        ms-vscode.cpptools
         ms-vscode.cpptools-extension-pack
         ms-vscode.hexeditor
         vscodevim.vim
@@ -443,6 +443,8 @@ in {
           version = "0.0.36";
           sha256 = "sha256-26Lt4/Bajg3b3TSif6k/o1l0adgRkmXA37QZxP1X3eU=";
         }
+      ] ++ lib.optional hostPlatform.isLinux [
+        ms-vscode.cpptools
       ];
 
       profiles.default = {

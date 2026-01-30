@@ -1,12 +1,16 @@
 #!/usr/bin/env bash
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
-  cmd=("darwin-rebuild")
+  cmd=("sudo" "darwin-rebuild" "--flake" "." "switch")
 elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
-  cmd=("nixos-rebuild" "--sudo")
+  if hash nh 2>/dev/null; then
+    cmd=("nh" "os" "switch")
+  else
+    cmd=("nixos-rebuild" "--sudo" "--flake" "." "switch")
+  fi
 else
   echo "Unknown OS type: $OSTYPE"
   exit 1
 fi
 
-"${cmd[@]}" --flake . switch "$@"
+"${cmd[@]}" "$@"

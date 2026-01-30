@@ -1,18 +1,20 @@
 #!/usr/bin/env bash
 
-if type nom > /dev/null 2>&1; then
+if hash nom 2>/dev/null; then
   cmd=nom
 else
   cmd=nix
 fi
 
-if [[ "$OSTYPE" == "darwin"* ]]; then
-  config=darwinConfigurations
+if [[ -n "$1" && "$1" != -* ]]; then
+  hostname=$1
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+  hostname=$(hostname -s)
 elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
-  config=nixosConfigurations
+  hostname=$(hostname)
 else
   echo "Unknown OS type: $OSTYPE"
   exit 1
 fi
 
-$cmd build ".#$config.$(hostname).config.system.build.toplevel" --keep-going "$@"
+$cmd build ".#configurations.$hostname.config.system.build.toplevel" --keep-going "$@"

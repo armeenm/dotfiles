@@ -21,6 +21,10 @@
     '';
   };
 
+  nixpkgs = {
+    hostPlatform = "x86_64-linux";
+  };
+
   programs = {
     neovim = {
       enable = true;

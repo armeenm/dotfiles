@@ -8,9 +8,7 @@
 }:
 
 {
-  imports = [
-    (modulesPath + "/installer/scan/not-detected.nix")
-  ];
+  imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
   age = {
     identityPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
@@ -26,6 +24,11 @@
     font = "Tamsyn7x13r";
     packages = [ pkgs.tamsyn ];
     earlySetup = false;
+  };
+
+  nix.settings = {
+    allowed-users = lib.mkForce [ "@users" ];
+    trusted-users = lib.mkForce [ "@wheel" ];
   };
 
   services = {

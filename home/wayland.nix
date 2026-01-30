@@ -194,7 +194,7 @@ in {
           "SUPER_SHIFT, space,  pin"
           "SUPER_SHIFT, D,      exec,exec $(tofi-drun)"
           "SUPER_SHIFT, P,      pseudo,"
-          "SUPER_SHIFT, F,      fullscreen,0"
+          "SUPER_SHIFT, F,      fullscreen, 0"
 
           "SUPER,       C, exec, ${screenshot "region"}"
           "SUPER_SHIFT, C, exec, ${screenshot "window"}"
