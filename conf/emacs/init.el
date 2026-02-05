@@ -363,6 +363,7 @@
    "p" 'projectile-command-map
    "e" 'eglot-mode-map
    "r" 'vertico-repeat
+   "t" 'treemacs
    "s i" 'symbol-overlay-put
    "s n" 'symbol-overlay-switch-forward
    "s p" 'symbol-overlay-switch-backward

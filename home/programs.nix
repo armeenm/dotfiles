@@ -376,9 +376,14 @@ in {
       enable = true;
       package = lib.optionals hostPlatform.isDarwin pkgs.openssh;
       enableDefaultConfig = false;
+
       matchBlocks."*" = {
         compression = true;
         controlMaster = "auto";
+      };
+
+      extraOptionOverrides = lib.optionalAttrs hostPlatform.isDarwin {
+        SecurityKeyProvider = "/usr/lib/ssh-keychain.dylib";
       };
     };
 
