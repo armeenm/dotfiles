@@ -102,5 +102,13 @@ in {
         "mode=do-not-disturb".invisible = 1;
       };
     };
+
+    recoll = {
+      enable = true;
+      settings = {
+        nocjk = true;
+        topdirs = [ "~/docs" ];
+      };
+    };
   };
 }

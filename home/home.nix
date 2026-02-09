@@ -35,6 +35,7 @@ let
   sharedGraphicalApps = with pkgs; [
     bruno
     cozette
+    evince
     fira-code
     fira-code-symbols
     meld
@@ -85,6 +86,7 @@ in {
       android-tools
       bitwarden-cli
       boxes
+      croc
       dos2unix
       duf
       fasd
