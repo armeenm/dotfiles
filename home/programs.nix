@@ -374,7 +374,7 @@ in {
 
     ssh = {
       enable = true;
-      package = lib.optionals hostPlatform.isDarwin pkgs.openssh;
+      package = pkgs.openssh;
       enableDefaultConfig = false;
 
       matchBlocks."*" = {
@@ -448,7 +448,7 @@ in {
           version = "0.0.36";
           sha256 = "sha256-26Lt4/Bajg3b3TSif6k/o1l0adgRkmXA37QZxP1X3eU=";
         }
-      ] ++ lib.optional hostPlatform.isLinux [
+      ] ++ lib.optionals hostPlatform.isLinux [
         ms-vscode.cpptools
       ];
 
