@@ -465,7 +465,7 @@ in {
     };
 
     yt-dlp = {
-      enable = enableSocial;
+      enable = enableSocial && hostPlatform.isLinux;
       settings = {
         embed-thumbnail = true;
         downloader = "aria2c";

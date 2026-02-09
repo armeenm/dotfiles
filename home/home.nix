@@ -37,7 +37,6 @@ let
     cozette
     fira-code
     fira-code-symbols
-    google-chrome
     meld
     moonlight-qt
     noto-fonts
@@ -50,7 +49,7 @@ let
     aider-chat
     claude-code
     discord
-    element-desktop
+    #element-desktop
   ];
 
 in {
@@ -145,6 +144,7 @@ in {
       brightnessctl
       easyeffects
       gimp-with-plugins
+      google-chrome
       gparted
       grim
       gtk3
@@ -190,11 +190,18 @@ in {
       zoom-us
 
     ]))) ++ (lib.optionals hostPlatform.isDarwin (sharedGraphicalApps ++ [
+      age-plugin-se
       bluesnooze
       mas
 
     ] ++ (with brewCasks; [
       gimp
+      (google-chrome.overrideAttrs (old: {
+        src = pkgs.fetchurl {
+          url = lib.lists.head old.src.urls;
+          hash = "sha256-P1TxSLJRp8hmnHWPk3dLR4frHTWS9JOS+kAVxVEyaWA=";
+        };
+      }))
       libreoffice
       linearmouse
       obs
