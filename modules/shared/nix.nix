@@ -10,9 +10,11 @@
     };
 
     settings = {
+      auto-optimise-store = true;
+      builders-use-substitutes = true;
       eval-cores = 0;
-      warn-dirty = false;
       sandbox = true;
+      warn-dirty = false;
 
       experimental-features = [
         "auto-allocate-uids"

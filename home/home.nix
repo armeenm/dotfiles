@@ -197,6 +197,7 @@ in {
       mas
 
     ] ++ (with brewCasks; [
+      bettertouchtool
       gimp
       (google-chrome.overrideAttrs (old: {
         src = pkgs.fetchurl {

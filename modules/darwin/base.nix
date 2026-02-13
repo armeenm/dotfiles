@@ -7,6 +7,13 @@
   # Assume Determinate Nix on macOS.
   determinateNix = {
     enable = true;
+    distributedBuilds = true;
+    registry = config.nix.registry;
+
+    determinateNixd = {
+      builder.state = "enabled";
+    };
+
     customSettings = config.nix.settings // {
       allowed-users = lib.mkForce [ "@staff" ];
       trusted-users = lib.mkForce [ "@admin" ];
