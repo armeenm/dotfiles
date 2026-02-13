@@ -47,6 +47,7 @@ in
     systemDirs.data = lib.optionals hostPlatform.isLinux [
       "/var/lib/flatpak/exports/share"
       "${home}/.local/share/flatpak/exports/share"
+      "${config.wayland.windowManager.hyprland.package}/share"
     ];
   };
 }

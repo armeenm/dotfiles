@@ -188,7 +188,7 @@
       f2fs-tools
       ntfs3g
 
-      #(hunspellWithDicts [ hunspellDicts.en_US hunspellDicts.en_US-large ])
+      # (hunspellWithDicts [ hunspellDicts.en_US hunspellDicts.en_US-large ])
     ];
   };
 

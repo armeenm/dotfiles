@@ -61,7 +61,7 @@ in {
         rlf = "readlink -f";
         rscp = "rsync -ahvP";
         sw = "nh os switch";
-        tf = "tofu";
+        tf = "terraform";
         zj = "zellij";
       } // lib.optionalAttrs hostPlatform.isLinux {
         open = "xdg-open";
