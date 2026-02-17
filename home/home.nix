@@ -13,6 +13,7 @@
 
 let
   inherit (pkgs.stdenv) hostPlatform;
+  inherit (inputs.nix-misc.packages.${hostPlatform.system}) launchk;
 
   hyprland-qtutils = inputs.hyprland-qtutils.packages.${hostPlatform.system}.default;
   hyprshell = inputs.hyprshell.packages.${hostPlatform.system}.hyprshell;
@@ -194,6 +195,7 @@ in {
     ]))) ++ (lib.optionals hostPlatform.isDarwin (sharedGraphicalApps ++ [
       age-plugin-se
       bluesnooze
+      launchk
       mas
 
     ] ++ (with brewCasks; [

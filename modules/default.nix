@@ -8,6 +8,7 @@ let
 
   nixosBase = [
     inputs.determinate.nixosModules.default
+    inputs.dwarffs.nixosModules.dwarffs
     inputs.home-manager.nixosModules.default
     inputs.ragenix.nixosModules.default
     { home-manager.sharedModules = hmBase; }

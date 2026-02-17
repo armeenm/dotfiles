@@ -15,6 +15,7 @@
     };
 
     customSettings = config.nix.settings // {
+      sandbox = "relaxed";
       allowed-users = lib.mkForce [ "@staff" ];
       trusted-users = lib.mkForce [ "@admin" ];
     };
