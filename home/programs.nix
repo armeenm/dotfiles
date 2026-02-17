@@ -360,6 +360,10 @@ in {
       };
     };
 
+    opencode = {
+      enable = enableSocial;
+    };
+
     readline = {
       enable = true;
       extraConfig = ''
