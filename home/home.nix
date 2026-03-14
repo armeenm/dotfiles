@@ -17,6 +17,7 @@ let
 
   hyprland-qtutils = inputs.hyprland-qtutils.packages.${hostPlatform.system}.default;
   hyprshell = inputs.hyprshell.packages.${hostPlatform.system}.hyprshell;
+  strace-macos = inputs.strace-macos.packages.${hostPlatform.system}.default;
 
   editor = lib.getBin (pkgs.writeShellScript "editor" ''
     if [ -z "''${WAYLAND_DISPLAY+x}" ]; then
@@ -197,6 +198,7 @@ in {
       bluesnooze
       launchk
       mas
+      strace-macos
 
     ] ++ (with brewCasks; [
       bettertouchtool

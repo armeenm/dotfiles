@@ -21,6 +21,7 @@
       supportedFeatures = [
         "big-parallel"
         "kvm"
+        "recursive-nix"
       ];
       systems = [
         "aarch64-linux"

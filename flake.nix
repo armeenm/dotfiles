@@ -135,6 +135,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    strace-macos = {
+      url = "github:Mic92/strace-macos";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     stylix = {
       url = "github:danth/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
