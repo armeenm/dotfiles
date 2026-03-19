@@ -37,7 +37,7 @@ let
   sharedGraphicalApps = with pkgs; [
     bruno
     cozette
-    evince
+    # evince
     fira-code
     fira-code-symbols
     meld
@@ -52,7 +52,7 @@ let
     aider-chat
     claude-code
     discord
-    #element-desktop
+    # element-desktop
   ];
 
 in {
@@ -206,7 +206,7 @@ in {
       (google-chrome.overrideAttrs (old: {
         src = pkgs.fetchurl {
           url = lib.lists.head old.src.urls;
-          hash = "sha256-P1TxSLJRp8hmnHWPk3dLR4frHTWS9JOS+kAVxVEyaWA=";
+          hash = "sha256-flCO/Mg/ei6y3Zz2GEqsxLLqjK/SaLYOQ04uzl8BEJg=";
         };
       }))
       libreoffice

@@ -7,7 +7,7 @@
       isPortable = true;
     };
 
-    users.${user.login}.home.stateVersion = lib.mkForce "25.11";
+    users.${user.login}.home.stateVersion = lib.mkForce "26.05";
   };
 
   determinateNix.buildMachines = [
