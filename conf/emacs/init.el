@@ -44,6 +44,7 @@
     `((".*" ,lock-files-directory t))))
 
 (setq visual-bell 1)
+(setq ring-bell-function 'ignore)
 
 (setq save-place-mode t)
 

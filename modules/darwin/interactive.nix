@@ -3,6 +3,10 @@
 {
   imports = [ ../shared/stylix.nix ];
 
+  environment.variables = {
+    SSH_SK_PROVIDER = "/usr/lib/ssh-keychain.dylib";
+  };
+
   home-manager = {
     extraSpecialArgs = {
       isHeadless = false;
