@@ -1,8 +1,8 @@
-{ lib
+{ config
+, lib
 , pkgs
 , isHeadless
 , isStandalone
-, stateVersion
 , ...
 }:
 
@@ -40,6 +40,8 @@ in {
 
   gtk = {
     enable = !isHeadless;
+    gtk4.theme = config.gtk.theme;
+
   } // lib.optionalAttrs hostPlatform.isLinux {
     iconTheme = {
       name = "Rose Pine";

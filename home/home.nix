@@ -49,7 +49,7 @@ let
     tamsyn
     yubikey-manager
   ] ++ lib.optionals enableSocial [
-    aider-chat
+    #aider-chat
     claude-code
     discord
     # element-desktop
@@ -184,8 +184,8 @@ in {
       woomer
       xdg-user-dirs
       xdg-utils
-      xorg.xeyes
-      xorg.xkill
+      xeyes
+      xkill
 
     ] ++ (lib.optionals enableSocial [
       kotatogram-desktop

@@ -36,9 +36,9 @@ in {
         hyprland-plugins = inputs.hyprland-plugins.packages.${system};
       in [
         hyprland-plugins.xtra-dispatchers
-        #inputs.hypr-darkwindow.packages.${system}.Hypr-DarkWindow
+        inputs.hypr-darkwindow.packages.${system}.Hypr-DarkWindow
         inputs.hypr-dynamic-cursors.packages.${system}.default
-        inputs.hyprspace.packages.${system}.Hyprspace
+        #inputs.hyprspace.packages.${system}.Hyprspace
         inputs.hyprsplit.packages.${system}.hyprsplit
       ];
 
@@ -214,8 +214,8 @@ in {
 
           "SUPER, tab, exec, hyprswitch gui --mod-key super --key tab --close mod-key-release --reverse-key=key=grave --sort-recent && hyprswitch dispatch"
 
-          "SUPER_SHIFT, Z, togglesplit"
-          "SUPER, Z, swapsplit"
+          "SUPER_SHIFT, Z, layoutmsg, togglesplit"
+          "SUPER, Z, layoutmsg, swapsplit"
           "SUPER, T, togglegroup"
           #"SUPER, I, invertactivewindow"
 

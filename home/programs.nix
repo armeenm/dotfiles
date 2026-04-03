@@ -26,9 +26,9 @@ in {
     home-manager.enable = true;
     htop.enable = true;
     imv.enable = hostPlatform.isLinux && !isHeadless;
-    mergiraf.enable = true;
     mpv.enable = hostPlatform.isLinux && !isHeadless;
     navi.enable = true;
+    lesspipe.enable = true;
     nix-index-database.comma.enable = true;
     nix-init.enable = true;
     nix-your-shell.enable = true;
@@ -37,7 +37,6 @@ in {
     ripgrep-all.enable = true;
     ripgrep.enable = true;
     scmpuff.enable = true;
-    yazi.enable = true;
     zoxide.enable = true;
 
     alacritty = {
@@ -209,10 +208,9 @@ in {
 
     git = {
       enable = true;
+      signing.format = null;
+
       ignores = [
-        ".aider*"
-        "!.aider.conf.yml"
-        "!.aiderignore"
         ".claude"
         ".vscode"
       ];
@@ -274,7 +272,10 @@ in {
       '';
     };
 
-    lesspipe.enable = true;
+    mergiraf = {
+      enable = true;
+      enableGitIntegration = true;
+    };
 
     mods = {
       enable = enableSocial;
@@ -466,6 +467,11 @@ in {
           };
         };
       };
+    };
+
+    yazi = {
+      enable = true;
+      shellWrapperName = "y";
     };
 
     yt-dlp = {

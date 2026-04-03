@@ -13,7 +13,7 @@
       auto-optimise-store = true;
       builders-use-substitutes = true;
       eval-cores = 0;
-      sandbox = true;
+      sandbox = "relaxed";
       warn-dirty = false;
 
       experimental-features = [

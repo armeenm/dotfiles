@@ -41,6 +41,7 @@
     smartd.enable = true;
     timesyncd.enable = true;
     udisks2.enable = true;
+    userborn.enable = true;
 
     avahi = {
       enable = true;
@@ -194,10 +195,13 @@
 
   documentation = {
     dev.enable = true;
-    man.generateCaches = true;
+    man.cache.enable = true;
   };
 
   system = {
+    etc.overlay.enable = true;
+    nixos-init.enable = true;
+
     activationScripts.report-changes = ''
         PATH=$PATH:${lib.makeBinPath [ pkgs.nvd pkgs.nix ]}
         nvd diff $(ls -dv /nix/var/nix/profiles/system-*-link | tail -2)

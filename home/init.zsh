@@ -37,15 +37,6 @@ d () {
   diff -u $@ | delta
 }
 
-function y() {
-  local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
-  yazi "$@" --cwd-file="$tmp"
-  if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
-    builtin cd -- "$cwd"
-  fi
-  rm -f -- "$tmp"
-}
-
 function precmd {
   print -Pn "\e]133;A\e\\"
   if ! builtin zle; then
