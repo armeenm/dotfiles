@@ -1,0 +1,13 @@
+diff --git a/scripts/cmake/utilities.cmake b/scripts/cmake/utilities.cmake
+index 5c17350d5..c21b65ab0 100644
+--- a/scripts/cmake/utilities.cmake
++++ b/scripts/cmake/utilities.cmake
+@@ -23,7 +23,7 @@ function(mz_target_handle_warnings MZ_TARGET)
+     if(MSVC)
+         target_compile_options( ${MZ_TARGET} ${scope} /W3 /WX)
+     else()
+-        target_compile_options( ${MZ_TARGET} ${scope} -Wall -Werror -Wno-conversion)
++        target_compile_options( ${MZ_TARGET} ${scope} -Wall -Werror -Wno-error=deprecated-declarations -Wno-conversion)
+     endif()
+ endfunction()
+ 

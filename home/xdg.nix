@@ -25,7 +25,7 @@ in
         "application/pdf" = ["org.pwmt.zathura.desktop"];
         "inode/directory" = ["dolphin.desktop"];
       };
-    }; 
+    };
 
     configFile = {
       "zsh/p10k.zsh".source = ../conf/zsh/p10k.zsh;
@@ -34,6 +34,9 @@ in
 
     userDirs = {
       enable = hostPlatform.isLinux;
+      # Opt into the new default functionality.
+      setSessionVariables = false;
+
       desktop = "${home}/desktop";
       documents = "${home}/docs";
       download = "${home}/dl";
