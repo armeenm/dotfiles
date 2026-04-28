@@ -201,6 +201,7 @@ in {
       strace-macos
 
     ] ++ (with brewCasks; [
+      betterdisplay
       bettertouchtool
       gimp
       (google-chrome.overrideAttrs (old: {
@@ -217,7 +218,7 @@ in {
     ] ++ (lib.optionals enableSocial [
       monero-wallet
       telegram
-      whatsapp
+      # whatsapp
       zoom
     ]))));
 
