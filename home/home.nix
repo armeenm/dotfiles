@@ -218,7 +218,11 @@ in {
     ] ++ (lib.optionals enableSocial [
       monero-wallet
       telegram
-      # whatsapp
+      (whatsapp.overrideAttrs (old: {
+        src = pkgs.runCommand "whatsapp.zip" {} ''
+          ln -s ${old.src} $out
+        '';
+      }))
       zoom
     ]))));
 
