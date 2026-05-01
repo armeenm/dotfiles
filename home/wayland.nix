@@ -35,7 +35,7 @@ in {
         system = pkgs.stdenv.hostPlatform.system;
         hyprland-plugins = inputs.hyprland-plugins.packages.${system};
       in [
-        hyprland-plugins.xtra-dispatchers
+        # hyprland-plugins.xtra-dispatchers
         inputs.hypr-darkwindow.packages.${system}.Hypr-DarkWindow
         inputs.hypr-dynamic-cursors.packages.${system}.default
         #inputs.hyprspace.packages.${system}.Hyprspace
