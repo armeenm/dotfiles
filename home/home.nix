@@ -214,7 +214,7 @@ in {
       vlc
 
     ] ++ (lib.optionals enableSocial [
-      monero-wallet
+      # monero-wallet
       telegram
       (whatsapp.overrideAttrs (old: {
         src = pkgs.runCommand "whatsapp.zip" {} ''

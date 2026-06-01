@@ -26,8 +26,8 @@
     keyboard = {
       enableKeyMapping = true;
       remapCapsLockToEscape = true;
-      swapLeftCtrlAndFn = true;
-      swapLeftCommandAndLeftAlt = true;
+      #swapLeftCtrlAndFn = true;
+      #swapLeftCommandAndLeftAlt = true;
     };
 
     defaults = {
