@@ -49,9 +49,7 @@ let
     tamsyn
     yubikey-manager
   ] ++ lib.optionals enableSocial [
-    #aider-chat
     claude-code
-    discord
     # element-desktop
   ];
 
@@ -188,9 +186,9 @@ in {
       xkill
 
     ] ++ (lib.optionals enableSocial [
+      karere
       kotatogram-desktop
       monero-gui
-      wasistlos
       zoom-us
 
     ]))) ++ (lib.optionals hostPlatform.isDarwin (sharedGraphicalApps ++ [

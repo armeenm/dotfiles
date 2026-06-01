@@ -70,7 +70,7 @@ in {
     };
 
     beets = {
-      enable = hostPlatform.isLinux;
+      # enable = hostPlatform.isLinux;
       package = pkgs.stable.beets;
       settings = {
         directory = config.xdg.userDirs.music;
@@ -100,6 +100,13 @@ in {
         line-numbers = true;
         syntax-theme = "base16-stylix";
         navigate = true;
+      };
+    };
+
+    discord = {
+      enable = enableSocial;
+      settings = {
+        DANGEROUS_ENABLE_DEVTOOLS_ONLY_ENABLE_IF_YOU_KNOW_WHAT_YOURE_DOING = true;
       };
     };
 
@@ -383,7 +390,7 @@ in {
       package = pkgs.openssh;
       enableDefaultConfig = false;
 
-      matchBlocks."*" = {
+      settings."*" = {
         compression = true;
         controlMaster = "auto";
       };

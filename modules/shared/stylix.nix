@@ -3,6 +3,8 @@
 {
   stylix = {
     enable = true;
+    # This is almost always noise for us.
+    enableReleaseChecks = false;
     base16Scheme = "${pkgs.base16-schemes}/share/themes/ayu-mirage.yaml";
 
     fonts = {

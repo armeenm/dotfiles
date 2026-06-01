@@ -34,14 +34,9 @@
     };
 
     emacs-overlay = {
-      url = "github:nix-community/emacs-overlay/fc8318565c8e2feb29c9e6a739acade323750b35";
+      url = "github:nix-community/emacs-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.nixpkgs-stable.follows = "nixpkgs-stable";
-    };
-
-    fw-fanctrl = {
-      url = "github:TamtamHero/fw-fanctrl/packaging/nix";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     home-manager = {
@@ -90,7 +85,7 @@
     };
 
     lanzaboote = {
-      url = "github:nix-community/lanzaboote/v0.4.2";
+      url = "github:nix-community/lanzaboote/v1.0.0";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -201,7 +196,7 @@
           nixosModules.nixosInteractive
           nixosModules.nixosUser
           inputs.nixos-hardware.nixosModules.framework-12th-gen-intel
-          inputs.fw-fanctrl.nixosModules.default
+          inputs.lanzaboote.nixosModules.lanzaboote
           ./hosts/argentum
         ];
       };

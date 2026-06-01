@@ -12,7 +12,6 @@ in
 {
   xdg = {
     enable = true;
-    autostart.enable = false;
     portal.config.common.default = "hyprland";
 
     mime.enable = hostPlatform.isLinux;

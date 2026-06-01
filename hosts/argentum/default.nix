@@ -2,8 +2,21 @@
 
 {
   boot = {
-    initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "nvme" "usb_storage" "sd_mod" ];
+    initrd.availableKernelModules = [
+      "xhci_pci"
+      "thunderbolt"
+      "nvme"
+      "usb_storage"
+      "sd_mod"
+    ];
     kernelModules = [ "kvm-intel" ];
+
+    # Conflicts with lanzaboote.
+    loader.systemd-boot.enable = lib.mkForce false;
+    lanzaboote = {
+      enable = true;
+      pkiBundle = "/var/lib/sbctl";
+    };
   };
 
   fileSystems = {
@@ -112,8 +125,6 @@
   nixpkgs.hostPlatform = "x86_64-linux";
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
-
-  #programs.fw-fanctrl.enable = true;
 
   services = {
     cloudflare-warp.enable = true;
