@@ -28,9 +28,15 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nix = {
+      url = "https://flakehub.com/f/DeterminateSystems/nix-src/3.21.0";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     determinate = {
       url = "github:DeterminateSystems/determinate";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nix.follows = "nix";
     };
 
     emacs-overlay = {

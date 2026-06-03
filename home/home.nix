@@ -210,6 +210,7 @@ in {
       }))
       libreoffice
       linearmouse
+      mozilla-vpn
       obs
       vlc
 
