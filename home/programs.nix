@@ -43,6 +43,8 @@ in {
       enable = !isHeadless;
       settings = {
         window = {
+          blur = true;
+          decorations = "None";
           dynamic_padding = true;
           option_as_alt = "OnlyLeft";
         };

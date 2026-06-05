@@ -37,11 +37,11 @@ let
   sharedGraphicalApps = with pkgs; [
     bruno
     cozette
-    # evince
     fira-code
     fira-code-symbols
     meld
     moonlight-qt
+    nerd-fonts.hack
     noto-fonts
     noto-fonts-cjk-sans
     remmina
@@ -50,7 +50,8 @@ let
     yubikey-manager
   ] ++ lib.optionals enableSocial [
     claude-code
-    # element-desktop
+    element-desktop
+    signal-desktop
   ];
 
 in {
@@ -142,9 +143,10 @@ in {
       strace
 
     ] ++ (lib.optionals (!isHeadless) sharedGraphicalApps ++ [
-      #feishin
       brightnessctl
       easyeffects
+      evince
+      feishin
       gimp-with-plugins
       google-chrome
       gparted
@@ -199,13 +201,19 @@ in {
       strace-macos
 
     ] ++ (with brewCasks; [
+      (autoraiseapp.overrideAttrs (old: {
+        src = pkgs.fetchurl {
+          url = lib.lists.head old.src.urls;
+          hash = "sha256-x2qThyvm9ZS+GLm6ScGuq2kv0/8WZJdNms9rKYFsbB0=";
+        };
+      }))
       betterdisplay
       bettertouchtool
       gimp
       (google-chrome.overrideAttrs (old: {
         src = pkgs.fetchurl {
           url = lib.lists.head old.src.urls;
-          hash = "sha256-flCO/Mg/ei6y3Zz2GEqsxLLqjK/SaLYOQ04uzl8BEJg=";
+          hash = "sha256-pVR0W1yGCxUo64VpUmmzEFSedYZXkF2l0gRIog2HkEw=";
         };
       }))
       libreoffice
@@ -213,6 +221,16 @@ in {
       mozilla-vpn
       obs
       vlc
+      (windows-app.overrideAttrs (old: {
+        unpackPhase = ''
+          xar -xf $src
+          for pkg in $(cat Distribution | grep -oE "#.+\.pkg" | sed -e "s/^#//" -e "s/$/\/Payload/"); do
+            if [ -f $pkg ]; then
+              zcat $pkg | cpio -i
+            fi
+          done
+        '';
+      }))
 
     ] ++ (lib.optionals enableSocial [
       # monero-wallet
@@ -243,7 +261,7 @@ in {
       };
 
       name = "BreezeX-RoséPine";
-      size = cursorSize;
+      size = if cursorSize == null then 32 else cursorSize;
     };
 
     sessionPath = [ "${config.home.homeDirectory}/.local/bin" ];

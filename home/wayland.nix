@@ -187,11 +187,11 @@ in {
           #"SUPER, grave,     overview:toggle"
           "SUPER, F,         fullscreen, 1"
 
-          "SUPER_SHIFT, return, exec,footclient"
+          "SUPER_SHIFT, return, exec, footclient"
           "SUPER_SHIFT, Q,      killactive,"
           "SUPER_SHIFT, equal,  exit,"
           "SUPER_SHIFT, space,  pin"
-          "SUPER_SHIFT, D,      exec,exec $(tofi-drun)"
+          "SUPER_SHIFT, D,      exec, exec $(tofi-drun)"
           "SUPER_SHIFT, P,      pseudo,"
           "SUPER_SHIFT, F,      fullscreen, 0"
 
@@ -232,13 +232,13 @@ in {
           "SUPER_SHIFT, L, movewindow, r"
 
           "SUPER,       minus, togglespecialworkspace"
-          "SUPER_SHIFT, minus, movetoworkspacesilent,special"
+          "SUPER_SHIFT, minus, movetoworkspacesilent, special"
 
-          "SUPER_CTRL, J, split:workspace,e-1"
-          "SUPER_CTRL, K, split:workspace,e+1"
+          "SUPER_CTRL, J, split:workspace, e-1"
+          "SUPER_CTRL, K, split:workspace, e+1"
 
-          "SUPER, mouse_up, split:workspace,e-1"
-          "SUPER, mouse_down, split:workspace,e+1"
+          "SUPER, mouse_up, split:workspace, e-1"
+          "SUPER, mouse_down, split:workspace, e+1"
 
           "SUPER,       A, exec, makoctl dismiss"
           "SUPER_SHIFT, A, exec, makoctl dismiss -a"

@@ -15,7 +15,7 @@
       isPortable = false;
       enableSocial = false;
       cursorColor = null;
-      cursorSize = 32;
+      cursorSize = null;
     };
   };
 }

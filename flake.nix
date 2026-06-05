@@ -7,7 +7,7 @@
     nixos-hardware.url = "github:nixos/nixos-hardware";
 
     brew-api = {
-      url = "github:BatteredBunny/brew-api";
+      url = "github:armeenm/brew-api";
       flake = false;
     };
 
@@ -242,13 +242,15 @@
 
     configurations = nixosConfigurations // darwinConfigurations;
 
-    homeConfigurations = forAllSystems (system: pkgs: {
-      default = inputs.home-manager.lib.homeManagerConfiguration {
+    homeConfigurations = forAllSystems (system: pkgs:
+      inputs.home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
 
         modules = baseModules ++ [
           inputs.stylix.homeModules.stylix
-          (if system == "aarch64-darwin" then nixosModules.hmDarwinBase else nixosModules.hmBase)
+          (if system == "aarch64-darwin"
+           then nixosModules.hmDarwinBase
+           else nixosModules.hmBase)
           ./home
         ];
 
@@ -258,9 +260,11 @@
           isPortable = false;
           enableSocial = false;
           stateVersion = "24.11";
+          cursorColor = null;
+          cursorSize = null;
         };
-      };
-    });
+      }
+    );
 
     nixOnDroidConfigurations = {
       default = inputs.nix-on-droid.lib.nixOnDroidConfiguration {
