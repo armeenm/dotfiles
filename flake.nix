@@ -210,6 +210,7 @@
       carbon = nixpkgs.lib.nixosSystem {
         modules = baseModules ++ [
           nixosModules.nixosBase
+          nixosModules.nixosUser
           ./hosts/carbon
         ];
       };

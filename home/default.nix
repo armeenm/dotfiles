@@ -35,9 +35,6 @@ in {
     };
   };
 
-  # This is almost always noise for us.
-  stylix.enableReleaseChecks = false;
-
   fonts.fontconfig.enable = !isHeadless;
   qt.enable = !isHeadless;
 
@@ -51,4 +48,8 @@ in {
       package = pkgs.rose-pine-icon-theme;
     };
   };
+
+} // lib.optionalAttrs (!isHeadless) {
+  # This is almost always noise for us.
+  stylix.enableReleaseChecks = false;
 }

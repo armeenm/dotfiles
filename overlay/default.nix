@@ -3,7 +3,7 @@
 final: prev: {
   stable = inputs.nixpkgs-stable.legacyPackages.${final.stdenv.hostPlatform.system};
 
-  direnv = prev.direnv.overrideAttrs (old: {
+  dufs = prev.dufs.overrideAttrs (old: {
     doCheck = false;
   });
 

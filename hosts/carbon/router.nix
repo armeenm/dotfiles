@@ -9,8 +9,8 @@ let
   domain = "armeen.xyz";
 
   wan = "enp90s0";
-  lan = "enp2s0f0np0";
-  aux = "enp87s0";
+  lan = "enp87s0";
+  aux = "enp2s0f0np0";
 
   prefix = "192.168.0";
   prefixRev = rev-ip4 prefix;

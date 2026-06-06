@@ -1,32 +1,32 @@
-{ config, pkgs, lib, inputs, user, root, ... }:
+{ config, pkgs, lib, inputs, user, ... }:
 
 {
   imports = [ ./router.nix ];
 
   age = {
     secrets = {
-      cloudflare-api-token.file = "${root}/secrets/cloudflare-api-token.age";
+      cloudflare-api-token.file = ../../secrets/cloudflare-api-token.age;
 
       restic-pw = {
-        file = "${root}/secrets/restic-pw.age";
+        file = ../../secrets/restic-pw.age;
         owner = "restic";
         group = "restic";
       };
 
       restic-b2-env = {
-        file =  "${root}/secrets/restic-b2-env.age";
+        file =  ../../secrets/restic-b2-env.age;
         owner = "restic";
         group = "restic";
       };
 
       vaultwarden-env = {
-        file = "${root}/secrets/vaultwarden-env.age";
+        file = ../../secrets/vaultwarden-env.age;
         owner = "vaultwarden";
         group = "vaultwarden";
       };
 
       cobalt-config = {
-        file = "${root}/secrets/cobalt.yaml.age";
+        file = ../../secrets/cobalt.yaml.age;
         owner = "dufs";
         group = "dufs";
       };
@@ -158,6 +158,7 @@
     "/export/tank" = {
       device = "/srv/tank";
       options = [ "bind" ];
+      fsType = "nfs4";
     };
   };
 
@@ -430,5 +431,9 @@
         group = "dufs";
       };
     };
+  };
+
+  home-manager.extraSpecialArgs = {
+    isHeadless = true;
   };
 }

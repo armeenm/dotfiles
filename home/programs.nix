@@ -184,7 +184,7 @@ in {
     };
 
     firefox = {
-      enable = true;
+      enable = !isHeadless;
       configPath = "${config.xdg.configHome}/mozilla/firefox";
     };
 
@@ -285,77 +285,6 @@ in {
     mergiraf = {
       enable = true;
       enableGitIntegration = true;
-    };
-
-    mods = {
-      enable = enableSocial;
-      settings = {
-        default-api = "openrouter";
-        default-model = "sonnet";
-
-        apis.openrouter = {
-          base-url = "https://openrouter.ai/api/v1";
-          api-key-env = "OPENROUTER_API_KEY";
-          models = {
-            "anthropic/claude-3.5-haiku" = {
-              aliases = [ "haiku" ];
-              max-input-chars = 200000;
-            };
-
-            "anthropic/claude-sonnet-4" = {
-              aliases = [ "sonnet" ];
-              max-input-chars = 200000;
-            };
-
-            "anthropic/claude-opus-4.1" = {
-              aliases = [ "opus" ];
-              max-input-chars = 200000;
-            };
-
-            "deepseek/deepseek-r1-0528" = {
-              aliases = [ "r1" ];
-              max-input-chars = 128000;
-            };
-
-            "qwen/qwen3-235b-a22b-thinking-2507" = {
-              aliases = [ "qwen" ];
-              max-input-chars = 262144;
-            };
-
-            "google/gemini-2.5-pro" = {
-              aliases = [ "gemini-pro" ];
-              max-input-chars = 1048576;
-            };
-
-            "google/gemini-2.5-flash" = {
-              aliases = [ "gemini-flash" ];
-              max-input-chars = 1048576;
-            };
-
-            "openai/gpt-5" = {
-              aliases = [ "gpt" ];
-              max-input-chars = 400000;
-            };
-
-            "openai/o3-mini-high" = {
-              aliases = [ "o3mini" ];
-              max-input-chars = 200000;
-            };
-
-            "x-ai/grok-4" = {
-              aliases = [ "grok" ];
-              max-input-chars = 256000;
-            };
-          };
-        };
-
-        roles.shell = [
-          "you are a shell expert"
-          "you do not explain anything"
-          "you simply output one liners to solve the problems you're asked"
-          "you do not provide any explanation whatsoever, ONLY the command"
-        ];
-      };
     };
 
     nh = {

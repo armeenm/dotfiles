@@ -34,26 +34,6 @@ let
     };
   }));
 
-  sharedGraphicalApps = with pkgs; [
-    bruno
-    cozette
-    fira-code
-    fira-code-symbols
-    meld
-    moonlight-qt
-    nerd-fonts.hack
-    noto-fonts
-    noto-fonts-cjk-sans
-    remmina
-    spek
-    tamsyn
-    yubikey-manager
-  ] ++ lib.optionals enableSocial [
-    claude-code
-    element-desktop
-    signal-desktop
-  ];
-
 in {
   home = {
     inherit stateVersion;
@@ -82,166 +62,193 @@ in {
       };
     };
 
-    packages = with pkgs; [
-      age-plugin-yubikey
-      android-tools
-      bitwarden-cli
-      boxes
-      croc
-      dos2unix
-      duf
-      fasd
-      fastmod
-      fd
-      ffmpeg
-      file
-      git-filter-repo
-      glow
-      hexyl
-      hyperfine
-      iperf
-      jq
-      killall
-      ldns
-      lsof
-      mediainfo
-      miniserve
-      mkpasswd
-      ncdu
-      nix-inspect
-      nix-output-monitor
-      nix-tree
-      nixd
-      nmap
-      nurl
-      onefetch
-      patchutils
-      procs
-      python3
-      rage
-      ragenix
-      rclone
-      scc
-      shellcheck
-      tcpdump
-      toilet
-      unzip
-      wget
-      whois
-      zip
+    packages = with pkgs; let
+      all-cli = [
+        age-plugin-yubikey
+        android-tools
+        bitwarden-cli
+        boxes
+        croc
+        dos2unix
+        duf
+        fasd
+        fastmod
+        fd
+        ffmpeg
+        file
+        git-filter-repo
+        glow
+        hexyl
+        hyperfine
+        iperf
+        jq
+        killall
+        ldns
+        lsof
+        mediainfo
+        miniserve
+        mkpasswd
+        ncdu
+        nix-inspect
+        nix-output-monitor
+        nix-tree
+        nixd
+        nmap
+        nurl
+        onefetch
+        patchutils
+        procs
+        python3
+        rage
+        ragenix
+        rclone
+        scc
+        shellcheck
+        tcpdump
+        toilet
+        unzip
+        wget
+        whois
+        zip
+      ];
 
-    ] ++ lib.optionals hostPlatform.isLinux ([
-      bluetuith
-      bubblewrap
-      cfspeedtest
-      gnuapl
-      httpie
-      libva-utils
-      miraclecast
-      monero-cli
-      powertop
-      strace
+      linux-cli = [
+        bluetuith
+        bubblewrap
+        cfspeedtest
+        gnuapl
+        httpie
+        libva-utils
+        miraclecast
+        powertop
+        strace
+      ] ++ lib.optionals enableSocial [
+        monero-cli
+      ];
 
-    ] ++ (lib.optionals (!isHeadless) sharedGraphicalApps ++ [
-      brightnessctl
-      easyeffects
-      evince
-      feishin
-      gimp-with-plugins
-      google-chrome
-      gparted
-      grim
-      gtk3
-      hyprland-qtutils
-      hyprpicker
-      hyprshell
-      hyprshot
-      kdePackages.breeze-icons
-      kdePackages.dolphin
-      libnotify
-      libreoffice-fresh
-      nomacs
-      obs-studio
-      obs-studio-plugins.obs-pipewire-audio-capture
-      obs-studio-plugins.wlrobs
-      pamixer
-      pavucontrol
-      playerctl
-      pulseaudio
-      satty
-      scrcpy
-      shikane
-      simple-scan
-      slurp
-      swaylock
-      vial
-      vlc
-      wdisplays
-      wl-clipboard
-      wl-screenrec
-      wlogout
-      wlr-randr
-      woomer
-      xdg-user-dirs
-      xdg-utils
-      xeyes
-      xkill
+      darwin-cli = [
+        age-plugin-se
+        launchk
+        mas
+        strace-macos
+      ];
 
-    ] ++ (lib.optionals enableSocial [
-      karere
-      kotatogram-desktop
-      monero-gui
-      zoom-us
+      all-gui = [
+        bruno
+        cozette
+        fira-code
+        fira-code-symbols
+        meld
+        moonlight-qt
+        nerd-fonts.hack
+        noto-fonts
+        noto-fonts-cjk-sans
+        remmina
+        spek
+        tamsyn
+        yubikey-manager
+      ] ++ lib.optionals enableSocial [
+        claude-code
+        element-desktop
+        signal-desktop
+  ];
 
-    ]))) ++ (lib.optionals hostPlatform.isDarwin (sharedGraphicalApps ++ [
-      age-plugin-se
-      bluesnooze
-      launchk
-      mas
-      strace-macos
+      linux-gui = [
+        brightnessctl
+        easyeffects
+        evince
+        feishin
+        gimp-with-plugins
+        google-chrome
+        gparted
+        grim
+        gtk3
+        hyprland-qtutils
+        hyprpicker
+        hyprshell
+        hyprshot
+        kdePackages.breeze-icons
+        kdePackages.dolphin
+        libnotify
+        libreoffice-fresh
+        nomacs
+        obs-studio
+        obs-studio-plugins.obs-pipewire-audio-capture
+        obs-studio-plugins.wlrobs
+        pamixer
+        pavucontrol
+        playerctl
+        pulseaudio
+        satty
+        scrcpy
+        shikane
+        simple-scan
+        slurp
+        swaylock
+        vial
+        vlc
+        wdisplays
+        wl-clipboard
+        wl-screenrec
+        wlogout
+        wlr-randr
+        woomer
+        xdg-user-dirs
+        xdg-utils
+        xeyes
+        xkill
 
-    ] ++ (with brewCasks; [
-      (autoraiseapp.overrideAttrs (old: {
-        src = pkgs.fetchurl {
-          url = lib.lists.head old.src.urls;
-          hash = "sha256-x2qThyvm9ZS+GLm6ScGuq2kv0/8WZJdNms9rKYFsbB0=";
-        };
-      }))
-      betterdisplay
-      bettertouchtool
-      gimp
-      (google-chrome.overrideAttrs (old: {
-        src = pkgs.fetchurl {
-          url = lib.lists.head old.src.urls;
-          hash = "sha256-pVR0W1yGCxUo64VpUmmzEFSedYZXkF2l0gRIog2HkEw=";
-        };
-      }))
-      libreoffice
-      linearmouse
-      mozilla-vpn
-      obs
-      vlc
-      (windows-app.overrideAttrs (old: {
-        unpackPhase = ''
-          xar -xf $src
-          for pkg in $(cat Distribution | grep -oE "#.+\.pkg" | sed -e "s/^#//" -e "s/$/\/Payload/"); do
-            if [ -f $pkg ]; then
-              zcat $pkg | cpio -i
-            fi
-          done
-        '';
-      }))
+      ];
 
-    ] ++ (lib.optionals enableSocial [
-      # monero-wallet
-      telegram
-      (whatsapp.overrideAttrs (old: {
-        src = pkgs.runCommand "whatsapp.zip" {} ''
-          ln -s ${old.src} $out
-        '';
-      }))
-      zoom
-    ]))));
+      darwin-gui = [ bluesnooze ] ++  (with brewCasks; [
+        (autoraiseapp.overrideAttrs (old: {
+          src = pkgs.fetchurl {
+            url = lib.lists.head old.src.urls;
+            hash = "sha256-x2qThyvm9ZS+GLm6ScGuq2kv0/8WZJdNms9rKYFsbB0=";
+          };
+        }))
+        betterdisplay
+        bettertouchtool
+        gimp
+        (google-chrome.overrideAttrs (old: {
+          src = pkgs.fetchurl {
+            url = lib.lists.head old.src.urls;
+            hash = "sha256-pVR0W1yGCxUo64VpUmmzEFSedYZXkF2l0gRIog2HkEw=";
+          };
+        }))
+        libreoffice
+        linearmouse
+        mozilla-vpn
+        obs
+        vlc
+        (windows-app.overrideAttrs (old: {
+          unpackPhase = ''
+            xar -xf $src
+            for pkg in $(cat Distribution | grep -oE "#.+\.pkg" | sed -e "s/^#//" -e "s/$/\/Payload/"); do
+              if [ -f $pkg ]; then
+                zcat $pkg | cpio -i
+              fi
+            done
+          '';
+        }))
+
+      ]) ++ lib.optionals enableSocial [
+        # monero-wallet
+        telegram
+        (whatsapp.overrideAttrs (old: {
+          # Rename source to "whatsapp.zip".
+          src = pkgs.runCommand "whatsapp.zip" {} ''
+            ln -s ${old.src} $out
+          '';
+        }))
+        zoom
+      ];
+
+      cli = all-cli ++ (if hostPlatform.isLinux then linux-cli else darwin-cli);
+      gui = all-gui ++ (if hostPlatform.isLinux then linux-gui else darwin-gui);
+      final = cli ++ lib.optionals (!isHeadless) gui;
+
+    in final;
 
     pointerCursor = {
       enable = hostPlatform.isLinux && !isHeadless;
