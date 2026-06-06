@@ -35,6 +35,7 @@
 
   boot = {
     kernelPackages = pkgs.linuxPackages_6_18;
+    supportedFilesystems = [ "bcachefs" ];
 
     initrd = {
       supportedFilesystems = [ "bcachefs" ];
