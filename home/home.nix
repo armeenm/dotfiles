@@ -237,7 +237,7 @@ in {
           '';
         }))
 
-      ]) ++ lib.optionals enableSocial [
+      ] ++ lib.optionals enableSocial [
         # monero-wallet
         telegram
         (whatsapp.overrideAttrs (old: {
@@ -247,7 +247,7 @@ in {
           '';
         }))
         zoom
-      ];
+      ]);
 
       cli = all-cli ++ (if hostPlatform.isLinux then linux-cli else darwin-cli);
       gui = all-gui ++ (if hostPlatform.isLinux then linux-gui else darwin-gui);
