@@ -1,4 +1,5 @@
 PLUGIN_DIR="$CONFIG_DIR/plugins"
+export PATH=$PATH:/etc/profiles/per-user/armeen/bin
 
 sketchybar --bar position=top height=40 blur_radius=30 color=0x40000000
 
@@ -28,7 +29,7 @@ for sid in $(aerospace list-workspaces --all); do
              background.drawing=off \
              label="$sid" \
              click_script="aerospace workspace $sid" \
-             script="$CONFIG_DIR/plugins/aerospace.sh $sid"
+             script="$PLUGIN_DIR/aerospace.sh $sid"
 done
 
 sketchybar --add item chevron left \

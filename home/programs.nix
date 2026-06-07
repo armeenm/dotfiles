@@ -410,7 +410,10 @@ in {
 
     sketchybar = {
       enable = !isHeadless && hostPlatform.isDarwin;
-      config = builtins.readFile ../conf/sketchybarrc;
+      config = {
+        source = ../conf/sketchybar;
+        recursive = true;
+      };
     };
 
     skim = {
