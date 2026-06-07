@@ -9,17 +9,17 @@
 let
   inherit (pkgs.stdenv) hostPlatform;
 in {
-  services = lib.optionalAttrs hostPlatform.isLinux {
-    batsignal.enable = !isHeadless;
-    hyprpolkitagent.enable = !isHeadless;
-    mpris-proxy.enable = !isHeadless;
-    playerctld.enable = !isHeadless;
+  services = {
+    batsignal.enable = hostPlatform.isLinux && !isHeadless;
+    hyprpolkitagent.enable = hostPlatform.isLinux && !isHeadless;
+    mpris-proxy.enable = hostPlatform.isLinux && !isHeadless;
+    playerctld.enable = hostPlatform.isLinux && !isHeadless;
     pueue.enable = true;
-    safeeyes.enable = !isHeadless;
-    wob.enable = !isHeadless;
+    safeeyes.enable = hostPlatform.isLinux && !isHeadless;
+    wob.enable = hostPlatform.isLinux && !isHeadless;
 
     clipcat = {
-      enable = !isHeadless;
+      enable = hostPlatform.isLinux && !isHeadless;
       enableZshIntegration = true;
       menuSettings.finder = "builtin";
     };
@@ -40,7 +40,7 @@ in {
     };
 
     hypridle = {
-      enable = !isHeadless;
+      enable = !isHeadless && hostPlatform.isLinux;
       settings = {
         general = {
           before_sleep_cmd = "loginctl lock-session";
@@ -77,7 +77,7 @@ in {
     };
 
     hyprsunset = {
-      enable = true;
+      enable = !isHeadless && hostPlatform.isLinux;
       settings = {
         profile = [
           {
@@ -96,15 +96,19 @@ in {
       };
     };
 
+    jankyborders = {
+      enable = !isHeadless && hostPlatform.isDarwin;
+    };
+
     mako = {
-      enable = !isHeadless;
+      enable = !isHeadless && hostPlatform.isLinux;
       settings = {
         "mode=do-not-disturb".invisible = 1;
       };
     };
 
     recoll = {
-      enable = true;
+      enable = hostPlatform.isLinux;
       settings = {
         nocjk = true;
         topdirs = [ "~/docs" ];

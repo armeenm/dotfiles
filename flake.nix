@@ -39,6 +39,11 @@
       inputs.nix.follows = "nix";
     };
 
+    darwin-emacs = {
+      url = "github:nix-giant/nix-darwin-emacs";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     emacs-overlay = {
       url = "github:nix-community/emacs-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -157,7 +162,6 @@
 
     allOverlays = [
       inputs.brew-nix.overlays.default
-      inputs.emacs-overlay.overlays.default
       inputs.nixgl.overlay
       overlay
     ];

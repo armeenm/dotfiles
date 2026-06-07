@@ -39,14 +39,108 @@ in {
     scmpuff.enable = true;
     zoxide.enable = true;
 
+    aerospace = {
+      enable = !isHeadless && hostPlatform.isDarwin;
+      launchd.enable = true;
+
+      settings = let
+        launch = x: "exec-and-forget open -n -a ${x}";
+        sketchybar = "${config.programs.sketchybar.package}/bin/sketchybar";
+      in {
+        automatically-unhide-macos-hidden-apps = true;
+        exec-on-workspace-change = [
+          "${pkgs.bash}/bin/bash"
+          "-c"
+          "${sketchybar} --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE"
+        ];
+        on-focus-changed = [ "move-mouse window-lazy-center" ];
+        on-window-detected = [
+          {
+            "if".app-id = "net.whatsapp.WhatsApp";
+            run = [ "layout tiling" ];
+          }
+          {
+            "if".app-id = "org.alacritty";
+            run = [ "layout tiling" ];
+          }
+          # {
+          #   "if".app-name-regex-substring = "emacs";
+          #   run = [ "layout tiling" ];
+          # }
+        ];
+
+        gaps = {
+          inner.horizontal = 8;
+          inner.vertical = 8;
+        };
+
+        mode.main.binding = {
+          alt-h = "focus --boundaries all-monitors-outer-frame left";
+          alt-j = "focus --boundaries all-monitors-outer-frame down";
+          alt-k = "focus --boundaries all-monitors-outer-frame up";
+          alt-l = "focus --boundaries all-monitors-outer-frame right";
+
+          alt-ctrl-h = "join-with left";
+          alt-ctrl-j = "join-with down";
+          alt-ctrl-k = "join-with up";
+          alt-ctrl-l = "join-with right";
+
+          alt-shift-h = "move --boundaries all-monitors-outer-frame left";
+          alt-shift-j = "move --boundaries all-monitors-outer-frame down";
+          alt-shift-k = "move --boundaries all-monitors-outer-frame up";
+          alt-shift-l = "move --boundaries all-monitors-outer-frame right";
+
+          alt-1 = "workspace 1";
+          alt-2 = "workspace 2";
+          alt-3 = "workspace 3";
+          alt-4 = "workspace 4";
+          alt-5 = "workspace 5";
+          alt-6 = "workspace 6";
+          alt-7 = "workspace 7";
+          alt-8 = "workspace 8";
+          alt-9 = "workspace 9";
+
+          alt-shift-1 = "move-node-to-workspace 1";
+          alt-shift-2 = "move-node-to-workspace 2";
+          alt-shift-3 = "move-node-to-workspace 3";
+          alt-shift-4 = "move-node-to-workspace 4";
+          alt-shift-5 = "move-node-to-workspace 5";
+          alt-shift-6 = "move-node-to-workspace 6";
+          alt-shift-7 = "move-node-to-workspace 7";
+          alt-shift-8 = "move-node-to-workspace 8";
+          alt-shift-9 = "move-node-to-workspace 9";
+
+          alt-tab = "workspace-back-and-forth";
+          alt-space = "layout floating tiling";
+          alt-f = "fullscreen";
+          alt-r = "mode resize";
+          alt-p = "exec-and-forget ${config.programs.emacs.finalPackage}/bin/emacsclient -c -n";
+          alt-shift-enter = ''exec-and-forget ${config.programs.alacritty.package}/bin/alacritty msg create-window'';
+        };
+
+        mode.resize.binding = {
+          esc = "mode main";
+          enter = "mode main";
+          backspace = "flatten-workspace-tree";
+          b = "balance-sizes";
+
+          h = "resize width -50";
+          j = "resize height -50";
+          k = "resize height +50";
+          l = "resize width +50";
+        };
+      };
+    };
+
     alacritty = {
       enable = !isHeadless;
       settings = {
         window = {
           blur = true;
-          decorations = "None";
+          decorations = if hostPlatform.isDarwin then "Buttonless" else "Full";
           dynamic_padding = true;
           option_as_alt = "OnlyLeft";
+          padding = { x = 20; y = 20; };
         };
       };
     };
@@ -163,19 +257,18 @@ in {
           };
         };
 
-        defaultInitFile = true;
+        package = if hostPlatform.isDarwin then (pkgs.emacs-unstable.overrideAttrs (old: { patches = old.patches ++ [ ./frame-transparency.patch ]; __noChroot = true; })) else pkgs.emacs-igc-pgtk;
         alwaysEnsure = true;
-        alwaysTangle = true;
-
-        package = pkgs.emacs-git-pgtk.overrideAttrs (old: {
-          configureFlags =
-            old.configureFlags ++ lib.optionals hostPlatform.isDarwin [ "ac_cv_prog_cc_c23=no" ];
-        });
 
         extraEmacsPackages = epkgs: (config.programs.emacs.extraPackages epkgs) ++ (with epkgs; [
           treesit-grammars.with-all-grammars
         ]);
-      };
+      } // (if hostPlatform.isDarwin
+            then { configAsDefaultInitFile = true; }
+            else {
+              alwaysTangle = true;
+              defaultInitFile = true;
+            });
     };
 
     eza = {
@@ -200,7 +293,7 @@ in {
           ''[sh -c "f=$(mktemp); cat - > $f; emacsclient -c $f; rm $f"] Control+Shift+g'';
 
         main = {
-          #font = lib.mkForce "Tamsyn:size=12";
+          # font = lib.mkForce "Tamsyn:size=12";
           term = "xterm-256color";
           pad = "20x20";
         };
@@ -309,6 +402,11 @@ in {
       extraConfig = ''
       set editing-mode vi
     '';
+    };
+
+    sketchybar = {
+      enable = !isHeadless && hostPlatform.isDarwin;
+      config = builtins.readFile ../conf/sketchybarrc;
     };
 
     skim = {

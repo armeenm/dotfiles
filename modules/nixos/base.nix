@@ -31,6 +31,8 @@
     trusted-users = lib.mkForce [ "@wheel" ];
   };
 
+  nixpkgs.overlays = [ inputs.emacs-overlay.overlays.default ];
+
   services = {
     chrony.enable = true;
     devmon.enable = true;

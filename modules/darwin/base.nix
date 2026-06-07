@@ -1,8 +1,14 @@
-{ config, lib, user, ... }:
+{ config, inputs, lib, user, ... }:
 
 {
   # No more support for x86 macOS.
-  nixpkgs.hostPlatform = "aarch64-darwin";
+  nixpkgs = {
+    hostPlatform = "aarch64-darwin";
+    overlays = [
+      inputs.darwin-emacs.overlays.emacs
+      inputs.emacs-overlay.overlays.package
+    ];
+  };
 
   # Assume Determinate Nix on macOS.
   determinateNix = {
