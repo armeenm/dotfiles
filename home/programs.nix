@@ -232,7 +232,9 @@ in {
 
     emacs = {
       enable = true;
-      package = pkgs.emacsWithPackagesFromUsePackage {
+      package = pkgs.emacsWithPackagesFromUsePackage ({
+        alwaysEnsure = true;
+
         config = pkgs.writeTextFile {
           text = ''
             ${builtins.readFile ../conf/emacs/init.el}
@@ -257,18 +259,20 @@ in {
           };
         };
 
-        package = if hostPlatform.isDarwin then (pkgs.emacs-unstable.overrideAttrs (old: { patches = old.patches ++ [ ./frame-transparency.patch ]; __noChroot = true; })) else pkgs.emacs-igc-pgtk;
-        alwaysEnsure = true;
+        package = let
+          darwinPackage = pkgs.emacs-unstable.overrideAttrs (old: {
+            patches = old.patches ++ [ ./frame-transparency.patch ];
+            __noChroot = true;
+          });
+        in if hostPlatform.isDarwin then darwinPackage else pkgs.emacs-igc-pgtk;
 
         extraEmacsPackages = epkgs: (config.programs.emacs.extraPackages epkgs) ++ (with epkgs; [
           treesit-grammars.with-all-grammars
         ]);
+
       } // (if hostPlatform.isDarwin
             then { configAsDefaultInitFile = true; }
-            else {
-              alwaysTangle = true;
-              defaultInitFile = true;
-            });
+            else { defaultInitFile = true; }));
     };
 
     eza = {
@@ -419,9 +423,15 @@ in {
       package = pkgs.openssh;
       enableDefaultConfig = false;
 
-      settings."*" = {
-        compression = true;
-        controlMaster = "auto";
+      settings = {
+        "*" = {
+          compression = true;
+          controlMaster = "auto";
+        };
+
+        "carbon.armeen.xyz" = {
+          proxyCommand = "${pkgs.cloudflared}/bin/cloudflared access ssh --hostname %h";
+        };
       };
 
       extraOptionOverrides = lib.optionalAttrs hostPlatform.isDarwin {

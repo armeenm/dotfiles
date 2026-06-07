@@ -108,7 +108,7 @@ in {
     };
 
     recoll = {
-      enable = hostPlatform.isLinux;
+      # enable = hostPlatform.isLinux;
       settings = {
         nocjk = true;
         topdirs = [ "~/docs" ];

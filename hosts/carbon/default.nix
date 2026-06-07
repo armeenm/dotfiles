@@ -213,8 +213,13 @@
       tunnels = {
         "904c1ace-669b-41c4-8b47-1641e63783f4" = {
           credentialsFile = config.age.secrets.cloudflare-tunnel-creds.path;
+          originRequest.noTLSVerify = true;
           ingress = {
-            "*.armeen.xyz" = "https://localhost:443";
+            "carbon.armeen.xyz" = "ssh://localhost:22";
+            "music.armeen.xyz" = "https://localhost:443";
+            "media.armeen.xyz" = "https://localhost:443";
+            "vault.armeen.xyz" = "https://localhost:443";
+            "cobalt.armeen.xyz" = "https://localhost:443";
           };
           default = "http_status:404";
         };

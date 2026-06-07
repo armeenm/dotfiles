@@ -60,11 +60,6 @@ in {
         source = ../conf/aider/aider.conf.yml;
         target = ".aider.conf.yml";
       };
-
-      emacs = {
-        source = ../conf/emacs/init.el;
-        target = ".emacs.d/init.el";
-      };
     };
 
     packages = with pkgs; let
