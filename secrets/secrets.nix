@@ -19,5 +19,6 @@ in {
   "vaultwarden-env.age".publicKeys = armeen ++ [ carbon ];
   "cobalt.yaml.age".publicKeys = armeen ++ [ carbon ];
   "cloudflare-api-token.age".publicKeys = armeen ++ [ carbon ];
+  "cloudflare-tunnel-creds-carbon.json.age".publicKeys = armeen ++ [ carbon ];
   "itmaclap-machines.nix.age".publicKeys = armeen ++ [ itmaclap ];
 }

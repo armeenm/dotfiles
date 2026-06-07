@@ -5,6 +5,7 @@
 
   age = {
     secrets = {
+      cloudflare-tunnel-creds.file = ../../secrets/cloudflare-tunnel-creds-carbon.json.age;
       cloudflare-api-token.file = ../../secrets/cloudflare-api-token.age;
 
       restic-pw = {
@@ -206,6 +207,19 @@
 
   services = {
     jellyfin.enable = true;
+
+    cloudflared = {
+      enable = true;
+      tunnels = {
+        "904c1ace-669b-41c4-8b47-1641e63783f4" = {
+          credentialsFile = config.age.secrets.cloudflare-tunnel-creds.path;
+          ingress = {
+            "*.armeen.xyz" = "https://localhost:443";
+          };
+          default = "http_status:404";
+        };
+      };
+    };
 
     cloudflare-dyndns = {
       enable = true;

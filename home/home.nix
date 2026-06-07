@@ -69,6 +69,7 @@ in {
 
     packages = with pkgs; let
       all-cli = [
+        age-plugin-se
         age-plugin-yubikey
         android-tools
         bitwarden-cli
@@ -132,7 +133,6 @@ in {
       ];
 
       darwin-cli = [
-        age-plugin-se
         launchk
         mas
         strace-macos
