@@ -109,7 +109,7 @@
     fprintd.enable = true;
     gnome.gnome-keyring.enable = true;
     gvfs.enable = true;
-    # mozillavpn.enable = true;
+    mozillavpn.enable = true;
     saned.enable = true;
     upower.enable = true;
 
