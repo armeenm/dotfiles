@@ -5,6 +5,7 @@
     users."${user.login}" = import ../../home;
     useGlobalPkgs = true;
     useUserPackages = true;
+    backupFileExtension = "bak";
 
     extraSpecialArgs = {
       inherit inputs user;

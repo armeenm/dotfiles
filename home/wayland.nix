@@ -57,12 +57,19 @@ in {
         };
 
         input = {
-          repeat_rate = 60;
-          repeat_delay = 200;
           follow_mouse = true;
-          touchpad.natural_scroll = true;
-          sensitivity = 0;
+          repeat_delay = 200;
+          repeat_rate = 60;
           scroll_factor = 1.0;
+          sensitivity = 0;
+
+          touchpad = {
+            clickfinger_behavior = true;
+            natural_scroll = true;
+            # TODO: Figure out why Hyprland is unfamiliar with this?
+            # tap_and_drag = false;
+            drag_3fg = 2;
+          };
         };
 
         general = {

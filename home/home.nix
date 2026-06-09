@@ -44,21 +44,15 @@ in {
     username = lib.mkOverride 500 user.login;
 
     file = {
-      dnscheck = {
-        source = ../conf/bin/dnscheck.sh;
-        target = ".local/bin/dnscheck";
-        executable = true;
+      bin = {
+        source = ../conf/bin;
+        target = ".local/bin";
       };
 
       sshrc = {
         source = ../conf/ssh/rc;
         target = ".ssh/rc";
         executable = true;
-      };
-
-      aider = {
-        source = ../conf/aider/aider.conf.yml;
-        target = ".aider.conf.yml";
       };
     };
 
