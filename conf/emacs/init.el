@@ -27,8 +27,6 @@
 
 (auto-compression-mode 1)
 
-(setq gc-cons-threshold most-positive-fixnum)
-
 (let ((path (shell-command-to-string ". ~/.zshenv; . ~/.profile; echo -n $PATH")))
   (setenv "PATH" path)
   (setq exec-path
@@ -209,7 +207,6 @@
   (add-to-list 'same-window-buffer-names "*Personal Keybindings*"))
 
 (use-package avy)
-(use-package bazel)
 (use-package devdocs)
 (use-package git-link)
 (use-package git-timemachine)
@@ -233,7 +230,8 @@
 
 (use-package bazel
   :config
-  (add-to-list 'auto-mode-alist '("\\.bazel\\'" . bazel-starlark-mode)))
+  (add-to-list 'auto-mode-alist '("\\.bazel\\'" . bazel-starlark-mode))
+  (add-to-list 'auto-mode-alist '("\\.bxl\\'" . bazel-starlark-mode)))
 
 (use-package fpga
   :init
@@ -523,5 +521,3 @@
 
 (use-package yasnippet-snippets
   :after yasnippet)
-
-(setq gc-cons-threshold (* 2 1000 1000))

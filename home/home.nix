@@ -144,6 +144,7 @@ in {
       ] ++ lib.optionals enableSocial [
         claude-code
         element-desktop
+        karere
         signal-desktop
   ];
 
