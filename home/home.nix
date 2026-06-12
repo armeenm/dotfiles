@@ -47,6 +47,7 @@ in {
       bin = {
         source = ../conf/bin;
         target = ".local/bin";
+        recursive = true;
       };
 
       sshrc = {
