@@ -145,9 +145,8 @@ in {
       ] ++ lib.optionals enableSocial [
         claude-code
         element-desktop
-        karere
         signal-desktop
-  ];
+      ];
 
       linux-gui = [
         brightnessctl
@@ -193,7 +192,8 @@ in {
         xdg-utils
         xeyes
         xkill
-
+      ] ++ lib.optionals enableSocial [
+        karere
       ];
 
       darwin-gui = [ bluesnooze ] ++  (with brewCasks; [
