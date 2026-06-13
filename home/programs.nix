@@ -135,6 +135,8 @@ in {
     alacritty = {
       enable = !isHeadless;
       settings = {
+        ipc.socket = enable;
+
         window = {
           blur = true;
           decorations = if hostPlatform.isDarwin then "Buttonless" else "Full";
