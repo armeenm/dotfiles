@@ -65,7 +65,7 @@
     ];
 
     kernel.sysctl = {
-      # Needed for router
+      # Needed for router.
       "net.ipv4.conf.all.accept_redirects" = true;
       "net.ipv6.conf.all.accept_redirects" = true;
       "net.ipv4.conf.all.accept_source_route" = true;
