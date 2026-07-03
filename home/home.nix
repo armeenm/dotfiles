@@ -78,6 +78,7 @@ in {
         hyperfine
         iperf
         jq
+        jsonnet-language-server
         killall
         ldns
         lsof
@@ -194,6 +195,7 @@ in {
         xkill
       ] ++ lib.optionals enableSocial [
         karere
+        telegram-desktop
       ];
 
       darwin-gui = [ bluesnooze ] ++  (with brewCasks; [
@@ -229,7 +231,7 @@ in {
         }))
 
       ] ++ lib.optionals enableSocial [
-        # monero-wallet
+        monero-wallet
         telegram
         (whatsapp.overrideAttrs (old: {
           # Rename source to "whatsapp.zip".

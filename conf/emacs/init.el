@@ -211,6 +211,7 @@
 (use-package git-link)
 (use-package git-timemachine)
 (use-package haskell-mode)
+(use-package jsonnet-mode)
 (use-package julia-mode)
 (use-package magit)
 (use-package markdown-mode)

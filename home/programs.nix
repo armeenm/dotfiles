@@ -430,6 +430,7 @@ in {
         "*" = {
           compression = true;
           controlMaster = "auto";
+          controlPath = "~/.ssh/sockets/cm-%r@%h:%p";
         };
 
         "carbon.armeen.xyz" = {
@@ -495,6 +496,7 @@ in {
         mkhl.direnv
         ms-vscode.cpptools-extension-pack
         ms-vscode.hexeditor
+        ms-vsliveshare.vsliveshare
         vscodevim.vim
       ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
         {

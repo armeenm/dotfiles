@@ -2,6 +2,7 @@
 
 {
   nix = {
+    distributedBuilds = true;
     nixPath = lib.mkForce [ "nixpkgs=${config.nix.registry.nixpkgs.flake}" ];
 
     registry = {

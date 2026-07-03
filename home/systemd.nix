@@ -43,6 +43,7 @@ in {
           Unit = {
             Description = "Audio effects for PipeWire applications";
             Documentation = "https://github.com/wwmm/easyeffects/wiki";
+            After = [ "graphical-session.target" ];
             PartOf = [ "graphical-session.target" ];
           };
 
@@ -57,6 +58,7 @@ in {
           Unit = {
             Description = "Video wallpaper program for wlroots compositors";
             Documentation = "https://github.com/GhostNaN/mpvpaper";
+            After = [ "graphical-session.target" ];
             PartOf = [ "graphical-session.target" ];
           };
 
@@ -74,22 +76,6 @@ in {
              '';
           };
         };
-
-        /*
-        hyprshell = {
-          Install.WantedBy = [ "graphical-session.target" ];
-
-          Unit = {
-            Description = "A CLI/GUI that allows switching between windows in Hyprland";
-            Documentation = "https://github.com/H3rmt/hyprswitch";
-            PartOf = [ "graphical-session.target" ];
-          };
-
-          Service = {
-            ExecStart = "${pkgs.hyprswitch}/bin/hyprswitch init";
-          };
-        };
-*/
 
         rclone-cobalt = rclone "cobalt";
         rclone-oxygen = rclone "oxygen";
