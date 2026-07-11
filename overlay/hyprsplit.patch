@@ -1,0 +1,207 @@
+diff --git a/src/main.cpp b/src/main.cpp
+index 196f02a..c9cf5c3 100644
+--- a/src/main.cpp
++++ b/src/main.cpp
+@@ -16,10 +16,14 @@
+ #include <hyprland/src/desktop/history/WorkspaceHistoryTracker.hpp>
+ #include <hyprland/src/desktop/state/FocusState.hpp>
++#include <hyprland/src/desktop/state/WindowState.hpp>
+ #include <hyprland/src/event/EventBus.hpp>
+-#include <hyprland/src/helpers/Monitor.hpp>
++#include <hyprland/src/output/Monitor.hpp>
+ #include <hyprland/src/layout/space/Space.hpp>
+-#include <hyprland/src/managers/animation/DesktopAnimationManager.hpp>
++#include <hyprland/src/animation/WorkspaceAnimationController.hpp>
+ #include <hyprland/src/managers/EventManager.hpp>
+ #include <hyprland/src/managers/input/InputManager.hpp>
++#include <hyprland/src/state/MonitorState.hpp>
++#include <hyprland/src/state/WorkspacePlacementController.hpp>
++#include <hyprland/src/state/WorkspaceState.hpp>
+ #include <hyprland/src/render/Renderer.hpp>
+ #undef private
+@@ -49,7 +53,7 @@ class MonitorRange {
+             if (base == -1) {
+                 // find missing monitors
+                 std::vector<PHLMONITOR> unmappedMonitors;
+-                for (const auto& m : g_pCompositor->m_monitors) {
++                for (const auto& m : State::monitorState()->monitors()) {
+                     if (m->m_id == MONITOR_INVALID || m->isMirror())
+                         continue;
+ 
+@@ -142,7 +146,7 @@ static std::string getWorkspaceOnCurrentMonitor(const std::string& workspace) {
+         const int                PLUSMINUSVALUE = (int)PLUSMINUSRESULT.value();
+ 
+         std::vector<WORKSPACEID> validWSes;
+-        for (auto const& ws : g_pCompositor->getWorkspaces()) {
++        for (auto const& ws : State::workspaceState()->workspaces()) {
+             if (ws->m_isSpecialWorkspace || ws->m_monitor != PMONITOR)
+                 continue;
+ 
+@@ -165,7 +169,7 @@ static std::string getWorkspaceOnCurrentMonitor(const std::string& workspace) {
+         return std::to_string(result);
+     } else if (workspace.starts_with("empty")) {
+         for (long id = RANGE.min; id <= RANGE.max; id++) {
+-            const auto PWORKSPACE = g_pCompositor->getWorkspaceByID(id);
++            const auto PWORKSPACE = State::workspaceState()->query().id(id).run();
+-            if (!PWORKSPACE || (PWORKSPACE->getWindows() == 0))
++            if (!PWORKSPACE || (PWORKSPACE->getWindowCount() == 0))
+                 return std::to_string(id);
+         }
+@@ -181,13 +185,10 @@ static std::string getWorkspaceOnCurrentMonitor(const std::string& workspace) {
+     return std::to_string(RANGE.min + wsID - 1);
+ }
+ 
+ static void ensureGoodWorkspaces() {
+-    if (g_pCompositor->m_unsafeState)
+-        return;
+-
+     static const auto PERSISTENT = ConfigValue<Hyprlang::INT>("plugin:hyprsplit:persistent_workspaces");
+ 
+-    for (auto& m : g_pCompositor->m_monitors) {
++    for (auto& m : State::monitorState()->monitors()) {
+         if (!m || m->m_id == MONITOR_INVALID || m->isMirror())
+             continue;
+ 
+@@ -196,19 +197,19 @@ static void ensureGoodWorkspaces() {
+ 
+         if (!RANGE.contains(m->activeWorkspaceID())) {
+             hsLog(DEBUG, "{} base {} active workspace {} out of bounds, changing workspace to {}", m->m_name, RANGE.base, m->activeWorkspaceID(), RANGE.min);
+-            auto ws = g_pCompositor->getWorkspaceByID(RANGE.min);
++            auto ws = State::workspaceState()->query().id(RANGE.min).run();
+ 
+             if (!ws) {
+-                ws = g_pCompositor->createNewWorkspace(RANGE.min, m->m_id);
++                ws = State::workspaceState()->create(RANGE.min, m->m_id);
+             } else if (ws->monitorID() != m->m_id) {
+-                g_pCompositor->moveWorkspaceToMonitor(ws, m);
++                State::workspacePlacementController()->moveWorkspaceToMonitor(ws, m);
+             }
+ 
+             m->changeWorkspace(ws, false, true, true);
+         }
+     }
+ 
+-    for (auto& m : g_pCompositor->m_monitors) {
++    for (auto& m : State::monitorState()->monitors()) {
+         if (!m || m->m_id == MONITOR_INVALID || m->isMirror())
+             continue;
+ 
+@@ -214,13 +215,13 @@ static void ensureGoodWorkspaces() {
+ 
+         const auto RANGE = MonitorRange(m);
+ 
+-        for (const auto& ws : g_pCompositor->getWorkspacesCopy()) {
++        for (const auto& ws : State::workspaceState()->workspacesCopy()) {
+             if (!valid(ws))
+                 continue;
+ 
+             if (ws->monitorID() != m->m_id && RANGE.contains(ws->m_id)) {
+                 hsLog(DEBUG, "workspace {} on monitor {} move to {} {}", ws->m_id, ws->monitorID(), m->m_name, RANGE.base);
+-                g_pCompositor->moveWorkspaceToMonitor(ws, m);
++                State::workspacePlacementController()->moveWorkspaceToMonitor(ws, m);
+             }
+         }
+ 
+@@ -241,6 +242,8 @@ static void ensureGoodWorkspaces() {
+                 else
+                     IT->m_monitor = wsRule.m_monitor;
+-                g_pCompositor->ensurePersistentWorkspacesPresent(Config::workspaceRuleMgr()->getAllWorkspaceRules());
++                State::workspacePlacementController()->ensurePersistentWorkspacesPresent(
++                    Config::workspaceRuleMgr()->getAllWorkspaceRules(), nullptr,
++                    [](PHLWORKSPACE ws, PHLMONITOR mon, bool noWarp) { State::workspacePlacementController()->moveWorkspaceToMonitor(ws, mon, noWarp); });
+             }
+         }
+     }
+@@ -262,9 +265,9 @@ static SDispatchResult focusWorkspace(std::string args) {
+         return {.success = false, .error = "focusWorkspace: invalid workspace"};
+     }
+ 
+-    auto PWORKSPACE = g_pCompositor->getWorkspaceByID(WORKSPACEID);
++    auto PWORKSPACE = State::workspaceState()->query().id(WORKSPACEID).run();
+     if (!PWORKSPACE) {
+-        PWORKSPACE = g_pCompositor->createNewWorkspace(WORKSPACEID, PCURRMONITOR->m_id);
++        PWORKSPACE = State::workspaceState()->create(WORKSPACEID, PCURRMONITOR->m_id);
+         g_pKeybindManager->m_dispatchers["workspace"](PWORKSPACE->getConfigName());
+         return {};
+     }
+@@ -302,8 +305,8 @@ static SDispatchResult swapActiveWorkspaces(std::string args) {
+     const auto MON1 = args.substr(0, args.find_first_of(' '));
+     const auto MON2 = args.substr(args.find_first_of(' ') + 1);
+ 
+-    const auto PMON1 = g_pCompositor->getMonitorFromString(MON1);
+-    const auto PMON2 = g_pCompositor->getMonitorFromString(MON2);
++    const auto PMON1 = State::monitorState()->query().selector(MON1).run();
++    const auto PMON2 = State::monitorState()->query().selector(MON2).run();
+ 
+     if (!PMON1 || !PMON2 || PMON1 == PMON2)
+         return {};
+@@ -316,7 +319,7 @@ static SDispatchResult swapActiveWorkspaces(std::string args) {
+ 
+     // move windows
+     // <std::string> fsWindows;
+-    for (auto& w : g_pCompositor->m_windows) {
++    for (auto& w : Desktop::windowState()->windows()) {
+         if (w->m_workspace == PWORKSPACEA) {
+             w->m_workspace = PWORKSPACEB;
+             w->m_monitor   = PMON2;
+@@ -354,10 +354,10 @@ static SDispatchResult swapActiveWorkspaces(std::string args) {
+     g_pHyprRenderer->damageMonitor(PMON1);
+     g_pHyprRenderer->damageMonitor(PMON2);
+ 
+-    g_pDesktopAnimationManager->setFullscreenFadeAnimation(
+-        PWORKSPACEB, PWORKSPACEB->m_hasFullscreenWindow ? CDesktopAnimationManager::ANIMATION_TYPE_IN : CDesktopAnimationManager::ANIMATION_TYPE_OUT);
+-    g_pDesktopAnimationManager->setFullscreenFadeAnimation(
+-        PWORKSPACEA, PWORKSPACEA->m_hasFullscreenWindow ? CDesktopAnimationManager::ANIMATION_TYPE_IN : CDesktopAnimationManager::ANIMATION_TYPE_OUT);
++    Animation::Workspace::setFullscreenFadeAnimation(
++        PWORKSPACEB, PWORKSPACEB->m_hasFullscreenWindow ? Animation::Workspace::ANIMATION_TYPE_IN : Animation::Workspace::ANIMATION_TYPE_OUT);
++    Animation::Workspace::setFullscreenFadeAnimation(
++        PWORKSPACEA, PWORKSPACEA->m_hasFullscreenWindow ? Animation::Workspace::ANIMATION_TYPE_IN : Animation::Workspace::ANIMATION_TYPE_OUT);
+ 
+     g_pInputManager->refocus();
+ 
+@@ -375,7 +378,7 @@ static SDispatchResult swapActiveWorkspaces(std::string args) {
+     g_pInputManager->refocus();
+ 
+     // instead of moveworkspace events, we should send movewindow events
+-    for (auto& w : g_pCompositor->m_windows) {
++    for (auto& w : Desktop::windowState()->windows()) {
+         if (w->workspaceID() == PWORKSPACEA->m_id) {
+             g_pEventManager->postEvent(SHyprIPCEvent{"movewindow", std::format("{:x},{}", (uintptr_t)w.get(), PWORKSPACEA->m_name)});
+             g_pEventManager->postEvent(SHyprIPCEvent{"movewindowv2", std::format("{:x},{},{}", (uintptr_t)w.get(), PWORKSPACEA->m_id, PWORKSPACEA->m_name)});
+@@ -398,13 +401,13 @@ static SDispatchResult grabRogueWindows(std::string args) {
+         return {.success = false, .error = "no active workspace?"};
+     }
+ 
+-    for (auto& w : g_pCompositor->m_windows) {
++    for (auto& w : Desktop::windowState()->windows()) {
+         if (!w->m_isMapped || w->onSpecialWorkspace())
+             continue;
+ 
+         bool inGoodWorkspace = false;
+ 
+-        for (auto& m : g_pCompositor->m_monitors) {
++        for (auto& m : State::monitorState()->monitors()) {
+             const auto RANGE = MonitorRange(m);
+ 
+             if (RANGE.contains(w->workspaceID())) {
+@@ -438,7 +441,9 @@ static void onMonitorRemoved(PHLMONITOR pMonitor) {
+ 
+         std::erase_if(Config::workspaceRuleMgr()->m_rules,
+                       [&](Config::CWorkspaceRule const& rule) { return rule.m_layoutopts.contains("hyprsplit") && RANGE.contains(rule.m_workspaceId); });
+-        g_pCompositor->ensurePersistentWorkspacesPresent(Config::workspaceRuleMgr()->getAllWorkspaceRules());
++        State::workspacePlacementController()->ensurePersistentWorkspacesPresent(
++            Config::workspaceRuleMgr()->getAllWorkspaceRules(), nullptr,
++            [](PHLWORKSPACE ws, PHLMONITOR mon, bool noWarp) { State::workspacePlacementController()->moveWorkspaceToMonitor(ws, mon, noWarp); });
+     }
+ }
+ 
+@@ -562,6 +567,8 @@ APICALL EXPORT void PLUGIN_EXIT() {
+     static const auto PERSISTENT = ConfigValue<Hyprlang::INT>("plugin:hyprsplit:persistent_workspaces");
+     if (*PERSISTENT) {
+         std::erase_if(Config::workspaceRuleMgr()->m_rules, [](Config::CWorkspaceRule const& rule) { return rule.m_layoutopts.contains("hyprsplit"); });
+-        g_pCompositor->ensurePersistentWorkspacesPresent(Config::workspaceRuleMgr()->getAllWorkspaceRules());
++        State::workspacePlacementController()->ensurePersistentWorkspacesPresent(
++            Config::workspaceRuleMgr()->getAllWorkspaceRules(), nullptr,
++            [](PHLWORKSPACE ws, PHLMONITOR mon, bool noWarp) { State::workspacePlacementController()->moveWorkspaceToMonitor(ws, mon, noWarp); });
+     }
+ }
