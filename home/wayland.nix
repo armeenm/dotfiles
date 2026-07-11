@@ -26,6 +26,8 @@ in {
                       then hyprPkgs.xdg-desktop-portal-hyprland
                       else osConfig.programs.hyprland.portalPackage;
 
+      configType = "lua";
+
       systemd = {
         enable = isStandalone;
         variables = [ "--all" ];
@@ -38,8 +40,8 @@ in {
         # hyprland-plugins.xtra-dispatchers
         inputs.hypr-darkwindow.packages.${system}.Hypr-DarkWindow
         inputs.hypr-dynamic-cursors.packages.${system}.default
-        #inputs.hyprspace.packages.${system}.Hyprspace
-        inputs.hyprsplit.packages.${system}.hyprsplit
+        # inputs.hyprspace.packages.${system}.Hyprspace
+        # inputs.hyprsplit.packages.${system}.hyprsplit
       ];
 
       settings = {

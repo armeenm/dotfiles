@@ -62,6 +62,7 @@ in {
         age-plugin-se
         age-plugin-yubikey
         android-tools
+        ast-grep
         bitwarden-cli
         boxes
         croc

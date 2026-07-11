@@ -117,6 +117,7 @@
         extraGroups = [
           "wheel"
         ];
+        # NOTE: Userborn doesn't use these yet, so these are useless currently.
         subGidRanges = [
           {
             count = 65536;
@@ -193,6 +194,22 @@
 
       # (hunspellWithDicts [ hunspellDicts.en_US hunspellDicts.en_US-large ])
     ];
+
+    etc = {
+      subuid = {
+        mode = "0644";
+        text = ''
+          ${user.login}:100000:65536
+        '';
+      };
+
+      subgid = {
+        mode = "0644";
+        text = ''
+          ${user.login}:100000:65536
+        '';
+      };
+    };
   };
 
   documentation = {

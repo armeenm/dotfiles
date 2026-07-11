@@ -19,7 +19,7 @@
 
   in [
     {
-      hostName = "server0.corp.edpi.ai";
+      hostName = "server0";
       protocol = "ssh-ng";
       sshUser = "it";
       sshKey = "/etc/nix/id_ed25519";

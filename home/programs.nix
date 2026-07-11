@@ -19,7 +19,9 @@ in {
     carapace.enable = true;
     clock-rs.enable = true;
     dircolors.enable = true;
-    direnv-instant.enable = true;
+    direnv.enable = true;
+    # TODO: Build is busted.
+    # direnv-instant.enable = true;
     fastfetch.enable = true;
     git-worktree-switcher.enable = true;
     gitui.enable = hostPlatform.isLinux;
