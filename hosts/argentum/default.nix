@@ -47,7 +47,13 @@
     };
 
     users."${user.login}" = {
-      wayland.windowManager.hyprland.settings.monitor = lib.mkForce [ ",preferred,auto,1.25" ];
+      wayland.windowManager.hyprland.settings.monitor = lib.mkForce {
+        output = "";
+        mode = "preferred";
+        position = "auto";
+        scale = 1.25;
+        bitdepth = 10;
+      };
 
       systemd.user.services = {
         mpvpaper = lib.mkForce {};
