@@ -16,7 +16,6 @@ let
   inherit (inputs.nix-misc.packages.${hostPlatform.system}) launchk;
 
   hyprland-qtutils = inputs.hyprland-qtutils.packages.${hostPlatform.system}.default;
-  hyprshell = inputs.hyprshell.packages.${hostPlatform.system}.hyprshell;
   strace-macos = inputs.strace-macos.packages.${hostPlatform.system}.default;
 
   editor = lib.getBin (pkgs.writeShellScript "editor" ''
@@ -162,7 +161,6 @@ in {
         gtk3
         hyprland-qtutils
         hyprpicker
-        hyprshell
         hyprshot
         kdePackages.breeze-icons
         kdePackages.dolphin

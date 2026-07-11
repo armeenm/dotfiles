@@ -60,24 +60,9 @@
       # Intentionally foregoing nixpkgs override.
     };
 
-    hyprland-plugins = {
-      url = "github:hyprwm/hyprland-plugins";
-      inputs.hyprland.follows = "hyprland";
-    };
-
     hyprland-qtutils = {
       url = "github:hyprwm/hyprland-qtutils";
       inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    hyprshell = {
-      url = "github:H3rmt/hyprshell";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    hyprspace = {
-      url = "github:KZDKM/Hyprspace";
-      inputs.hyprland.follows = "hyprland";
     };
 
     hyprsplit = {
