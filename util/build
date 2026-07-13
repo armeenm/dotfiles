@@ -1,11 +1,10 @@
 #!/usr/bin/env bash
 
-# if hash nom 2>/dev/null; then
-#   cmd=nom
-# else
-#   cmd=nix
-# fi
-cmd=nix
+if hash nom 2>/dev/null; then
+  cmd=nom
+else
+  cmd=nix
+fi
 
 if [[ -n "$1" && "$1" != -* ]]; then
   hostname=$1

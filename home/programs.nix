@@ -16,6 +16,7 @@ in {
     bacon.enable = true;
     bashmount.enable = true;
     bat.enable = true;
+    bun.enable = true;
     carapace.enable = true;
     clock-rs.enable = true;
     dircolors.enable = true;
