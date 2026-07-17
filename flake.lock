@@ -1563,6 +1563,33 @@
         "type": "github"
       }
     },
+    "nixpkgs-patch-fwupd-fix": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-IoGH+vDR07DM68sSWXMWxAW2nktBK8xDPGcK1lo1WMM=",
+        "type": "file",
+        "url": "https://github.com/NixOS/nixpkgs/pull/539855.diff"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://github.com/NixOS/nixpkgs/pull/539855.diff"
+      }
+    },
+    "nixpkgs-patcher": {
+      "locked": {
+        "lastModified": 1781789965,
+        "narHash": "sha256-ZRlWPq2Qms6KbesJrj7cUe2GN7s8BZISfp9ZbrCi2x0=",
+        "owner": "gepbird",
+        "repo": "nixpkgs-patcher",
+        "rev": "d2abed2b94b7955e05b4e2e8a9b8ac45597ecf94",
+        "type": "github"
+      },
+      "original": {
+        "owner": "gepbird",
+        "repo": "nixpkgs-patcher",
+        "type": "github"
+      }
+    },
     "nixpkgs-regression": {
       "locked": {
         "lastModified": 1643052045,
@@ -1845,6 +1872,8 @@
         "nixgl": "nixgl",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_7",
+        "nixpkgs-patch-fwupd-fix": "nixpkgs-patch-fwupd-fix",
+        "nixpkgs-patcher": "nixpkgs-patcher",
         "nixpkgs-stable": "nixpkgs-stable",
         "ragenix": "ragenix",
         "rose-pine-hyprcursor": "rose-pine-hyprcursor",

@@ -1,4 +1,4 @@
-{ inputs, ... }:
+{ inputs, lib, ... }:
 
 final: prev: {
   stable = inputs.nixpkgs-stable.legacyPackages.${final.stdenv.hostPlatform.system};
@@ -17,5 +17,11 @@ final: prev: {
 
   mozillavpn = prev.mozillavpn.overrideAttrs (_: {
     patches = [ ./mozillavpn.patch ];
+  });
+
+  fwupd = prev.fwupd.overrideAttrs (old: {
+    mesonFlags = old.mesonFlags ++ [
+      (lib.mesonOption "efi_app_location" "/run/fwupd-efi")
+    ];
   });
 }

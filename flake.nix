@@ -6,6 +6,12 @@
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.11-small";
     nixos-hardware.url = "github:nixos/nixos-hardware";
 
+    nixpkgs-patcher.url = "github:gepbird/nixpkgs-patcher";
+    nixpkgs-patch-fwupd-fix = {
+      url = "https://github.com/NixOS/nixpkgs/pull/539855.diff";
+      flake = false;
+    };
+
     brew-api = {
       url = "github:armeenm/brew-api";
       flake = false;
@@ -137,13 +143,15 @@
     };
   };
 
-  outputs = inputs@{ self, nixpkgs, ... }: let
+  outputs = inputs@{ self, nixpkgs, nixpkgs-patcher, ... }: let
+    inherit (nixpkgs) lib;
+
     config = {
       allowUnfree = true;
       contentAddressedByDefault = false;
     };
 
-    overlay = (import ./overlay { inherit inputs; });
+    overlay = (import ./overlay { inherit inputs lib; });
 
     allOverlays = [
       inputs.brew-nix.overlays.default
@@ -151,7 +159,7 @@
       overlay
     ];
 
-    forAllSystems = f: nixpkgs.lib.genAttrs [
+    forAllSystems = f: lib.genAttrs [
       "x86_64-linux"
       "aarch64-linux"
       "aarch64-darwin"
@@ -177,16 +185,18 @@
     nixosModules = import ./modules { inherit inputs; };
 
     nixosConfigurations = {
-      lithium = nixpkgs.lib.nixosSystem {
+      lithium = nixpkgs-patcher.lib.nixosSystem {
         modules = baseModules ++ [
           nixosModules.nixosInteractive
           nixosModules.nixosUser
           inputs.lanzaboote.nixosModules.lanzaboote
           ./hosts/lithium
         ];
+
+        specialArgs = inputs;
       };
 
-      argentum = nixpkgs.lib.nixosSystem {
+      argentum = nixpkgs-patcher.lib.nixosSystem {
         modules = baseModules ++ [
           nixosModules.nixosInteractive
           nixosModules.nixosUser
@@ -194,35 +204,41 @@
           inputs.lanzaboote.nixosModules.lanzaboote
           ./hosts/argentum
         ];
+
+        specialArgs = inputs;
       };
 
-      carbon = nixpkgs.lib.nixosSystem {
+      carbon = nixpkgs-patcher.lib.nixosSystem {
         modules = baseModules ++ [
           nixosModules.nixosBase
           nixosModules.nixosUser
           ./hosts/carbon
         ];
+
+        specialArgs = inputs;
       };
 
-      hydrogen = nixpkgs.lib.nixosSystem {
+      hydrogen = nixpkgs-patcher.lib.nixosSystem {
         modules = [
           "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
           ./hosts/hydrogen
         ];
+
+        specialArgs = inputs;
       };
     };
 
     darwinConfigurations = rec {
       itmaclap = cadmium;
 
-      cadmium = inputs.nix-darwin.lib.darwinSystem {
+      cadmium = nixpkgs-patcher.lib.darwinSystem {
         modules = baseModules ++ [
           nixosModules.darwinInteractive
           ./hosts/cadmium
         ];
       };
 
-      rhenium = inputs.nix-darwin.lib.darwinSystem {
+      rhenium = nixpkgs-patcher.lib.darwinSystem {
         modules = baseModules ++ [
           nixosModules.darwinInteractive
           ./hosts/rhenium
@@ -270,7 +286,7 @@
       };
     };
 
-    overlays.default = nixpkgs.lib.composeManyExtensions allOverlays;
+    overlays.default = lib.composeManyExtensions allOverlays;
 
     deploy = {
       nodes = with self.nixosConfigurations; let

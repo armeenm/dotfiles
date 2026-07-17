@@ -95,7 +95,6 @@
     physlock.enable = true;
     timesyncd.enable = true;
     udisks2.enable = true;
-    fwupd.enable = true;
     xserver.videoDrivers = [ "intel" ];
 
     avahi = {
