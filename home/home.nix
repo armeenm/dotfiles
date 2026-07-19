@@ -135,7 +135,6 @@ in {
         fira-code
         fira-code-symbols
         meld
-        moonlight-qt
         nerd-fonts.hack
         noto-fonts
         noto-fonts-cjk-sans
@@ -166,6 +165,7 @@ in {
         kdePackages.dolphin
         libnotify
         libreoffice-fresh
+        moonlight-qt
         nomacs
         obs-studio
         obs-studio-plugins.obs-pipewire-audio-capture
@@ -210,7 +210,7 @@ in {
         (google-chrome.overrideAttrs (old: {
           src = pkgs.fetchurl {
             url = lib.lists.head old.src.urls;
-            hash = "sha256-pVR0W1yGCxUo64VpUmmzEFSedYZXkF2l0gRIog2HkEw=";
+            hash = "sha256-bp6aAnRMCLVX+gXpLoP4Po7xeMIxVyaALxsRddUGOWI=";
           };
         }))
         libreoffice

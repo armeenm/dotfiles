@@ -91,7 +91,7 @@ let
   };
 
 in {
-  home.activation.setupSunshine = lib.hm.dag.entryAfter ["writeBoundary"] ''
-    run ${setup-sunshine}
-  '';
+  # home.activation.setupSunshine = lib.hm.dag.entryAfter ["writeBoundary"] ''
+  #   run ${setup-sunshine}
+  # '';
 }

@@ -1,4 +1,5 @@
 { config
+, inputs
 , lib
 , pkgs
 , isHeadless
@@ -21,16 +22,18 @@ in {
     ./zsh.nix
   ] ++ lib.optionals isStandalone [
     ./wrappers.nix
-    ../modules/shared/nix.nix
+    # ../modules/shared/nix.nix
     ../modules/shared/stylix.nix
   ];
 
-  targets.genericLinux.enable = hostPlatform.isLinux && isStandalone;
+  targets = {
+    genericLinux.enable = hostPlatform.isLinux && isStandalone;
 
-  targets.darwin = lib.optionalAttrs hostPlatform.isDarwin {
-    currentHostDefaults = {
-      "com.microsoft.VSCode" = {
-        ApplePressAndHoldEnabled = false;
+    darwin = lib.optionalAttrs hostPlatform.isDarwin {
+      currentHostDefaults = {
+        "com.microsoft.VSCode" = {
+          ApplePressAndHoldEnabled = false;
+        };
       };
     };
   };

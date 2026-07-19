@@ -14,7 +14,7 @@ in {
   programs = {
     aria2.enable = true;
     bacon.enable = true;
-    bashmount.enable = true;
+    bashmount.enable = hostPlatform.isLinux;
     bat.enable = true;
     bun.enable = true;
     carapace.enable = true;

@@ -2,8 +2,13 @@
 
 let
   hmBase = [
+    inputs.determinate.homeManagerModules.default
     inputs.direnv-instant.homeModules.direnv-instant
     inputs.nix-index-database.homeModules.nix-index
+  ];
+
+  hmLinuxBase = hmBase ++ [
+    { nixpkgs.overlays = [ inputs.emacs-overlay.overlays.default ]; }
   ];
 
   nixosBase = [
@@ -21,6 +26,12 @@ let
 
   hmDarwinBase = hmBase ++ [
     inputs.mac-app-util.homeManagerModules.default
+    { 
+      nixpkgs.overlays = [ 
+        inputs.darwin-emacs.overlays.emacs
+        inputs.emacs-overlay.overlays.package
+      ];
+    }
   ];
 
   darwinBase = [
@@ -37,7 +48,7 @@ let
   ];
 
 in {
-  hmBase = { ... }: { imports = hmBase; };
+  hmLinuxBase = { ... }: { imports = hmLinuxBase; };
   nixosBase = { ... }: { imports = nixosBase; };
   nixosInteractive = { ... }: { imports = nixosInteractive; };
   nixosUser = { ... }: { imports = [ ./nixos/user.nix ]; };

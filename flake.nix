@@ -29,7 +29,7 @@
     };
 
     nix = {
-      url = "https://flakehub.com/f/DeterminateSystems/nix-src/3.21.0";
+      url = "https://flakehub.com/f/DeterminateSystems/nix-src/3.21.5";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -240,7 +240,7 @@
           inputs.stylix.homeModules.stylix
           (if system == "aarch64-darwin"
            then nixosModules.hmDarwinBase
-           else nixosModules.hmBase)
+           else nixosModules.hmLinuxBase)
           ./home
         ];
 
