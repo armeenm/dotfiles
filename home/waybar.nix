@@ -1,7 +1,9 @@
-{ lib, pkgs, isHeadless, isPortable, ... }:
+{ config, lib, pkgs, isHeadless, isPortable, ... }:
 
 let
   inherit (pkgs.stdenv) hostPlatform;
+  foot = "${config.programs.foot.package}/bin/foot";
+  launch = program: ''hyprctl dispatch 'hl.dsp.exec_cmd("${program}", { float = true })' '';
 in {
   programs.waybar = {
     enable = hostPlatform.isLinux && !isHeadless;
@@ -108,7 +110,7 @@ in {
         };
 
         bluetooth = {
-          on-click = "hyprctl dispatch exec [float] foot bluetuith";
+          on-click = launch "${foot} bluetuith";
         };
 
         cava = {
@@ -130,7 +132,7 @@ in {
           format-alt = "{:%A, %B %d, %Y (%R %Z)}";
           tooltip-format = "{tz_list}";
           interval = 1;
-          on-click-middle = "hyprctl dispatch exec [float] foot clock-rs";
+          on-click-middle = launch "${foot} clock-rs";
           timezones = [
             ""
             "America/Los_Angeles"
@@ -180,7 +182,7 @@ in {
           format-icons = {
             default = ["" ""];
           };
-          on-click = "hyprctl dispatch exec [float] ${pkgs.pavucontrol}/bin/pavucontrol";
+          on-click = launch "${pkgs.pavucontrol}/bin/pavucontrol";
           on-click-right = "${pkgs.pulseaudio}/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle";
           scroll-step = 5.0;
           ignored-sinks = [ "Easy Effects Sink" ];
@@ -197,7 +199,7 @@ in {
                 systemctl --state=failed --no-pager
                 read -p "Press enter to exit..."
               '';
-          in "hyprctl dispatch exec [float] foot ${script}";
+          in launch "${foot} ${script}";
         };
       };
     };

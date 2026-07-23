@@ -2,6 +2,10 @@
 
 {
   nix = {
+    package = lib.mkForce (inputs.nix.packages."${pkgs.stdenv.system}".default.overrideAttrs (_: {
+      doCheck = false;
+    }));
+
     distributedBuilds = true;
     nixPath = lib.mkForce [ "nixpkgs=${config.nix.registry.nixpkgs.flake}" ];
 

@@ -7,10 +7,6 @@
     nixos-hardware.url = "github:nixos/nixos-hardware";
 
     nixpkgs-patcher.url = "github:gepbird/nixpkgs-patcher";
-    nixpkgs-patch-fwupd-fix = {
-      url = "https://github.com/NixOS/nixpkgs/pull/539855.diff";
-      flake = false;
-    };
 
     brew-api = {
       url = "github:armeenm/brew-api";
@@ -35,7 +31,7 @@
     };
 
     nix = {
-      url = "https://flakehub.com/f/DeterminateSystems/nix-src/3.21.0";
+      url = "https://flakehub.com/f/DeterminateSystems/nix-src/3.21.8";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

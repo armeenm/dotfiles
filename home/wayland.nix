@@ -79,7 +79,6 @@ in {
       plugins = let
         system = pkgs.stdenv.hostPlatform.system;
       in [
-        inputs.hypr-darkwindow.packages.${system}.Hypr-DarkWindow
         inputs.hypr-dynamic-cursors.packages.${system}.default
       ];
 
