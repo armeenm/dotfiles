@@ -475,7 +475,9 @@
   :config
   (spacious-padding-mode))
 
-(use-package treesit-auto)
+(use-package treesit-auto
+  :config
+  (add-to-list 'auto-mode-alist '("\\.gel\\'" . python-ts-mode)))
 
 (use-package treemacs-evil
   :after (treemacs evil))

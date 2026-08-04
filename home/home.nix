@@ -193,8 +193,8 @@ in {
         xeyes
         xkill
       ] ++ lib.optionals enableSocial [
-        karere
         telegram-desktop
+        zoom-us
       ];
 
       darwin-gui = [ bluesnooze ] ++  (with brewCasks; [

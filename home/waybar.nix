@@ -18,7 +18,7 @@ in {
         output = [ "*" ];
 
         modules-left = [
-          "hyprland/workspaces"
+          "ext/workspaces"
           "hyprland/submap"
           "custom/separator0"
           "group/mpris"
@@ -50,6 +50,13 @@ in {
           "clock"
           "group/tray"
         ];
+
+        "ext/workspaces" = {
+          on-scroll-up = ''hyprctl dispatch 'hl.dsp.focus({workspace="e+1"})' '';
+          on-scroll-down = ''hyprctl dispatch 'hl.dsp.focus({workspace="e-1"})' '';
+          on-click = "activate";
+          sort-by-id = false;
+        };
 
         "group/pulse" = {
           orientation = "inherit";

@@ -10,6 +10,10 @@
       "sd_mod"
     ];
     kernelModules = [ "kvm-intel" ];
+    kernelParams = [
+      # Disables NVMe APST power management.
+      "nvme_core.default_ps_max_latency_us=0"
+    ];
 
     # Conflicts with lanzaboote.
     loader.systemd-boot.enable = lib.mkForce false;

@@ -40,6 +40,7 @@ in {
     ripgrep-all.enable = true;
     ripgrep.enable = true;
     scmpuff.enable = true;
+    uv.enable = true;
     zoxide.enable = true;
 
     aerospace = {
