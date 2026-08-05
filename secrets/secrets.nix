@@ -5,7 +5,7 @@ let
   armeen = [ armeen-yk0 armeen-yk1 armeen-itmaclap ];
   users = armeen;
 
-  argentum = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICZQdVbbPwRm4+e3njANkGEAwMTp8kiBy6gzb5QwPslU";
+  argentum = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAXHvnrXAQyuLQhCVOnGpedpAlY9hl26Z1rtmPdTnbi1";
   lithium = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJl6/aiWgReQ80Tbde4fLE1vdM49alVEREXnUIN5NDVP";
   carbon = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA9yCr5oGZrYNhHW2Od8/3sw8OCHbGtsDrBM6pp+y3Um";
   itmaclap = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDWccq1GfFOiFXaKir3KZ6hTiOZEsYDe41/ucTegc50b";
