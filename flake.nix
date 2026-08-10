@@ -396,7 +396,7 @@
       (system: deployLib: deployLib.deployChecks self.deploy)
       inputs.deploy-rs.lib;
 
-    lib = {
+    lib = nixpkgs.lib // {
       inherit forAllSystems;
     };
   };
