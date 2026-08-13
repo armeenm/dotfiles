@@ -299,7 +299,8 @@
         carbon = {
           hostname = "carbon";
           profiles.system = {
-            sshUser = "root";
+            sshUser = user.login;
+            interactiveSudo = true;
             path = lib.x86_64-linux.activate.nixos carbon;
           };
         };
