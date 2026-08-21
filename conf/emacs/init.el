@@ -222,12 +222,18 @@
 (use-package smartparens)
 (use-package solidity-mode)
 (use-package symbol-overlay)
+(use-package swift-mode)
 (use-package terraform-mode)
 (use-package treemacs)
 (use-package undo-fu)
 (use-package vterm)
 (use-package vundo)
 (use-package wgrep)
+
+(use-package kotlin-ts-mode
+  :config
+  (add-to-list 'auto-mode-alist '("\\.kt\\'" . kotlin-ts-mode))
+  (add-to-list 'auto-mode-alist '("\\.kts\\'" . kotlin-ts-mode)))
 
 (use-package bazel
   :config

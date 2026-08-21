@@ -282,6 +282,8 @@ in {
       _JAVA_AWT_WM_NONREPARENTING = 1;
 
       EDITOR = editor;
+
+      OPENCODE_ENABLE_EXA = 1;
     };
 
     shellAliases = {
