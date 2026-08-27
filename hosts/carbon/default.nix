@@ -441,6 +441,11 @@
     groups.dufs = {};
 
     users = {
+      arash = {
+        isNormalUser = true;
+        hashedPasswordFile = config.age.secrets.arash-pw.path;
+      };
+
       restic = {
         isSystemUser = true;
         group = "restic";
@@ -456,4 +461,6 @@
   home-manager.extraSpecialArgs = {
     isHeadless = true;
   };
+
+  age.secrets.arash-pw.file = ../../secrets/arash-pw.age;
 }

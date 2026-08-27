@@ -403,6 +403,24 @@ in {
 
     opencode = {
       enable = enableSocial;
+      package = pkgs.writeShellApplication {
+        name = "opencode";
+
+        text = ''
+          set -a
+          # shellcheck disable=SC1091
+          source "${config.age.secrets.opencode-env.path}"
+          set +a
+          ${pkgs.opencode}/bin/opencode "$@"
+        '';
+
+        derivationArgs = {
+          doInstall = true;
+          installPhase = ''
+            ln -s ${pkgs.opencode}/share $out/share
+          '';
+        };
+      };
     };
 
     readline = {

@@ -48,6 +48,16 @@ in {
     };
   };
 
+  age = {
+    identityPaths = [ "${config.home.homeDirectory}/.ssh/id_ed25519" ];
+    secrets = {
+      opencode-env = {
+        file = ../secrets/opencode.env.age;
+      };
+    };
+  };
+
+
 } // lib.optionalAttrs (!isHeadless) {
   # This is almost always noise for us.
   stylix.enableReleaseChecks = false;

@@ -5,6 +5,8 @@ let
   armeen = [ armeen-yk0 armeen-yk1 armeen-itmaclap ];
   users = armeen;
 
+  armeen-ssh = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDXWQumRO6nC4ABA79WHB3kkNj0vUqAiz8oJwbxeG457";
+
   argentum = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAXHvnrXAQyuLQhCVOnGpedpAlY9hl26Z1rtmPdTnbi1";
   lithium = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJl6/aiWgReQ80Tbde4fLE1vdM49alVEREXnUIN5NDVP";
   carbon = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA9yCr5oGZrYNhHW2Od8/3sw8OCHbGtsDrBM6pp+y3Um";
@@ -21,4 +23,5 @@ in {
   "cloudflare-api-token.age".publicKeys = armeen ++ [ carbon ];
   "cloudflare-tunnel-creds-carbon.json.age".publicKeys = armeen ++ [ carbon ];
   "itmaclap-machines.nix.age".publicKeys = armeen ++ [ itmaclap ];
+  "opencode.env.age".publicKeys = armeen ++ [ armeen-ssh ];
 }
