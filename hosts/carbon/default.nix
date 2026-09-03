@@ -441,6 +441,8 @@
     groups.dufs = {};
 
     users = {
+      "${user.login}".extraGroups = [ "libvirtd" ];
+
       arash = {
         isNormalUser = true;
         hashedPasswordFile = config.age.secrets.arash-pw.path;
@@ -460,6 +462,10 @@
 
   home-manager.extraSpecialArgs = {
     isHeadless = true;
+  };
+
+  virtualisation = {
+    libvirtd.enable = true;
   };
 
   age.secrets.arash-pw.file = ../../secrets/arash-pw.age;

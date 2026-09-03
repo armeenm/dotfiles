@@ -294,6 +294,7 @@ in {
       server.enable = true;
 
       settings = {
+        bell.system = "no";
         mouse.hide-when-typing = "yes";
         scrollback.lines = 1000000;
 
@@ -301,7 +302,6 @@ in {
           ''[sh -c "f=$(mktemp); cat - > $f; emacsclient -c $f; rm $f"] Control+Shift+g'';
 
         main = {
-          # font = lib.mkForce "Tamsyn:size=12";
           term = "xterm-256color";
           pad = "20x20";
         };

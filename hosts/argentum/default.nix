@@ -79,7 +79,7 @@
                   {
                     match = "eDP-1";
                     enable = true;
-                    scale = 1.0;
+                    scale = 1.25;
                   }
                 ];
               }
@@ -106,14 +106,14 @@
                   {
                     match = "eDP-1";
                     enable = true;
-                    scale = 1.0;
+                    scale = 1.25;
                     position = "0,864";
                   }
                   {
                     search = [ "m=LG IPS QHD" "s=506TFEN0S636" "v=LG Electronics" ];
                     enable = true;
                     scale = 1.0;
-                    position = "2880,0"; # 2880 (xres) / 1.25 (scale)
+                    position = "2304,0"; # 2880 (xres) / 1.25 (scale)
                   }
                 ];
               }
