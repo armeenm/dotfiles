@@ -67,7 +67,6 @@ in {
         croc
         dos2unix
         duf
-        fasd
         fastmod
         fd
         ffmpeg

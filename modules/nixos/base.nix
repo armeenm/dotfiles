@@ -82,7 +82,6 @@
   security = {
     allowUserNamespaces = true;
     protectKernelImage = true;
-    unprivilegedUsernsClone = true;
     virtualisation.flushL1DataCache = null;
 
     apparmor.enable = true;
