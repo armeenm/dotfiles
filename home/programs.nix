@@ -465,21 +465,9 @@ in {
       };
     };
 
-    tealdeer = {
-      enable = true;
-      settings = {
-        updates.auto_update = true;
-      };
-    };
-
     television = {
       enable = true;
       enableZshIntegration = false;
-      settings = {
-        keybindings = {
-          quit = [ "esc" "ctrl-c" ];
-        };
-      };
     };
 
     translate-shell = {

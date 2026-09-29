@@ -164,7 +164,7 @@ in {
         kdePackages.breeze-icons
         kdePackages.dolphin
         libnotify
-        libreoffice-fresh
+        libreoffice
         nomacs
         obs-studio
         obs-studio-plugins.obs-pipewire-audio-capture
