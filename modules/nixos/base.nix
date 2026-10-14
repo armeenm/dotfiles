@@ -140,6 +140,11 @@
     nix-ld.enable = true;
     zsh.enable = true;
 
+    appimage = {
+      enable = true;
+      binfmt = true;
+    };
+
     neovim = {
       enable = true;
       defaultEditor = true;
