@@ -3,20 +3,20 @@
 let
   inherit (pkgs.stdenv) hostPlatform;
 
-  version = "2.0.28";
+  version = "2.0.29";
 
   sources = {
     x86_64-linux = {
       url = "https://registry.npmjs.org/@opencode/cli-linux-x64/-/cli-linux-x64-${version}.tgz";
-      hash = "sha512-HdgQ2c9FrER88w3Alm/UGdzU55lCc0FXxSm+VNMXUz+Yyv03uLc0Z+PxSnEBysmYNKcFvcnxdT7e0xGPoytrNg==";
+      hash = "sha512-pdG/T4uBxSC3hjUTOrTlx2pXlZl2VqABlb0AgDlZ8VO/q1pUUOYvooWmN5VeSi+EP8cKGVUsj0GUmMDeB2ympA==";
     };
     aarch64-linux = {
       url = "https://registry.npmjs.org/@opencode/cli-linux-arm64/-/cli-linux-arm64-${version}.tgz";
-      hash = "sha512-BOjXZMtvYiQ9xowfHXJseARn7wHN8RTvRvYvMMIsjIOEJOYtv4aPvB4l0BmmnhUEhZQgrprPFamkUDy0lDiYiw==";
+      hash = "sha512-EsCnvp5lMJNem0YoQJM9PkXY0KrkiugL55M9J2JlImQzKdQnZ4CKutrPAXOnsa889qHhY5tjRpAnD/ZYFzhkRA==";
     };
     aarch64-darwin = {
       url = "https://registry.npmjs.org/@opencode/cli-darwin-arm64/-/cli-darwin-arm64-${version}.tgz";
-      hash = "sha512-HYFeBK8drYVq9b9DlQ51pBLCaL+GNyih1ysTQfmekW7YhAJngPYDM7xMgCINXopRVMGTw7EmbJPrMm+9V0G7Yg==";
+      hash = "sha512-2tJOM20RpOjNeWsYcV3VfRFPDTeu1yMMbEqAQm1sEKmHX9087Sx/TxhwBlvtiudOGq6Kr3zyKmW1t7aFF6qCsQ==";
     };
   };
 
