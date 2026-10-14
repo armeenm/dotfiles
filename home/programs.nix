@@ -404,14 +404,21 @@ in {
 
     opencode = {
       enable = enableSocial;
-      package = pkgs.writeShellApplication {
+      package = pkgs.writeShellApplication (let
+        clipboardLibraryPath = lib.optionalString hostPlatform.isLinux
+          (pkgs.lib.makeLibraryPath [ pkgs.wayland ]);
+      in {
         name = "opencode";
-
         text = ''
           set -a
           # shellcheck disable=SC1091
           source "${config.age.secrets.opencode-env.path}"
           set +a
+          # OpenCode's native clipboard backend dlopen()s libwayland-client.so.0
+          # at runtime; the prebuilt binary does not carry it, so without this
+          # Wayland clipboard reads (Ctrl+V paste of text/images) return
+          # "Unsupported" and are silently ignored.
+          export LD_LIBRARY_PATH="${clipboardLibraryPath}''${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
           ${opencode}/bin/opencode "$@"
         '';
 
@@ -421,7 +428,7 @@ in {
             ln -s ${opencode}/share $out/share
           '';
         };
-      };
+      });
     };
 
     readline = {
