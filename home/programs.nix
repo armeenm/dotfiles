@@ -10,6 +10,7 @@
 
 let
   inherit (pkgs.stdenv) hostPlatform;
+  opencode = import ./opencode.nix { inherit lib pkgs; };
 in {
   programs = {
     aria2.enable = true;
@@ -411,13 +412,13 @@ in {
           # shellcheck disable=SC1091
           source "${config.age.secrets.opencode-env.path}"
           set +a
-          ${pkgs.opencode}/bin/opencode "$@"
+          ${opencode}/bin/opencode "$@"
         '';
 
         derivationArgs = {
           doInstall = true;
           installPhase = ''
-            ln -s ${pkgs.opencode}/share $out/share
+            ln -s ${opencode}/share $out/share
           '';
         };
       };
