@@ -8,18 +8,78 @@ let
   inherit (pkgs.stdenv) hostPlatform;
   conf = ../conf;
   home = config.home.homeDirectory;
+
+  browserPicker = pkgs.writeShellScript "browser-picker" ''
+    local_state="${config.xdg.configHome}/google-chrome/Local State"
+
+    declare -A profile_dirs
+    options="firefox"
+
+    if [ -f "$local_state" ]; then
+      while IFS=$'\t' read -r dir label; do
+        entry="chrome ($label)"
+        profile_dirs["$entry"]="$dir"
+        options="$options"$'\n'"$entry"
+      done < <(${lib.getExe pkgs.jq} -r '
+        .profile.info_cache
+        | to_entries[]
+        | [
+            .key,
+            (if (.value.user_name // "") != "" then .value.user_name else .value.name end)
+          ]
+        | @tsv
+      ' "$local_state")
+    else
+      options="$options"$'\n'"chrome"
+    fi
+
+    choice=$(printf "%s\n" "$options" | ${lib.getExe pkgs.tofi} --prompt-text "open in: ")
+
+    case "$choice" in
+      firefox)
+        exec firefox "$@"
+        ;;
+      chrome)
+        exec google-chrome-stable "$@"
+        ;;
+      "chrome ("*)
+        if [ -n "''${profile_dirs[$choice]+x}" ]; then
+          exec google-chrome-stable --profile-directory="''${profile_dirs[$choice]}" "$@"
+        fi
+        ;;
+    esac
+  '';
 in
 {
   xdg = {
     enable = true;
     portal.config.common.default = "hyprland";
 
+    desktopEntries = lib.optionalAttrs hostPlatform.isLinux {
+      browser-picker = {
+        name = "Browser Picker";
+        exec = "${browserPicker} %u";
+        terminal = false;
+        type = "Application";
+        mimeType = [
+          "text/html"
+          "x-scheme-handler/http"
+          "x-scheme-handler/https"
+          "x-scheme-handler/about"
+          "x-scheme-handler/unknown"
+        ];
+      };
+    };
+
     mime.enable = hostPlatform.isLinux;
     mimeApps = {
       enable = hostPlatform.isLinux;
       defaultApplications = {
-        "x-scheme-handler/http" = ["firefox.desktop"];
-        "x-scheme-handler/https" = ["firefox.desktop"];
+        "text/html" = ["browser-picker.desktop"];
+        "x-scheme-handler/http" = ["browser-picker.desktop"];
+        "x-scheme-handler/https" = ["browser-picker.desktop"];
+        "x-scheme-handler/about" = ["browser-picker.desktop"];
+        "x-scheme-handler/unknown" = ["browser-picker.desktop"];
         "x-scheme-handler/pdf" = ["org.pwmt.zathura.desktop"];
         "application/pdf" = ["org.pwmt.zathura.desktop"];
         "inode/directory" = ["dolphin.desktop"];
