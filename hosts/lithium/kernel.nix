@@ -1,11 +1,14 @@
 { config
 , lib
-, linuxKernel
+, linuxPackages
 , linuxPackagesFor
 }:
 
 let
-  kernel = linuxKernel.kernels.linux_6_6_hardened;
+  # nixpkgs no longer ships a linux-hardened kernel (the series was removed
+  # upstream), so build on the default kernel and keep the hardening options
+  # below via structuredExtraConfig.
+  kernel = linuxPackages.kernel;
 in
 linuxPackagesFor (kernel.override {
   features = {
@@ -13,7 +16,9 @@ linuxPackagesFor (kernel.override {
     needsCifsUtils = false;
   };
 
-  structuredExtraConfig = with lib.kernel; {
+  # Force every option so these hardening settings win over nixpkgs'
+  # common-config defaults for the standard kernel.
+  structuredExtraConfig = lib.mapAttrs (_: lib.mkForce) (with lib.kernel; {
     ## General ##
     #DEBUG_KMEMLEAK = yes;
     #KCSAN = yes;
@@ -47,7 +52,9 @@ linuxPackagesFor (kernel.override {
     EXPERT = yes;
     FORTIFY_SOURCE = yes;
     GCC_PLUGINS = yes;
-    GCC_PLUGIN_LATENT_ENTROPY = yes;
+    # Conflicts with the Rust bindings generator (clang/bindgen rejects the
+    # `latent_entropy` attribute), which nixpkgs enables via CONFIG_RUST.
+    GCC_PLUGIN_LATENT_ENTROPY = no;
     GCC_PLUGIN_RANDSTRUCT = yes;
     GCC_PLUGIN_STACKLEAK = yes;
     GCC_PLUGIN_STACKLEAK_METRICS = yes;
@@ -301,7 +308,7 @@ linuxPackagesFor (kernel.override {
     BLK_DEV_SD = yes;
     BLK_DEV_SR = yes;
     BTRFS_FS = yes;
-    CACHEFILES = yes;
+    CACHEFILES = module;
     CIFS = yes;
     CUSE = yes;
     DAX = yes;
@@ -325,7 +332,7 @@ linuxPackagesFor (kernel.override {
     ISO9660_FS = lib.mkForce yes;
     JBD2 = yes;
     MMC = yes;
-    MMC_BLOCK = yes;
+    MMC_BLOCK = module;
     NETWORK_FILESYSTEMS = yes;
     NFS_FS = lib.mkForce yes;
     NFS_V4 = yes;
@@ -545,7 +552,7 @@ linuxPackagesFor (kernel.override {
     ENIC = no;
     EPIC100 = no;
     EQUALIZER = no;
-    EROFS_FS = no;
+    EROFS_FS = module;
     ET131X = no;
     ETHOC = no;
     EUROTECH_WDT = no;
@@ -650,6 +657,7 @@ linuxPackagesFor (kernel.override {
     HID_XINMO = no;
     HID_ZEROPLUS = no;
     HID_ZYDACRON = no;
+    HIBMCGE = no;
     HINIC = no;
     HIPPI = lib.mkForce no;
     HOTPLUG_PCI = no;
@@ -865,7 +873,7 @@ linuxPackagesFor (kernel.override {
     NATIONAL_PHY = no;
     NATSEMI = no;
     NE2K_PCI = no;
-    NETFS_SUPPORT = no;
+    NETFS_SUPPORT = yes;
     NETXEN_NIC = no;
     NET_DSA = no;
     NET_FC = lib.mkForce no;
@@ -965,7 +973,7 @@ linuxPackagesFor (kernel.override {
     PCI_SW_SWITCHTEC = no;
     PCMCIA = no;
     PCNET32 = no;
-    PCS_XPCS = no;
+    PCS_XPCS = module;
     PDC_ADMA = no;
     PEAQ_WMI = no;
     PHANTOM = no;
@@ -1521,7 +1529,7 @@ linuxPackagesFor (kernel.override {
     XILLYUSB = no;
     YELLOWFIN = no;
     ZIIRAVE_WATCHDOG = no;
-  };
+  });
 
   ignoreConfigErrors = true;
 })
