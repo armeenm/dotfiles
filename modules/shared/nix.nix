@@ -2,9 +2,22 @@
 
 {
   nix = {
-    package = lib.mkForce (inputs.nix.packages."${pkgs.stdenv.system}".default.overrideAttrs (_: {
-      doCheck = false;
-    }));
+    package = lib.mkForce (
+      (inputs.nix.packages."${pkgs.stdenv.system}".default.overrideScope
+        (_final: prev: {
+          # Meson resolves a source path beginning with the build directory's
+          # name as build-dir-relative (generated). `src/libstore` has a real
+          # `build/` source directory that collides with meson's default
+          # `build` build directory, so rename the build directory for just
+          # this component. (Other components assume the default name.)
+          nix-store = prev.nix-store.overrideAttrs (_: {
+            mesonBuildDir = "_build";
+          });
+        })
+      ).overrideAttrs (_: {
+        doCheck = false;
+      })
+    );
 
     distributedBuilds = true;
     nixPath = lib.mkForce [ "nixpkgs=${config.nix.registry.nixpkgs.flake}" ];
