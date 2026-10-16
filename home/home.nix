@@ -33,6 +33,32 @@ let
     };
   }));
 
+  # OpenChamber goes through a wrapper so that the GUI and the OpenCode server
+  # it spawns inherit the same environment as the terminal `opencode`: the
+  # age-encrypted OpenCode env file, the Wayland clipboard library path, and
+  # this config's OpenCode CLI rather than the one upstream would bundle.
+  openchamber = pkgs.writeShellApplication {
+    name = "openchamber";
+
+    text = let
+      clipboardLibraryPath = lib.optionalString hostPlatform.isLinux
+        (lib.makeLibraryPath [ pkgs.wayland ]);
+    in ''
+      set -a
+      # shellcheck disable=SC1091
+      source "${config.age.secrets.opencode-env.path}"
+      set +a
+
+      # OpenCode's native clipboard backend dlopen()s libwayland-client.so.0
+      # at runtime; the prebuilt binary does not carry it.
+      export LD_LIBRARY_PATH="${clipboardLibraryPath}''${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+
+      export OPENCODE_BINARY="${lib.getExe config.programs.opencode.package}"
+
+      exec ${lib.getExe pkgs.openchamber-desktop} "$@"
+    '';
+  };
+
 in {
   home = {
     inherit stateVersion;
@@ -193,6 +219,7 @@ in {
         xeyes
         xkill
       ] ++ lib.optionals enableSocial [
+        openchamber
         telegram-desktop
         zoom-us
       ];

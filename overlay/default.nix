@@ -24,4 +24,6 @@ final: prev: {
       (lib.mesonOption "efi_app_location" "/run/fwupd-efi")
     ];
   });
+
+  openchamber-desktop = final.callPackage ./openchamber.nix { };
 }

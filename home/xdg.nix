@@ -1,6 +1,7 @@
 { config
 , pkgs
 , lib
+, enableSocial
 , ...
 }:
 
@@ -68,6 +69,18 @@ in
           "x-scheme-handler/about"
           "x-scheme-handler/unknown"
         ];
+      };
+
+      openchamber = lib.mkIf enableSocial {
+        name = "OpenChamber";
+        comment = "Desktop GUI for the OpenCode AI coding agent";
+        exec = "openchamber";
+        icon = "${pkgs.openchamber-desktop}/share/icons/hicolor/scalable/apps/openchamber.svg";
+        categories = [ "Development" ];
+        terminal = false;
+        type = "Application";
+        # Electron reports its own app name, not the wrapper's.
+        settings.StartupWMClass = "openchamber";
       };
     };
 
