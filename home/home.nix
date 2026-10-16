@@ -180,6 +180,7 @@ in {
         slurp
         swaylock
         vial
+        virt-manager
         vlc
         wdisplays
         wl-clipboard
