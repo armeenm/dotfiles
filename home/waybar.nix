@@ -4,6 +4,29 @@ let
   inherit (pkgs.stdenv) hostPlatform;
   foot = "${config.programs.foot.package}/bin/foot";
   launch = program: ''hyprctl dispatch 'hl.dsp.exec_cmd("${program}", { float = true })' '';
+
+  # Invisible while idle; shows a robot while hypruse has hands on the desktop.
+  # The module JSON is built by jq, from the state file, so a last_action an
+  # agent chose can never blank the indicator.
+  hypruseStatus = pkgs.writeShellScript "waybar-hypruse" ''
+    state="''${XDG_RUNTIME_DIR:-/tmp}/hypruse/state.json"
+    jq="${lib.getExe pkgs.jq}"
+
+    if [ -f "$state" ]; then
+      pid=$("$jq" -r '.pid // empty' "$state" 2>/dev/null)
+      if [ -n "$pid" ] && kill -0 "$pid" 2>/dev/null; then
+        "$jq" -c '{text: "󰚩", class: "active",
+                  tooltip: ((["agent has hands on this desktop, click to kill"]
+                             + (if (.last_action // "") == "" then []
+                                else ["last: " + (.last_action | tostring)] end))
+                            | join("\n"))}' "$state" 2>/dev/null && exit 0
+        # unreadable state with a live pid: still show the indicator
+        printf '{"text":"󰚩","class":"active","tooltip":"agent has hands on this desktop, click to kill"}\n'
+        exit 0
+      fi
+    fi
+    printf '{"text":"","class":"idle","tooltip":""}\n'
+  '';
 in {
   programs.waybar = {
     enable = hostPlatform.isLinux && !isHeadless;
@@ -45,6 +68,7 @@ in {
           "custom/separator0"
         ]) ++ [
           "systemd-failed-units"
+          "custom/hypruse"
           "idle_inhibitor"
           "custom/dnd"
           "clock"
@@ -114,6 +138,13 @@ in {
         "custom/power" = {
           format = " ⏻ ";
           on-click = "wlogout";
+        };
+
+        "custom/hypruse" = {
+          exec = "${hypruseStatus}";
+          return-type = "json";
+          interval = 1;
+          on-click = "pkill -f hypruse";
         };
 
         bluetooth = {
@@ -214,6 +245,9 @@ in {
     style = ''
         window#waybar {
           background: transparent;
+        }
+        #custom-hypruse.active {
+          color: @base08;
         }
         #pulseaudio-slider slider {
           min-height: 0px;

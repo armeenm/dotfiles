@@ -292,6 +292,8 @@ in {
           (modBind "SHIFT + return" ''hl.dsp.exec_cmd("footclient")'')
           (modBind "SHIFT + Q" "hl.dsp.window.close()")
           (modBind "SHIFT + equal" "hl.dsp.exit()")
+          # Panic: take the seat back from hypruse at once.
+          (modBind "SHIFT + BackSpace" ''hl.dsp.exec_cmd("pkill -f hypruse")'')
           (modBind "SHIFT + space" "hl.dsp.window.pin()")
           (modBind "SHIFT + D" ''hl.dsp.exec_cmd("exec $(tofi-drun)")'')
           (modBind "SHIFT + P" "hl.dsp.window.pseudo()")

@@ -16,6 +16,7 @@ let
   inherit (inputs.nix-misc.packages.${hostPlatform.system}) launchk;
 
   hyprland-qtutils = inputs.hyprland-qtutils.packages.${hostPlatform.system}.default;
+  hypruse = import ./hypruse.nix { inherit lib pkgs; };
   strace-macos = inputs.strace-macos.packages.${hostPlatform.system}.default;
 
   editor = lib.getBin (pkgs.writeShellScript "editor" ''
@@ -187,6 +188,7 @@ in {
         hyprland-qtutils
         hyprpicker
         hyprshot
+        hypruse
         kdePackages.breeze-icons
         kdePackages.dolphin
         libnotify
