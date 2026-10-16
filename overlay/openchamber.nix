@@ -14,6 +14,7 @@
   nodejs,
   electron,
   makeWrapper,
+  patchelf,
   git,
   openssh,
   cloudflared,
@@ -113,6 +114,7 @@ stdenv.mkDerivation {
     bun
     nodejs
     makeWrapper
+    patchelf
   ];
 
   buildPhase = ''
@@ -153,6 +155,16 @@ stdenv.mkDerivation {
     # Swap the build-time dependency tree for the production-only one.
     rm -rf $out/libexec/openchamber-desktop/packages/*/node_modules
     ${copyNodeModules nodeModulesRuntime "$out/libexec/openchamber-desktop"}
+
+    # sherpa-onnx ships prebuilt ELF files whose RUNPATH is only $ORIGIN, which
+    # resolves the sibling libsherpa-onnx-*.so but not libstdc++.so.6. Plain
+    # Node links libstdc++ itself so the addon loads there, but the local
+    # dictation worker runs under Electron, which does not, so dlopen() failed
+    # and surfaced as "Failed to load sherpa-onnx-node". The dependency trees
+    # come from fixed-output derivations, so nothing ever patched their RPATHs.
+    find $out/libexec/openchamber-desktop -path '*sherpa-onnx-linux-x64*' \
+      \( -name '*.node' -o -name '*.so' \) \
+      -exec patchelf --add-rpath ${lib.makeLibraryPath [ stdenv.cc.cc.lib ]} {} +
 
     # The bundled main process keeps @openchamber/web external, so Node has to
     # resolve it from the application root at runtime.
