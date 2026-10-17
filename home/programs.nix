@@ -251,13 +251,13 @@ in {
         override = epkgs: epkgs // {
           emsg-blame = epkgs.trivialBuild {
             pname = "emsg-blame";
-            version = "unstable-2025-02-22";
+            version = "unstable-2025-10-23";
 
             src = pkgs.fetchFromGitHub {
               owner = "ISouthRain";
               repo = "emsg-blame";
-              rev = "7b0bdae8398a38b0bdb103f8cdeaaf62053496cb";
-              hash = "sha256-bI3zBUJ/B2TsyQx4N8fmIrACEUEw0IX3OBpNGzVpq2Y=";
+              rev = "34f981394aecb3747f0c95c4ae359e8f35c7c677";
+              hash = "sha256-4TzUsZPXXPhgNKsVhVnmeFDtTHRpD1mEZYRRwcUv/ec=";
             };
 
             packageRequires = [ epkgs.async ];
@@ -507,27 +507,27 @@ in {
       package = if hostPlatform.isLinux then pkgs.vscode.fhs else pkgs.vscode;
       mutableExtensionsDir = false;
 
-      extensions = with pkgs.vscode-extensions; [
-        eamodio.gitlens
-        llvm-vs-code-extensions.lldb-dap
-        llvm-vs-code-extensions.vscode-clangd
-        mkhl.direnv
-        ms-vscode.cpptools-extension-pack
-        ms-vscode.hexeditor
-        ms-vsliveshare.vsliveshare
-        vscodevim.vim
-      ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
-        {
-          name = "llama-vscode";
-          publisher = "ggml-org";
-          version = "0.0.36";
-          sha256 = "sha256-26Lt4/Bajg3b3TSif6k/o1l0adgRkmXA37QZxP1X3eU=";
-        }
-      ] ++ lib.optionals hostPlatform.isLinux [
-        ms-vscode.cpptools
-      ];
-
       profiles.default = {
+        extensions = with pkgs.vscode-extensions; [
+          eamodio.gitlens
+          llvm-vs-code-extensions.lldb-dap
+          llvm-vs-code-extensions.vscode-clangd
+          mkhl.direnv
+          ms-vscode.cpptools-extension-pack
+          ms-vscode.hexeditor
+          ms-vsliveshare.vsliveshare
+          vscodevim.vim
+        ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
+          {
+            name = "llama-vscode";
+            publisher = "ggml-org";
+            version = "0.0.69";
+            sha256 = "sha256-UfAy4dbNX5Gcd7fECLTjbtC+3Bu3hYWhOaG6+GzRy/w=";
+          }
+        ] ++ lib.optionals hostPlatform.isLinux [
+          ms-vscode.cpptools
+        ];
+
         userSettings = {
           "vim.foldfix" = true;
           "clangd.path" = "${pkgs.llvmPackages_21.clang-tools}/bin/clangd";

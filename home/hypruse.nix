@@ -32,7 +32,10 @@ pkgs.python3Packages.buildPythonApplication rec {
   nativeBuildInputs = [ pkgs.makeWrapper ];
 
   makeWrapperArgs = [
-    "--prefix PATH : ${lib.makeBinPath runtimeInputs}"
+    "--prefix"
+    "PATH"
+    ":"
+    (lib.makeBinPath runtimeInputs)
   ];
 
   pythonImportsCheck = [ "hypruse" ];
