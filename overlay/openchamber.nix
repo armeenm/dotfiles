@@ -22,13 +22,13 @@
 
 let
   pname = "openchamber-desktop";
-  version = "2.3.3";
+  version = "2.4.0";
 
   src = fetchFromGitHub {
     owner = "openchamber";
     repo = "openchamber";
     rev = "v${version}";
-    hash = "sha256-WLXYk8Yq/UI4uLCbdzGZrR96lNf3pIEHBPny1ELREfw=";
+    hash = "sha256-maZ2osLKTI7xIek16/Jheu6Y1hwq92DO24erNaEdY8M=";
   };
 
   # `bun install` needs the network, so the dependency trees are fixed-output
@@ -83,13 +83,13 @@ let
   nodeModulesBuild = mkNodeModules {
     name = "node-modules";
     flags = "";
-    hash = "sha256-Dw2qUNnUP5ZVZo4ASPHXAoKSmIIrp7xWjqblQKjPch4=";
+    hash = "sha256-xMlO+yam/ddtNbJJwFyoNJ6wIu2ay3YaeZpKgBAJSMY=";
   };
 
   nodeModulesRuntime = mkNodeModules {
     name = "node-modules-runtime";
     flags = "--production";
-    hash = "sha256-ATzIZmhN9YKpbk73J6QNRiad6+bT9s6SXU7gKtxMavs=";
+    hash = "sha256-MfiVXyR78u/Oh026kla2m46qIMtQcRG4ve1rivVlBaY=";
   };
 
   # Lays the dependency tree out next to the sources at the depth bun's
