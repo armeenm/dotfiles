@@ -3,9 +3,6 @@
 final: prev: {
   stable = inputs.nixpkgs-stable.legacyPackages.${final.stdenv.hostPlatform.system};
 
-  # TODO: Pinned until https://github.com/NixOS/nixpkgs/issues/540320 is fixed.
-  age-plugin-se = final.stable.age-plugin-se;
-
   dufs = prev.dufs.overrideAttrs (_: {
     doCheck = false;
   });
