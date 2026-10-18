@@ -5,8 +5,12 @@
   nixpkgs = {
     hostPlatform = "aarch64-darwin";
     overlays = [
+      # Provides `emacs-unstable` and refreshed ELPA/MELPA package sets.
+      inputs.emacs-overlay.overlays.default
+      # Must come last: this `emacsWithPackagesFromUsePackage` is the one that
+      # understands `configAsDefaultInitFile`, which the shared home config
+      # passes on Darwin.
       inputs.darwin-emacs.overlays.emacs
-      inputs.emacs-overlay.overlays.package
     ];
   };
 

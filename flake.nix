@@ -89,7 +89,10 @@
 
     mac-app-util = {
       url = "github:hraban/mac-app-util";
-      inputs.cl-nix-lite.url = "github:r4v3n6101/cl-nix-lite/url-fix";
+      # Use our (unstable) nixpkgs so mac-app-util is built with a fixed SBCL:
+      # upstream's nixos-26.05 pin still ships SBCL 2.6.4, which fails to
+      # allocate its heap on macOS 27 ("failed to allocate ... at 0x300100000").
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     nixgl = {
@@ -227,14 +230,18 @@
     darwinConfigurations = rec {
       itmaclap = cadmium;
 
-      cadmium = nixpkgs-patcher.lib.darwinSystem {
+      cadmium = inputs.nix-darwin.lib.darwinSystem {
+        specialArgs = inputs;
+
         modules = baseModules ++ [
           nixosModules.darwinInteractive
           ./hosts/cadmium
         ];
       };
 
-      rhenium = nixpkgs-patcher.lib.darwinSystem {
+      rhenium = inputs.nix-darwin.lib.darwinSystem {
+        specialArgs = inputs;
+
         modules = baseModules ++ [
           nixosModules.darwinInteractive
           ./hosts/rhenium
@@ -326,7 +333,11 @@
     devShells = forAllSystems (system: pkgs: with pkgs; {
       default = (mkShell.override { stdenv = pkgs.stdenvNoCC; }) {
         packages = [
-          inputs.deploy-rs.packages.${system}.default
+          (inputs.deploy-rs.packages.${system}.default.overrideAttrs (_: {
+            # deploy-rs' canary/file-watching tests are timing dependent and
+            # fail in the Darwin build sandbox, so skip them there.
+            doCheck = system != "aarch64-darwin";
+          }))
           nix-output-monitor
           nvd
           openssl
