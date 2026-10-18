@@ -766,6 +766,10 @@ linuxPackagesFor (kernel.override {
     INTEL_RST = no;
     INTEL_SKL_INT3472 = no;
     INTEL_SMARTCONNECT = no;
+    # Selects INT340X_THERMAL (below), which is intentionally unused; on newer
+    # kernels autoModules turns this into a module and oldconfig then re-asks
+    # INT340X_THERMAL, which generate-config.pl rejects as a "repeated question".
+    INTEL_SOC_DTS_THERMAL = no;
     INTEL_SPEED_SELECT_INTERFACE = no;
     INTEL_TH = no;
     INTEL_TXT = no;
