@@ -114,6 +114,7 @@ linuxPackagesFor (kernel.override {
     X86_IOPL_IOPERM = no;
     X86_MCE_INJECT = no;
     X86_MSR = yes;
+    X86_X32_ABI = yes;
 
     ## Hardware ##
     ACPI_APEI = yes;
@@ -215,6 +216,7 @@ linuxPackagesFor (kernel.override {
     USB_EHCI_PCI = yes;
     USB_HID = yes;
     USB_OHCI_HCD = yes;
+    USB_OHCI_HCD_PCI = yes;
     USB_OHCI_HCD_PLATFORM = yes;
     USB_PRINTER = yes;
     USB_UHCI_HCD = yes;
@@ -310,6 +312,7 @@ linuxPackagesFor (kernel.override {
     #NFS_V4_2_READ_PLUS = yes;
     NTFS_FS = lib.mkForce yes;
     NVME_CORE = yes;
+    QFMT_V2 = yes;
     SATA_AHCI = yes;
     SATA_AHCI_PLATFORM = yes;
     SCSI = yes;
