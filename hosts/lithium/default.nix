@@ -21,7 +21,9 @@
       "ib_ipoib"
     ];
 
-    kernelPackages = pkgs.callPackage ./kernel.nix { };
+    kernelPackages = pkgs.callPackage ./kernel.nix {
+      linuxPackages = pkgs.linuxPackages_latest;
+    };
 
     kernelParams = [
       "elevator=none"
