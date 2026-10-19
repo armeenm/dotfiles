@@ -488,7 +488,12 @@ in {
 
     tofi = {
       enable = hostPlatform.isLinux && !isHeadless;
-      settings = {
+      settings = let
+        inherit (config.lib.stylix.colors.withHashtag) base00 base03 base0A;
+        # Fully transparent; stylix paints the translucent window colour behind
+        # each result/prompt as well, which stacks into a visible slab.
+        transparent = "#00000000";
+      in {
         "width" = "100%";
         "height" = "100%";
         "border-width" = 0;
@@ -499,6 +504,15 @@ in {
         "num-results" = 5;
         "font" = lib.mkForce "${pkgs.fira-code}/share/fonts/truetype/FiraCode-VF.ttf";
         "font-size" = lib.mkForce "";
+        # Drop the box behind the results and the prompt.
+        "default-result-background" = lib.mkForce transparent;
+        "prompt-background" = lib.mkForce transparent;
+        "input-background" = lib.mkForce transparent;
+        # Highlight the selected result as a yellow block with dark text.
+        "selection-background" = lib.mkForce base0A;
+        "selection-color" = lib.mkForce base00;
+        # The prompt recedes to the grey the selection text used to be.
+        "prompt-color" = lib.mkForce base03;
       };
     };
 
