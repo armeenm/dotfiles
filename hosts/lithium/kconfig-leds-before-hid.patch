@@ -1,0 +1,20 @@
+--- a/drivers/Kconfig
++++ b/drivers/Kconfig
+@@ -113,6 +113,8 @@
+ 
+ source "sound/Kconfig"
+ 
++source "drivers/leds/Kconfig"
++
+ source "drivers/hid/Kconfig"
+ 
+ source "drivers/usb/Kconfig"
+@@ -123,8 +125,6 @@
+ 
+ source "drivers/memstick/Kconfig"
+ 
+-source "drivers/leds/Kconfig"
+-
+ source "drivers/accessibility/Kconfig"
+ 
+ source "drivers/infiniband/Kconfig"
