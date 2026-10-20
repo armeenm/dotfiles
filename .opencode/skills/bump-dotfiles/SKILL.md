@@ -86,6 +86,26 @@ with a small expression that imports the flake and returns
 `pkgs.openchamber-desktop`. Then build it for real to confirm 2.x still has the
 `build:web-assets` / `bundle:main` scripts the derivation calls.
 
+Smoke-test the packaged app against an isolated profile instead of replacing the
+running desktop app:
+
+```sh
+mkdir -p /tmp/opencode/oc/home/{.config,.local/share,.cache}
+env HOME=/tmp/opencode/oc/home \
+  XDG_CONFIG_HOME=/tmp/opencode/oc/home/.config \
+  XDG_DATA_HOME=/tmp/opencode/oc/home/.local/share \
+  XDG_CACHE_HOME=/tmp/opencode/oc/home/.cache \
+  $(nix build --impure --print-out-paths --file /tmp/openchamber-build.nix)/bin/openchamber-desktop \
+  > /tmp/opencode/oc/run.log 2>&1
+```
+
+Check `packages/electron/package.json` for the Electron major it expects. The
+wrapper uses nixpkgs' `electron`, which lags upstream; when the app needs a
+newer one, pass it from `overlay/default.nix`
+(`electron = final.electron_44;`). 2.5.0 needs Electron 44 for
+`webContents.setZoomMode`; without it startup dies with
+`setZoomMode is not a function` and no window appears.
+
 ## 4. Verify
 
 ```sh
@@ -106,7 +126,7 @@ Every host must build. **`nix flake check` is not enough on its own** — withou
 workaround once upstream fixes it (see the existing `TODO`s there for the shape
 of one).
 
-## 5. Package list for the PR
+## 5. Package list and PR text
 
 ```sh
 nvd diff /run/current-system <new-toplevel>
@@ -115,6 +135,80 @@ nvd diff /run/current-system <new-toplevel>
 `/run/current-system` is usually still the pre-bump system, so this is the
 old→new diff. Report the `[U.]`/`[U*]` upgrades; `[C.]` lines are same-version
 changes, not updates.
+
+### One table, with changelogs
+
+Put the `nvd` upgrades and the hand-pinned bumps in a **single** table
+(`Package | Old | New | Changelog`), not one table per source. Deduplicate
+aliases into one row (`code`/`vscode`, `zathura`/`zathura-with-plugins`,
+`emacs-*-with-packages`). `[U*]` rows whose old version is `<none>` were newly
+pulled in, not upgraded; leave them out.
+
+Changelog links come from nixpkgs metadata first:
+
+```sh
+nix eval --impure --json --expr '
+let
+  f = builtins.getFlake (toString ./.);
+  p = f.inputs.nixpkgs.legacyPackages.x86_64-linux;
+  get = n: {
+    inherit n;
+    homepage = p.${n}.meta.homepage or null;
+    changelog = p.${n}.meta.changelog or null;
+  };
+in map get [ "starship" "uv" "upower" ]
+'
+```
+
+For packages nested elsewhere, use their real attr path (e.g.
+`p.tree-sitter-grammars.<name>`). If `meta.changelog` is null:
+
+- `gh api repos/<owner>/<repo>/releases/tags/<tag> --jq .body` to find the
+  release, or `gh api repos/<owner>/<repo>/tags`
+- a tag with no release gets a compare link
+  (`https://github.com/<owner>/<repo>/compare/<old>...<new>`)
+- VS Code: `https://code.visualstudio.com/updates/v1_<minor>`
+- MELPA snapshot packages (magit, posframe, …): link the upstream repo or
+  `https://melpa.org/#/<pkg>`
+- follow a moved repo via the package's npm/PyPI metadata (e.g. opencode's
+  repository is now `anomalyco/opencode`)
+- check every link with `curl -sIL -o /dev/null -w '%{http_code}' <url>`
+  (some sites reject HEAD, so fall back to `curl -s -o /dev/null -w`)
+
+### Highlights
+
+Read the release notes of the notable bumps and add a short "Worth a look"
+section in the PR body. Aim for 5-10 bullets, and prefer things that matter
+here:
+
+- breaking changes (OpenCode 2.1 renamed `providerState`/`resultState`)
+- security fixes (Starship GHSA releases)
+- changes to tools this repo drives or embeds (Hypruse background mode,
+  claude-code's `--worktree` cleanup fix, an app's new Electron requirement)
+- notable features (VS Code canvases, OpenChamber find-in-changes)
+
+Skip "bug fixes only" releases from the highlights, but keep them in the
+table with their changelog link.
+
+### PR body shape
+
+```md
+Weekly bump of the flake inputs and hand-pinned packages.
+
+<nixpkgs rev change, frozen-input status, unchanged pins>
+
+## Bumps
+
+<the single table>
+
+## Worth a look
+
+<a few bullets, linked>
+
+## Verification
+
+<four toplevels, flake check, runtime smoke test if a GUI app moved, fixes>
+```
 
 ## 6. Commit and open the PR
 
