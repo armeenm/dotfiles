@@ -63,5 +63,9 @@ final: prev: {
     ];
   });
 
-  openchamber-desktop = final.callPackage ./openchamber.nix { };
+  # OpenChamber 2.5.0 uses `webContents.setZoomMode`, which Electron 44 added.
+  # nixpkgs' `electron` is still 43, so pin the desktop app to Electron 44.
+  openchamber-desktop = final.callPackage ./openchamber.nix {
+    electron = final.electron_44;
+  };
 }
