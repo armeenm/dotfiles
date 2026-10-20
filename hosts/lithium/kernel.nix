@@ -16,6 +16,21 @@ linuxPackagesFor (kernel.override {
     needsCifsUtils = false;
   };
 
+  # TODO: Remove when https://github.com/NixOS/nixpkgs/issues/82951 is fixed.
+  # `HID_LOGITECH` depends on `LEDS_CLASS_MULTICOLOR`, but drivers/Kconfig
+  # sources the HID menu before the LED one, so generate-config.pl is asked
+  # for `HID_LOGITECH` while its dependency is still a module and answers `y`,
+  # which is not a valid choice. Kernel 7.3's kconfig asks again instead of
+  # silently keeping `m`, and generate-config.pl then dies with "repeated
+  # question". Source the LED menu first so the dependency is resolved before
+  # the driver that needs it.
+  kernelPatches = kernel.kernelPatches ++ [
+    {
+      name = "kconfig-leds-before-hid";
+      patch = ./kconfig-leds-before-hid.patch;
+    }
+  ];
+
   # Force every option so these hardening settings win over nixpkgs'
   # common-config defaults for the standard kernel.
   structuredExtraConfig = lib.mapAttrs (_: lib.mkForce) (with lib.kernel; {
