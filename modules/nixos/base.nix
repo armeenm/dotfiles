@@ -88,6 +88,15 @@
     apparmor.enable = true;
     auditd.enable = true;
     polkit.enable = true;
+
+    # eMudhra intermediate CA compromise (October 2026). Nixpkgs' cacert
+    # already distrusts these roots, but keep them here explicitly so the
+    # protection does not depend on the nixpkgs revision.
+    # https://emudhra.we-have-a-problem.com/
+    pki.caCertificateBlacklist = [
+      "Comodo AAA Services root"
+      "emSign ECC Root CA - G3"
+    ];
     rtkit.enable = true;
     sudo.enable = false;
     sudo-rs.enable = true;

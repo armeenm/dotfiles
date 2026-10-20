@@ -313,6 +313,15 @@ in {
       EDITOR = editor;
 
       OPENCODE_ENABLE_EXA = 1;
+
+      # Some runtimes ship their own CA bundle and would keep trusting the
+      # revoked eMudhra intermediates after the October 2026 CA compromise.
+      # Point them at the system trust store, which carries the blacklist.
+      # https://emudhra.we-have-a-problem.com/
+      SSL_CERT_FILE = if hostPlatform.isLinux
+        then "/etc/ssl/certs/ca-certificates.crt"
+        else "${pkgs.cacert}/etc/ssl/certs/ca-certificates.crt";
+      UV_NATIVE_TLS = "1";
     };
 
     shellAliases = {

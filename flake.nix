@@ -307,6 +307,7 @@
           hostname = "carbon";
           profiles.system = {
             sshUser = user.login;
+            user = "root";
             interactiveSudo = true;
             path = lib.x86_64-linux.activate.nixos carbon;
           };
@@ -320,13 +321,6 @@
           };
         };
 
-        boron = {
-          hostname = "boron";
-          profiles.system = {
-            sshUser = "root";
-            path = lib.x86_64-linux.activate.nixos boron;
-          };
-        };
       };
     };
 
