@@ -83,6 +83,9 @@ in
 
             iifname "lo" accept
 
+            # libvirt guests on the default NAT bridge
+            iifname "virbr0" accept
+
             iifname "${aux}" counter accept
             iifname "${lan}" counter accept
 
@@ -95,6 +98,10 @@ in
 
           chain forward {
             type filter hook forward priority filter; policy drop;
+
+            # libvirt guests on the default NAT bridge
+            iifname "virbr0" accept
+            oifname "virbr0" accept
 
             iifname {
               "${lan}",

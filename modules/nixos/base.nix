@@ -59,6 +59,10 @@
         X11Forwarding = true;
       };
     };
+
+    tailscale = {
+      enable = true;
+    };
   };
 
   systemd = {
