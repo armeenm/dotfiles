@@ -14,7 +14,10 @@
     identityPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
   };
 
-  boot.initrd.verbose = false;
+  boot = {
+    initrd.verbose = false;
+    kernelPackages = lib.mkDefault pkgs.linuxPackages_latest;
+  };
 
   i18n.defaultLocale = "en_US.UTF-8";
   time.timeZone = null;

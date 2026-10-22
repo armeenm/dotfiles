@@ -1,14 +1,14 @@
 { config
 , lib
-, linuxPackages
 , linuxPackagesFor
+, linuxPackages_latest
 }:
 
 let
   # nixpkgs no longer ships a linux-hardened kernel (the series was removed
-  # upstream), so build on the default kernel and keep the hardening options
+  # upstream), so build on the mainline kernel and keep the hardening options
   # below via structuredExtraConfig.
-  kernel = linuxPackages.kernel;
+  kernel = linuxPackages_latest.kernel;
 in
 linuxPackagesFor (kernel.override {
   features = {
