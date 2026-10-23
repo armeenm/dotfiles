@@ -503,7 +503,6 @@ in {
         "result-spacing" = 25;
         "num-results" = 5;
         "font" = lib.mkForce "${pkgs.fira-code}/share/fonts/truetype/FiraCode-VF.ttf";
-        "font-size" = lib.mkForce "";
         # Drop the box behind the results and the prompt.
         "default-result-background" = lib.mkForce transparent;
         "prompt-background" = lib.mkForce transparent;
