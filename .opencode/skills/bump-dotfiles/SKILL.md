@@ -53,7 +53,7 @@ Compare, then update the file:
 
 | File | Package | Bump |
 | --- | --- | --- |
-| `home/opencode.nix` | opencode | `version` + the three `sha512-…` hashes |
+| `home/opencode.nix` | opencode | `version`, the `src` hash, and the three `node_modules` hashes (copied from the release's `nix/hashes.json`) |
 | `overlay/openchamber.nix` | openchamber-desktop | `version`, `src` hash, **and** the two `node-modules*` fixed-output hashes |
 | `home/hypruse.nix` | hypruse | `version` + `src` hash (the tarball URL embeds the version) |
 | `home/programs.nix` | llama-vscode | `version` + `sha256` |
@@ -85,6 +85,12 @@ nix build --impure --keep-going --file /tmp/openchamber-build.nix
 with a small expression that imports the flake and returns
 `pkgs.openchamber-desktop`. Then build it for real to confirm 2.x still has the
 `build:web-assets` / `bundle:main` scripts the derivation calls.
+
+`home/opencode.nix` builds OpenCode from source and pins a `bun install` tree
+too, but its per-system hashes ship with each release: copy `nodeModules.*`
+from `nix/hashes.json` in the release tarball (or the source store path) and
+prefetch only the `src` hash. If the vendor changes `bun.lock` incompatibly,
+the build fails with a fixed-output hash mismatch, which is the signal.
 
 Smoke-test the packaged app against an isolated profile instead of replacing the
 running desktop app:
