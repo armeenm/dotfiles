@@ -158,6 +158,21 @@
       overlay
     ];
 
+    # Overlays for the bare nixpkgs instances built here (devShells,
+    # homeConfigurations, nixOnDroidConfigurations). The NixOS and nix-darwin
+    # modules add the emacs overlays themselves, but these standalone outputs
+    # don't go through those modules (and so don't inherit `nixpkgs.overlays`),
+    # while `home/programs.nix` needs `emacsWithPackagesFromUsePackage`.
+    standaloneOverlays = system:
+      allOverlays
+      ++ [ inputs.emacs-overlay.overlays.default ]
+      ++ lib.optionals (system == "aarch64-darwin") [
+        # Must come last, same as modules/darwin/base.nix: this is the
+        # `emacsWithPackagesFromUsePackage` that understands
+        # `configAsDefaultInitFile`.
+        inputs.darwin-emacs.overlays.emacs
+      ];
+
     forAllSystems = f: lib.genAttrs [
       "x86_64-linux"
       "aarch64-linux"
@@ -165,7 +180,7 @@
     ] (system: f system (
       import nixpkgs {
         inherit system config;
-        overlays = allOverlays;
+        overlays = standaloneOverlays system;
       }
     ));
 
@@ -175,8 +190,11 @@
       email = "armeen@fulminous-hill.com";
     };
 
-    baseModules = [
+    commonModules = [
       { _module.args = { inherit inputs user; }; }
+    ];
+
+    baseModules = commonModules ++ [
       { nixpkgs = { inherit config; overlays = allOverlays; }; }
     ];
 
@@ -255,7 +273,11 @@
       inputs.home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
 
-        modules = baseModules ++ [
+        # `homeManagerConfiguration` already takes overlays from `pkgs`
+        # (`pkgs.overlays`, which come from `standaloneOverlays`). Adding
+        # `baseModules` would apply the local overlay a second time, and
+        # overlays like nix-output-monitor's append a patch each time.
+        modules = commonModules ++ [
           inputs.stylix.homeModules.stylix
           (if system == "aarch64-darwin"
            then nixosModules.hmDarwinBase
@@ -279,12 +301,15 @@
       default = inputs.nix-on-droid.lib.nixOnDroidConfiguration {
         pkgs = import nixpkgs {
           inherit config;
-          overlays = overlays ++ [ inputs.nix-on-droid.overlays.default ];
+          overlays = standaloneOverlays "aarch64-linux" ++ [ inputs.nix-on-droid.overlays.default ];
           system = "aarch64-linux";
         };
         modules = [
           inputs.stylix.nixOnDroidModules.default
           ./hosts/droid
+          # We hand nix-on-droid an already-overlaid `pkgs` below, so stylix
+          # must not also set `nixpkgs.overlays` (which its flake mode forbids).
+          { stylix.overlays.enable = false; }
         ];
       };
     };
@@ -398,9 +423,14 @@
       };
     });
 
-    checks = builtins.mapAttrs
-      (system: deployLib: deployLib.deployChecks self.deploy)
-      inputs.deploy-rs.lib;
+    # deploy-rs' `lib` covers every system it knows about, including ones
+    # nixpkgs no longer supports (x86_64-darwin in 26.11), so only produce
+    # checks for the systems this flake targets.
+    checks = lib.genAttrs [
+      "x86_64-linux"
+      "aarch64-linux"
+      "aarch64-darwin"
+    ] (system: inputs.deploy-rs.lib.${system}.deployChecks self.deploy);
 
     lib = nixpkgs.lib // {
       inherit forAllSystems;

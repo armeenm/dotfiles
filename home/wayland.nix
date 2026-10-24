@@ -12,8 +12,10 @@ let
   inherit (pkgs.stdenv) hostPlatform;
 
   hyprPkgs = inputs.hyprland.packages.${hostPlatform.system};
-  hyprsplitLua =
-    inputs.hyprsplit.packages.${hostPlatform.system}.hyprsplitlua;
+  # `hyprsplitlua` just installs this file from the flake source; read it
+  # directly so evaluating the config doesn't import from a derivation (and
+  # thus doesn't need to build for non-native systems).
+  hyprsplitLua = "${inputs.hyprsplit}/init.lua";
 
   toLua = lib.generators.toLua { };
   lua = lib.generators.mkLuaInline;
@@ -76,16 +78,14 @@ in {
         variables = [ "--all" ];
       };
 
-      plugins = let
-        system = pkgs.stdenv.hostPlatform.system;
-      in [
-        inputs.hypr-dynamic-cursors.packages.${system}.default
-      ];
+      plugins = lib.optionals
+        (inputs.hypr-dynamic-cursors.packages ? ${hostPlatform.system})
+        [ inputs.hypr-dynamic-cursors.packages.${hostPlatform.system}.default ];
 
       extraLuaFiles = {
         "hyprsplit/init" = {
           autoLoad = false;
-          content = builtins.readFile "${hyprsplitLua}/share/hyprsplit/init.lua";
+          content = builtins.readFile hyprsplitLua;
         };
 
         "00-hyprsplit" = ''

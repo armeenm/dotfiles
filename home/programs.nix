@@ -240,13 +240,14 @@ in {
       package = pkgs.emacsWithPackagesFromUsePackage ({
         alwaysEnsure = true;
 
-        config = pkgs.writeTextFile {
-          text = ''
-            ${builtins.readFile ../conf/emacs/init.el}
-            ${config.programs.emacs.extraConfig}
-          '';
-          name = "config.el";
-        };
+        # Pass the config as a string, not a derivation: both
+        # `emacsWithPackagesFromUsePackage` implementations read it at eval time,
+        # which would otherwise be an import-from-derivation that has to be
+        # built for the target platform just to evaluate the flake.
+        config = ''
+          ${builtins.readFile ../conf/emacs/init.el}
+          ${config.programs.emacs.extraConfig}
+        '';
 
         override = epkgs: epkgs // {
           emsg-blame = epkgs.trivialBuild {
