@@ -90,7 +90,7 @@ let
     permissions = "110";
   };
 
-in {
+in lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
   home.activation.setupSunshine = lib.hm.dag.entryAfter ["writeBoundary"] ''
     run ${setup-sunshine}
   '';

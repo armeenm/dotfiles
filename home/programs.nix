@@ -240,13 +240,10 @@ in {
       package = pkgs.emacsWithPackagesFromUsePackage ({
         alwaysEnsure = true;
 
-        config = pkgs.writeTextFile {
-          text = ''
-            ${builtins.readFile ../conf/emacs/init.el}
-            ${config.programs.emacs.extraConfig}
-          '';
-          name = "config.el";
-        };
+        config = ''
+          ${builtins.readFile ../conf/emacs/init.el}
+          ${config.programs.emacs.extraConfig}
+        '';
 
         override = epkgs: epkgs // {
           emsg-blame = epkgs.trivialBuild {

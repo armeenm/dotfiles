@@ -85,7 +85,6 @@ in {
 
     packages = with pkgs; let
       all-cli = [
-        age-plugin-se
         age-plugin-yubikey
         android-tools
         ast-grep
@@ -133,6 +132,10 @@ in {
         wget
         whois
         zip
+      ] ++ lib.optionals (!(hostPlatform.isLinux && hostPlatform.isAarch64)) [
+        # nixpkgs marks the Swift compiler this needs as broken on
+        # aarch64-linux, so it's only buildable on the other Linux/macOS hosts.
+        age-plugin-se
       ];
 
       linux-cli = [
@@ -207,7 +210,6 @@ in {
         simple-scan
         slurp
         swaylock
-        vial
         virt-manager
         vlc
         wdisplays
@@ -224,6 +226,9 @@ in {
         openchamber
         telegram-desktop
         zoom-us
+      ] ++ lib.optionals (lib.meta.availableOn hostPlatform pkgs.vial) [
+        # Vial is x86_64-linux only upstream.
+        vial
       ];
 
       darwin-gui = [ bluesnooze ] ++  (with brewCasks; [
