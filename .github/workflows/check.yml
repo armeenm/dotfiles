@@ -1,0 +1,24 @@
+name: Check
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  flake-check:
+    name: nix flake check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7.0.1
+
+      - uses: DeterminateSystems/determinate-nix-action@v3.24.0
+
+      - uses: DeterminateSystems/magic-nix-cache-action@v15
+
+      - name: nix flake check
+        run: nix flake check --build-all
