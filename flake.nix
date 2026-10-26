@@ -360,8 +360,11 @@
             doCheck = system != "aarch64-darwin";
           }))
           nix-output-monitor
+          nodejs_22
           nvd
           openssl
+          pulumi
+          pulumiPackages.pulumi-nodejs
         ];
 
         shellHook = ''

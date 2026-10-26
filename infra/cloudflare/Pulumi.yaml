@@ -1,0 +1,6 @@
+name: cloudflare-personal
+description: Personal Cloudflare DNS (armeen.xyz and friends)
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm
