@@ -83,7 +83,7 @@ let
   nodeModulesBuild = mkNodeModules {
     name = "node-modules";
     flags = "";
-    hash = "sha256-jnk+D5GkagBlctQudMfah8vATXNvBidmZ5EzSmUdCHg=";
+    hash = "sha256-1FB+MoreZx6wc3Ku1ZBE5i5c3eSAEipmkx/5G7QjjRU=";
   };
 
   nodeModulesRuntime = mkNodeModules {
