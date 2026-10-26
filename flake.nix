@@ -52,6 +52,10 @@
       inputs.nixpkgs-stable.follows = "nixpkgs-stable";
     };
 
+    flake-schemas = {
+      url = "github:DeterminateSystems/flake-schemas";
+    };
+
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -304,12 +308,10 @@
           overlays = standaloneOverlays "aarch64-linux" ++ [ inputs.nix-on-droid.overlays.default ];
           system = "aarch64-linux";
         };
-        modules = [
+        modules = commonModules ++ [
           inputs.stylix.nixOnDroidModules.default
           ./hosts/droid
-          # We hand nix-on-droid an already-overlaid `pkgs` below, so stylix
-          # must not also set `nixpkgs.overlays` (which its flake mode forbids).
-          { stylix.overlays.enable = false; }
+          { _module.args.nixosModules = nixosModules; }
         ];
       };
     };
@@ -423,14 +425,37 @@
       };
     });
 
-    # deploy-rs' `lib` covers every system it knows about, including ones
-    # nixpkgs no longer supports (x86_64-darwin in 26.11), so only produce
-    # checks for the systems this flake targets.
+    # The deploy nodes are all x86_64-linux, and the generated check
+    # derivations reference those system closures, so the per-system copies
+    # for other systems can't be built anywhere else.
     checks = lib.genAttrs [
       "x86_64-linux"
-      "aarch64-linux"
-      "aarch64-darwin"
     ] (system: inputs.deploy-rs.lib.${system}.deployChecks self.deploy);
+
+    # `nix flake check` has built-in schemas for the standard outputs, but
+    # nothing for nix-on-droid's. Declaring `schemas` makes Determinate Nix use
+    # these (defaults + ours) instead of its built-ins, so the output is
+    # evaluated/built like `homeConfigurations`.
+    exportedSchemas.nixOnDroidConfigurations = {
+      version = 1;
+      doc = ''
+        The `nixOnDroidConfigurations` flake output defines
+        [nix-on-droid](https://github.com/nix-community/nix-on-droid)
+        configurations.
+      '';
+      inventory = output:
+        inputs.flake-schemas.lib.mkChildren (
+          builtins.mapAttrs (_name: configuration: {
+            what = "nix-on-droid configuration";
+            derivationAttrPath = [ "activationPackage" ];
+            # Unlike `nixOnDroidConfiguration.activationPackage`, `pkgs` can be
+            # inspected without evaluating the (aarch64-only, IFD-heavy) config.
+            forSystems = [ configuration.pkgs.stdenv.hostPlatform.system ];
+          }) output
+        );
+    };
+
+    schemas = inputs.flake-schemas.exportedSchemas // exportedSchemas;
 
     lib = nixpkgs.lib // {
       inherit forAllSystems;

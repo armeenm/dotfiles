@@ -266,7 +266,9 @@ in {
             patches = old.patches ++ [ ./frame-transparency.patch ];
             __noChroot = true;
           });
-        in if hostPlatform.isDarwin then darwinPackage else pkgs.emacs-igc-pgtk;
+        in if hostPlatform.isDarwin then darwinPackage
+           else if isHeadless then pkgs.emacs-igc
+           else pkgs.emacs-igc-pgtk;
 
         extraEmacsPackages = epkgs: (config.programs.emacs.extraPackages epkgs) ++ (with epkgs; [
           treesit-grammars.with-all-grammars

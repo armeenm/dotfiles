@@ -63,13 +63,9 @@ in {
     windowManager.hyprland = {
       enable = !isHeadless;
 
-      package = if isStandalone
-                then hyprPkgs.hyprland
-                else osConfig.programs.hyprland.package;
+      package = lib.attrByPath [ "programs" "hyprland" "package" ] hyprPkgs.hyprland osConfig;
 
-      portalPackage = if isStandalone
-                      then hyprPkgs.xdg-desktop-portal-hyprland
-                      else osConfig.programs.hyprland.portalPackage;
+      portalPackage = lib.attrByPath [ "programs" "hyprland" "portalPackage" ] hyprPkgs.xdg-desktop-portal-hyprland osConfig;
 
       configType = "lua";
 

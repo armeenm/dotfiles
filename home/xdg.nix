@@ -119,10 +119,14 @@ in
       videos = "${home}/media";
     };
 
-    systemDirs.data = lib.optionals hostPlatform.isLinux [
-      "/var/lib/flatpak/exports/share"
-      "${home}/.local/share/flatpak/exports/share"
-      "${config.wayland.windowManager.hyprland.package}/share"
-    ];
+    systemDirs.data = lib.optionals hostPlatform.isLinux (
+      [
+        "/var/lib/flatpak/exports/share"
+        "${home}/.local/share/flatpak/exports/share"
+      ]
+      ++ lib.optionals config.wayland.windowManager.hyprland.enable [
+        "${config.wayland.windowManager.hyprland.package}/share"
+      ]
+    );
   };
 }

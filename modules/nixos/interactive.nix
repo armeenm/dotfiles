@@ -21,10 +21,15 @@
     };
 
     supportedFilesystems = [ "ntfs" "nfs" "nfs4" ];
-    binfmt.emulatedSystems = [
-      "aarch64-linux"
-      "riscv64-linux"
-    ];
+    binfmt = {
+      emulatedSystems = [
+        "aarch64-linux"
+        "riscv64-linux"
+      ];
+      # Load the emulator into the kernel at registration time instead of
+      # resolving /run/binfmt inside each build sandbox.
+      preferStaticEmulators = true;
+    };
     consoleLogLevel = 0;
     extraModulePackages = with config.boot.kernelPackages; [ ddcci-driver ];
     initrd.verbose = false;
