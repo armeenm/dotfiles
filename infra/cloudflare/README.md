@@ -35,15 +35,22 @@ short:
 
 ## Usage
 
+The API token lives in `secrets/pulumi-cloudflare-token.age` (recipients:
+your YubiKeys, the Mac, and carbon). It is a dedicated token named
+`pulumi-cloudflare-personal` with `Zone:Read` + `DNS:Edit` on the ten zones
+and a one-year TTL. The dyndns token is separate and stays `armeen.xyz`-only.
+
 ```sh
 nix develop
+export CLOUDFLARE_API_TOKEN="$(rage -d -i secrets/identities/armeen-yk1.txt secrets/pulumi-cloudflare-token.age)"
 cd infra/cloudflare
-
-export CLOUDFLARE_API_TOKEN=...   # Zone:Read + DNS:Edit on the zones above
 pulumi stack select prod
 pulumi preview
 pulumi up
 ```
+
+On the Mac, use `secrets/identities/armeen-itmaclap.txt` instead. Both
+identities require the usual YubiKey/Secure Enclave touch.
 
 ## Importing another record
 
