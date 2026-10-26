@@ -16,6 +16,13 @@ final: prev: {
         old.postBuild;
     });
 
+  # libgit2's test suite fails in the macOS build sandbox
+  # (checkout::icase::overwrites_links_for_folders_when_forced returns EINVAL).
+  # Determinate Nix pulls it in; the tests are skipped on Darwin only.
+  libgit2 = prev.libgit2.overrideAttrs (_: {
+    doCheck = !prev.stdenv.hostPlatform.isDarwin;
+  });
+
   # TODO: Remove when clipcat allows `renamed_and_removed_lints`. Its workspace
   # denies that lint, and rustc 1.99 removed several lints the workspace also
   # denies (e.g. `no_mangle_generic_items`), which turns the build into an error.

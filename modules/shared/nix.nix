@@ -3,8 +3,8 @@
 {
   nix = {
     package = lib.mkForce (
-      (inputs.nix.packages."${pkgs.stdenv.system}".default.overrideScope
-        (_final: prev: {
+      let
+        overrideComponents = _final: prev: {
           # Meson resolves a source path beginning with the build directory's
           # name as build-dir-relative (generated). `src/libstore` has a real
           # `build/` source directory that collides with meson's default
@@ -13,10 +13,20 @@
           nix-store = prev.nix-store.overrideAttrs (_: {
             mesonBuildDir = "_build";
           });
+        };
+      in
+      if pkgs.stdenv.hostPlatform.isDarwin then
+        # Build the components from our own nixpkgs, so the overlay's libgit2
+        # (tests disabled in the macOS sandbox) is used.
+        ((inputs.nix.lib.makeComponents { inherit pkgs; }).overrideScope overrideComponents)
+        .nix-everything.overrideAttrs (_: {
+          doCheck = false;
         })
-      ).overrideAttrs (_: {
-        doCheck = false;
-      })
+      else
+        (inputs.nix.packages."${pkgs.stdenv.system}".default.overrideScope overrideComponents)
+        .overrideAttrs (_: {
+          doCheck = false;
+        })
     );
 
     distributedBuilds = true;

@@ -31,6 +31,14 @@ jobs:
     steps:
       - uses: actions/checkout@v7.0.1
 
+      - name: Free disk space
+        if: runner.os == 'Linux'
+        run: |
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc \
+            /opt/hostedtoolcache/CodeQL /usr/local/.ghcup
+          sudo apt-get clean
+          df -h /
+
       - uses: DeterminateSystems/determinate-nix-action@v3.24.0
         with:
           extra-conf: |
