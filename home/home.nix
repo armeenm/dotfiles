@@ -235,7 +235,7 @@ in {
         (autoraiseapp.overrideAttrs (old: {
           src = pkgs.fetchurl {
             url = lib.lists.head old.src.urls;
-            hash = "sha256-x2qThyvm9ZS+GLm6ScGuq2kv0/8WZJdNms9rKYFsbB0=";
+            hash = "sha256-8iBhcguxQ9jJ+pbOPFHN0LzH4YIP9frjxAv4MANrsG8=";
           };
         }))
         betterdisplay

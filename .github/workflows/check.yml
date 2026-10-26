@@ -18,10 +18,15 @@ jobs:
         include:
           - system: x86_64-linux
             runner: ubuntu-latest
+            args: ""
           - system: aarch64-linux
             runner: ubuntu-24.04-arm
+            # nix-on-droid's hardcoded proot store path needs impure evaluation
+            # (same as `nix-on-droid switch --flake` does on the device).
+            args: --impure
           - system: aarch64-darwin
             runner: macos-latest
+            args: ""
     runs-on: ${{ matrix.runner }}
     steps:
       - uses: actions/checkout@v7.0.1
@@ -35,4 +40,4 @@ jobs:
       - uses: DeterminateSystems/magic-nix-cache-action@v15
 
       - name: nix flake check
-        run: nix flake check --build-all
+        run: nix flake check --build-all ${{ matrix.args }}
