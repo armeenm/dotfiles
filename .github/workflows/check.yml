@@ -34,8 +34,8 @@ jobs:
       - uses: DeterminateSystems/determinate-nix-action@v3.24.0
         with:
           extra-conf: |
-            extra-substituters = https://nix-on-droid.cachix.org
-            extra-trusted-public-keys = nix-on-droid.cachix.org-1:56snoMJTXmDRC1Ei24CmKoUqvHJ9XCp+nidK7qkMQrU=
+            extra-substituters = https://nix-on-droid.cachix.org https://hyprland.cachix.org https://nix-community.cachix.org
+            extra-trusted-public-keys = nix-on-droid.cachix.org-1:56snoMJTXmDRC1Ei24CmKoUqvHJ9XCp+nidK7qkMQrU= hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc= nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=
 
       - uses: DeterminateSystems/magic-nix-cache-action@v15
 
