@@ -1,0 +1,31 @@
+{
+  "resources": [
+    { "type": "cloudflare:index/dnsRecord:DnsRecord", "name": "armeen-org-grpc",                           "id": "b6cf5c6c466404348dbf8817cdabbd0d/788d500ce6cd42f2ee420a9733f4e3f2" },
+    { "type": "cloudflare:index/dnsRecord:DnsRecord", "name": "armeen-org-google-site-verification",        "id": "b6cf5c6c466404348dbf8817cdabbd0d/cbfecf780bff7333ca0d541895113377" },
+    { "type": "cloudflare:index/dnsRecord:DnsRecord", "name": "armeen-org-keybase-site-verification",       "id": "b6cf5c6c466404348dbf8817cdabbd0d/e671b4e8fd7fa658cf7b80f952b05eb5" },
+    { "type": "cloudflare:index/dnsRecord:DnsRecord", "name": "armeen-org-exam",                            "id": "b6cf5c6c466404348dbf8817cdabbd0d/77e4b9113fa2479a3316f8dd545e4054" },
+    { "type": "cloudflare:index/dnsRecord:DnsRecord", "name": "armeen-xyz-ru",                              "id": "f1a9a37b06d9b796a5d950a5db66b1cd/a73a5bcd18eb0f8bd07a739d1f7ab3b9" },
+    { "type": "cloudflare:index/dnsRecord:DnsRecord", "name": "armeen-xyz-carbon",                          "id": "f1a9a37b06d9b796a5d950a5db66b1cd/ea876b1c32f7feaf0c66a58706141163" },
+    { "type": "cloudflare:index/dnsRecord:DnsRecord", "name": "armeen-xyz-cobalt",                          "id": "f1a9a37b06d9b796a5d950a5db66b1cd/9f6176e97e1204b75d65402de79153d5" },
+    { "type": "cloudflare:index/dnsRecord:DnsRecord", "name": "armeen-xyz-media",                           "id": "f1a9a37b06d9b796a5d950a5db66b1cd/e8120df182f6fb6742745d7833fc0a32" },
+    { "type": "cloudflare:index/dnsRecord:DnsRecord", "name": "armeen-xyz-music",                           "id": "f1a9a37b06d9b796a5d950a5db66b1cd/490234f2ab427b5e0221c78ab0356250" },
+    { "type": "cloudflare:index/dnsRecord:DnsRecord", "name": "armeen-xyz-vault",                           "id": "f1a9a37b06d9b796a5d950a5db66b1cd/4f520ccd18a3a41a8517ac9ba510eaac" },
+    { "type": "cloudflare:index/dnsRecord:DnsRecord", "name": "armeen-xyz-www",                             "id": "f1a9a37b06d9b796a5d950a5db66b1cd/7f99801d9ce2c8b01e377d9083b2c76e" },
+    { "type": "cloudflare:index/dnsRecord:DnsRecord", "name": "armeen-xyz-google-site-verification",        "id": "f1a9a37b06d9b796a5d950a5db66b1cd/138587729eb125668c92eba3f44cc173" },
+    { "type": "cloudflare:index/dnsRecord:DnsRecord", "name": "fulminant-hill-com-google-site-verification", "id": "0500bd36089d69975e9676ee7c9d830d/d1086934d4081710fe323ab0405586df" },
+    { "type": "cloudflare:index/dnsRecord:DnsRecord", "name": "fulminant-hill-xyz-google-site-verification", "id": "6e4c4ce51eb8fff5d612c09b47df9c51/ad6ccdf4f1a338ee73a2df5c1c1c11de" },
+    { "type": "cloudflare:index/dnsRecord:DnsRecord", "name": "fulmino-us-teleport",                        "id": "6fac371abd785e85af2375baea77c48d/3ea0efd42a3d0dfa24aac2b18a17e042" },
+    { "type": "cloudflare:index/dnsRecord:DnsRecord", "name": "fulmino-us-teleport-wildcard",               "id": "6fac371abd785e85af2375baea77c48d/b8c7a5c5ecea7af183e4abb2aa2c8a68" },
+    { "type": "cloudflare:index/dnsRecord:DnsRecord", "name": "fulmino-us-google-site-verification",        "id": "6fac371abd785e85af2375baea77c48d/b85ece287636302ae205a60136fc140a" },
+    { "type": "cloudflare:index/dnsRecord:DnsRecord", "name": "fulminous-hill-com-google-site-verification", "id": "5d0b9177edbbfd7fdd38368b28542689/5d53f8588b246f0db1aec22868ab4db6" },
+    { "type": "cloudflare:index/dnsRecord:DnsRecord", "name": "fulminous-hill-xyz-git",                     "id": "c71e4c1d50c77db3b705164bec9107af/7c3692c35b8ce070bdd317a825aa374c" },
+    { "type": "cloudflare:index/dnsRecord:DnsRecord", "name": "fulminous-hill-xyz-google-site-verification", "id": "c71e4c1d50c77db3b705164bec9107af/bbef3e7b6a85afc805ca6a9868b96b0b" },
+    { "type": "cloudflare:index/dnsRecord:DnsRecord", "name": "oreo-ooo-plague",                            "id": "b49bc2caef26a3cebbf078043ee23637/197a89a92654236cea51b97b4582141f" },
+    { "type": "cloudflare:index/dnsRecord:DnsRecord", "name": "oreo-ooo-foto",                              "id": "b49bc2caef26a3cebbf078043ee23637/3b56c76b7c137a1c54e6048ecb24f030" },
+    { "type": "cloudflare:index/dnsRecord:DnsRecord", "name": "oreo-ooo-ooo",                               "id": "b49bc2caef26a3cebbf078043ee23637/709c5b9dbc466d510e5d02f8fd64faa1" },
+    { "type": "cloudflare:index/dnsRecord:DnsRecord", "name": "oreo-ooo-status",                            "id": "b49bc2caef26a3cebbf078043ee23637/ea2602b203883a3c17154eb6e7c7c2a5" },
+    { "type": "cloudflare:index/dnsRecord:DnsRecord", "name": "oreo-ooo-minecraft",                         "id": "b49bc2caef26a3cebbf078043ee23637/03ec4fd55194e6e64cb39487223c97e8" },
+    { "type": "cloudflare:index/dnsRecord:DnsRecord", "name": "vermillionink-com-apex",                     "id": "ca69e872e1630b8aa6c0c7813d03ca84/53fde83e0cfbade6e8c4b337685d4f08" },
+    { "type": "cloudflare:index/dnsRecord:DnsRecord", "name": "vermillionink-com-wildcard",                 "id": "ca69e872e1630b8aa6c0c7813d03ca84/fb98198470228533cd0b1e283dd0670f" }
+  ]
+}

@@ -24,4 +24,5 @@ in {
   "cloudflare-tunnel-creds-carbon.json.age".publicKeys = armeen ++ [ carbon ];
   "itmaclap-machines.nix.age".publicKeys = armeen ++ [ itmaclap ];
   "opencode.env.age".publicKeys = armeen ++ [ armeen-ssh ];
+  "pulumi-cloudflare-token.age".publicKeys = armeen ++ [ carbon ];
 }

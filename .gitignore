@@ -117,3 +117,8 @@ tags
 
 ### Direnv ###
 .direnv
+
+### Pulumi ###
+.pulumi/
+infra/**/node_modules/
+infra/**/bin/
