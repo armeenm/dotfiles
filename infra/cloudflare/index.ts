@@ -56,7 +56,6 @@ const records: RecordSpec[] = [
   // armeen.org
   { resourceName: "armeen-org-grpc", zoneId: zones.armeenOrg, name: "grpc.armeen.org", type: "CNAME", content: "ghs.googlehosted.com" },
   { resourceName: "armeen-org-google-site-verification", zoneId: zones.armeenOrg, name: "armeen.org", type: "TXT", content: "google-site-verification=CH7afV0wk5-bB8aNYWnilqh2UeL7L9z1kVVo2xMgEHM" },
-  { resourceName: "armeen-org-keybase-site-verification", zoneId: zones.armeenOrg, name: "armeen.org", type: "TXT", content: "keybase-site-verification=x32GPR2eBjsxnj-EMN3W1z4SlAaAmPaP0cGaasFCp0o" },
   // Placeholder for the `exam` Worker route.
   { resourceName: "armeen-org-exam", zoneId: zones.armeenOrg, name: "exam.armeen.org", type: "AAAA", content: "100::", proxied: true },
 
@@ -69,10 +68,6 @@ const records: RecordSpec[] = [
   { resourceName: "armeen-xyz-vault", zoneId: zones.armeenXyz, name: "vault.armeen.xyz", type: "CNAME", content: "carbon.armeen.xyz", proxied: true },
   { resourceName: "armeen-xyz-www", zoneId: zones.armeenXyz, name: "www.armeen.xyz", type: "CNAME", content: "armeen.xyz", proxied: true },
   { resourceName: "armeen-xyz-google-site-verification", zoneId: zones.armeenXyz, name: "armeen.xyz", type: "TXT", content: "\"google-site-verification=0K9wDtomZl_iHLI7Pn3fTyqTYvXS8OACgR2mqwDtYGk\"" },
-
-  // fulminant-hill.com / .xyz
-  { resourceName: "fulminant-hill-com-google-site-verification", zoneId: zones.fulminantHillCom, name: "fulminant-hill.com", type: "TXT", content: "google-site-verification=phtufcsHn8rtPxxXJofzaQI4FM2v48CLcbmOB2AqtW8", ttl: 3600 },
-  { resourceName: "fulminant-hill-xyz-google-site-verification", zoneId: zones.fulminantHillXyz, name: "fulminant-hill.xyz", type: "TXT", content: "google-site-verification=eyX-rR5tWXtmpGrdyc_T4pWIYQSPL_Kk9Eizx1q6GKg", ttl: 3600 },
 
   // fulmino.us
   { resourceName: "fulmino-us-teleport", zoneId: zones.fulminoUs, name: "teleport.dash.fulmino.us", type: "A", content: "52.205.250.169" },
