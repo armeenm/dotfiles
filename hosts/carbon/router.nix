@@ -89,6 +89,9 @@ in
             iifname "${aux}" counter accept
             iifname "${lan}" counter accept
 
+            # Tailscale peers are authenticated by WireGuard.
+            iifname "tailscale0" counter accept
+
             iifname "${wan}" ct state { established, related } counter accept
             iifname "${wan}" tcp dport 443 counter accept
             iifname "${wan}" tcp dport 80 counter accept

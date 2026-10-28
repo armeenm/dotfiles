@@ -470,6 +470,11 @@
     };
   };
 
+  # tailscaled starts on boot and reconnects from its persisted node state.
+  # Keep Tailscale's DNS management off: carbon runs unbound/knot for the LAN
+  # and dhcpcd owns /etc/resolv.conf.
+  services.tailscale.extraSetFlags = [ "--accept-dns=false" ];
+
   users = {
     groups.restic = {};
     groups.dufs = {};
