@@ -23,8 +23,28 @@ if (( $# == 0 )); then
   exit 2
 fi
 
-exec niks3 push \
-  --server-url "${server}" \
-  --auth-token-path "${token}" \
-  --max-concurrent-uploads "${NIKS3_MAX_CONCURRENT_UPLOADS:-4}" \
-  "$@"
+# R2 occasionally resets long uploads; push is idempotent (already-present
+# objects are skipped), so retry with a small backoff.
+max_attempts="${NIKS3_PUSH_ATTEMPTS:-5}"
+retry_delay="${NIKS3_PUSH_RETRY_DELAY:-15}"
+
+attempt=1
+while true; do
+  if niks3 push \
+    --server-url "${server}" \
+    --auth-token-path "${token}" \
+    --max-concurrent-uploads "${NIKS3_MAX_CONCURRENT_UPLOADS:-4}" \
+    "$@"; then
+    exit 0
+  fi
+
+  if (( attempt >= max_attempts )); then
+    echo "push-cache: giving up after ${attempt} attempt(s)" >&2
+    exit 1
+  fi
+
+  echo "push-cache: attempt ${attempt}/${max_attempts} failed; retrying in ${retry_delay}s" >&2
+  sleep "${retry_delay}"
+  attempt=$((attempt + 1))
+  retry_delay=$(( retry_delay < 120 ? retry_delay * 2 : 120 ))
+done

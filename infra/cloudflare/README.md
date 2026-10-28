@@ -27,6 +27,13 @@ R2 resources (account-level):
 | `R2CustomDomain` | `cache.armeen.xyz` | public read origin (Cloudflare CDN, zero egress) |
 | `R2BucketLifecycle` | `armeen-xyz-cache-lifecycle` | abort multipart uploads older than 1 day |
 
+Zone rulesets:
+
+| Ruleset | Phase | Purpose |
+| --- | --- | --- |
+| `armeen-xyz-cache-rules` | `http_request_cache_settings` | cache `/nar/*` at the edge for a year and metadata for 5 minutes |
+| `armeen-xyz-cache-redirect` | `http_request_dynamic_redirect` | send `cache.armeen.xyz/` to the landing page |
+
 ## What it deliberately does not own
 
 See the comment block at the top of `index.ts` for the full rationale. In
@@ -52,7 +59,10 @@ The API token lives in `secrets/pulumi-cloudflare-token.age` (recipients:
 your YubiKeys, the Mac, and carbon). It is a dedicated token named
 `pulumi-cloudflare-personal` with `Zone:Read` + `DNS:Edit` on the ten zones
 plus account-level `Workers R2 Storage Read`/`Write` (bucket creation) and a
-one-year TTL. The dyndns token is separate and stays `armeen.xyz`-only.
+one-year TTL. The ruleset resources additionally need `Zone → Cache Rules →
+Edit`, `Zone → Single Redirect → Edit`, `Account Rulesets → Edit` and
+`Account Filter Lists → Edit`. The dyndns token is separate and stays
+`armeen.xyz`-only.
 
 ```sh
 nix develop
@@ -69,9 +79,10 @@ identities require the usual YubiKey/Secure Enclave touch.
 ## Nix binary cache (niks3)
 
 `cache.armeen.xyz` is a public Nix substituter backed by the
-`armeen-xyz-cache` R2 bucket. Nix clients read directly from R2 through the
-custom domain; the niks3 server on carbon only handles pushes (via
-`niks3.armeen.xyz`), garbage collection, and the landing page.
+`armeen-xyz-cache` R2 bucket. Nix clients read from R2 through the custom
+domain, with NARs cached at Cloudflare's edge for a year; the niks3 server on
+carbon only handles pushes (via `niks3.armeen.xyz`), garbage collection, and
+the landing page.
 
 After the first `pulumi up`, create the S3 credential niks3 uses:
 

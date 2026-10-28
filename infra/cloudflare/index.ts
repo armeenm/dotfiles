@@ -80,6 +80,72 @@ new cloudflare.R2BucketLifecycle("armeen-xyz-cache-lifecycle", {
   }],
 });
 
+// NARs are immutable, so let Cloudflare's edge cache them for a year instead
+// of hitting R2 (and paying Class B operations) on every substitution. Narinfo
+// files are deliberately left uncached: a 404 for a not-yet-pushed path would
+// otherwise be cached and hide the object after it lands. Metadata gets a
+// short TTL.
+new cloudflare.Ruleset("armeen-xyz-cache-rules", {
+  zoneId: zones.armeenXyz,
+  name: "Nix cache",
+  description: "Cache niks3 objects served from R2",
+  kind: "zone",
+  phase: "http_request_cache_settings",
+  rules: [
+    {
+      ref: "cache_nars",
+      description: "NARs are immutable",
+      expression:
+        '(http.host eq "cache.armeen.xyz" and starts_with(http.request.uri.path, "/nar/"))',
+      action: "set_cache_settings",
+      actionParameters: {
+        cache: true,
+        edgeTtl: { mode: "override_origin", default: 31536000 },
+        browserTtl: { mode: "override_origin", default: 86400 },
+      },
+      enabled: true,
+    },
+    {
+      ref: "cache_metadata",
+      description: "Short-lived cache for the landing page and cache info",
+      expression:
+        '(http.host eq "cache.armeen.xyz" and (http.request.uri.path eq "/index.html" or http.request.uri.path eq "/nix-cache-info"))',
+      action: "set_cache_settings",
+      actionParameters: {
+        cache: true,
+        edgeTtl: { mode: "override_origin", default: 300 },
+        browserTtl: { mode: "override_origin", default: 60 },
+      },
+      enabled: true,
+    },
+  ],
+});
+
+// R2 has no index document, so the bare cache root would 404.
+new cloudflare.Ruleset("armeen-xyz-cache-redirect", {
+  zoneId: zones.armeenXyz,
+  name: "Nix cache landing page",
+  description: "Redirect the bare cache root to the niks3 landing page",
+  kind: "zone",
+  phase: "http_request_dynamic_redirect",
+  rules: [
+    {
+      ref: "cache_root_to_landing",
+      description: "R2 custom domains do not serve index documents",
+      expression:
+        '(http.host eq "cache.armeen.xyz" and http.request.uri.path eq "/")',
+      action: "redirect",
+      actionParameters: {
+        fromValue: {
+          statusCode: 302,
+          targetUrl: { value: "https://cache.armeen.xyz/index.html" },
+        },
+      },
+      enabled: true,
+    },
+  ],
+});
+
 export const cacheBucketName = cacheBucket.name;
 export const cacheDomainStatus = cacheDomain.status;
 

@@ -279,11 +279,22 @@
       '';
     };
 
+    postgresqlBackup = {
+      enable = true;
+      location = "/srv/tank/postgresql";
+    };
+
     restic = {
       backups = {
         b2 = {
           paths = [ "/srv/tank" ];
-          exclude = [ "/srv/tank/nobak" ];
+          exclude = [
+            "/srv/tank/nobak"
+            # The libvirt disk is 1.7 TB sparse; reading it into restic is
+            # prohibitively slow/expensive and it does not belong in B2.
+            "/srv/tank/*.qcow2"
+            "/srv/tank/**/*.qcow2"
+          ];
           user = "restic";
           repository = "b2:backups-jKl9AFet877bX";
           passwordFile = config.age.secrets.restic-pw.path;
