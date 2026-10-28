@@ -1,7 +1,10 @@
 { config, pkgs, lib, inputs, user, ... }:
 
 {
-  imports = [ ./router.nix ];
+  imports = [
+    ./niks3.nix
+    ./router.nix
+  ];
 
   age = {
     secrets = {
@@ -179,6 +182,7 @@
     acme = {
       acceptTerms = true;
       defaults.email = user.email;
+
     };
 
     krb5 = {
@@ -217,6 +221,7 @@
             "carbon.armeen.xyz" = "ssh://localhost:22";
             "music.armeen.xyz" = "https://localhost:443";
             "media.armeen.xyz" = "https://localhost:443";
+            "niks3.armeen.xyz" = "https://localhost:443";
             "vault.armeen.xyz" = "https://localhost:443";
             "cobalt.armeen.xyz" = "https://localhost:443";
           };
@@ -274,11 +279,22 @@
       '';
     };
 
+    postgresqlBackup = {
+      enable = true;
+      location = "/srv/tank/postgresql";
+    };
+
     restic = {
       backups = {
         b2 = {
           paths = [ "/srv/tank" ];
-          exclude = [ "/srv/tank/nobak" ];
+          exclude = [
+            "/srv/tank/nobak"
+            # The libvirt disk is 1.7 TB sparse; reading it into restic is
+            # prohibitively slow/expensive and it does not belong in B2.
+            "/srv/tank/*.qcow2"
+            "/srv/tank/**/*.qcow2"
+          ];
           user = "restic";
           repository = "b2:backups-jKl9AFet877bX";
           passwordFile = config.age.secrets.restic-pw.path;
@@ -418,6 +434,11 @@
     ];
 
     services = {
+      # The tailscale0 denyinterfaces edit is not worth dropping the WAN (and
+      # the cloudflared tunnel) mid-switch; it applies on the next dhcpcd
+      # restart/reboot.
+      dhcpcd.restartIfChanged = false;
+
       cobalt-dufs = {
         description = "Cobalt DUFS";
         wantedBy = [ "multi-user.target" ];

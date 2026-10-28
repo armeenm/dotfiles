@@ -302,11 +302,26 @@ in
           { name = "168.192.in-addr.arpa"; stub-addr = "::1@10053"; }
         ];
 
-        forward-zone = [{
-          forward-addr = upstreamDns;
-          forward-tls-upstream = true;
-          name = ".";
-        }];
+        forward-zone = [
+          {
+            forward-addr = upstreamDns;
+            forward-tls-upstream = true;
+            name = ".";
+          }
+          # These live on Cloudflare, not in the local knot zone. Without an
+          # explicit forward-zone the armeen.xyz stub below turns them into
+          # NXDOMAIN, so carbon and LAN clients could not resolve the cache.
+          {
+            forward-addr = upstreamDns;
+            forward-tls-upstream = true;
+            name = "cache.armeen.xyz";
+          }
+          {
+            forward-addr = upstreamDns;
+            forward-tls-upstream = true;
+            name = "niks3.armeen.xyz";
+          }
+        ];
       };
     };
   };

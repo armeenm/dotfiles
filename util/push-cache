@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+# Push closures to the public niks3 cache.
+#
+# With no arguments, pushes this host's current system and (if present) the
+# Home Manager generation. Extra arguments are passed through to `niks3 push`
+# as store paths, so `push-cache /nix/store/...` works too.
+set -euo pipefail
+
+server="${NIKS3_SERVER_URL:-https://niks3.armeen.xyz}"
+token="${NIKS3_API_TOKEN_FILE:-/run/agenix/niks3-api-token}"
+
+if (( $# == 0 )); then
+  if [[ -L /run/current-system ]]; then
+    set -- "$(readlink -f /run/current-system)"
+  fi
+  if [[ -L "${HOME}/.local/state/nix/profiles/home-manager" ]]; then
+    set -- "$@" "$(readlink -f "${HOME}/.local/state/nix/profiles/home-manager")"
+  fi
+fi
+
+if (( $# == 0 )); then
+  echo "usage: push-cache [store-path...]" >&2
+  exit 2
+fi
+
+# R2 occasionally resets long uploads; push is idempotent (already-present
+# objects are skipped), so retry with a small backoff.
+max_attempts="${NIKS3_PUSH_ATTEMPTS:-5}"
+retry_delay="${NIKS3_PUSH_RETRY_DELAY:-15}"
+
+attempt=1
+while true; do
+  if niks3 push \
+    --server-url "${server}" \
+    --auth-token-path "${token}" \
+    --max-concurrent-uploads "${NIKS3_MAX_CONCURRENT_UPLOADS:-4}" \
+    "$@"; then
+    exit 0
+  fi
+
+  if (( attempt >= max_attempts )); then
+    echo "push-cache: giving up after ${attempt} attempt(s)" >&2
+    exit 1
+  fi
+
+  echo "push-cache: attempt ${attempt}/${max_attempts} failed; retrying in ${retry_delay}s" >&2
+  sleep "${retry_delay}"
+  attempt=$((attempt + 1))
+  retry_delay=$(( retry_delay < 120 ? retry_delay * 2 : 120 ))
+done

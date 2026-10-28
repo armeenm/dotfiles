@@ -125,6 +125,11 @@
       inputs.home-manager.follows = "home-manager";
     };
 
+    niks3 = {
+      url = "github:Mic92/niks3";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     ragenix = {
       url = "github:yaxitech/ragenix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -359,6 +364,7 @@
             # fail in the Darwin build sandbox, so skip them there.
             doCheck = system != "aarch64-darwin";
           }))
+          inputs.niks3.packages.${system}.niks3
           nix-output-monitor
           nodejs_22
           nvd

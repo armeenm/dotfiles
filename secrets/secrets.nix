@@ -25,4 +25,8 @@ in {
   "itmaclap-machines.nix.age".publicKeys = armeen ++ [ itmaclap ];
   "opencode.env.age".publicKeys = armeen ++ [ armeen-ssh ];
   "pulumi-cloudflare-token.age".publicKeys = armeen ++ [ carbon ];
+  "niks3-api-token.age".publicKeys = armeen ++ hosts;
+  "niks3-signing-key.age".publicKeys = armeen ++ [ carbon ];
+  "niks3-r2-access-key.age".publicKeys = armeen ++ [ carbon ];
+  "niks3-r2-secret-key.age".publicKeys = armeen ++ [ carbon ];
 }

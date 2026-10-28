@@ -16,6 +16,8 @@ const config = new pulumi.Config();
  *    band; pinning it here would cause flapping.
  *  - siggen.armeen.org. A Cloudflare Pages custom domain; Pages adds and
  *    removes the record itself.
+ *  - cache.armeen.xyz. The R2 custom domain below creates and owns its CNAME;
+ *    adding a DnsRecord for it here would conflict.
  *  - The `carbon` tunnel, the `exam`/`hierarch` Workers, and the `fpgapres`
  *    Pages project. Deployed by Nix, wrangler, and the GitHub integration.
  *
@@ -38,6 +40,134 @@ const zones = {
 } as const;
 
 const tunnelTarget = "904c1ace-669b-41c4-8b47-1641e63783f4.cfargotunnel.com";
+
+/**
+ * R2-backed Nix binary cache (niks3).
+ *
+ * Reads are served straight from R2 at cache.armeen.xyz (custom domain, CDN,
+ * zero egress); writes go through niks3 on carbon. R2 creates the CNAME for
+ * cache.armeen.xyz itself, so it is deliberately absent from `records`.
+ *
+ * The S3 credentials niks3 uses are a separate, bucket-scoped R2 API token
+ * created by hand and stored in agenix, not a Pulumi resource.
+ */
+const cacheBucket = new cloudflare.R2Bucket("armeen-xyz-cache", {
+  accountId,
+  name: "armeen-xyz-cache",
+  location: "wnam",
+});
+
+const cacheDomain = new cloudflare.R2CustomDomain("armeen-xyz-cache-domain", {
+  accountId,
+  bucketName: cacheBucket.name,
+  domain: "cache.armeen.xyz",
+  zoneId: zones.armeenXyz,
+  enabled: true,
+  minTls: "1.2",
+});
+
+// niks3 uploads large NARs with multipart uploads; abandon unfinished parts
+// after a day. Never expire objects here: niks3's garbage collector owns
+// deletion, and a lifecycle rule would desynchronise it from Postgres.
+new cloudflare.R2BucketLifecycle("armeen-xyz-cache-lifecycle", {
+  accountId,
+  bucketName: cacheBucket.name,
+  rules: [{
+    id: "abort-incomplete-multipart",
+    enabled: true,
+    conditions: { prefix: "" },
+    abortMultipartUploadsTransition: { condition: { type: "Age", maxAge: 86400 } },
+  }],
+});
+
+// NARs are immutable, so let Cloudflare's edge cache them for a year instead
+// of hitting R2 (and paying Class B operations) on every substitution. Narinfo
+// files are deliberately left uncached: a 404 for a not-yet-pushed path would
+// otherwise be cached and hide the object after it lands. Metadata gets a
+// short TTL.
+new cloudflare.Ruleset("armeen-xyz-cache-rules", {
+  zoneId: zones.armeenXyz,
+  name: "Nix cache",
+  description: "Cache niks3 objects served from R2",
+  kind: "zone",
+  phase: "http_request_cache_settings",
+  rules: [
+    {
+      ref: "cache_nars",
+      description: "NARs are immutable",
+      expression:
+        '(http.host eq "cache.armeen.xyz" and starts_with(http.request.uri.path, "/nar/"))',
+      action: "set_cache_settings",
+      actionParameters: {
+        cache: true,
+        edgeTtl: { mode: "override_origin", default: 31536000 },
+        browserTtl: { mode: "override_origin", default: 86400 },
+      },
+      enabled: true,
+    },
+    {
+      ref: "cache_metadata",
+      description: "Short-lived cache for the landing page and cache info",
+      expression:
+        '(http.host eq "cache.armeen.xyz" and (http.request.uri.path eq "/index.html" or http.request.uri.path eq "/nix-cache-info"))',
+      action: "set_cache_settings",
+      actionParameters: {
+        cache: true,
+        edgeTtl: { mode: "override_origin", default: 300 },
+        browserTtl: { mode: "override_origin", default: 60 },
+      },
+      enabled: true,
+    },
+  ],
+});
+
+// R2 has no index document, so the bare cache root would 404.
+new cloudflare.Ruleset("armeen-xyz-cache-redirect", {
+  zoneId: zones.armeenXyz,
+  name: "Nix cache landing page",
+  description: "Redirect the bare cache root to the niks3 landing page",
+  kind: "zone",
+  phase: "http_request_dynamic_redirect",
+  rules: [
+    {
+      ref: "cache_root_to_landing",
+      description: "R2 custom domains do not serve index documents",
+      expression:
+        '(http.host eq "cache.armeen.xyz" and http.request.uri.path eq "/")',
+      action: "redirect",
+      actionParameters: {
+        fromValue: {
+          statusCode: 302,
+          targetUrl: { value: "https://cache.armeen.xyz/index.html" },
+        },
+      },
+      enabled: true,
+    },
+  ],
+});
+
+// Bot Fight Mode challenges non-browser traffic, including GitHub Actions
+// runners fetching the public cache; Nix then sees 403 and disables the
+// substituter. Keep the rest of the zone's bot configuration as it was and
+// only turn Fight Mode off.
+new cloudflare.BotManagement("armeen-xyz-bot-management", {
+  zoneId: zones.armeenXyz,
+  fightMode: false,
+  enableJs: true,
+  aiBotsProtection: "disabled",
+  contentBotsProtection: "disabled",
+  crawlerProtection: "disabled",
+  aiTraining: "disabled",
+  aisearch: "disabled",
+  aiUser: "disabled",
+  isRobotsTxtManaged: false,
+  botPreferenceSyncEnabled: false,
+  cfRobotsVariant: "policy_only",
+  aiBotsMigrationOptOut: false,
+});
+
+export const cacheBucketName = cacheBucket.name;
+export const cacheDomainStatus = cacheDomain.status;
 
 type RecordSpec = {
   /** Pulumi resource name. Keep stable: it is the key in import.json. */
@@ -65,6 +195,7 @@ const records: RecordSpec[] = [
   { resourceName: "armeen-xyz-cobalt", zoneId: zones.armeenXyz, name: "cobalt.armeen.xyz", type: "CNAME", content: "carbon.armeen.xyz", proxied: true },
   { resourceName: "armeen-xyz-media", zoneId: zones.armeenXyz, name: "media.armeen.xyz", type: "CNAME", content: "carbon.armeen.xyz", proxied: true },
   { resourceName: "armeen-xyz-music", zoneId: zones.armeenXyz, name: "music.armeen.xyz", type: "CNAME", content: "carbon.armeen.xyz", proxied: true },
+  { resourceName: "armeen-xyz-niks3", zoneId: zones.armeenXyz, name: "niks3.armeen.xyz", type: "CNAME", content: "carbon.armeen.xyz", proxied: true },
   { resourceName: "armeen-xyz-vault", zoneId: zones.armeenXyz, name: "vault.armeen.xyz", type: "CNAME", content: "carbon.armeen.xyz", proxied: true },
   { resourceName: "armeen-xyz-www", zoneId: zones.armeenXyz, name: "www.armeen.xyz", type: "CNAME", content: "armeen.xyz", proxied: true },
   { resourceName: "armeen-xyz-google-site-verification", zoneId: zones.armeenXyz, name: "armeen.xyz", type: "TXT", content: "\"google-site-verification=0K9wDtomZl_iHLI7Pn3fTyqTYvXS8OACgR2mqwDtYGk\"" },
@@ -80,7 +211,6 @@ const records: RecordSpec[] = [
   { resourceName: "fulminous-hill-xyz-google-site-verification", zoneId: zones.fulminousHillXyz, name: "fulminous-hill.xyz", type: "TXT", content: "google-site-verification=XSU2PvHeFYo-KTWg3oCbuGXxeEZwg-2TAfHVcJlTuP0", ttl: 3600 },
 
   // oreo.ooo
-  { resourceName: "oreo-ooo-plague", zoneId: zones.oreoOoo, name: "plague.oreo.ooo", type: "A", content: "104.59.229.242" },
   { resourceName: "oreo-ooo-foto", zoneId: zones.oreoOoo, name: "foto.oreo.ooo", type: "CNAME", content: "plague.oreo.ooo", comment: "immich" },
   { resourceName: "oreo-ooo-ooo", zoneId: zones.oreoOoo, name: "ooo.oreo.ooo", type: "CNAME", content: "plague.oreo.ooo", comment: "jellyfin" },
   { resourceName: "oreo-ooo-status", zoneId: zones.oreoOoo, name: "status.oreo.ooo", type: "CNAME", content: "plague.oreo.ooo", comment: "uptime-kuma" },

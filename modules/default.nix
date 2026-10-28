@@ -10,6 +10,7 @@ let
   nixosBase = [
     inputs.determinate.nixosModules.default
     inputs.home-manager.nixosModules.default
+    inputs.niks3.nixosModules.default
     inputs.ragenix.nixosModules.default
     { home-manager.sharedModules = hmBase; }
     ./nixos
