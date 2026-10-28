@@ -340,7 +340,6 @@
           profiles.system = {
             sshUser = user.login;
             user = "root";
-            interactiveSudo = true;
             path = lib.x86_64-linux.activate.nixos carbon;
           };
         };

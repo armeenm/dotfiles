@@ -206,6 +206,18 @@
         };
       };
     };
+
+    sudo-rs.extraRules = [
+      {
+        users = [ user.login ];
+        commands = [
+          {
+            command = "ALL";
+            options = [ "NOPASSWD" ];
+          }
+        ];
+      }
+    ];
   };
 
   services = {
@@ -453,6 +465,8 @@
       };
 
       cloudflare-dyndns.environment.HOME = "/tmp";
+
+      restic-backups-b2.serviceConfig.AmbientCapabilities = [ "CAP_DAC_READ_SEARCH" ];
     };
   };
 
