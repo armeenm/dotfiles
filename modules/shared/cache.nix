@@ -1,8 +1,6 @@
 { ... }:
 {
   nix.settings = {
-    # Public niks3 cache on carbon. Reads come straight from R2 at
-    # cache.armeen.xyz; niks3 only handles pushes and GC.
     substituters = [
       "https://cache.armeen.xyz"
       "https://cache.nixos.org"
