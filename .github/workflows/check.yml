@@ -8,6 +8,7 @@ on:
 
 permissions:
   contents: read
+  id-token: write
 
 jobs:
   flake-check:
@@ -45,7 +46,14 @@ jobs:
             extra-substituters = https://cache.armeen.xyz https://nix-on-droid.cachix.org https://hyprland.cachix.org https://nix-community.cachix.org
             extra-trusted-public-keys = armeen-cache-1:l8aGtFs3ouC2LT+0zWolFYogDI0H5lD8FXork1CqNYg= nix-on-droid.cachix.org-1:56snoMJTXmDRC1Ei24CmKoUqvHJ9XCp+nidK7qkMQrU= hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc= nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=
 
-      - uses: DeterminateSystems/magic-nix-cache-action@v15
+      # The server only accepts OIDC pushes from master; other refs get the
+      # substituter configured without attempting uploads.
+      - uses: Mic92/niks3-action@6d24bc1d87acdfac8e5dc3266f7b28ae99051adf # v1.5.0
+        with:
+          server-url: https://niks3.armeen.xyz
+          skip-push: ${{ github.ref != 'refs/heads/master' }}
+          max-concurrent-uploads: 8
+          drain-timeout: 1200
 
       - name: nix flake check
         run: nix flake check --build-all ${{ matrix.args }}
