@@ -1,7 +1,10 @@
 { config, pkgs, lib, inputs, user, ... }:
 
 {
-  imports = [ ./router.nix ];
+  imports = [
+    ./niks3.nix
+    ./router.nix
+  ];
 
   age = {
     secrets = {
@@ -179,6 +182,7 @@
     acme = {
       acceptTerms = true;
       defaults.email = user.email;
+
     };
 
     krb5 = {
@@ -217,6 +221,7 @@
             "carbon.armeen.xyz" = "ssh://localhost:22";
             "music.armeen.xyz" = "https://localhost:443";
             "media.armeen.xyz" = "https://localhost:443";
+            "niks3.armeen.xyz" = "https://localhost:443";
             "vault.armeen.xyz" = "https://localhost:443";
             "cobalt.armeen.xyz" = "https://localhost:443";
           };
@@ -418,6 +423,11 @@
     ];
 
     services = {
+      # The tailscale0 denyinterfaces edit is not worth dropping the WAN (and
+      # the cloudflared tunnel) mid-switch; it applies on the next dhcpcd
+      # restart/reboot.
+      dhcpcd.restartIfChanged = false;
+
       cobalt-dufs = {
         description = "Cobalt DUFS";
         wantedBy = [ "multi-user.target" ];

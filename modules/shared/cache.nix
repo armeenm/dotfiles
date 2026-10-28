@@ -1,7 +1,10 @@
 { ... }:
 {
   nix.settings = {
+    # Public niks3 cache on carbon. Reads come straight from R2 at
+    # cache.armeen.xyz; niks3 only handles pushes and GC.
     substituters = [
+      "https://cache.armeen.xyz"
       "https://cache.nixos.org"
       "https://hyprland.cachix.org"
       "https://install.determinate.systems"
@@ -10,6 +13,7 @@
     ];
 
     trusted-public-keys = [
+      "armeen-cache-1:l8aGtFs3ouC2LT+0zWolFYogDI0H5lD8FXork1CqNYg="
       "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
       "cache.flakehub.com-3:hJuILl5sVK4iKm86JzgdXW12Y2Hwd5G07qKtHTOcDCM="
       "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="

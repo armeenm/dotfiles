@@ -1,15 +1,16 @@
 # Cloudflare (Pulumi)
 
-Personal Cloudflare DNS. Everything is TypeScript; state lives in Pulumi Cloud
-under the `hierarch/cloudflare-personal/prod` stack (the project name is
-deliberately distinct from the `hierarch/cloudflare` project in the `hierarch`
-repo, which manages a different Cloudflare account).
+Personal Cloudflare resources: DNS, plus the R2 bucket behind the public Nix
+binary cache. Everything is TypeScript; state lives in Pulumi Cloud under the
+`hierarch/cloudflare-personal/prod` stack (the project name is deliberately
+distinct from the `hierarch/cloudflare` project in the `hierarch` repo, which
+manages a different Cloudflare account).
 
 ## What this stack owns
 
 | Zone | Records |
 | --- | --- |
-| `armeen.xyz` | `ru` A; `carbon`/`cobalt`/`media`/`music`/`vault`/`www` CNAMEs; Google site verification TXT |
+| `armeen.xyz` | `ru` A; `carbon`/`cobalt`/`media`/`music`/`niks3`/`vault`/`www` CNAMEs; `cache` (R2 custom domain); Google site verification TXT |
 | `armeen.org` | `grpc` CNAME; `exam` AAAA (Worker route placeholder); Google + Keybase verification TXT |
 | `fulminant-hill.com` / `.xyz` | Google site verification TXT |
 | `fulmino.us` | `teleport.dash` + wildcard A; Google site verification TXT |
@@ -17,6 +18,14 @@ repo, which manages a different Cloudflare account).
 | `oreo.ooo` | `plague` A; `foto`/`ooo`/`status` CNAMEs; `_minecraft._tcp` SRV |
 | `vermillionink.com` | apex + wildcard CNAMEs (parked at Porkbun) |
 | `1984.team` | nothing — email records only |
+
+R2 resources (account-level):
+
+| Resource | Name | Purpose |
+| --- | --- | --- |
+| `R2Bucket` | `armeen-xyz-cache` | NARs, narinfos, build logs, landing page |
+| `R2CustomDomain` | `cache.armeen.xyz` | public read origin (Cloudflare CDN, zero egress) |
+| `R2BucketLifecycle` | `armeen-xyz-cache-lifecycle` | abort multipart uploads older than 1 day |
 
 ## What it deliberately does not own
 
@@ -30,6 +39,10 @@ short:
 - **`_acme-challenge` TXT** — transient ACME validation.
 - **`siggen.armeen.org`** — Cloudflare Pages custom domain; Pages manages the
   record.
+- **`cache.armeen.xyz` CNAME** — created and owned by the `R2CustomDomain`
+  resource. Do not add a `DnsRecord` with that name.
+- **The niks3 R2 API token** — a separate, bucket-scoped S3 credential created
+  by hand and stored in agenix. It deliberately stays out of Pulumi state.
 - **`carbon` tunnel, `exam`/`hierarch` Workers, `fpgapres` Pages project** —
   deployed by Nix, wrangler, and the GitHub integration.
 
@@ -38,7 +51,8 @@ short:
 The API token lives in `secrets/pulumi-cloudflare-token.age` (recipients:
 your YubiKeys, the Mac, and carbon). It is a dedicated token named
 `pulumi-cloudflare-personal` with `Zone:Read` + `DNS:Edit` on the ten zones
-and a one-year TTL. The dyndns token is separate and stays `armeen.xyz`-only.
+plus account-level `Workers R2 Storage Read`/`Write` (bucket creation) and a
+one-year TTL. The dyndns token is separate and stays `armeen.xyz`-only.
 
 ```sh
 nix develop
@@ -51,6 +65,31 @@ pulumi up
 
 On the Mac, use `secrets/identities/armeen-itmaclap.txt` instead. Both
 identities require the usual YubiKey/Secure Enclave touch.
+
+## Nix binary cache (niks3)
+
+`cache.armeen.xyz` is a public Nix substituter backed by the
+`armeen-xyz-cache` R2 bucket. Nix clients read directly from R2 through the
+custom domain; the niks3 server on carbon only handles pushes (via
+`niks3.armeen.xyz`), garbage collection, and the landing page.
+
+After the first `pulumi up`, create the S3 credential niks3 uses:
+
+1. Cloudflare dashboard → R2 → Manage R2 API Tokens → Create API Token.
+2. Permissions: **Object Read & Write**, scoped to `armeen-xyz-cache` only.
+3. Store the access key ID and secret in agenix:
+
+   ```sh
+   ragenix -e secrets/niks3-r2-access-key.age
+   ragenix -e secrets/niks3-r2-secret-key.age
+   ```
+
+The S3 endpoint is `<accountId>.r2.cloudflarestorage.com`; the bucket name is
+`armeen-xyz-cache`.
+
+So that `pulumi up` can create the bucket and custom domain, the Pulumi token
+needs account-level `Workers R2 Storage Read` and `Workers R2 Storage Write`
+in addition to the zone permissions above.
 
 ## Importing another record
 

@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+# Push closures to the public niks3 cache.
+#
+# With no arguments, pushes this host's current system and (if present) the
+# Home Manager generation. Extra arguments are passed through to `niks3 push`
+# as store paths, so `push-cache /nix/store/...` works too.
+set -euo pipefail
+
+server="${NIKS3_SERVER_URL:-https://niks3.armeen.xyz}"
+token="${NIKS3_API_TOKEN_FILE:-/run/agenix/niks3-api-token}"
+
+if (( $# == 0 )); then
+  if [[ -L /run/current-system ]]; then
+    set -- "$(readlink -f /run/current-system)"
+  fi
+  if [[ -L "${HOME}/.local/state/nix/profiles/home-manager" ]]; then
+    set -- "$@" "$(readlink -f "${HOME}/.local/state/nix/profiles/home-manager")"
+  fi
+fi
+
+if (( $# == 0 )); then
+  echo "usage: push-cache [store-path...]" >&2
+  exit 2
+fi
+
+exec niks3 push \
+  --server-url "${server}" \
+  --auth-token-path "${token}" \
+  --max-concurrent-uploads "${NIKS3_MAX_CONCURRENT_UPLOADS:-4}" \
+  "$@"
