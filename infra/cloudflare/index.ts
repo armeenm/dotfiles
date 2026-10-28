@@ -146,6 +146,26 @@ new cloudflare.Ruleset("armeen-xyz-cache-redirect", {
   ],
 });
 
+// Bot Fight Mode challenges non-browser traffic, including GitHub Actions
+// runners fetching the public cache; Nix then sees 403 and disables the
+// substituter. Keep the rest of the zone's bot configuration as it was and
+// only turn Fight Mode off.
+new cloudflare.BotManagement("armeen-xyz-bot-management", {
+  zoneId: zones.armeenXyz,
+  fightMode: false,
+  enableJs: true,
+  aiBotsProtection: "disabled",
+  contentBotsProtection: "disabled",
+  crawlerProtection: "disabled",
+  aiTraining: "disabled",
+  aisearch: "disabled",
+  aiUser: "disabled",
+  isRobotsTxtManaged: false,
+  botPreferenceSyncEnabled: false,
+  cfRobotsVariant: "policy_only",
+  aiBotsMigrationOptOut: false,
+});
+
 export const cacheBucketName = cacheBucket.name;
 export const cacheDomainStatus = cacheDomain.status;
 

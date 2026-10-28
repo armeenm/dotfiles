@@ -34,6 +34,12 @@ Zone rulesets:
 | `armeen-xyz-cache-rules` | `http_request_cache_settings` | cache `/nar/*` at the edge for a year and metadata for 5 minutes |
 | `armeen-xyz-cache-redirect` | `http_request_dynamic_redirect` | send `cache.armeen.xyz/` to the landing page |
 
+Zone settings:
+
+| Resource | Value | Purpose |
+| --- | --- | --- |
+| `BotManagement` | `fightMode: false` | let GitHub Actions and other non-browser clients read `cache.armeen.xyz` |
+
 ## What it deliberately does not own
 
 See the comment block at the top of `index.ts` for the full rationale. In
@@ -61,8 +67,17 @@ your YubiKeys, the Mac, and carbon). It is a dedicated token named
 plus account-level `Workers R2 Storage Read`/`Write` (bucket creation) and a
 one-year TTL. The ruleset resources additionally need `Zone → Cache Rules →
 Edit`, `Zone → Single Redirect → Edit`, `Account Rulesets → Edit` and
-`Account Filter Lists → Edit`. The dyndns token is separate and stays
+`Account Filter Lists → Edit`; the bot-management resource needs
+`Bot Management Read`/`Write`. The dyndns token is separate and stays
 `armeen.xyz`-only.
+
+The bot-management setting already exists on the zone, so import it once
+before the first `up`:
+
+```sh
+pulumi import 'cloudflare:index/botManagement:BotManagement' \
+  armeen-xyz-bot-management f1a9a37b06d9b796a5d950a5db66b1cd
+```
 
 ```sh
 nix develop
