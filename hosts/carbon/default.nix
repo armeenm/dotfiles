@@ -473,13 +473,30 @@
       };
 
       restic-backups-b2.serviceConfig.AmbientCapabilities = [ "CAP_DAC_READ_SEARCH" ];
+
+      # On Linux tailscaled defaults to its iptables backend and there is no
+      # iptables userland here (nftables.enable blacklists ip_tables), so it
+      # would silently install no rules at all. Force the native nftables
+      # backend; router.nix owns the data path either way.
+      tailscaled.environment.TS_DEBUG_FIREWALL_MODE = "nftables";
     };
   };
 
   # tailscaled starts on boot and reconnects from its persisted node state.
   # Keep Tailscale's DNS management off: carbon runs unbound/knot for the LAN
   # and dhcpcd owns /etc/resolv.conf.
-  services.tailscale.extraSetFlags = [ "--accept-dns=false" ];
+  #
+  # Exit node: `server` turns on IPv4/IPv6 forwarding. Advertising is
+  # declarative so it survives reboots; the route still has to be approved in
+  # the admin console.
+  services.tailscale = {
+    useRoutingFeatures = "server";
+
+    extraSetFlags = [
+      "--accept-dns=false"
+      "--advertise-exit-node"
+    ];
+  };
 
   users = {
     groups.restic = {};

@@ -84,6 +84,22 @@ in
 
     nftables = {
       enable = true;
+
+      # The module flushes the *entire* ruleset on every reload whenever
+      # `ruleset` is set, which would also wipe tailscaled's own netfilter
+      # tables (ip/ip6 filter, ip6 nat) and its MSS-clamping chain. Delete only
+      # the tables defined below instead. `ip nat` is also shared with
+      # tailscaled, which puts its (subnet-route only) POSTROUTING chain there;
+      # an exit node does not use it, but restart tailscaled after a firewall
+      # change if carbon ever becomes a subnet router.
+      flushRuleset = false;
+      extraDeletions = ''
+        table inet filter
+        delete table inet filter
+        table ip nat
+        delete table ip nat
+      '';
+
       ruleset = ''
         table inet filter {
           chain output {
@@ -114,6 +130,13 @@ in
             # Tailscale peers are authenticated by WireGuard.
             iifname "tailscale0" counter accept
 
+            # Direct (non-DERP) WireGuard. Carbon sits behind another NAT, so
+            # today this only matters for hole-punched flows (which land in the
+            # conntrack rule above) and for tailnet peers on the same link; it
+            # becomes load-bearing if 41641 is ever forwarded upstream.
+            iifname "${wan}" udp dport ${toString config.services.tailscale.port} \
+              counter accept comment "Tailscale magicsock"
+
             # Rate-limit new SSH connections before accepting them. sshd's
             # PerSourcePenalties handles failed-auth clients; this keeps the
             # pre-auth work (key exchange) bounded as well.
@@ -131,6 +154,15 @@ in
             type filter hook forward priority filter; policy drop;
 
             ct state invalid counter drop
+
+            # Tailscale exit node: tailnet traffic is forwarded out the WAN
+            # (masqueraded by table ip nat below) and the replies come back to
+            # the tunnel. Tailscaled's own nftables chains are no help here:
+            # they sit at the same hook priority and lose to our policy drop.
+            iifname "tailscale0" oifname "${wan}" \
+              counter accept comment "Tailscale exit node egress"
+            iifname "${wan}" oifname "tailscale0" ct state established,related \
+              counter accept comment "Tailscale exit node return"
 
             # libvirt guests on the default NAT bridge
             iifname "virbr0" accept
