@@ -252,6 +252,16 @@
 
         specialArgs = inputs;
       };
+
+      tungsten = nixpkgs-patcher.lib.nixosSystem {
+        modules = baseModules ++ [
+          nixosModules.nixosMinimal
+          inputs.nixos-hardware.nixosModules.raspberry-pi-4
+          ./hosts/tungsten
+        ];
+
+        specialArgs = inputs;
+      };
     };
 
     darwinConfigurations = rec {
@@ -351,7 +361,6 @@
             path = lib.x86_64-linux.activate.nixos lithium;
           };
         };
-
       };
     };
 

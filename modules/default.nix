@@ -21,6 +21,10 @@ let
     ./nixos/interactive.nix
   ];
 
+  nixosMinimal = [
+    ./nixos/minimal.nix
+  ];
+
   hmDarwinBase = hmBase ++ [
     inputs.mac-app-util.homeManagerModules.default
   ];
@@ -42,6 +46,7 @@ in {
   hmBase = { ... }: { imports = hmBase; };
   nixosBase = { ... }: { imports = nixosBase; };
   nixosInteractive = { ... }: { imports = nixosInteractive; };
+  nixosMinimal = { ... }: { imports = nixosMinimal; };
   nixosUser = { ... }: { imports = [ ./nixos/user.nix ]; };
 
   hmDarwinBase = { ... }: { imports = hmDarwinBase; };
