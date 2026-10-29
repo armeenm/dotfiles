@@ -243,7 +243,7 @@
     };
 
     cloudflare-dyndns = {
-      enable = true;
+      enable = false;
       domains = [ "armeen.xyz" ];
       apiTokenFile = config.age.secrets.cloudflare-api-token.path;
     };
@@ -462,6 +462,14 @@
             ${pkgs.dufs}/bin/dufs -c ${config.age.secrets.cobalt-config.path}
           '';
         };
+      };
+
+      # unbound is the only resolver; if this runs while unbound is still
+      # restarting every IP lookup fails and the unit exits 2 (which fails
+      # the whole activation).
+      cloudflare-dyndns = lib.mkIf config.services.cloudflare-dyndns.enable {
+        wants = [ "unbound.service" ];
+        after = [ "unbound.service" ];
       };
 
       restic-backups-b2.serviceConfig.AmbientCapabilities = [ "CAP_DAC_READ_SEARCH" ];

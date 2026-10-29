@@ -1,6 +1,7 @@
 { config
 , lib
 , pkgs
+, enableSocial
 , isHeadless
 , isStandalone
 , ...
@@ -49,7 +50,7 @@ in {
 
   age = {
     identityPaths = [ "${config.home.homeDirectory}/.ssh/id_ed25519" ];
-    secrets = {
+    secrets = lib.optionalAttrs enableSocial {
       opencode-env = {
         file = ../secrets/opencode.env.age;
       };
