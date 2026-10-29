@@ -57,13 +57,6 @@ final: prev: {
     patches = [ ./mozillavpn.patch ];
   });
 
-  # TODO: Remove when https://github.com/maralorn/nix-output-monitor/pull/321 lands.
-  # Determinate Nix 3.23 emits activity type 10113 and result type 10111, which
-  # nom 2.2.0 rejects, spamming ParseNixJSONMessageError during `nh os switch`.
-  nix-output-monitor = prev.nix-output-monitor.overrideAttrs (old: {
-    patches = (old.patches or [ ]) ++ [ ./nix-output-monitor-unknown-activity-types.patch ];
-  });
-
   fwupd = prev.fwupd.overrideAttrs (old: {
     mesonFlags = old.mesonFlags ++ [
       (lib.mesonOption "efi_app_location" "/run/fwupd-efi")
