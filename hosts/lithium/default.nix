@@ -33,17 +33,6 @@
     ];
 
     kernel.sysctl = {
-      # Needed for router.
-      "net.ipv4.conf.all.accept_redirects" = true;
-      "net.ipv6.conf.all.accept_redirects" = true;
-      "net.ipv4.conf.all.accept_source_route" = true;
-      "net.ipv6.conf.all.accept_source_route" = true;
-      "net.ipv4.ip_forward" = true;
-      "net.ipv4.conf.all.send_redirects" = true;
-
-      "net.ipv4.conf.all.secure_redirects" = true;
-      "net.ipv6.conf.all.secure_redirects" = true;
-
       "net.ipv4.conf.all.log_martians" = true;
       "net.ipv4.conf.all.rp_filter" = true;
 
@@ -52,21 +41,9 @@
       "net.ipv4.icmp_ignore_bogus_error_responses" = true;
 
       "net.ipv4.tcp_congestion_control" = "bbr";
-      "net.ipv4.tcp_dsack" = false;
-      "net.ipv4.tcp_fack" = false;
-      "net.ipv4.tcp_fastopen" = 3;
       "net.ipv4.tcp_rfc1337" = true;
-      "net.ipv4.tcp_sack" = false;
       "net.ipv4.tcp_synack_retries" = 5;
-      "net.ipv4.tcp_timestamps" = false;
       "net.ipv4.tcp_window_scaling" = true;
-
-      "net.ipv6.conf.default.accept_ra" = false;
-      "net.ipv6.conf.default.accept_ra_pinfo" = false;
-      "net.ipv6.conf.default.accept_ra_rtr_pref" = false;
-      "net.ipv6.conf.default.aceept_ra_defrtr" = false;
-      "net.ipv6.conf.default.max_addresses" = 1;
-      "net.ipv6.conf.default.router_solicitations" = false;
 
       "net.core.bpf_jit_harden" = 2;
       "net.core.default_qdisc" = "cake";
@@ -179,7 +156,7 @@
     hostId = "5a656e88";
     hostName = "lithium";
 
-    firewall.interfaces.enp78s0.allowedTCPPorts = [ 8080 8888 7860 5201 11434 ];
+    firewall.interfaces.enp78s0.allowedTCPPorts = [ 8080 8888 7860 5201 ];
   };
 
   nixpkgs = {
@@ -231,12 +208,6 @@
         package = pkgs.openrgb-with-all-plugins;
         motherboard = "amd";
       };
-    };
-
-    ollama = {
-      enable = true;
-      host = "0.0.0.0";
-      rocmOverrideGfx = "10.3.0";
     };
 
     sunshine = {

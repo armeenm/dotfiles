@@ -29,9 +29,23 @@
     earlySetup = false;
   };
 
-  nix.settings = {
-    allowed-users = lib.mkForce [ "@users" ];
-    trusted-users = lib.mkForce [ "@wheel" ];
+  nix = {
+    # Keep the store bounded. `--delete-older-than` implies `-d`, so this drops
+    # every generation older than two weeks and leaves the rest alone.
+    gc = {
+      automatic = true;
+      dates = "weekly";
+      randomizedDelaySec = "30min";
+      options = "--delete-older-than 14d";
+    };
+
+    settings = {
+      allowed-users = lib.mkForce [ "@users" ];
+      trusted-users = lib.mkForce [ "@wheel" ];
+
+      # Keep enough headroom for a rebuild to fetch a new system closure.
+      min-free = 10 * 1024 * 1024 * 1024;
+    };
   };
 
   nixpkgs.overlays = [ inputs.emacs-overlay.overlays.default ];
@@ -42,7 +56,6 @@
     fstrim.enable = true;
     fwupd.enable = true;
     pcscd.enable = true;
-    rpcbind.enable = true;
     smartd.enable = true;
     timesyncd.enable = true;
     udisks2.enable = true;
@@ -68,6 +81,11 @@
     };
   };
 
+  # The firewall is enabled per host, but tailnet traffic is encrypted and
+  # authenticated by WireGuard, so let it through wherever the NixOS firewall
+  # is in charge (carbon runs its own ruleset and accepts tailscale0 there).
+  networking.firewall.trustedInterfaces = [ "tailscale0" ];
+
   systemd = {
     oomd = {
       enable = true;
@@ -90,10 +108,8 @@
   security = {
     allowUserNamespaces = true;
     protectKernelImage = true;
-    virtualisation.flushL1DataCache = null;
 
     apparmor.enable = true;
-    auditd.enable = true;
     polkit.enable = true;
 
     # eMudhra intermediate CA compromise (October 2026). Nixpkgs' cacert
@@ -107,11 +123,6 @@
     rtkit.enable = true;
     sudo.enable = false;
     sudo-rs.enable = true;
-
-    audit = {
-      enable = false;
-      rules = [ ];
-    };
 
     tpm2 = {
       enable = true;

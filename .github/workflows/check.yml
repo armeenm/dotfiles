@@ -30,7 +30,9 @@ jobs:
             args: ""
     runs-on: ${{ matrix.runner }}
     steps:
-      - uses: actions/checkout@v7.0.1
+      # Actions are pinned to commit SHAs: tags are mutable, and this workflow
+      # runs with the repo's cache credentials.
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Free disk space
         if: runner.os == 'Linux'
@@ -40,7 +42,7 @@ jobs:
           sudo apt-get clean
           df -h /
 
-      - uses: DeterminateSystems/determinate-nix-action@v3.24.0
+      - uses: DeterminateSystems/determinate-nix-action@f296148a827001a9a82d3685b53210c06e5d3b67 # v3.24.0
         with:
           extra-conf: |
             extra-substituters = https://cache.armeen.xyz https://nix-on-droid.cachix.org https://hyprland.cachix.org https://nix-community.cachix.org

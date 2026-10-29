@@ -225,7 +225,7 @@ in {
       };
 
       containers = {
-        alma.iamge = "almalinux:latest";
+        alma.image = "almalinux:latest";
         alpine.image = "alpine:latest";
         arch.image = "archlinux:latest";
         debian.image = "debian:latest";
@@ -264,7 +264,6 @@ in {
         package = let
           darwinPackage = pkgs.emacs-unstable.overrideAttrs (old: {
             patches = old.patches ++ [ ./frame-transparency.patch ];
-            __noChroot = true;
           });
         in if hostPlatform.isDarwin then darwinPackage
            else if isHeadless then pkgs.emacs-igc
@@ -331,7 +330,6 @@ in {
 
         advice.addEmptyPathspec = false;
         core.editor = ''${config.home.sessionVariables.EDITOR}'';
-        credential.helper = "store";
         init.defaultBranch = "master";
         push.autoSetupRemote = true;
 
@@ -440,7 +438,12 @@ in {
     sketchybar = {
       enable = !isHeadless && hostPlatform.isDarwin;
       config = {
-        source = ../conf/sketchybar;
+        source = pkgs.runCommand "sketchybar-config" { } ''
+          cp -r ${../conf/sketchybar} $out
+          chmod -R u+w $out
+          substituteInPlace $out/sketchybarrc \
+            --replace-fail "/etc/profiles/per-user/armeen" "/etc/profiles/per-user/${user.login}"
+        '';
         recursive = true;
       };
     };

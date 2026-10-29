@@ -14,6 +14,11 @@ let
   hosts = [ argentum lithium carbon itmaclap ];
 
 in {
+  # NOTE: secrets/identities/*.txt are checked in on purpose. They are
+  # hardware-bound stubs, not key material: the age-plugin-yubikey files
+  # (`AGE-PLUGIN-YUBIKEY-…`) need the physical YubiKey and its PIV PIN to
+  # unwrap, and the age-plugin-se file (`AGE-PLUGIN-SE-…`) is a reference to a
+  # key held in the Secure Enclave. Without the hardware they are inert.
   "armeen-pw.age".publicKeys = armeen ++ hosts;
   "arash-pw.age".publicKeys = armeen ++ hosts;
   "restic-pw.age".publicKeys = armeen ++ [ carbon ];

@@ -118,6 +118,11 @@
     saned.enable = true;
     upower.enable = true;
 
+    # Only carbon runs an NFS server, so it is the only host that needs the
+    # portmapper; NFSv4 clients talk to port 2049 directly. The NFS module
+    # turns rpcbind on for any host with nfs in supportedFilesystems.
+    rpcbind.enable = lib.mkForce false;
+
     pipewire = {
       enable = true;
       alsa.enable = true;

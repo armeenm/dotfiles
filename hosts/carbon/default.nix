@@ -98,7 +98,7 @@
       "net.ipv6.conf.default.accept_ra" = false;
       "net.ipv6.conf.default.accept_ra_pinfo" = false;
       "net.ipv6.conf.default.accept_ra_rtr_pref" = false;
-      "net.ipv6.conf.default.aceept_ra_defrtr" = false;
+      "net.ipv6.conf.default.accept_ra_defrtr" = false;
       "net.ipv6.conf.default.max_addresses" = 1;
       "net.ipv6.conf.default.router_solicitations" = false;
 
@@ -248,19 +248,6 @@
       apiTokenFile = config.age.secrets.cloudflare-api-token.path;
     };
 
-    home-assistant = {
-      enable = true;
-      extraComponents = [
-        "esphome"
-        "met"
-        "radio_browser"
-      ];
-
-      config = {
-        default_config = {};
-      };
-    };
-
     kerberos_server = {
       enable = true;
       settings = {
@@ -311,6 +298,19 @@
           repository = "b2:backups-jKl9AFet877bX";
           passwordFile = config.age.secrets.restic-pw.path;
           environmentFile = config.age.secrets.restic-b2-env.path;
+
+          # Two weeks of dailies, five weeklies and a year of monthlies.
+          # Without pruneOpts restic never forgets anything and B2 grows
+          # forever.
+          pruneOpts = [
+            "--keep-daily 14"
+            "--keep-weekly 5"
+            "--keep-monthly 12"
+          ];
+
+          # Read a random 5% of the repository after every backup so
+          # bit-rot is noticed before a restore is needed.
+          checkOpts = [ "--read-data-subset=5%" ];
         };
       };
     };
@@ -338,7 +338,7 @@
       recommendedTlsSettings = true;
 
       virtualHosts = {
-        "\"\"" = {
+        "_" = {
           default = true;
           extraConfig = ''
             return 444;
@@ -463,8 +463,6 @@
           '';
         };
       };
-
-      cloudflare-dyndns.environment.HOME = "/tmp";
 
       restic-backups-b2.serviceConfig.AmbientCapabilities = [ "CAP_DAC_READ_SEARCH" ];
     };

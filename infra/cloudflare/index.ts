@@ -55,7 +55,7 @@ const cacheBucket = new cloudflare.R2Bucket("armeen-xyz-cache", {
   accountId,
   name: "armeen-xyz-cache",
   location: "wnam",
-});
+}, { protect: true });
 
 const cacheDomain = new cloudflare.R2CustomDomain("armeen-xyz-cache-domain", {
   accountId,
@@ -64,7 +64,7 @@ const cacheDomain = new cloudflare.R2CustomDomain("armeen-xyz-cache-domain", {
   zoneId: zones.armeenXyz,
   enabled: true,
   minTls: "1.2",
-});
+}, { protect: true });
 
 // niks3 uploads large NARs with multipart uploads; abandon unfinished parts
 // after a day. Never expire objects here: niks3's garbage collector owns
@@ -78,7 +78,7 @@ new cloudflare.R2BucketLifecycle("armeen-xyz-cache-lifecycle", {
     conditions: { prefix: "" },
     abortMultipartUploadsTransition: { condition: { type: "Age", maxAge: 86400 } },
   }],
-});
+}, { protect: true });
 
 // NARs are immutable, so let Cloudflare's edge cache them for a year instead
 // of hitting R2 (and paying Class B operations) on every substitution. Narinfo
@@ -119,7 +119,7 @@ new cloudflare.Ruleset("armeen-xyz-cache-rules", {
       enabled: true,
     },
   ],
-});
+}, { protect: true });
 
 // R2 has no index document, so the bare cache root would 404.
 new cloudflare.Ruleset("armeen-xyz-cache-redirect", {
@@ -144,7 +144,7 @@ new cloudflare.Ruleset("armeen-xyz-cache-redirect", {
       enabled: true,
     },
   ],
-});
+}, { protect: true });
 
 // Bot Fight Mode challenges non-browser traffic, including GitHub Actions
 // runners fetching the public cache; Nix then sees 403 and disables the
@@ -164,7 +164,7 @@ new cloudflare.BotManagement("armeen-xyz-bot-management", {
   botPreferenceSyncEnabled: false,
   cfRobotsVariant: "policy_only",
   aiBotsMigrationOptOut: false,
-});
+}, { protect: true });
 
 export const cacheBucketName = cacheBucket.name;
 export const cacheDomainStatus = cacheDomain.status;
@@ -231,5 +231,5 @@ for (const spec of records) {
     proxied: spec.proxied ?? false,
     ttl: spec.ttl ?? 1,
     comment: spec.comment,
-  });
+  }, { protect: true });
 }
