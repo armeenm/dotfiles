@@ -25,7 +25,8 @@
     };
 
     customSettings = config.nix.settings // {
-      sandbox = "relaxed";
+      # Nix defaults sandboxing off on Darwin; keep builds sandboxed.
+      sandbox = true;
       allowed-users = lib.mkForce [ "@staff" ];
       trusted-users = lib.mkForce [ "@admin" ];
     };

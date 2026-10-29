@@ -20,7 +20,6 @@ in {
     ./xdg.nix
     ./zsh.nix
   ] ++ lib.optionals isStandalone [
-    ./wrappers.nix
     ../modules/shared/nix.nix
     ../modules/shared/stylix.nix
   ];

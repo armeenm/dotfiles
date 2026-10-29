@@ -127,7 +127,6 @@
   networking = {
     hostName = "argentum";
     networkmanager.wifi.powersave = true;
-    firewall.enable = false;
   };
 
   nixpkgs.hostPlatform = "x86_64-linux";

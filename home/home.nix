@@ -27,13 +27,6 @@ let
     fi
   '');
 
-  hashOverride = drv: hash: (drv.overrideAttrs (old: {
-    src = pkgs.fetchurl {
-      inherit hash;
-      url = old.src.url;
-    };
-  }));
-
   # OpenChamber goes through a wrapper so that the GUI and the OpenCode server
   # it spawns inherit the same environment as the terminal `opencode`: the
   # age-encrypted OpenCode env file, the Wayland clipboard library path, and
