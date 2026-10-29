@@ -18,7 +18,6 @@
   };
 
   boot = {
-    initrd.verbose = false;
     kernelPackages = lib.mkDefault pkgs.linuxPackages_latest;
   };
 
@@ -82,12 +81,15 @@
     polkit.enable = true;
 
     # eMudhra intermediate CA compromise (October 2026). Nixpkgs' cacert
-    # already distrusts these roots, but keep them here explicitly so the
+    # already distrusts this root, but keep it here explicitly so the
     # protection does not depend on the nixpkgs revision.
     # https://emudhra.we-have-a-problem.com/
+    #
+    # "emSign ECC Root CA - G3" is no longer listed: cacert 3.131.1 removed it
+    # from the store entirely, and buildcatrust fails when a blacklisted cert
+    # is missing.
     pki.caCertificateBlacklist = [
       "Comodo AAA Services root"
-      "emSign ECC Root CA - G3"
     ];
     rtkit.enable = true;
     sudo.enable = false;
