@@ -51,13 +51,15 @@
   nixpkgs.overlays = [ inputs.emacs-overlay.overlays.default ];
 
   services = {
+    # chrony is the NTP client here; its module force-disables
+    # systemd-timesyncd, so do not enable both.
     chrony.enable = true;
+
     devmon.enable = true;
     fstrim.enable = true;
     fwupd.enable = true;
     pcscd.enable = true;
     smartd.enable = true;
-    timesyncd.enable = true;
     udisks2.enable = true;
     userborn.enable = true;
 
@@ -97,8 +99,6 @@
     suppressedSystemUnits = [
       "sys-kernel-debug.mount"
     ];
-
-    services.systemd-timesyncd.enable = false;
 
     settings = {
       Manager.RebootWatchdogSec = 15;

@@ -119,8 +119,9 @@
       };
     };
 
-    # Keep the clock close to real time; TLS and Tailscale both care.
-    timesyncd.enable = true;
+    # Keep the clock close to real time; TLS and Tailscale both care. chrony
+    # is a real NTP client rather than systemd's SNTP implementation.
+    chrony.enable = true;
   };
 
   users = {
