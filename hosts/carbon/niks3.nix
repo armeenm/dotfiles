@@ -68,6 +68,22 @@ in
     # 30 days, matching the default; niks3's GC is the only thing that deletes
     # objects from the bucket.
     gc.olderThan = "720h";
+
+    # CI may push, but only from the check workflow on master. PRs and other
+    # branches may read the cache; they must not be able to upload paths signed
+    # by our key. The static API token keeps its admin scope for GC and pins.
+    oidc.providers.github = {
+      issuer = "https://token.actions.githubusercontent.com";
+      audience = "https://niks3.armeen.xyz";
+
+      boundClaims = {
+        repository = [ "armeenm/dotfiles" ];
+        ref = [ "refs/heads/master" ];
+        workflow_ref = [ "armeenm/dotfiles/.github/workflows/check.yml@refs/heads/master" ];
+      };
+
+      scopes = [ "write" ];
+    };
   };
 
   # Metrics are unauthenticated and this vhost is public.
