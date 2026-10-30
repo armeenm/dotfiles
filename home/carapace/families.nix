@@ -502,6 +502,135 @@ in
       completion.positional = [file dir];
     };
   }
+  # ---------------------------------------------------------------- mount helpers
+  // {
+    mount-nfs = render "mount-nfs" {
+      description = "Mount an NFS filesystem";
+      flags = {
+        "-r" = "mount read-only";
+        "-w" = "mount read-write";
+        "-v" = "verbose";
+        "-V" = "print version";
+        "-f" = "fake mount, do not actually mount";
+        "-n" = "do not update /etc/mtab";
+        "-s" = "tolerate sloppy mount options";
+        "-o=" = "NFS mount options";
+        "-h" = "show help";
+      };
+      completion = {
+        flag.o = [
+          "$list(,)"
+          "ro"
+          "rw"
+          "vers="
+          "nfsvers="
+          "minorversion="
+          "proto="
+          "tcp"
+          "udp"
+          "addr="
+          "port="
+          "mountport="
+          "mountproto="
+          "sec="
+          "soft"
+          "hard"
+          "timeo="
+          "retrans="
+          "rsize="
+          "wsize="
+          "nolock"
+          "lock"
+          "fg"
+          "bg"
+          "intr"
+          "noatime"
+          "nodiratime"
+          "relatime"
+          "actimeo="
+          "lookupcache="
+          "local_lock="
+        ];
+        positional = [ [] dir ];
+      };
+    };
+    mount-ntfs = render "mount-ntfs" {
+      description = "Mount an NTFS filesystem with ntfs-3g";
+      flags = {
+        "-o=" = "NTFS-3G mount options";
+        "-h" = "show help";
+        "-V" = "print version";
+      };
+      completion = {
+        flag.o = [
+          "$list(,)"
+          "ro"
+          "rw"
+          "uid="
+          "gid="
+          "umask="
+          "fmask="
+          "dmask="
+          "windows_names"
+          "permissions"
+          "acl"
+          "streams_interface="
+          "big_writes"
+          "noatime"
+          "atime"
+          "relatime"
+          "locale="
+          "nls="
+          "show_sys_files"
+          "hide_dot_files"
+          "ignore_case"
+          "remove_hiberfile"
+          "recover"
+          "force"
+          "debug"
+        ];
+        positional = [ file dir ];
+      };
+    };
+    mount-fuse = render "mount-fuse" {
+      description = "Mount a FUSE filesystem";
+      flags = {
+        "-t=" = "filesystem type";
+        "-o=" = "FUSE mount options";
+        "-h" = "show help";
+      };
+      completion = {
+        flag.o = [
+          "$list(,)"
+          "ro"
+          "rw"
+          "allow_other"
+          "allow_root"
+          "default_permissions"
+          "nonempty"
+          "fsname="
+          "subtype="
+          "max_read="
+          "uid="
+          "gid="
+          "umask="
+          "user"
+          "users"
+          "auto"
+          "noauto"
+          "exec"
+          "noexec"
+          "suid"
+          "nosuid"
+          "dev"
+          "nodev"
+          "atime"
+          "noatime"
+        ];
+        positional = [ file dir ];
+      };
+    };
+  }
   # ---------------------------------------------------------------- systemd
   // family {
     flags = {

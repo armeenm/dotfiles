@@ -45,16 +45,6 @@
   "iptables-apply": [
     "ip6tables-apply"
   ],
-  "mount": [
-    "mount.fuse",
-    "mount.fuse3",
-    "mount.nfs",
-    "mount.nfs4",
-    "mount.ntfs",
-    "mount.ntfs-3g",
-    "mount.lowntfs-3g",
-    "mount.rclone"
-  ],
   "umount": [
     "umount.nfs",
     "umount.nfs4",
@@ -157,5 +147,21 @@
   ],
   "rsync": [
     "rsync-ssl"
+  ],
+  "mount-nfs": [
+    "mount.nfs",
+    "mount.nfs4"
+  ],
+  "mount-ntfs": [
+    "mount.ntfs",
+    "mount.ntfs-3g",
+    "mount.lowntfs-3g"
+  ],
+  "mount-fuse": [
+    "mount.fuse",
+    "mount.fuse3"
+  ],
+  "rclonefs": [
+    "mount.rclone"
   ]
 }
