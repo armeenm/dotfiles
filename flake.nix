@@ -240,6 +240,17 @@
           path = lib.aarch64-linux.activate.nixos tungsten;
         };
       };
+
+      iridium = mk "aarch64-linux" {
+        hostname = "iridium";
+        # Build on the deploying machine; the Pi is only for activation.
+        remoteBuild = false;
+        profiles.system = {
+          sshUser = user.login;
+          user = "root";
+          path = lib.aarch64-linux.activate.nixos iridium;
+        };
+      };
     };
 
     commonModules = [
@@ -301,6 +312,16 @@
           nixosModules.nixosMinimal
           inputs.nixos-hardware.nixosModules.raspberry-pi-4
           ./hosts/tungsten
+        ];
+
+        specialArgs = inputs;
+      };
+
+      iridium = nixpkgs-patcher.lib.nixosSystem {
+        modules = baseModules ++ [
+          nixosModules.nixosMinimal
+          inputs.nixos-hardware.nixosModules.raspberry-pi-3
+          ./hosts/iridium
         ];
 
         specialArgs = inputs;
