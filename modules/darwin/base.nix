@@ -35,6 +35,8 @@
   power.restartAfterFreeze = true;
 
   services = {
+    tailscale.enable = true;
+
     emacs = {
       enable = true;
       package = config.home-manager.users.${user.login}.programs.emacs.package;
