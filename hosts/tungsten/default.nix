@@ -1,12 +1,9 @@
 { pkgs, ... }:
 
 # Headless Raspberry Pi 4 used only as a Tailscale exit node. The shared image
-# setup lives in ../rpi.nix; see README.md for build and flash instructions.
+# setup lives in modules/nixos/rpi.nix; see README.md for build and flash
+# instructions.
 {
-  imports = [
-    ../rpi.nix
-  ];
-
   networking.hostName = "tungsten";
 
   services.tailscale = {

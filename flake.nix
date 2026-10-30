@@ -290,7 +290,7 @@
 
       carbon = nixpkgs-patcher.lib.nixosSystem {
         modules = baseModules ++ [
-          nixosModules.nixosBase
+          nixosModules.nixosFull
           nixosModules.nixosUser
           ./hosts/carbon
         ];
@@ -310,6 +310,7 @@
       tungsten = nixpkgs-patcher.lib.nixosSystem {
         modules = baseModules ++ [
           nixosModules.nixosMinimal
+          nixosModules.nixosRpi
           inputs.nixos-hardware.nixosModules.raspberry-pi-4
           ./hosts/tungsten
         ];
@@ -320,6 +321,7 @@
       iridium = nixpkgs-patcher.lib.nixosSystem {
         modules = baseModules ++ [
           nixosModules.nixosMinimal
+          nixosModules.nixosRpi
           inputs.nixos-hardware.nixosModules.raspberry-pi-3
           ./hosts/iridium
         ];

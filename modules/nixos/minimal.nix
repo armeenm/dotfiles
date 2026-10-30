@@ -1,12 +1,15 @@
 { lib, pkgs, user, ... }:
 
-# A deliberately small NixOS base for appliances that only need to be reached
-# over SSH. It has no home-manager, no firmware blobs and no graphical stack,
-# so the system closure fits comfortably on a 16 GiB SD card.
+# A deliberately small NixOS profile for appliances that only need to be
+# reached over SSH. It has no home-manager, no firmware blobs and no graphical
+# stack, so the system closure fits comfortably on a 16 GiB SD card.
 {
   imports = [
+    ./base.nix
     ../shared/cache.nix
   ];
+
+  time.timeZone = "UTC";
 
   # Manuals are the largest avoidable chunk of a default NixOS closure.
   documentation = {
@@ -17,15 +20,11 @@
     nixos.enable = false;
   };
 
-  environment = {
-    defaultPackages = lib.mkForce [ ];
-
-    systemPackages = with pkgs; [
-      htop
-      rsync
-      vim
-    ];
-  };
+  environment.systemPackages = with pkgs; [
+    htop
+    rsync
+    vim
+  ];
 
   # The default list pulls in LVM, XFS, Btrfs and bcachefs tools. This
   # appliance only ever sees ext4 and the FAT firmware partition.
@@ -47,36 +46,13 @@
     setNixPath = false;
   };
 
-  i18n.defaultLocale = "en_US.UTF-8";
-  time.timeZone = "UTC";
+  nix.settings = {
+    auto-optimise-store = true;
+    experimental-features = [ "nix-command" "flakes" ];
 
-  console = {
-    keyMap = "us";
-    earlySetup = false;
-  };
-
-  nix = {
-    # The card is small, so keep only recent generations around.
-    gc = {
-      automatic = true;
-      dates = "weekly";
-      randomizedDelaySec = "30min";
-      options = "--delete-older-than 14d";
-    };
-
-    settings = {
-      auto-optimise-store = true;
-      experimental-features = [ "nix-command" "flakes" ];
-
-      # Allow wheel users to push locally built (and therefore unsigned)
-      # closures over SSH without turning off signature checking globally.
-      # Wheel already has passwordless sudo here.
-      trusted-users = lib.mkForce [ "@wheel" ];
-
-      # The big hosts reserve 10 GiB for a rebuild; that would prevent every
-      # rebuild on a 16 GiB card.
-      min-free = 1024 * 1024 * 1024;
-    };
+    # The big hosts reserve 10 GiB for a rebuild; that would prevent every
+    # rebuild on a 16 GiB card.
+    min-free = 1024 * 1024 * 1024;
   };
 
   networking = {
@@ -86,65 +62,26 @@
     # NixOS firewall use its nftables backend and blacklists ip_tables.
     nftables.enable = true;
 
-    firewall = {
-      enable = true;
-      trustedInterfaces = [ "tailscale0" ];
-    };
+    firewall.enable = true;
   };
 
-  security = {
-    protectKernelImage = true;
-
-    # No password is set for the user, so passwordless sudo is what makes
-    # administrative access over an SSH key work.
-    sudo-rs = {
-      enable = true;
-      extraRules = [
+  # No password is set for the user, so passwordless sudo is what makes
+  # administrative access over an SSH key work.
+  security.sudo-rs.extraRules = [
+    {
+      users = [ user.login ];
+      commands = [
         {
-          users = [ user.login ];
-          commands = [
-            {
-              command = "ALL";
-              options = [ "NOPASSWD" ];
-            }
-          ];
+          command = "ALL";
+          options = [ "NOPASSWD" ];
         }
       ];
-    };
-  };
+    }
+  ];
 
-  services = {
-    fstrim.enable = true;
-
-    openssh = {
-      enable = true;
-      settings = {
-        PasswordAuthentication = false;
-        PermitRootLogin = "prohibit-password";
-      };
-    };
-
-    # Keep the clock close to real time; TLS and Tailscale both care. chrony
-    # is a real NTP client rather than systemd's SNTP implementation.
-    chrony.enable = true;
-  };
-
-  users = {
-    mutableUsers = false;
-
-    users = {
-      root.hashedPassword = null;
-
-      "${user.login}" = {
-        isNormalUser = true;
-        extraGroups = [ "wheel" ];
-
-        # Public key only; it is the same `armeen-ssh` key listed in
-        # secrets/secrets.nix.
-        openssh.authorizedKeys.keys = [
-          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDXWQumRO6nC4ABA79WHB3kkNj0vUqAiz8oJwbxeG457 armeen"
-        ];
-      };
-    };
-  };
+  # Public key only; it is the same `armeen-ssh` key listed in
+  # secrets/secrets.nix.
+  users.users."${user.login}".openssh.authorizedKeys.keys = [
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDXWQumRO6nC4ABA79WHB3kkNj0vUqAiz8oJwbxeG457 armeen"
+  ];
 }
