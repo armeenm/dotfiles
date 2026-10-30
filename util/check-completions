@@ -24,13 +24,17 @@ Usage:
 import argparse
 import json
 import os
+import platform
 import re
 import shutil
 import subprocess
 import sys
 import tempfile
 
-BASELINE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "completion-baseline")
+BASELINE = os.path.join(
+    os.path.dirname(os.path.abspath(__file__)),
+    f"completion-baseline-{platform.system().lower()}",
+)
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 REPO_SPECS = os.path.join(REPO, "home", "carapace", "specs")
 DELEGATES = os.path.join(REPO, "home", "carapace", "delegates.json")
