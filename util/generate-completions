@@ -1,30 +1,29 @@
 #!/usr/bin/env python3
 """Generate carapace specs for commands that have no upstream completion.
 
-Runs each command's --help/-h in a throwaway, GUI-less environment, extracts
-flag definitions, and writes a JSON spec per command. Output is a manifest
-(name -> spec body) that Nix renders into ~/.config/carapace/specs.
+Runs each command's --help/-h in a throwaway, GUI-less temporary directory and
+extracts flag definitions. Only output that actually looks like help and names
+the same program is used for flags; everything else gets an explicit
+file-completion spec. A side manifest records how each spec was derived.
 
 Usage:
-  util/generate-completions [--all] [--check] command...
+  util/generate-completions [--all] [--check] [--audit] command...
 """
 
 import argparse
 import json
-from concurrent.futures import ThreadPoolExecutor
 import os
 import re
-import shutil
 import signal
 import subprocess
 import sys
 import tempfile
+from concurrent.futures import ThreadPoolExecutor
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 MANIFEST = os.path.join(REPO, "home", "carapace", "generated.json")
+META = os.path.join(REPO, "home", "carapace", "generated-meta.json")
 
-# GUI/session tools: do not invoke them, not even with --help. They still get
-# a minimal file-completion spec.
 GUI = {
     "Telegram", "bruno", "discord", "element-desktop", "evince-previewer",
     "evince-thumbnailer", "feishin", "imv-dir", "imv-msg", "imv-wayland",
@@ -36,10 +35,16 @@ GUI = {
 }
 
 SAFE_NAME = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_-]*$")
-
 FLAG_LINE = re.compile(r"^\s*(-{1,2}[^\s].*)$")
 TOKEN = re.compile(r"(?<![A-Za-z0-9])(--?[A-Za-z0-9?][A-Za-z0-9_-]*)")
 SEP = re.compile(r"\s{2,}")
+HELPISH = re.compile(r"(?i)\b(usage|options|flags|commands)\b")
+USAGE = re.compile(r"(?im)^\s*usage:\s*([^\s\[]+)")
+ERROR = re.compile(
+    r"invalid option|unknown option|unrecognized option|illegal option|"
+    r"no such file|cannot open|try '.*--help'|error:",
+    re.I,
+)
 
 
 def clean(text):
@@ -49,12 +54,13 @@ def clean(text):
     return text[:180]
 
 
-def run_help(cmd):
+def probe_help(cmd):
     base = os.environ.copy()
     for key in ("DISPLAY", "WAYLAND_DISPLAY", "XDG_SESSION_TYPE"):
         base.pop(key, None)
-    base.update({"LC_ALL": "C", "TERM": "dumb", "HOME": "/tmp"})
+    result = {"text": "", "flag": None, "exit": None, "files": []}
     with tempfile.TemporaryDirectory() as cwd:
+        base.update({"LC_ALL": "C", "TERM": "dumb", "HOME": cwd})
         for flag in ("--help", "-h", "--usage"):
             try:
                 proc = subprocess.Popen(
@@ -71,12 +77,14 @@ def run_help(cmd):
                 except subprocess.TimeoutExpired:
                     os.killpg(proc.pid, signal.SIGKILL)
                     out, _ = proc.communicate()
-            except OSError:
-                continue
-            text = out.decode("utf-8", "replace")
-            if text.strip():
-                return text
-    return ""
+            except OSError as exc:
+                result["text"] = str(exc)
+                break
+            result.update(flag=flag, exit=proc.returncode, text=out.decode("utf-8", "replace"))
+            if result["text"].strip():
+                break
+        result["files"] = sorted(os.listdir(cwd))
+    return result
 
 
 def parse_flags(text):
@@ -111,11 +119,17 @@ def parse_flags(text):
                 shorts.append(token)
         if not shorts and not longs:
             continue
-        takes_arg = bool(re.search(r"(=|<|\[=|\s(ARG|FILE|PATH|NUM|N|VALUE|STRING|NAME|ADDR|PORT|TYPE|MODE))", spec_part))
+        takes_arg = bool(
+            re.search(
+                r"(=|<|\[=|\s(ARG|FILE|PATH|NUM|N|VALUE|STRING|NAME|ADDR|PORT|TYPE|MODE))",
+                spec_part,
+            )
+        )
         optional = bool(re.search(r"\[[^]]*\]|(\?)$", spec_part))
         repeat = "..." in spec_part or "*" in spec_part
-        # Carapace order: value, repeatable, optional.
-        mods = ("=" if takes_arg else "") + ("*" if repeat else "") + ("?" if optional and not takes_arg else "")
+        mods = ("=" if takes_arg else "") + ("*" if repeat else "") + (
+            "?" if optional and not takes_arg else ""
+        )
         long = next((l for l in longs if l not in used_long), None)
         short = next((s for s in shorts if s not in used_short), None)
         if long is None and short is None:
@@ -128,7 +142,6 @@ def parse_flags(text):
         if key in flags:
             continue
         flags[key] = desc or "option"
-        # Alternate long forms like --no-foo are exposed as separate flags.
         for alt in longs:
             if alt == long or alt in used_long:
                 continue
@@ -139,14 +152,49 @@ def parse_flags(text):
     return flags
 
 
-def spec_for(cmd):
-    text = run_help(cmd)
+def classify(cmd, probe):
+    text = probe["text"]
+    if not text.strip():
+        return "no-output", {}
+    if ERROR.search(text) and not HELPISH.search(text):
+        return "error", {}
+    if not HELPISH.search(text):
+        return "not-help", {}
+    usage = USAGE.search(text)
+    used = usage.group(1) if usage else ""
+    used = os.path.basename(used).lstrip(".").removesuffix("-wrapped")
+    if used and used not in (cmd, "help"):
+        return "wrong-program", {}
     flags = parse_flags(text)
+    return ("ok" if flags else "no-flags"), flags
+
+
+def spec_for(cmd):
+    if cmd in GUI:
+        return {"completion": {"positionalany": ["$files"]}}, {
+            "source": "gui",
+            "class": "gui",
+            "flags": 0,
+            "help_flag": None,
+            "exit": None,
+            "files": [],
+        }
+    probe = probe_help(cmd)
+    cls, flags = classify(cmd, probe)
     body = {}
     if flags:
         body["flags"] = flags
     body["completion"] = {"positionalany": ["$files"]}
-    return body, text
+    source = "help" if cls in ("ok", "no-flags") else "file"
+    meta = {
+        "source": source,
+        "class": cls,
+        "flags": len(flags),
+        "help_flag": probe["flag"],
+        "exit": probe["exit"],
+        "files": probe["files"][:5],
+    }
+    return body, meta
 
 
 def candidates(spec_name, spec):
@@ -161,28 +209,8 @@ def candidates(spec_name, spec):
         env["XDG_CONFIG_HOME"] = cfg
         env["CARAPACE_BRIDGES"] = ""
         env["LC_ALL"] = "C"
-        try:
-            proc = subprocess.run(
-                ["carapace", spec_name, "zsh", spec_name, "-"],
-                capture_output=True,
-                timeout=10,
-                env=env,
-                cwd=workdir,
-            )
-        except (subprocess.TimeoutExpired, OSError):
-            return -1, ""
-        out = proc.stdout.decode("utf-8", "replace")
-        err = proc.stderr.decode("utf-8", "replace")
-        parts = out.split("\x01")
-        if len(parts) < 4:
-            return -1, err
-        count = 0
-        for block in parts[3].split("\x02"):
-            fields = block.split("\x03")
-            if len(fields) >= 3:
-                count += len([v for v in fields[2].split("\x04") if v.strip()])
-        if count == 0:
-            for probe in ("--", ""):
+        for probe in ("-", "--", ""):
+            try:
                 proc = subprocess.run(
                     ["carapace", spec_name, "zsh", spec_name, probe],
                     capture_output=True,
@@ -190,31 +218,39 @@ def candidates(spec_name, spec):
                     env=env,
                     cwd=workdir,
                 )
-                out = proc.stdout.decode("utf-8", "replace")
-                parts = out.split("\x01")
-                if len(parts) >= 4:
-                    count = 0
-                    for block in parts[3].split("\x02"):
-                        fields = block.split("\x03")
-                        if len(fields) >= 3:
-                            count += len([v for v in fields[2].split("\x04") if v.strip()])
-                if count:
-                    break
-        return count, err
+            except (subprocess.TimeoutExpired, OSError):
+                continue
+            out = proc.stdout.decode("utf-8", "replace")
+            parts = out.split("\x01")
+            if len(parts) < 4:
+                continue
+            count = 0
+            for block in parts[3].split("\x02"):
+                fields = block.split("\x03")
+                if len(fields) >= 3:
+                    count += len([v for v in fields[2].split("\x04") if v.strip()])
+            if count:
+                return count, proc.stderr.decode("utf-8", "replace")
+        return 0, ""
 
 
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("commands", nargs="*")
-    parser.add_argument("--all", action="store_true", help="generate for every untracked command on PATH")
-    parser.add_argument("--check", action="store_true", help="only report commands with no manifest entry")
-    parser.add_argument("--from-file", metavar="FILE", help="read command names from FILE")
+    parser.add_argument("--all", action="store_true")
+    parser.add_argument("--check", action="store_true")
+    parser.add_argument("--audit", action="store_true")
+    parser.add_argument("--from-file", metavar="FILE")
     args = parser.parse_args()
 
     existing = {}
     if os.path.exists(MANIFEST):
         with open(MANIFEST) as handle:
             existing = json.load(handle)
+    meta = {}
+    if os.path.exists(META):
+        with open(META) as handle:
+            meta = json.load(handle)
 
     commands = list(args.commands)
     if args.from_file:
@@ -237,33 +273,48 @@ def main():
     commands = [c for c in commands if SAFE_NAME.match(c)]
 
     if args.check:
-        missing = [c for c in commands if c not in existing]
-        print("\n".join(missing))
+        print("\n".join(c for c in commands if c not in existing))
+        return 0
+
+    if args.audit:
+        with ThreadPoolExecutor(max_workers=10) as pool:
+            results = list(pool.map(lambda c: (c, spec_for(c)[1]), commands))
+        from collections import Counter
+
+        counts = Counter(m["class"] for _, m in results)
+        print("audited", len(results), dict(counts))
+        for cls in ("error", "not-help", "wrong-program", "no-output"):
+            bad = [(c, m) for c, m in results if m["class"] == cls]
+            if bad:
+                print(f"\n{cls} ({len(bad)}):")
+                for c, m in bad:
+                    print(f"  {c:28} flag={m['help_flag']} exit={m['exit']} files={m['files']}")
         return 0
 
     def process(cmd):
-        if cmd in GUI:
-            return cmd, {"completion": {"positionalany": ["$files"]}}, 1, ""
-        body, _ = spec_for(cmd)
+        body, info = spec_for(cmd)
         count, err = candidates(cmd, body)
-        return cmd, body, count, err
+        return cmd, body, info, count, err
 
     written = 0
     with ThreadPoolExecutor(max_workers=8) as pool:
-        for cmd, body, count, err in pool.map(process, commands):
-            if count < 0:
-                print(f"invalid {cmd}: {err.strip().splitlines()[0] if err.strip() else 'no output'}", file=sys.stderr)
+        for cmd, body, info, count, err in pool.map(process, commands):
+            if count <= 0 and info["source"] == "help":
+                print(f"invalid {cmd}: {err.strip().splitlines()[0] if err.strip() else 'no candidates'}", file=sys.stderr)
                 continue
             existing[cmd] = body
+            info["candidates"] = count
+            meta[cmd] = info
             written += 1
-            print(f"{cmd}: {len(body.get('flags', {}))} flags, {count} candidates", file=sys.stderr)
-
-    if invalid:
-        print("skipped (carapace cannot name): " + " ".join(invalid), file=sys.stderr)
 
     with open(MANIFEST, "w") as handle:
         json.dump(existing, handle, indent=1, sort_keys=True)
         handle.write("\n")
+    with open(META, "w") as handle:
+        json.dump(meta, handle, indent=1, sort_keys=True)
+        handle.write("\n")
+    if invalid:
+        print("skipped (carapace cannot name): " + " ".join(invalid), file=sys.stderr)
     print(f"wrote {written} specs to {MANIFEST}", file=sys.stderr)
 
 

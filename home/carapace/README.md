@@ -23,3 +23,20 @@ or to `delegates.json` is enough for it to count.
 3. Otherwise: add `specs/<name>.yaml`.
 
 Then run `util/check-completions --update` after switching.
+
+## Validation
+
+`generated.json` is paired with `generated-meta.json`: each entry records
+whether it came from real help output (`source: help`) or is an explicit
+file-only fallback (`source: file`), plus the help flag, exit code, class and
+parsed flag count. `util/check-completions` reports the split.
+
+Re-audit without writing anything:
+
+```sh
+util/generate-completions --audit --from-file <command-list>
+```
+
+Classes are `ok`, `no-flags`, `not-help`, `error`, `wrong-program`,
+`no-output` and `gui`. Only `ok`/`no-flags` with a matching program name are
+used for flags; everything else gets a file-only spec.

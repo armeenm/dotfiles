@@ -35,6 +35,7 @@ REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 REPO_SPECS = os.path.join(REPO, "home", "carapace", "specs")
 DELEGATES = os.path.join(REPO, "home", "carapace", "delegates.json")
 GENERATED = os.path.join(REPO, "home", "carapace", "generated.json")
+GENERATED_META = os.path.join(REPO, "home", "carapace", "generated-meta.json")
 FILE_ONLY = os.path.join(REPO, "home", "carapace", "file-only.json")
 DEFAULT_SPEC_DIRS = [
     REPO_SPECS,
@@ -191,6 +192,16 @@ def main():
     if args.missing:
         print("\n".join(uncovered))
 
+    generated_meta = {}
+    try:
+        with open(GENERATED_META) as handle:
+            generated_meta = json.load(handle)
+    except FileNotFoundError:
+        pass
+    generated = {n: generated_meta[n] for n in generated_meta if n in covered}
+    generated_with_flags = sum(1 for m in generated.values() if m.get("source") == "help" and m.get("flags", 0) > 0)
+    generated_file = len(generated) - generated_with_flags
+
     summary = {
         "installed": len(installed),
         "covered": len(covered),
@@ -199,6 +210,8 @@ def main():
         "regressions": regressions,
         "additions": additions,
         "updated": args.update,
+        "generated_with_flags": generated_with_flags,
+        "generated_file_only": generated_file,
     }
 
     if args.json:
@@ -206,6 +219,8 @@ def main():
     elif not args.missing:
         percent = 100 * len(covered) / len(installed) if installed else 0
         print(f"{len(covered)}/{len(installed)} commands covered ({percent:.1f}%)")
+        if generated:
+            print(f"generated specs: {generated_with_flags} with flags, {generated_file} file-only")
         if args.update:
             print(f"baseline written: {len(covered)} commands")
         if additions:

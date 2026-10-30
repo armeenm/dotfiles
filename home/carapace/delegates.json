@@ -73,6 +73,7 @@
     "mkfs.exfat"
   ],
   "f2fs-mkfs": [
+    "make_f2fs",
     "mkfs.f2fs"
   ],
   "bcachefs-format": [
@@ -189,7 +190,8 @@
     "x86_64"
   ],
   "tar": [
-    "mxtar"
+    "mxtar",
+    "tgz"
   ],
   "f2fs-defrag": [
     "defrag.f2fs"
@@ -245,5 +247,19 @@
   ],
   "mkfs": [
     "mke2fs.android"
+  ],
+  "vlc": [
+    "cvlc",
+    "nvlc",
+    "qvlc",
+    "rvlc",
+    "svlc",
+    "vlc-wrapper"
+  ],
+  "cp": [
+    "override"
+  ],
+  "fatlabel": [
+    "dosfslabel"
   ]
 }
