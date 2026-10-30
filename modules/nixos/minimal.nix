@@ -68,6 +68,11 @@
       auto-optimise-store = true;
       experimental-features = [ "nix-command" "flakes" ];
 
+      # Allow wheel users to push locally built (and therefore unsigned)
+      # closures over SSH without turning off signature checking globally.
+      # Wheel already has passwordless sudo here.
+      trusted-users = lib.mkForce [ "@wheel" ];
+
       # The big hosts reserve 10 GiB for a rebuild; that would prevent every
       # rebuild on a 16 GiB card.
       min-free = 1024 * 1024 * 1024;

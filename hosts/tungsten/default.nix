@@ -13,11 +13,6 @@
 
   nixpkgs.hostPlatform = "aarch64-linux";
 
-  # Deploys are cross-architecture builds from a machine without a cache
-  # signing key. The host is key-only and single-purpose, and its substituters
-  # remain explicitly configured.
-  nix.settings.require-sigs = false;
-
   networking.hostName = "tungsten";
 
   # The card is the only writable disk; avoid unnecessary metadata writes.
@@ -88,6 +83,10 @@
       "--accept-dns=false"
     ];
   };
+
+  # tailscaled otherwise picks iptables-nft compatibility tables on Linux.
+  # The host is nftables-only, so force its native nftables backend.
+  systemd.services.tailscaled.environment.TS_DEBUG_FIREWALL_MODE = "nftables";
 
   # Tailscale asks for this on exit nodes; it improves forwarded UDP
   # throughput. Wait for the interface device so ethtool has a link to act on.

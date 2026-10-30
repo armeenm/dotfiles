@@ -114,12 +114,15 @@ nix build --keep-going --print-out-paths \
   .#nixosConfigurations.lithium.config.system.build.toplevel \
   .#nixosConfigurations.argentum.config.system.build.toplevel \
   .#nixosConfigurations.carbon.config.system.build.toplevel \
-  .#nixosConfigurations.hydrogen.config.system.build.toplevel
+  .#nixosConfigurations.hydrogen.config.system.build.toplevel \
+  .#nixosConfigurations.tungsten.config.system.build.toplevel
 ```
 
+`tungsten` is aarch64, so the build host needs aarch64 binfmt (lithium has it).
 Every host must build. **`nix flake check` is not enough on its own** — without
-`--no-build` it does build, but it also fails on the pre-existing darwin /
-`deploy` problems, so build the four Linux toplevels explicitly.
+`--no-build` it does build, but it also fails on pre-existing darwin issues, so
+build the five Linux toplevels explicitly. Deploy checks are split per system,
+so they no longer fail on cross-architecture deploy nodes.
 
 `nixos-unstable-small` regularly ships regressions. Work around them in
 `overlay/default.nix` with a `TODO` naming the upstream issue, and delete the
