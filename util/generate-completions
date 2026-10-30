@@ -1,0 +1,324 @@
+#!/usr/bin/env python3
+"""Generate carapace specs for commands that have no upstream completion.
+
+Runs each command's --help/-h in a throwaway, GUI-less temporary directory and
+extracts flag definitions. Only output that actually looks like help and names
+the same program is used for flags; everything else gets an explicit
+file-completion spec. A side manifest records how each spec was derived.
+
+Usage:
+  util/generate-completions [--all] [--check] [--audit] command...
+"""
+
+import argparse
+import json
+import os
+import re
+import signal
+import subprocess
+import sys
+import tempfile
+from concurrent.futures import ThreadPoolExecutor
+
+REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+MANIFEST = os.path.join(REPO, "home", "carapace", "generated.json")
+META = os.path.join(REPO, "home", "carapace", "generated-meta.json")
+
+GUI = {
+    "Telegram", "bruno", "discord", "element-desktop", "evince-previewer",
+    "evince-thumbnailer", "feishin", "imv-dir", "imv-msg", "imv-wayland",
+    "imv-x11", "libreoffice", "moonlight", "mozillavpn", "nomacs", "obs",
+    "obs-ffmpeg-mux", "obs-nvenc-test", "openchamber", "remmina",
+    "remmina-file-wrapper", "scalc", "sdraw", "signal-desktop", "simpress",
+    "smath", "soffice", "swriter", "virt-manager", "waybar", "wdisplays",
+    "xeyes", "zathura-sandbox", "zoom", "zoom-us",
+    "autoraiseapp", "betterdisplay", "bettertouchtool", "borders", "launchk",
+    "linearmouse", "monero-wallet", "sketchybar", "telegram", "whatsapp",
+}
+
+SAFE_NAME = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_-]*$")
+FLAG_LINE = re.compile(r"^\s*(-{1,2}[^\s].*)$")
+TOKEN = re.compile(r"(?<![A-Za-z0-9])(--?[A-Za-z0-9?][A-Za-z0-9_-]*)")
+SEP = re.compile(r"\s{2,}")
+HELPISH = re.compile(r"(?i)\b(usage|options|flags|commands)\b")
+USAGE = re.compile(r"(?im)^\s*usage:\s*([^\s\[]+)")
+ERROR = re.compile(
+    r"invalid option|unknown option|unrecognized option|illegal option|"
+    r"no such file|cannot open|try '.*--help'|error:",
+    re.I,
+)
+
+
+def clean(text):
+    text = re.sub(r"\x1b\[[0-9;]*[A-Za-z]", "", text)
+    text = text.replace("\r", " ")
+    text = re.sub(r"\s+", " ", text).strip()
+    return text[:180]
+
+
+def probe_help(cmd):
+    base = os.environ.copy()
+    for key in ("DISPLAY", "WAYLAND_DISPLAY", "XDG_SESSION_TYPE"):
+        base.pop(key, None)
+    result = {"text": "", "flag": None, "exit": None, "files": []}
+    with tempfile.TemporaryDirectory() as cwd:
+        base.update({"LC_ALL": "C", "TERM": "dumb", "HOME": cwd})
+        for flag in ("--help", "-h", "--usage"):
+            try:
+                proc = subprocess.Popen(
+                    [cmd, flag],
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.STDOUT,
+                    stdin=subprocess.DEVNULL,
+                    env=base,
+                    cwd=cwd,
+                    start_new_session=True,
+                )
+                try:
+                    out, _ = proc.communicate(timeout=4)
+                except subprocess.TimeoutExpired:
+                    os.killpg(proc.pid, signal.SIGKILL)
+                    out, _ = proc.communicate()
+            except OSError as exc:
+                result["text"] = str(exc)
+                break
+            result.update(flag=flag, exit=proc.returncode, text=out.decode("utf-8", "replace"))
+            if result["text"].strip():
+                break
+        result["files"] = sorted(os.listdir(cwd))
+    return result
+
+
+def parse_flags(text):
+    flags = {}
+    used_short = set()
+    used_long = set()
+    for raw in text.splitlines():
+        match = FLAG_LINE.match(raw)
+        if not match:
+            continue
+        line = match.group(1).strip()
+        parts = SEP.split(line, maxsplit=1)
+        spec_part = parts[0]
+        desc = clean(parts[1]) if len(parts) > 1 else ""
+        if not re.match(r"^-", spec_part):
+            continue
+        tokens = TOKEN.findall(spec_part)
+        if not tokens:
+            continue
+        shorts = []
+        longs = []
+        for token in tokens:
+            if token.startswith("--"):
+                name = token[2:]
+                if name.startswith("[no-]"):
+                    name = name[5:]
+                    if name:
+                        longs.append("--no-" + name)
+                if name:
+                    longs.append("--" + name)
+            elif len(token) == 2:
+                shorts.append(token)
+        if not shorts and not longs:
+            continue
+        takes_arg = bool(
+            re.search(
+                r"(=|<|\[=|\s(ARG|FILE|PATH|NUM|N|VALUE|STRING|NAME|ADDR|PORT|TYPE|MODE))",
+                spec_part,
+            )
+        )
+        optional = bool(re.search(r"\[[^]]*\]|(\?)$", spec_part))
+        repeat = "..." in spec_part or "*" in spec_part
+        mods = ("=" if takes_arg else "") + ("*" if repeat else "") + (
+            "?" if optional and not takes_arg else ""
+        )
+        long = next((l for l in longs if l not in used_long), None)
+        short = next((s for s in shorts if s not in used_short), None)
+        if long is None and short is None:
+            continue
+        if long:
+            used_long.add(long)
+        if short:
+            used_short.add(short)
+        key = ", ".join([x for x in (short, long) if x]) + mods
+        if key in flags:
+            continue
+        flags[key] = desc or "option"
+        for alt in longs:
+            if alt == long or alt in used_long:
+                continue
+            used_long.add(alt)
+            alt_key = alt + mods
+            if alt_key not in flags:
+                flags[alt_key] = desc or "option"
+    return flags
+
+
+def classify(cmd, probe):
+    text = probe["text"]
+    if not text.strip():
+        return "no-output", {}
+    if ERROR.search(text) and not HELPISH.search(text):
+        return "error", {}
+    if not HELPISH.search(text):
+        return "not-help", {}
+    usage = USAGE.search(text)
+    used = usage.group(1) if usage else ""
+    used = os.path.basename(used).lstrip(".").removesuffix("-wrapped")
+    if used and used not in (cmd, "help"):
+        return "wrong-program", {}
+    flags = parse_flags(text)
+    return ("ok" if flags else "no-flags"), flags
+
+
+def spec_for(cmd):
+    if cmd in GUI:
+        return {"completion": {"positionalany": ["$files"]}}, {
+            "source": "gui",
+            "class": "gui",
+            "flags": 0,
+            "help_flag": None,
+            "exit": None,
+            "files": [],
+        }
+    probe = probe_help(cmd)
+    cls, flags = classify(cmd, probe)
+    body = {}
+    if flags:
+        body["flags"] = flags
+    body["completion"] = {"positionalany": ["$files"]}
+    source = "help" if cls in ("ok", "no-flags") else "file"
+    meta = {
+        "source": source,
+        "class": cls,
+        "flags": len(flags),
+        "help_flag": probe["flag"],
+        "exit": probe["exit"],
+        "files": probe["files"][:5],
+    }
+    return body, meta
+
+
+def candidates(spec_name, spec):
+    with tempfile.TemporaryDirectory() as cfg, tempfile.TemporaryDirectory() as workdir:
+        with open(os.path.join(workdir, "probe.txt"), "w") as handle:
+            handle.write("probe\n")
+        specs = os.path.join(cfg, "carapace", "specs")
+        os.makedirs(specs)
+        with open(os.path.join(specs, spec_name + ".yaml"), "w") as handle:
+            json.dump({"name": spec_name, **spec}, handle)
+        env = dict(os.environ)
+        env["XDG_CONFIG_HOME"] = cfg
+        env["CARAPACE_BRIDGES"] = ""
+        env["LC_ALL"] = "C"
+        for probe in ("-", "--", ""):
+            try:
+                proc = subprocess.run(
+                    ["carapace", spec_name, "zsh", spec_name, probe],
+                    capture_output=True,
+                    timeout=10,
+                    env=env,
+                    cwd=workdir,
+                )
+            except (subprocess.TimeoutExpired, OSError):
+                continue
+            out = proc.stdout.decode("utf-8", "replace")
+            parts = out.split("\x01")
+            if len(parts) < 4:
+                continue
+            count = 0
+            for block in parts[3].split("\x02"):
+                fields = block.split("\x03")
+                if len(fields) >= 3:
+                    count += len([v for v in fields[2].split("\x04") if v.strip()])
+            if count:
+                return count, proc.stderr.decode("utf-8", "replace")
+        return 0, ""
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("commands", nargs="*")
+    parser.add_argument("--all", action="store_true")
+    parser.add_argument("--check", action="store_true")
+    parser.add_argument("--audit", action="store_true")
+    parser.add_argument("--from-file", metavar="FILE")
+    args = parser.parse_args()
+
+    existing = {}
+    if os.path.exists(MANIFEST):
+        with open(MANIFEST) as handle:
+            existing = json.load(handle)
+    meta = {}
+    if os.path.exists(META):
+        with open(META) as handle:
+            meta = json.load(handle)
+
+    commands = list(args.commands)
+    if args.from_file:
+        with open(args.from_file) as handle:
+            commands += [line.strip() for line in handle if line.strip()]
+    if args.all:
+        seen = set()
+        for directory in os.environ.get("PATH", "").split(os.pathsep):
+            try:
+                entries = os.listdir(directory)
+            except OSError:
+                continue
+            for name in entries:
+                path = os.path.join(directory, name)
+                if name not in seen and os.path.isfile(path) and os.access(path, os.X_OK):
+                    seen.add(name)
+                    commands.append(name)
+    commands = sorted(set(commands))
+    invalid = [c for c in commands if not SAFE_NAME.match(c)]
+    commands = [c for c in commands if SAFE_NAME.match(c)]
+
+    if args.check:
+        print("\n".join(c for c in commands if c not in existing))
+        return 0
+
+    if args.audit:
+        with ThreadPoolExecutor(max_workers=10) as pool:
+            results = list(pool.map(lambda c: (c, spec_for(c)[1]), commands))
+        from collections import Counter
+
+        counts = Counter(m["class"] for _, m in results)
+        print("audited", len(results), dict(counts))
+        for cls in ("error", "not-help", "wrong-program", "no-output"):
+            bad = [(c, m) for c, m in results if m["class"] == cls]
+            if bad:
+                print(f"\n{cls} ({len(bad)}):")
+                for c, m in bad:
+                    print(f"  {c:28} flag={m['help_flag']} exit={m['exit']} files={m['files']}")
+        return 0
+
+    def process(cmd):
+        body, info = spec_for(cmd)
+        count, err = candidates(cmd, body)
+        return cmd, body, info, count, err
+
+    written = 0
+    with ThreadPoolExecutor(max_workers=8) as pool:
+        for cmd, body, info, count, err in pool.map(process, commands):
+            if count <= 0 and info["source"] == "help":
+                print(f"invalid {cmd}: {err.strip().splitlines()[0] if err.strip() else 'no candidates'}", file=sys.stderr)
+                continue
+            existing[cmd] = body
+            info["candidates"] = count
+            meta[cmd] = info
+            written += 1
+
+    with open(MANIFEST, "w") as handle:
+        json.dump(existing, handle, indent=1, sort_keys=True)
+        handle.write("\n")
+    with open(META, "w") as handle:
+        json.dump(meta, handle, indent=1, sort_keys=True)
+        handle.write("\n")
+    if invalid:
+        print("skipped (carapace cannot name): " + " ".join(invalid), file=sys.stderr)
+    print(f"wrote {written} specs to {MANIFEST}", file=sys.stderr)
+
+
+if __name__ == "__main__":
+    main()

@@ -2,6 +2,17 @@
 
 let
   inherit (pkgs.stdenv) hostPlatform;
+
+  # Commands carapace covers without any bridges. The zsh bridge setup uses
+  # this to tell apart "carapace has its own completer" (keep carapace) from
+  # "the bash bridge merely picked up a bash completion" (restore native zsh).
+  carapaceBaseCompleters = pkgs.runCommandLocal "carapace-base-completers" {
+    nativeBuildInputs = [ config.programs.carapace.package ];
+  } ''
+    carapace _carapace zsh \
+      | sed -n 's/^compdef _carapace_completer //p' \
+      | grep -o '"[^"]*"' | tr -d '"' | sort -u > $out
+  '';
 in {
   programs.zsh = {
     enable = true;
@@ -38,6 +49,7 @@ in {
       fi
       [[ ! -f ~/.config/zsh/p10k.zsh ]] || source ~/.config/zsh/p10k.zsh
 
+      CARAPACE_BASE_COMPLETERS=${carapaceBaseCompleters}
       . ${./init.zsh}
     '';
 

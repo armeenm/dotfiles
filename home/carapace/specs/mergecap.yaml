@@ -1,0 +1,15 @@
+name: mergecap
+description: Merge two or more capture files into one
+flags:
+  -a: Concatenate rather than merge files
+  -s=: Truncate packets to a maximum number of bytes
+  -w=: Set the output filename, or - for stdout
+  -F=: Set the output file type
+  -I=: Set the merge mode for interface description blocks
+  --compress=: Compress the output file
+  -h, --help: Display this help and exit
+  -V: Verbose output
+  -v, --version: Print version information and exit
+completion:
+  positional:
+    - ["$files([.pcap, .pcapng, .cap, .gz, .pcap.gz, .pcapng.gz])"]

@@ -18,7 +18,13 @@ in {
     bashmount.enable = hostPlatform.isLinux;
     bat.enable = true;
     bun.enable = true;
-    carapace.enable = true;
+    carapace = {
+      enable = true;
+      # Let carapace use installed bash completions for commands it has no
+      # spec for. Covered commands keep their native zsh completion; see
+      # init.zsh for the restore pass.
+      environment.CARAPACE_BRIDGES = "bash";
+    };
     clock-rs.enable = true;
     dircolors.enable = true;
     direnv.enable = true;

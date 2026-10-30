@@ -1,0 +1,54 @@
+name: randpktdump
+description: Extcap generator of random packet data
+flags:
+  --extcap-interfaces: List the extcap interfaces
+  --extcap-dlts: List the data link types
+  --extcap-interface=: Specify the extcap interface
+  --extcap-config: List the interface configuration
+  --capture: Run the capture
+  --extcap-capture-filter=: Capture filter
+  --fifo=: Dump data to file or fifo
+  --extcap-version: Print tool version
+  --log-level=: Set the log level
+  --log-file=: Set a log file in addition to the console
+  --help: Print help
+  --version: Print the version
+  --maxbytes=: Maximum bytes per packet
+  --count=: Number of packets to generate
+  --delay=: Milliseconds to wait after writing each packet
+  --random-type: Choose one random type for all packets
+  --all-random: Choose a random type for each packet
+  --type=: Packet type
+completion:
+  flag:
+    type:
+      - "arp\tAddress Resolution Protocol"
+      - "bgp\tBorder Gateway Protocol"
+      - "bvlc\tBACnet Virtual Link Control"
+      - "dns\tDomain Name Service"
+      - "eth\tEthernet"
+      - "fddi\tFiber Distributed Data Interface"
+      - "giop\tGeneral Inter-ORB Protocol"
+      - "icmp\tInternet Control Message Protocol"
+      - "ieee802.15.4\tIEEE 802.15.4"
+      - "ip\tInternet Protocol"
+      - "ipv6\tInternet Protocol Version 6"
+      - "llc\tLogical Link Control"
+      - "m2m\tWiMAX M2M Encapsulation Protocol"
+      - "megaco\tMEGACO"
+      - "nbns\tNetBIOS-over-TCP Name Service"
+      - "ncp2222\tNetWare Core Protocol"
+      - "sctp\tStream Control Transmission Protocol"
+      - "syslog\tSyslog message"
+      - "tds\tTDS NetLib"
+      - "tcp\tTransmission Control Protocol"
+      - "tr\tToken-Ring"
+      - "udp\tUser Datagram Protocol"
+      - "usb-linux\tUniversal Serial Bus with Linux specific header"
+    log-level:
+      - critical
+      - warning
+      - message
+      - info
+      - debug
+      - noisy

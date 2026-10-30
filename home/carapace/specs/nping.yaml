@@ -1,0 +1,82 @@
+name: nping
+description: Network packet generation tool and ping utility
+flags:
+  --tcp-connect: Unprivileged TCP connect probe mode
+  --tcp: TCP probe mode
+  --udp: UDP probe mode
+  --icmp: ICMP probe mode
+  --arp: ARP/RARP probe mode
+  --traceroute: Traceroute mode
+  -p, --dest-port=: Set destination port or ports
+  -g, --source-port=: Try to use a custom source port
+  --seq=: Set sequence number
+  --flags=: Set TCP flags
+  --ack=: Set ACK number
+  --win=: Set window size
+  --badsum: Use a random invalid checksum
+  --icmp-type=: ICMP type
+  --icmp-code=: ICMP code
+  --icmp-id=: Set identifier
+  --icmp-seq=: Set sequence number
+  --icmp-redirect-addr=: Set redirect address
+  --icmp-param-pointer=: Set parameter problem pointer
+  --icmp-advert-lifetime=: Set router advertisement lifetime
+  --icmp-advert-entry=: Add router advertisement entry
+  --icmp-orig-time=: Set originate timestamp
+  --icmp-recv-time=: Set receive timestamp
+  --icmp-trans-time=: Set transmit timestamp
+  --arp-type=: ARP or RARP type
+  --arp-sender-mac=: Set sender MAC address
+  --arp-sender-ip=: Set sender IP address
+  --arp-target-mac=: Set target MAC address
+  --arp-target-ip=: Set target IP address
+  -S, --source-ip=: Set source IP address
+  --dest-ip=: Set destination IP address
+  --tos=: Set type of service field
+  --id=: Set identification field
+  --df: Set Don't Fragment flag
+  --mf: Set More Fragments flag
+  --evil: Set Reserved flag
+  --ttl=: Set time to live
+  --badsum-ip: Use a random invalid checksum
+  --ip-options=: Set IP options
+  --mtu=: Set MTU
+  -6, --IPv6: Use IP version 6
+  --hop-limit=: Set hop limit
+  --traffic-class=: Set traffic class
+  --flow=: Set flow label
+  --dest-mac=: Set destination MAC address
+  --source-mac=: Set source MAC address
+  --ether-type=: Set EtherType value
+  --data=: Include a custom payload
+  --data-string=: Include a custom ASCII text
+  --data-length=: Include random bytes as payload
+  --echo-client=: Run in client mode
+  --echo-server=: Run in server mode
+  --echo-port=: Use custom port to listen or connect
+  --no-crypto: Disable encryption and authentication
+  --once: Stop the server after one connection
+  --safe-payloads: Erase application data in echoed packets
+  --delay=: Adjust delay between probes
+  --rate=: Send packets per second
+  -h, --help: Display help information
+  -V, --version: Display current version number
+  -c, --count=: Stop after n rounds
+  -e, --interface=: Use supplied network interface
+  -H, --hide-sent: Do not display sent packets
+  -N, --no-capture: Do not try to capture replies
+  --privileged: Assume user is fully privileged
+  --unprivileged: Assume user lacks raw socket privileges
+  --send-eth: Send packets at the raw Ethernet layer
+  --send-ip: Send packets using raw IP sockets
+  --bpf-filter=: Specify custom BPF filter
+  -v: Increment verbosity level
+  -d: Increment debugging level
+  -q: Decrease verbosity level
+  --quiet: Set verbosity and debug level to minimum
+  --debug: Set verbosity and debug to the max level
+completion:
+  flag:
+    traceroute: []
+    icmp-type: ["echo", "echo-reply", "timestamp", "timestamp-reply", "info", "info-reply", "dest-unreach", "time-exceeded"]
+    arp-type: ["ARP", "ARP-reply", "RARP", "RARP-reply"]

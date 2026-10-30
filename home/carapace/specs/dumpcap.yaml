@@ -1,0 +1,37 @@
+name: dumpcap
+description: Capture network packets into a pcapng or pcap file
+flags:
+  -i, --interface=: capture interface name or index
+  --ifname=: name to use in the capture file
+  --ifdescr=: description to use in the capture file
+  -f=: packet filter in libpcap syntax
+  -s, --snapshot-length=: packet snapshot length
+  -p, --no-promiscuous-mode: do not capture in promiscuous mode
+  -I, --monitor-mode: capture in monitor mode
+  -B, --buffer-size=: kernel buffer size in MiB
+  -y, --linktype=: link-layer type
+  --time-stamp-type=: timestamp method for the interface
+  -D, --list-interfaces: list interfaces and exit
+  -L, --list-data-link-types: list link-layer types and exit
+  --list-time-stamp-types: list timestamp types and exit
+  --update-interval=: interval between updates in milliseconds
+  -d: print generated BPF code for the capture filter
+  -k=: set channel on a Wi-Fi interface
+  -S: print per-interface statistics once per second
+  -M: machine-readable output for -D, -L and -S
+  -c=: stop after this many packets
+  -a, --autostop=*: autostop condition
+  -w=: output file name
+  -g: enable group read access on the output file
+  -b, --ring-buffer=*: ring buffer option
+  -F=: output file type
+  -n: use pcapng format
+  -P: use libpcap format
+  --capture-comment=: capture comment for the output file
+  --temp-dir=: directory for temporary files
+  -N=: maximum number of buffered packets
+  -C=: maximum number of buffered bytes
+  --log-level=: active log level
+  --log-file=: write log messages to this file
+  -h, --help: show help
+  -v, --version: show version

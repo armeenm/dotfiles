@@ -1,0 +1,96 @@
+name: warp-cli
+description: Cloudflare WARP client
+flags:
+  -l, --listen: listen for status changes and DNS logs
+  --accept-tos: accept the terms of service
+  -v, --verbose*: increase verbosity
+  -j, --json: pretty print output as JSON
+  --no-paginate: disable automatic pagination
+  --no-ansi: disable ANSI characters in output
+  -h, --help: print help
+  -V, --version: print version
+commands:
+  - name: connect
+    description: Maintain a connection whenever possible
+  - name: disconnect
+    description: Disconnect the client
+  - name: status
+    description: Return the current connection status
+  - name: mode
+    description: Set the client's operating mode
+    completion:
+      positional:
+        - ["warp", "doh", "warp+doh", "dot", "warp+dot", "proxy", "tunnel_only"]
+  - name: dns
+    description: Configure DNS settings
+    commands:
+      - name: fallback
+        description: Configure fallback domains
+      - name: families
+        description: Configure Families Mode settings
+      - name: gateway-id
+        description: Force the specified Gateway ID for DNS queries
+      - name: log
+        description: Enable or disable DNS logging
+      - name: stats
+        description: Retrieve DNS stats for the current connection
+      - name: default-fallbacks
+        description: Display the DNS servers used for default fallback
+  - name: proxy
+    description: Configure proxy mode settings
+    commands:
+      - name: port
+        description: Override the listening port for proxy mode
+  - name: registration
+    description: Registration settings
+    commands:
+      - name: show
+        description: Show information about the current registration
+      - name: new
+        description: Register this client
+      - name: delete
+        description: Delete the current registration
+      - name: organization
+        description: Show the current Teams organization
+      - name: devices
+        description: List devices associated with the registration
+      - name: license
+        description: Attach the registration to a different account
+  - name: settings
+    description: Show or alter application settings
+    commands:
+      - name: list
+        description: Retrieve the current application settings
+      - name: reset
+        description: Restore settings to defaults
+      - name: support-url
+        description: Get the support URL for the current organization
+      - name: mode-switch-allowed
+        description: Whether users may change connection mode
+  - name: connector
+    description: Register a WARP Connector
+  - name: debug
+    description: Debugging commands
+  - name: environment
+    description: Configure the compliance environment
+  - name: mdm
+    description: MDM configs
+  - name: override
+    description: Temporary overrides of administrative settings
+  - name: target
+    description: Manage targets
+  - name: trusted
+    description: Configure trusted networks
+  - name: tunnel
+    description: Configure tunnel settings
+  - name: vnet
+    description: Get or specify the connected virtual network
+  - name: stats
+    description: Display statistics
+  - name: certs
+    description: Print installed account certificates
+  - name: generate-completions
+    description: Generate completions for a shell
+    completion:
+      positional:
+        - ["bash", "elvish", "fish", "nushell", "powershell", "zsh"]

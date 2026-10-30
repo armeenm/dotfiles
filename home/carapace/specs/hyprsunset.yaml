@@ -1,0 +1,14 @@
+name: hyprsunset
+description: Blue-light filter for Hyprland
+flags:
+  -g, --gamma=: Set the display gamma
+  --gamma_max=: Set the maximum display gamma
+  -t, --temperature=: Set the temperature in K
+  -i, --identity: Use the identity matrix
+  --verbose: Print more logging
+  -v, --version: Print the version
+  -h, --help: Print help
+completion:
+  flag:
+    temperature: ["1000", "2000", "3000", "4000", "5000", "6000", "6500"]
+    gamma: ["50", "75", "100", "125", "150"]

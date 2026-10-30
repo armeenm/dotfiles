@@ -1,0 +1,29 @@
+name: duf
+description: Disk usage and free space utility
+flags:
+  -all: include pseudo, duplicate and inaccessible file systems
+  -avail-threshold=: coloring threshold for the avail column
+  -hide=: hide device types, comma separated
+  -hide-fs=: hide specific filesystems, comma separated
+  -hide-mp=: hide specific mount points, comma separated
+  -inodes: list inode information instead of block usage
+  -json: output all devices in JSON format
+  -only=: show only device types, comma separated
+  -only-fs=: show only specific filesystems, comma separated
+  -only-mp=: show only specific mount points, comma separated
+  -output=: output fields, comma separated
+  -sort=: sort output by field
+  -style=: output style
+  -theme=: color theme
+  -usage-threshold=: coloring threshold for the usage bars
+  -version: display version
+  -warnings: output all warnings to stderr
+  -width=: maximum output width
+completion:
+  flag:
+    hide: ["$list(,)", "local", "network", "fuse", "special", "loops", "binds"]
+    only: ["$list(,)", "local", "network", "fuse", "special", "loops", "binds"]
+    output: ["$list(,)", "mountpoint", "size", "used", "avail", "usage", "inodes", "inodes_used", "inodes_avail", "inodes_usage", "type", "filesystem"]
+    sort: [mountpoint, size, used, avail, usage, inodes, inodes_used, inodes_avail, inodes_usage, type, filesystem]
+    style: [unicode, ascii]
+    theme: [dark, light, ansi]

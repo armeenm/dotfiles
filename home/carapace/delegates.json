@@ -1,0 +1,266 @@
+{
+  "iptables": [
+    "iptables-legacy",
+    "iptables-nft",
+    "xtables-legacy-multi",
+    "xtables-nft-multi"
+  ],
+  "ip6tables": [
+    "ip6tables-legacy",
+    "ip6tables-nft"
+  ],
+  "arptables": [
+    "arptables-nft"
+  ],
+  "ebtables": [
+    "ebtables-nft"
+  ],
+  "iptables-save": [
+    "arptables-nft-save",
+    "arptables-save",
+    "ebtables-nft-save",
+    "ebtables-save",
+    "ip6tables-legacy-save",
+    "ip6tables-nft-save",
+    "iptables-legacy-save",
+    "iptables-nft-save"
+  ],
+  "iptables-restore": [
+    "arptables-nft-restore",
+    "arptables-restore",
+    "ebtables-nft-restore",
+    "ebtables-restore",
+    "ip6tables-legacy-restore",
+    "ip6tables-nft-restore",
+    "iptables-legacy-restore",
+    "iptables-nft-restore"
+  ],
+  "iptables-translate": [
+    "arptables-translate",
+    "ebtables-translate",
+    "ip6tables-restore-translate",
+    "ip6tables-translate",
+    "iptables-restore-translate"
+  ],
+  "iptables-apply": [
+    "ip6tables-apply"
+  ],
+  "umount": [
+    "umount.nfs",
+    "umount.nfs4",
+    "umount.udisks2"
+  ],
+  "fsck": [
+    "dosfsck",
+    "fsck.fat",
+    "fsck.msdos",
+    "fsck.ntfs",
+    "fsck.ntfsplus",
+    "fsck.vfat"
+  ],
+  "exfat-fsck": [
+    "fsck.exfat"
+  ],
+  "f2fs-fsck": [
+    "fsck.f2fs"
+  ],
+  "bcachefs-fsck": [
+    "fsck.bcachefs",
+    "fsck.fuse.bcachefs",
+    "fsck.fuseblk.bcachefs"
+  ],
+  "exfat-mkfs": [
+    "mkfs.exfat"
+  ],
+  "f2fs-mkfs": [
+    "make_f2fs",
+    "mkfs.f2fs"
+  ],
+  "bcachefs-format": [
+    "mkfs.bcachefs",
+    "mkfs.fuse.bcachefs",
+    "mkfs.fuseblk.bcachefs"
+  ],
+  "exfat-dump": [
+    "dump.exfat"
+  ],
+  "exfat-tune": [
+    "tune.exfat"
+  ],
+  "f2fs-dump": [
+    "dump.f2fs"
+  ],
+  "f2fs-resize": [
+    "resize.f2fs"
+  ],
+  "f2fs-sload": [
+    "sload.f2fs"
+  ],
+  "bcachefs-mount": [
+    "mount.bcachefs",
+    "mount.fuse.bcachefs",
+    "mount.fuseblk.bcachefs"
+  ],
+  "ntfs-probe": [
+    "ntfs-3g.probe"
+  ],
+  "gimp": [
+    "gimp-3"
+  ],
+  "gimp-console-3": [
+    "gimp-console",
+    "gimp-console-3.2"
+  ],
+  "gimptool-3": [
+    "gimptool",
+    "gimptool-3.2"
+  ],
+  "gimp-test-clipboard-3": [
+    "gimp-test-clipboard",
+    "gimp-test-clipboard-3.2"
+  ],
+  "pw-cat": [
+    "pw-dsdplay",
+    "pw-encplay",
+    "pw-midi2play",
+    "pw-midi2record",
+    "pw-midiplay",
+    "pw-midirecord",
+    "pw-play",
+    "pw-record",
+    "pw-sysex"
+  ],
+  "mkfs-fat": [
+    "mkdosfs",
+    "mkfs.fat",
+    "mkfs.msdos",
+    "mkfs.vfat"
+  ],
+  "mkfs-ntfs": [
+    "mkfs.ntfs",
+    "mkfs.ntfsplus",
+    "mkntfs"
+  ],
+  "Hyprland": [
+    "hyprland"
+  ],
+  "python3": [
+    "python3.14"
+  ],
+  "rsync": [
+    "rsync-ssl"
+  ],
+  "mount-nfs": [
+    "mount.nfs",
+    "mount.nfs4"
+  ],
+  "mount-ntfs": [
+    "lowntfs-3g",
+    "mount.lowntfs-3g",
+    "mount.ntfs",
+    "mount.ntfs-3g"
+  ],
+  "mount-fuse": [
+    "mount.fuse",
+    "mount.fuse3"
+  ],
+  "rclonefs": [
+    "mount.rclone"
+  ],
+  "pacat": [
+    "pamon"
+  ],
+  "gnome-keyring": [
+    "gnome-keyring-3"
+  ],
+  "google-chrome": [
+    "google-chrome-stable"
+  ],
+  "uwsm-app": [
+    "uwsm-terminal",
+    "uwsm-terminal-scope",
+    "uwsm-terminal-service"
+  ],
+  "setarch": [
+    "arch",
+    "i386",
+    "linux32",
+    "linux64",
+    "uname26",
+    "x86_64"
+  ],
+  "tar": [
+    "mxtar",
+    "tgz"
+  ],
+  "f2fs-defrag": [
+    "defrag.f2fs"
+  ],
+  "emacs": [
+    "emacs-31.1",
+    "emacs-32.0.50"
+  ],
+  "idle3": [
+    "idle3.14"
+  ],
+  "pydoc3": [
+    "pydoc3.14"
+  ],
+  "python3-config": [
+    "python3.14-config"
+  ],
+  "ld": [
+    "ld.bfd",
+    "ld.gold"
+  ],
+  "ld-so": [
+    "ld.so"
+  ],
+  "tcpdump": [
+    "tcpdump.4.99.7"
+  ],
+  "f2fs-fibmap": [
+    "fibmap.f2fs"
+  ],
+  "f2fs-parse": [
+    "parse.f2fs"
+  ],
+  "rpc-gssd": [
+    "rpc.gssd"
+  ],
+  "rpc-idmapd": [
+    "rpc.idmapd"
+  ],
+  "rpc-mountd": [
+    "rpc.mountd"
+  ],
+  "rpc-nfsd": [
+    "rpc.nfsd"
+  ],
+  "rpc-statd": [
+    "rpc.statd"
+  ],
+  "rpc-svcgssd": [
+    "rpc.svcgssd"
+  ],
+  "cxxfilt": [
+    "c++filt"
+  ],
+  "vlc": [
+    "cvlc",
+    "nvlc",
+    "qvlc",
+    "rvlc",
+    "svlc",
+    "vlc-wrapper"
+  ],
+  "cp": [
+    "override"
+  ],
+  "fatlabel": [
+    "dosfslabel"
+  ],
+  "mke2fs-android": [
+    "mke2fs.android"
+  ]
+}

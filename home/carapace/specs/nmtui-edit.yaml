@@ -1,0 +1,4 @@
+name: nmtui-edit
+description: Edit a NetworkManager connection
+flags:
+  -h, --help: Show help options

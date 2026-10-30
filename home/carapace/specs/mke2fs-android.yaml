@@ -1,0 +1,4 @@
+name: mke2fs-android
+description: Create an ext2/3/4 filesystem (Android variant)
+completion:
+  positionalany: ["$files"]

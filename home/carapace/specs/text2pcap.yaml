@@ -1,0 +1,56 @@
+name: text2pcap
+description: Generate a capture file from an ASCII hexdump of packets
+flags:
+  -o=: Parse offsets as hex, octal, decimal, or none
+  -t=: Treat the text before the packet as a date/time code
+  -D: Text before the packet starts with I or O for inbound or outbound
+  -a: Enable ASCII text dump identification
+  -r=: Enable regex mode with the given expression
+  -b=: Encoding base of the packet data in regex mode
+  -F=: Set the output file type
+  -E=: Set the output file encapsulation type
+  -l=: Set the output encapsulation type by link-layer type number
+  -m=: Maximum packet length in output
+  -N=: Assign a name to the interface in the pcapng file
+  --compress=: Compress the output file
+  -e=: Prepend a dummy Ethernet II header with the specified EtherType
+  -i=: Prepend a dummy IP header with the specified IP protocol
+  -4=: Prepend a dummy IPv4 header with source and destination addresses
+  -6=: Prepend a dummy IPv6 header with source and destination addresses
+  -u=: Prepend a dummy UDP header with source and destination ports
+  -T=: Prepend a dummy TCP header with source and destination ports
+  -s=: Prepend a dummy SCTP header with ports and verification tag
+  -S=: Prepend a dummy SCTP header with ports and payload protocol identifier
+  -P=: Prepend an exported PDU header with the specified dissector
+  --log-level=: Set the active log level
+  --log-fatal=: Set level to abort the program
+  --log-domains=: Comma-separated list of active log domains
+  --log-fatal-domains=: Domains that cause the program to abort
+  --log-debug=: Domains with debug level
+  --log-noisy=: Domains with noisy level
+  --log-file=: File to output messages to
+  -h, --help: Display this help and exit
+  -v, --version: Print version information and exit
+  -q: Do not report processed packet counts
+completion:
+  flag:
+    o:
+      - hex
+      - oct
+      - dec
+      - none
+    b:
+      - "2\tBinary"
+      - "8\tOctal"
+      - "16\tHexadecimal"
+      - "64\tBase 64"
+    log-level:
+      - critical
+      - warning
+      - message
+      - info
+      - debug
+      - noisy
+  positional:
+    - ["$files"]
+    - ["$files([.pcap, .pcapng, .cap, .gz, .pcap.gz, .pcapng.gz])"]

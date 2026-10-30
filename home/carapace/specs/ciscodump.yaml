@@ -1,0 +1,34 @@
+name: ciscodump
+description: Extcap remote capture from a Cisco device over SSH
+flags:
+  --extcap-interfaces: List the extcap interfaces
+  --extcap-dlts: List the data link types
+  --extcap-interface=: Specify the extcap interface
+  --extcap-config: List the interface configuration
+  --capture: Run the capture
+  --extcap-capture-filter=: Capture filter
+  --fifo=: Dump data to file or fifo
+  --extcap-version: Print tool version
+  --log-level=: Set the log level
+  --log-file=: Set a log file in addition to the console
+  --help: Print help
+  --version: Print the version
+  --remote-host=: Remote SSH host
+  --remote-port=: Remote SSH port
+  --remote-username=: Remote SSH username
+  --remote-password=: Remote SSH password
+  --sshkey=: Path of the SSH key
+  --sshkey-passphrase=: Passphrase to unlock the SSH key
+  --proxycommand=: Command to use as proxy for the SSH connection
+  --ssh-sha1: Support keys and key exchange using SHA-1
+  --remote-interface=: Remote capture interface
+  --remote-filter=: Filter for remote capture
+completion:
+  flag:
+    log-level:
+      - critical
+      - warning
+      - message
+      - info
+      - debug
+      - noisy

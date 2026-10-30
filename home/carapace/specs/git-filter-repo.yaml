@@ -1,0 +1,73 @@
+name: git-filter-repo
+description: Rewrite or analyze Git repository history
+flags:
+  --analyze: Analyze repository history and create a report
+  --report-dir=: Directory to write the analysis report
+  --invert-paths: Invert the selection of files
+  --path=*: Exact paths to include in filtered history
+  --path-match=*: Exact paths to include in filtered history
+  --path-glob=*: Glob of paths to include in filtered history
+  --path-regex=*: Regex of paths to include in filtered history
+  --use-base-name: Match on file base name instead of full path
+  --path-rename=*: Rename a path
+  --path-rename-match=*: Rename a path
+  --paths-from-file=: Read path filtering and renaming directives from a file
+  --subdirectory-filter=: Only look at history that touches a subdirectory
+  --to-subdirectory-filter=: Treat the project root as if under a directory
+  --replace-text=: Replace expressions found in file contents
+  --strip-blobs-bigger-than=: Strip blobs bigger than the specified size
+  --strip-blobs-with-ids=: Strip blobs with object ids listed in a file
+  --tag-rename=: Rename tags starting with a prefix
+  --replace-message=: Replace expressions found in commit and tag messages
+  --preserve-commit-hashes: Do not update old commit hashes in messages
+  --preserve-commit-encoding: Do not reencode commit messages into UTF-8
+  --mailmap=: Use the specified mailmap file
+  --use-mailmap: Same as --mailmap .mailmap
+  --replace-refs=: How to handle replace refs
+  --prune-empty=: Whether to prune empty commits
+  --prune-degenerate=: Whether to prune degenerate merge commits
+  --no-ff: Do not prune the first parent even if it becomes an ancestor
+  --filename-callback=: Python code body for processing filenames
+  --file-info-callback=: Python code body for processing file and metadata
+  --message-callback=: Python code body for processing messages
+  --name-callback=: Python code body for processing names of people
+  --email-callback=: Python code body for processing email addresses
+  --refname-callback=: Python code body for processing refnames
+  --blob-callback=: Python code body for processing blob objects
+  --commit-callback=: Python code body for processing commit objects
+  --tag-callback=: Python code body for processing tag objects
+  --reset-callback=: Python code body for processing reset objects
+  --sensitive-data-removal: Gather extra information for sensitive data cleanup
+  --sdr: Alias for --sensitive-data-removal
+  --no-fetch: Do not fetch all refs from origin
+  --source=: Git repository to read from
+  --target=: Git repository to overwrite with filtered history
+  --date-order: Process commits in commit timestamp order
+  -h, --help: Show this help message and exit
+  --version: Display filter-repo's version and exit
+  --proceed: Avoid triggering the no-arguments-specified check
+  -f, --force: Rewrite repository history even if not a fresh clone
+  --partial: Do a partial history rewrite
+  --no-gc: Do not run git gc after filtering
+  --refs=*: Limit history rewriting to the specified refs
+  --dry-run: Do not change the repository
+  --debug: Print additional information about operations
+  --stdin: Filter the fast-export stream from stdin
+  --quiet: Pass --quiet to other git commands called
+completion:
+  flag:
+    report-dir: ["$directories"]
+    path-match: ["$files"]
+    path: ["$files"]
+    path-glob: []
+    paths-from-file: ["$files"]
+    subdirectory-filter: ["$directories"]
+    to-subdirectory-filter: ["$directories"]
+    replace-text: ["$files"]
+    strip-blobs-with-ids: ["$files"]
+    mailmap: ["$files"]
+    replace-refs: ["delete-no-add", "delete-and-add", "update-no-add", "update-or-add", "update-and-add", "old-default"]
+    prune-empty: ["always", "auto", "never"]
+    prune-degenerate: ["always", "auto", "never"]
+    source: ["$directories"]
+    target: ["$directories"]

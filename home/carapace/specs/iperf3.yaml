@@ -1,0 +1,76 @@
+name: iperf3
+description: Measure network bandwidth between two hosts
+flags:
+  -p, --port=: Server port to listen on or connect to
+  -f, --format=: Format to report
+  -i, --interval=: Seconds between periodic throughput reports
+  -I, --pidfile=: Write PID file
+  -F, --file=: Transmit or receive the specified file
+  -A, --affinity=: Set CPU affinity core number
+  -B, --bind=: Bind to the interface associated with the address
+  --bind-dev=: Bind to the network interface with SO_BINDTODEVICE
+  -V, --verbose: More detailed output
+  -J, --json: Output in JSON format
+  --json-stream: Output in line-delimited JSON format
+  --json-stream-full-output: Output in JSON format with JSON streams enabled
+  --logfile=: Send output to a log file
+  --forceflush: Force flushing output at every interval
+  --timestamps=?: Emit a timestamp at the start of each output line
+  --rcv-timeout=: Idle timeout for receiving data in milliseconds
+  --snd-timeout=: Timeout for unacknowledged TCP data in milliseconds
+  --cntl-ka=?: Use control connection TCP keepalive
+  -m, --mptcp: Use MPTCP rather than plain TCP
+  -d, --debug=?: Emit debugging output
+  -v, --version: Show version information and quit
+  -h, --help: Show this message and quit
+  -s, --server: Run in server mode
+  -D, --daemon: Run the server as a daemon
+  -1, --one-off: Handle one client connection then exit
+  --server-bitrate-limit=: Server's total bit rate limit
+  --idle-timeout=: Restart idle server after the given number of seconds
+  --server-max-duration=: Max time an iperf test can run against the server
+  --rsa-private-key-path=: Path to the RSA private key
+  --authorized-users-path=: Path to the user credentials file
+  --time-skew-threshold=: Time skew threshold in seconds
+  --use-pkcs1-padding: Use pkcs1 padding
+  -c, --client=: Run in client mode, connecting to the host
+  --sctp: Use SCTP rather than TCP
+  -X, --xbind=: Bind SCTP association to links
+  --nstreams=: Number of SCTP streams
+  -u, --udp: Use UDP rather than TCP
+  --connect-timeout=: Timeout for control connection setup in milliseconds
+  -b, --bitrate=: Target bitrate in bits per second
+  --pacing-timer=: Set the server timing for pacing in microseconds
+  --fq-rate=: Enable fair-queuing based socket pacing
+  -t, --time=: Time in seconds to transmit for
+  -n, --bytes=: Transmit until at least this number of bytes
+  -k, --blockcount=: Transmit until at least this number of blocks
+  -l, --length=: Length of buffer to read or write
+  --cport=: Bind to a specific client port
+  -P, --parallel=: Number of parallel client streams to run
+  -R, --reverse: Run in reverse mode
+  --bidir: Run in bidirectional mode
+  -w, --window=: Set send and receive socket buffer sizes
+  -C, --congestion=: Set TCP congestion control algorithm
+  -M, --set-mss=: Set TCP or SCTP maximum segment size
+  -N, --no-delay: Set TCP or SCTP no delay
+  -4, --version4: Only use IPv4
+  -6, --version6: Only use IPv6
+  -S, --tos=: Set the IP type of service
+  --dscp=: Set the IP DSCP value
+  -L, --flowlabel=: Set the IPv6 flow label
+  -Z, --zerocopy: Use a zero copy method of sending data
+  --skip-rx-copy: Ignore received messages using MSG_TRUNC
+  -O, --omit=: Perform a pre-test for N seconds and omit its statistics
+  -T, --title=: Prefix every output line with this string
+  --extra-data=: Data string to include in JSON
+  --get-server-output: Get results from server
+  --udp-counters-64bit: Use 64-bit counters in UDP test packets
+  --gsro: Enable UDP GSO/GRO on both client and server
+  --repeating-payload: Use a repeating pattern in payload
+  --dont-fragment: Set IPv4 Don't Fragment flag
+  --username=: Username for authentication
+  --rsa-public-key-path=: Path to the RSA public key
+completion:
+  flag:
+    format: ["k", "m", "g", "t", "K", "M", "G", "T"]

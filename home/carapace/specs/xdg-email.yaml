@@ -1,0 +1,15 @@
+name: xdg-email
+description: Send mail using the user's preferred e-mail composer
+flags:
+  --utf8: Use UTF-8 encoding
+  --cc=: Address to carbon copy
+  --bcc=: Address to blind carbon copy
+  --subject=: Subject of the message
+  --body=: Body of the message
+  --attach=: File to attach
+  -h, --help: Show command synopsis
+  --manual: Show the manual page
+  --version: Show the xdg-utils version information
+completion:
+  flag:
+    attach: ["$files"]

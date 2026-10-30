@@ -1,0 +1,66 @@
+name: httpie
+description: Manage HTTPie plugins and configuration
+flags:
+  --debug: print the exception traceback and debug information
+  --traceback: print the exception traceback
+  -h, --help: show help
+  --version: show version
+commands:
+  - name: cli
+    description: Manage HTTPie for Terminal
+    commands:
+      - name: export-args
+        description: Export the arguments used by http/https
+        flags:
+          -o, --output=: write the export to this file
+          -h, --help: show help
+      - name: check-updates
+        description: Check for updates
+        flags:
+          -h, --help: show help
+      - name: sessions
+        description: List and manage HTTPie sessions
+        flags:
+          -h, --help: show help
+      - name: plugins
+        description: Manage HTTPie plugins
+        aliases: [plugin]
+        commands:
+          - name: install
+            description: Install a plugin
+            flags:
+              --force: reinstall an existing plugin
+              -h, --help: show help
+          - name: upgrade
+            description: Upgrade a plugin
+            flags:
+              -h, --help: show help
+          - name: uninstall
+            description: Uninstall a plugin
+            flags:
+              -h, --help: show help
+          - name: list
+            description: List installed plugins
+            flags:
+              -h, --help: show help
+  - name: plugins
+    description: Manage HTTPie plugins
+    aliases: [plugin]
+    commands:
+      - name: install
+        description: Install a plugin
+        flags:
+          --force: reinstall an existing plugin
+          -h, --help: show help
+      - name: upgrade
+        description: Upgrade a plugin
+        flags:
+          -h, --help: show help
+      - name: uninstall
+        description: Uninstall a plugin
+        flags:
+          -h, --help: show help
+      - name: list
+        description: List installed plugins
+        flags:
+          -h, --help: show help

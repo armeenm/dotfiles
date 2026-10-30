@@ -1,0 +1,102 @@
+name: uwsm
+description: Universal Wayland Session Manager
+flags:
+  -h, --help: Show help
+  -v, --version: Print version
+commands:
+  - name: select
+    description: Select the default compositor entry
+  - name: start
+    description: Generate units and start the compositor
+    flags:
+      -h, --help: Show help
+      -D=: Names to fill XDG_CURRENT_DESKTOP with
+      -a: Append -D names to other sources
+      -e: Use -D names exclusively
+      -N=: Fancy name for the compositor
+      -C=: Fancy description for the compositor
+      -U=: Generated unit destination
+      -t: Do not generate tweak drop-ins
+      -T: Generate tweak drop-ins
+      -F: Hardcode the resulting command line
+      -g=: Seconds to wait for graphical.target and warn
+      -G=: Seconds to wait for graphical.target and abort
+      -o: Only generate units, do not start
+      -n: Dry run, write or start nothing
+    completion:
+      flag:
+        U: ["run", "home"]
+      positionalany: ["$executables"]
+  - name: stop
+    description: Stop the compositor and optionally remove units
+    flags:
+      -h, --help: Show help
+      -r?: Also remove unit files
+      -U=: Generated unit destination
+      -n: Dry run, stop or remove nothing
+    completion:
+      flag:
+        U: ["run", "home"]
+  - name: finalize
+    description: Export variables and complete compositor startup
+    flags:
+      -h, --help: Show help
+    completion:
+  - name: app
+    description: Launch an application as a systemd unit
+    flags:
+      -h, --help: Show help
+      -s=: Slice selector
+      -t=: Type of unit to launch
+      -a=: Override app name
+      -u=: Override the unit name
+      -d=: Unit description
+      -p=: Pass a unit property assignment
+      -S=: Silence stdout, stderr, or both
+      -T: Launch the app in a terminal
+    completion:
+      flag:
+        s: ["a", "b", "s"]
+        t: ["scope", "service"]
+        S: ["out", "err", "both"]
+      positionalany: ["$executables"]
+  - name: check
+    description: Perform state checks
+    commands:
+      - name: is-active
+        description: Check for an active compositor
+        flags:
+          -h, --help: Show help
+      - name: may-start
+        description: Check for start conditions
+        flags:
+          -h, --help: Show help
+  - name: aux
+    description: Auxiliary functions used by systemd units
+    commands:
+      - name: prepare-env
+        description: Prepare the environment
+        flags:
+          -h, --help: Show help
+      - name: cleanup-env
+        description: Clean up the environment
+        flags:
+          -h, --help: Show help
+      - name: exec
+        description: Execute a binary or Desktop Entry
+        flags:
+          -h, --help: Show help
+        completion:
+          positionalany: ["$executables"]
+      - name: waitpid
+        description: Wait for a PID to exit
+        flags:
+          -h, --help: Show help
+      - name: waitenv
+        description: Wait for WAYLAND_DISPLAY and other variables
+        flags:
+          -h, --help: Show help
+      - name: app-daemon
+        description: Daemon for fast app argument generation
+        flags:
+          -h, --help: Show help

@@ -1,0 +1,47 @@
+name: python3
+description: Python interpreter
+flags:
+  -b: issue warnings about bytes/str conversions
+  -B: don't write .pyc files on import
+  -c=: program passed in as a string
+  -d: turn on parser debugging output
+  -E: ignore PYTHON* environment variables
+  -h, --help: print help
+  -i: inspect interactively after running a script
+  -I: isolate Python from the user's environment
+  -m=: run a library module as a script
+  -O: remove assert and __debug__-dependent statements
+  -OO: also discard docstrings
+  -P: don't prepend a potentially unsafe path to sys.path
+  -q: don't print version and copyright on interactive startup
+  -s: don't add the user site directory to sys.path
+  -S: don't imply import site on initialization
+  -u: force stdout and stderr to be unbuffered
+  -v: verbose, trace import statements
+  -V, --version: print the Python version number
+  -W=: warning control (action:message:category:module:lineno)
+  -x: skip the first line of the source
+  -X=: set an implementation-specific option
+  --check-hash-based-pycs=: control how Python invalidates hash-based .pyc files
+  --help-env: print help about Python environment variables
+  --help-xoptions: print help about implementation-specific -X options
+  --help-all: print complete help information
+completion:
+  flag:
+    W: [error, ignore, always, default, module, once]
+    X:
+      - dev
+      - faulthandler
+      - importtime
+      - no_debug_ranges
+      - perf
+      - perf_jit
+      - showrefcount
+      - tracemalloc
+      - utf8
+      - warn_default_encoding
+      - frozen_modules=on
+      - frozen_modules=off
+    check-hash-based-pycs: [always, default, never]
+  positional:
+    - ["$files([.py, .pyw])", "$directories"]

@@ -1,0 +1,21 @@
+name: numbat
+description: Statically typed language for scientific computations with units
+flags:
+  -e, --expression=*: Evaluate a single expression, repeatable
+  -i, --inspect-interactively: Enter interactive session after running
+  --no-config: Do not load the user configuration file
+  -N, --no-prelude: Do not load the prelude with predefined units
+  --no-init: Do not load the user init file
+  --pretty-print=: Whether to pretty-print every input expression
+  --color=: Whether coloring should occur
+  --intro-banner=: What kind of intro banner to show
+  --generate-config: Generate a default configuration file
+  -h, --help: Print help
+  -V, --version: Print version
+completion:
+  flag:
+    pretty-print: ["always", "never", "auto"]
+    color: ["always", "never", "auto"]
+    intro-banner: ["long", "short", "off"]
+  positional:
+    - ["$files([.nbt])"]

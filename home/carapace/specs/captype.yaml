@@ -1,0 +1,8 @@
+name: captype
+description: Print the file types of capture files
+flags:
+  -h, --help: Display this help and exit
+  -v, --version: Display version info and exit
+completion:
+  positional:
+    - ["$files([.pcap, .pcapng, .cap, .gz, .pcap.gz, .pcapng.gz])"]
