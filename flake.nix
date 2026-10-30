@@ -199,6 +199,49 @@
       email = "armeen@fulminous-hill.com";
     };
 
+    # Nodes are tagged with their activation system so deploy checks only see
+    # nodes that can be built on the checking machine.
+    deployNodes = with self.nixosConfigurations; let
+      inherit (inputs.deploy-rs) lib;
+      mk = system: node: { inherit system node; };
+    in {
+      argentum = mk "x86_64-linux" {
+        hostname = "argentum";
+        profiles.system = {
+          sshUser = "root";
+          path = lib.x86_64-linux.activate.nixos argentum;
+        };
+      };
+
+      carbon = mk "x86_64-linux" {
+        hostname = "carbon";
+        profiles.system = {
+          sshUser = user.login;
+          user = "root";
+          path = lib.x86_64-linux.activate.nixos carbon;
+        };
+      };
+
+      lithium = mk "x86_64-linux" {
+        hostname = "lithium";
+        profiles.system = {
+          sshUser = "root";
+          path = lib.x86_64-linux.activate.nixos lithium;
+        };
+      };
+
+      tungsten = mk "aarch64-linux" {
+        hostname = "tungsten";
+        # Build on the deploying machine; the Pi is only for activation.
+        remoteBuild = false;
+        profiles.system = {
+          sshUser = user.login;
+          user = "root";
+          path = lib.aarch64-linux.activate.nixos tungsten;
+        };
+      };
+    };
+
     commonModules = [
       { _module.args = { inherit inputs user; }; }
     ];
@@ -334,34 +377,7 @@
     overlays.default = lib.composeManyExtensions allOverlays;
 
     deploy = {
-      nodes = with self.nixosConfigurations; let
-        inherit (inputs.deploy-rs) lib;
-      in {
-        argentum = {
-          hostname = "argentum";
-          profiles.system = {
-            sshUser = "root";
-            path = lib.x86_64-linux.activate.nixos argentum;
-          };
-        };
-
-        carbon = {
-          hostname = "carbon";
-          profiles.system = {
-            sshUser = user.login;
-            user = "root";
-            path = lib.x86_64-linux.activate.nixos carbon;
-          };
-        };
-
-        lithium = {
-          hostname = "lithium";
-          profiles.system = {
-            sshUser = "root";
-            path = lib.x86_64-linux.activate.nixos lithium;
-          };
-        };
-      };
+      nodes = lib.mapAttrs (_: node: node.node) deployNodes;
     };
 
     devShells = forAllSystems (system: pkgs: with pkgs; {
@@ -442,12 +458,15 @@
       };
     });
 
-    # The deploy nodes are all x86_64-linux, and the generated check
-    # derivations reference those system closures, so the per-system copies
-    # for other systems can't be built anywhere else.
+    # Deploy checks build every node's activation on the checking system, so
+    # give each system only the nodes it can actually build.
     checks = lib.genAttrs [
       "x86_64-linux"
-    ] (system: inputs.deploy-rs.lib.${system}.deployChecks self.deploy);
+      "aarch64-linux"
+    ] (system: inputs.deploy-rs.lib.${system}.deployChecks {
+      nodes = lib.mapAttrs (_: node: node.node)
+        (lib.filterAttrs (_: node: node.system == system) deployNodes);
+    });
 
     # `nix flake check` has built-in schemas for the standard outputs, but
     # nothing for nix-on-droid's. Declaring `schemas` makes Determinate Nix use

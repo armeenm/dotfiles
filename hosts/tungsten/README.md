@@ -31,10 +31,12 @@ on every boot.
 
 ## Update
 
-The device has no `nixos-rebuild` on purpose. Update it from a host that can
+The device has no `nixos-rebuild` on purpose. Deploy from a host that can
 build aarch64 (for example lithium):
 
 ```sh
-nixos-rebuild switch --flake .#tungsten \
-  --target-host armeen@tungsten --elevate=sudo
+deploy .#tungsten
 ```
+
+The node sets `remoteBuild = false`, so the build happens on the deploying
+machine rather than on the Pi.
