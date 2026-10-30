@@ -1,0 +1,150 @@
+{
+  "iptables": [
+    "iptables-nft",
+    "iptables-legacy",
+    "xtables-nft-multi",
+    "xtables-legacy-multi"
+  ],
+  "ip6tables": [
+    "ip6tables-nft",
+    "ip6tables-legacy"
+  ],
+  "arptables": [
+    "arptables-nft"
+  ],
+  "ebtables": [
+    "ebtables-nft"
+  ],
+  "iptables-save": [
+    "iptables-nft-save",
+    "iptables-legacy-save",
+    "ip6tables-nft-save",
+    "ip6tables-legacy-save",
+    "arptables-nft-save",
+    "arptables-save",
+    "ebtables-nft-save",
+    "ebtables-save"
+  ],
+  "iptables-restore": [
+    "iptables-nft-restore",
+    "iptables-legacy-restore",
+    "ip6tables-nft-restore",
+    "ip6tables-legacy-restore",
+    "arptables-nft-restore",
+    "arptables-restore",
+    "ebtables-nft-restore",
+    "ebtables-restore"
+  ],
+  "iptables-translate": [
+    "iptables-restore-translate",
+    "ip6tables-translate",
+    "ip6tables-restore-translate",
+    "arptables-translate",
+    "ebtables-translate"
+  ],
+  "iptables-apply": [
+    "ip6tables-apply"
+  ],
+  "mount": [
+    "mount.fuse",
+    "mount.fuse3",
+    "mount.nfs",
+    "mount.nfs4",
+    "mount.ntfs",
+    "mount.ntfs-3g",
+    "mount.lowntfs-3g",
+    "mount.rclone"
+  ],
+  "umount": [
+    "umount.nfs",
+    "umount.nfs4",
+    "umount.udisks2"
+  ],
+  "fsck": [
+    "fsck.fat",
+    "fsck.msdos",
+    "fsck.vfat",
+    "fsck.ntfs",
+    "fsck.ntfsplus"
+  ],
+  "exfat-fsck": [
+    "fsck.exfat"
+  ],
+  "f2fs-fsck": [
+    "fsck.f2fs"
+  ],
+  "bcachefs-fsck": [
+    "fsck.bcachefs",
+    "fsck.fuse.bcachefs",
+    "fsck.fuseblk.bcachefs"
+  ],
+  "mkfs": [
+    "mkfs.fat",
+    "mkfs.msdos",
+    "mkfs.vfat",
+    "mkdosfs",
+    "mkfs.ntfs",
+    "mkfs.ntfsplus",
+    "mkntfs"
+  ],
+  "exfat-mkfs": [
+    "mkfs.exfat"
+  ],
+  "f2fs-mkfs": [
+    "mkfs.f2fs"
+  ],
+  "bcachefs-format": [
+    "mkfs.bcachefs",
+    "mkfs.fuse.bcachefs",
+    "mkfs.fuseblk.bcachefs"
+  ],
+  "exfat-dump": [
+    "dump.exfat"
+  ],
+  "exfat-tune": [
+    "tune.exfat"
+  ],
+  "f2fs-dump": [
+    "dump.f2fs"
+  ],
+  "f2fs-resize": [
+    "resize.f2fs"
+  ],
+  "f2fs-sload": [
+    "sload.f2fs"
+  ],
+  "bcachefs-mount": [
+    "mount.bcachefs",
+    "mount.fuse.bcachefs",
+    "mount.fuseblk.bcachefs"
+  ],
+  "ntfs-probe": [
+    "ntfs-3g.probe"
+  ],
+  "gimp": [
+    "gimp-3"
+  ],
+  "gimp-console-3": [
+    "gimp-console",
+    "gimp-console-3.2"
+  ],
+  "gimptool-3": [
+    "gimptool",
+    "gimptool-3.2"
+  ],
+  "gimp-test-clipboard-3": [
+    "gimp-test-clipboard",
+    "gimp-test-clipboard-3.2"
+  ],
+  "pw-cat": [
+    "pw-play",
+    "pw-record",
+    "pw-dsdplay",
+    "pw-encplay",
+    "pw-midiplay",
+    "pw-midirecord",
+    "pw-midi2play",
+    "pw-midi2record",
+    "pw-sysex"
+  ]
+}
