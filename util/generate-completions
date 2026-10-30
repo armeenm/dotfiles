@@ -32,6 +32,8 @@ GUI = {
     "remmina-file-wrapper", "scalc", "sdraw", "signal-desktop", "simpress",
     "smath", "soffice", "swriter", "virt-manager", "waybar", "wdisplays",
     "xeyes", "zathura-sandbox", "zoom", "zoom-us",
+    "autoraiseapp", "betterdisplay", "bettertouchtool", "borders", "launchk",
+    "linearmouse", "monero-wallet", "sketchybar", "telegram", "whatsapp",
 }
 
 SAFE_NAME = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_-]*$")

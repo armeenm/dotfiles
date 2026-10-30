@@ -197,6 +197,7 @@
     "defrag.f2fs"
   ],
   "emacs": [
+    "emacs-31.1",
     "emacs-32.0.50"
   ],
   "idle3": [
@@ -245,9 +246,6 @@
   "cxxfilt": [
     "c++filt"
   ],
-  "mkfs": [
-    "mke2fs.android"
-  ],
   "vlc": [
     "cvlc",
     "nvlc",
@@ -261,5 +259,8 @@
   ],
   "fatlabel": [
     "dosfslabel"
+  ],
+  "mke2fs-android": [
+    "mke2fs.android"
   ]
 }
