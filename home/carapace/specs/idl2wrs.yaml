@@ -1,0 +1,5 @@
+name: idl2wrs
+description: Generate a Wireshark dissector from an IDL file
+completion:
+  positional:
+    - ["$files([.idl])"]

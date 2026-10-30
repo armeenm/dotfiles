@@ -414,6 +414,16 @@ in
         "-r" = "restore";
       };
     };
+    f2fs-defrag = {
+      flags = {
+        "-d=" = "debug level";
+        "-s=" = "start block address";
+        "-S" = "sparse mode";
+        "-l=" = "length";
+        "-t=" = "target block address";
+        "-i" = "shrink instead of expand";
+      };
+    };
     f2fs_io = {
       completion.positionalany = ["$executables"];
     };
@@ -628,6 +638,70 @@ in
           "noatime"
         ];
         positional = [ file dir ];
+      };
+    };
+  }
+  # ---------------------------------------------------------------- mtools
+  // family {
+    flags = {"-V" = "print version";};
+    completion.positional = files;
+  } {
+    mbadblocks = {
+      flags = {
+        "-s=" = "sector list";
+        "-c=" = "cluster list";
+        "-w" = "write changes to the disk";
+      };
+    };
+    mcat = {
+      flags = {
+        "-w" = "write to the device instead of reading";
+      };
+    };
+    mdoctorfat = {
+      flags = {
+        "-o=" = "cluster offset";
+        "-b" = "mark clusters as bad instead of reallocating them";
+        "-s=" = "new file size in bytes";
+      };
+      completion.positional = [file file];
+    };
+    minfo = {
+      flags = {"-v" = "verbose output";};
+    };
+    mpartition = {
+      flags = {
+        "-p" = "create a partition";
+        "-r" = "remove a partition";
+        "-a" = "make a partition active";
+        "-d" = "make a partition inactive";
+        "-c" = "create a filesystem";
+        "-v" = "verbose output";
+        "-I" = "ignore existing partition table";
+        "-B=" = "boot sector template";
+        "-s=" = "sectors per track";
+        "-t=" = "cylinders";
+        "-h=" = "heads";
+        "-T=" = "partition type";
+        "-b=" = "beginning sector";
+        "-l=" = "length in sectors";
+      };
+    };
+    mshortname = {};
+    mshowfat = {};
+    mtools = {
+      completion.positional = [["mattrib" "mbadblocks" "mcat" "mcd" "mcopy" "mdel" "mdeltree" "mdir" "mdoctorfat" "mdu" "mformat" "minfo" "mlabel" "mmd" "mmount" "mpartition" "mrd" "mmove" "mren" "mshowfat" "mshortname" "mtoolstest" "mtype" "mzip"]];
+    };
+    mzip = {
+      flags = {
+        "-q" = "print status";
+        "-e" = "eject the disk";
+        "-f" = "eject even when mounted";
+        "-r" = "write protect";
+        "-w" = "remove write protection";
+        "-p" = "password write protect";
+        "-x" = "password protect";
+        "-u" = "unprotect until eject";
       };
     };
   }

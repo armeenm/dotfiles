@@ -1,13 +1,13 @@
 {
   "iptables": [
-    "iptables-nft",
     "iptables-legacy",
-    "xtables-nft-multi",
-    "xtables-legacy-multi"
+    "iptables-nft",
+    "xtables-legacy-multi",
+    "xtables-nft-multi"
   ],
   "ip6tables": [
-    "ip6tables-nft",
-    "ip6tables-legacy"
+    "ip6tables-legacy",
+    "ip6tables-nft"
   ],
   "arptables": [
     "arptables-nft"
@@ -16,31 +16,31 @@
     "ebtables-nft"
   ],
   "iptables-save": [
-    "iptables-nft-save",
-    "iptables-legacy-save",
-    "ip6tables-nft-save",
-    "ip6tables-legacy-save",
     "arptables-nft-save",
     "arptables-save",
     "ebtables-nft-save",
-    "ebtables-save"
+    "ebtables-save",
+    "ip6tables-legacy-save",
+    "ip6tables-nft-save",
+    "iptables-legacy-save",
+    "iptables-nft-save"
   ],
   "iptables-restore": [
-    "iptables-nft-restore",
-    "iptables-legacy-restore",
-    "ip6tables-nft-restore",
-    "ip6tables-legacy-restore",
     "arptables-nft-restore",
     "arptables-restore",
     "ebtables-nft-restore",
-    "ebtables-restore"
+    "ebtables-restore",
+    "ip6tables-legacy-restore",
+    "ip6tables-nft-restore",
+    "iptables-legacy-restore",
+    "iptables-nft-restore"
   ],
   "iptables-translate": [
-    "iptables-restore-translate",
-    "ip6tables-translate",
-    "ip6tables-restore-translate",
     "arptables-translate",
-    "ebtables-translate"
+    "ebtables-translate",
+    "ip6tables-restore-translate",
+    "ip6tables-translate",
+    "iptables-restore-translate"
   ],
   "iptables-apply": [
     "ip6tables-apply"
@@ -51,11 +51,12 @@
     "umount.udisks2"
   ],
   "fsck": [
+    "dosfsck",
     "fsck.fat",
     "fsck.msdos",
-    "fsck.vfat",
     "fsck.ntfs",
-    "fsck.ntfsplus"
+    "fsck.ntfsplus",
+    "fsck.vfat"
   ],
   "exfat-fsck": [
     "fsck.exfat"
@@ -118,21 +119,21 @@
     "gimp-test-clipboard-3.2"
   ],
   "pw-cat": [
-    "pw-play",
-    "pw-record",
     "pw-dsdplay",
     "pw-encplay",
-    "pw-midiplay",
-    "pw-midirecord",
     "pw-midi2play",
     "pw-midi2record",
+    "pw-midiplay",
+    "pw-midirecord",
+    "pw-play",
+    "pw-record",
     "pw-sysex"
   ],
   "mkfs-fat": [
+    "mkdosfs",
     "mkfs.fat",
     "mkfs.msdos",
-    "mkfs.vfat",
-    "mkdosfs"
+    "mkfs.vfat"
   ],
   "mkfs-ntfs": [
     "mkfs.ntfs",
@@ -153,9 +154,10 @@
     "mount.nfs4"
   ],
   "mount-ntfs": [
+    "lowntfs-3g",
+    "mount.lowntfs-3g",
     "mount.ntfs",
-    "mount.ntfs-3g",
-    "mount.lowntfs-3g"
+    "mount.ntfs-3g"
   ],
   "mount-fuse": [
     "mount.fuse",
@@ -163,5 +165,33 @@
   ],
   "rclonefs": [
     "mount.rclone"
+  ],
+  "pacat": [
+    "pamon"
+  ],
+  "gnome-keyring": [
+    "gnome-keyring-3"
+  ],
+  "google-chrome": [
+    "google-chrome-stable"
+  ],
+  "uwsm-app": [
+    "uwsm-terminal",
+    "uwsm-terminal-scope",
+    "uwsm-terminal-service"
+  ],
+  "setarch": [
+    "arch",
+    "i386",
+    "linux32",
+    "linux64",
+    "uname26",
+    "x86_64"
+  ],
+  "tar": [
+    "mxtar"
+  ],
+  "f2fs-defrag": [
+    "defrag.f2fs"
   ]
 }

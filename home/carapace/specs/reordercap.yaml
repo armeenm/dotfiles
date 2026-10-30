@@ -1,0 +1,10 @@
+name: reordercap
+description: Reorder timestamps of input file frames into an output file
+flags:
+  -n: Do not write the output file if the input file is ordered
+  -h, --help: Display this help and exit
+  -v, --version: Print version information and exit
+completion:
+  positional:
+    - ["$files([.pcap, .pcapng, .cap, .gz, .pcap.gz, .pcapng.gz])"]
+    - ["$files([.pcap, .pcapng, .cap, .gz, .pcap.gz, .pcapng.gz])"]

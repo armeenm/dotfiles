@@ -4,8 +4,10 @@ adb
 addpart
 agenix
 alacritty
+androiddump
 apropos
 ar
+arch
 aria2c
 arping
 arptables
@@ -31,6 +33,7 @@ base64
 basename
 basenc
 bash
+bashmount
 bat
 bcachefs
 bits
@@ -62,6 +65,8 @@ bzip2recover
 bzless
 bzmore
 cal
+capinfos
+captype
 carapace
 cat
 cfdisk
@@ -79,6 +84,7 @@ chpasswd
 chroot
 chrt
 chsh
+ciscodump
 cksum
 claude
 clear
@@ -113,10 +119,12 @@ dbus-monitor
 dbus-send
 dconf
 dd
+defrag.f2fs
 delpart
 delta
 devlink
 df
+dftest
 diff
 diff3
 dir
@@ -140,12 +148,15 @@ dmesg
 docker
 dolphin
 dos2unix
+dosfsck
+dpauxmon
 dpll
 drill
 du
 duf
 dump.exfat
 dump.f2fs
+dumpcap
 ebtables
 ebtables-nft
 ebtables-nft-restore
@@ -154,8 +165,11 @@ ebtables-restore
 ebtables-save
 ebtables-translate
 echo
+editcap
 egrep
 eject
+emacs
+emacsclient
 enosys
 env
 etags
@@ -254,8 +268,10 @@ git-upload-pack
 gitui
 glow
 gnome-keyring
+gnome-keyring-3
 gnome-keyring-daemon
 google-chrome
+google-chrome-stable
 gpasswd
 gprof
 grep
@@ -293,9 +309,11 @@ hyprpicker
 hyprpm
 hyprshot
 hyprsunset
+i386
 iconv
 iconvconfig
 id
+idl2wrs
 importctl
 imv
 info
@@ -321,6 +339,7 @@ ip6tables-translate
 ipcmk
 ipcrm
 ipcs
+iperf
 iperf3
 iptables
 iptables-apply
@@ -351,6 +370,8 @@ ldconfig
 ldd
 less
 link
+linux32
+linux64
 ln
 loadkeys
 locale
@@ -361,6 +382,7 @@ loginctl
 logname
 look
 losetup
+lowntfs-3g
 lp
 lpadmin
 lpinfo
@@ -417,6 +439,8 @@ mako
 makoctl
 man
 mattrib
+mbadblocks
+mcat
 mcd
 mcookie
 mcopy
@@ -424,11 +448,14 @@ md5sum
 mdel
 mdeltree
 mdir
+mdoctorfat
 mdu
 meld
+mergecap
 mergiraf
 mesg
 mformat
+minfo
 miniserve
 miracle-sinkctl
 miracle-wifictl
@@ -457,6 +484,7 @@ mktemp
 mlabel
 mmcli
 mmd
+mmdbresolve
 mmount
 mmove
 modinfo
@@ -489,13 +517,19 @@ mount.ntfs
 mount.ntfs-3g
 mount.rclone
 mountpoint
+mpartition
 mpv
 mrd
 mren
+mshortname
+mshowfat
+mtools
 mtoolstest
 mtr
 mtype
 mv
+mxtar
+mzip
 namei
 nano
 navi
@@ -534,6 +568,10 @@ nl
 nm
 nmap
 nmcli
+nmtui
+nmtui-connect
+nmtui-edit
+nmtui-hostname
 nohup
 nom
 nom-build
@@ -576,6 +614,7 @@ pacmd
 pactl
 padsp
 pamixer
+pamon
 paplay
 parec
 parecord
@@ -652,7 +691,10 @@ python3.14
 rage
 rage-keygen
 ragenix
+randpkt
+randpktdump
 ranlib
+rawshark
 rclone
 rclonefs
 readelf
@@ -661,6 +703,7 @@ readprofile
 reboot
 rename
 renice
+reordercap
 resize.f2fs
 resizepart
 resolvectl
@@ -686,6 +729,7 @@ scrcpy
 script
 scriptlive
 scriptreplay
+sdjournal
 sed
 seq
 setarch
@@ -703,6 +747,7 @@ sha224sum
 sha256sum
 sha384sum
 sha512sum
+sharkd
 shellcheck
 showkey
 showmount
@@ -725,6 +770,7 @@ ssh-agent
 ssh-copy-id
 ssh-keygen
 ssh-keyscan
+sshdump
 starship
 stat
 stdbuf
@@ -793,6 +839,7 @@ texi2any
 texi2dvi
 texi2pdf
 texindex
+text2pcap
 time
 timedatectl
 timeout
@@ -819,12 +866,14 @@ tv
 uclampset
 udevadm
 udisksctl
+udpdump
 ul
 umount
 umount.nfs
 umount.nfs4
 umount.udisks2
 uname
+uname26
 uncompress
 unexpand
 uniq
@@ -854,6 +903,9 @@ uv
 uvx
 uwsm
 uwsm-app
+uwsm-terminal
+uwsm-terminal-scope
+uwsm-terminal-service
 varlinkctl
 vdir
 vgcfgbackup
@@ -897,6 +949,7 @@ who
 whoami
 whois
 wifi
+wifidump
 wipefs
 wireshark
 wl-copy
@@ -909,6 +962,7 @@ wpctl
 write
 wt
 wwan
+x86_64
 xargs
 xbacklight
 xdg-email

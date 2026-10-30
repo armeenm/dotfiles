@@ -1,0 +1,4 @@
+name: nmtui-hostname
+description: Set the system hostname with NetworkManager
+flags:
+  -h, --help: Show help options

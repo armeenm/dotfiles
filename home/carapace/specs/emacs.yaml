@@ -1,0 +1,106 @@
+name: emacs
+description: Extensible, customizable, self-documenting real-time display editor
+flags:
+  -nw, --no-window-system: Do not communicate with X, ignoring $DISPLAY
+  -q, --no-init-file: Load neither ~/.emacs nor default.el
+  -Q, --quick: Equivalent to -q --no-site-file --no-site-lisp --no-splash --no-x-resources
+  -u, --user=: Load ~USER/.emacs instead of your own
+  -t, --terminal=: Use DEVICE for terminal I/O
+  --tty=: Use DEVICE for terminal I/O
+  -d, --display=: Use X server DISPLAY
+  --batch: Do not do interactive display; implies -q
+  --chdir=: Change to directory DIR
+  --daemon=?: Start a server in the background
+  --bg-daemon=?: Start a named server in the background
+  --fg-daemon=?: Start a named server in the foreground
+  --debug-init: Enable Emacs Lisp debugger for init file
+  --no-site-file: Do not load site-start.el
+  -nsl, --no-site-lisp: Do not add site-lisp directories to load-path
+  --no-splash: Do not display a splash screen on startup
+  --no-desktop: Do not load a saved desktop
+  --no-x-resources: Do not load X resources
+  --no-build-details: Do not add build details such as time stamps
+  -nl, --no-loadup: Do not load loadup.el into bare Emacs
+  --module-assertions: Assert behavior of dynamic modules
+  --dump-file=: Read dumped state from FILE
+  --init-directory=: Use DIR when looking for the Emacs init files
+  --fingerprint: Output fingerprint and exit
+  --seccomp=: Read Seccomp BPF filter from FILE
+  --script=: Run FILE as an Emacs Lisp script
+  -x: Approximately the same as -Q --script
+  -L, --directory=: Prepend DIR to load-path (with :DIR, append DIR)
+  --eval=: Evaluate Emacs Lisp expression EXPR
+  --execute=: Evaluate Emacs Lisp expression EXPR
+  -f, --funcall=: Call Emacs Lisp function FUNC with no arguments
+  -l, --load=: Load Emacs Lisp FILE using the load function
+  --file=: Visit FILE
+  --find-file=: Visit FILE
+  --visit=: Visit FILE
+  --insert=: Insert contents of FILE into current buffer
+  --kill: Exit without asking for confirmation
+  -fn, --font=: Default font; must be fixed-width
+  -g, --geometry=: Window geometry
+  --color=?: Override color mode for character terminals
+  -r, --reverse-video: Switch foreground and background
+  -rv: Switch foreground and background
+  -T, --title=: Title for initial Emacs frame
+  --name=: Title for initial Emacs frame
+  -bg, --background-color=: Window background color
+  -fg, --foreground-color=: Window foreground color
+  -bd, --border-color=: Main border color
+  -bw, --border-width=: Width of main border
+  -cr, --cursor-color=: Color of the Emacs cursor indicating point
+  -ms, --mouse-color=: Mouse cursor color in Emacs window
+  -ib, --internal-border=: Width between text and main border
+  -lsp, --line-spacing=: Additional space to put between lines
+  -fh, --fullheight: Make the first frame high as the screen
+  -fs, --fullscreen: Make the first frame fullscreen
+  -fw, --fullwidth: Make the first frame wide as the screen
+  -mm, --maximized: Make the first frame maximized
+  --iconic: Start Emacs in iconified state
+  -nbi, --no-bitmap-icon: Do not use picture of gnu for Emacs icon
+  -nbc, --no-blinking-cursor: Disable blinking cursor
+  -vb, --vertical-scroll-bars: Enable vertical scroll bars
+  -D, --basic-display: Disable many display features
+  --xrm=: Set additional X resources
+  --parent-id=: Set parent window
+  --help: Display this help and exit
+  --version: Output version information and exit
+completion:
+  flag:
+    user: ["$files([.emacs,.el])"]
+    terminal: ["$files"]
+    tty: ["$files"]
+    display: ["$list(,)"]
+    chdir: ["$directories"]
+    daemon: []
+    bg-daemon: []
+    fg-daemon: []
+    dump-file: ["$files"]
+    init-directory: ["$directories"]
+    seccomp: ["$files"]
+    script: ["$files([.el])"]
+    L: ["$directories"]
+    directory: ["$directories"]
+    funcall: []
+    l: ["$files([.el,.elc])"]
+    load: ["$files([.el,.elc])"]
+    file: ["$files"]
+    find-file: ["$files"]
+    visit: ["$files"]
+    insert: ["$files"]
+    fn: []
+    font: []
+    geometry: []
+    color: ["auto", "never", "always", "ansi8"]
+    T: []
+    title: []
+    name: []
+    background-color: []
+    foreground-color: []
+    border-color: []
+    cursor-color: []
+    mouse-color: []
+    xrm: []
+  positional:
+    - ["$files"]

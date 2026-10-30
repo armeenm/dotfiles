@@ -1,0 +1,59 @@
+name: rawshark
+description: Dump and analyze raw network packet data
+flags:
+  -r, --read-file=: Set the pipe or file name to read from
+  -d=: Packet encapsulation or protocol
+  -F=: Field to display
+  -m=: Virtual memory limit in bytes
+  -n: Disable all name resolutions
+  -N=: Enable specific name resolutions
+  -p: Use the system packet header format
+  -R, --read-filter=: Packet filter in display filter syntax
+  -s: Skip the pcap header on input
+  -Y, --display-filter=: Packet filter in display filter syntax
+  --enable-protocol=: Enable dissection of a protocol
+  --disable-protocol=: Disable dissection of a protocol
+  --only-protocols=: Enable only the listed protocols, comma separated
+  --disable-all-protocols: Disable dissection of all protocols
+  --enable-heuristic=: Enable dissection of a heuristic protocol
+  --disable-heuristic=: Disable dissection of a heuristic protocol
+  -l: Flush output after each packet
+  -S=: Format string for fields
+  -t=: Output format of time stamps
+  -u=: Output format of seconds
+  --log-level=: Set the active log level
+  --log-fatal=: Set level to abort the program
+  --log-domains=: Comma-separated list of active log domains
+  --log-fatal-domains=: Domains that cause the program to abort
+  --log-debug=: Domains with debug level
+  --log-noisy=: Domains with noisy level
+  --log-file=: File to output messages to
+  -h, --help: Display this help and exit
+  -v, --version: Display version info and exit
+  -o=: Override a preference setting
+  -K=: Keytab file for Kerberos decryption
+completion:
+  flag:
+    read-file: ["$files([.pcap, .pcapng, .cap])"]
+    t:
+      - a
+      - ad
+      - adoy
+      - d
+      - dd
+      - e
+      - r
+      - u
+      - ud
+      - udoy
+    u:
+      - s
+      - hms
+    log-level:
+      - critical
+      - warning
+      - message
+      - info
+      - debug
+      - noisy
+    K: ["$files"]

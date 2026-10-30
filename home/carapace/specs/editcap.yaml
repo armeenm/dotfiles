@@ -1,0 +1,42 @@
+name: editcap
+description: Edit and translate the format of capture files
+flags:
+  -r: Keep the selected packets instead of deleting them
+  -A=: Only read packets at or after the given time
+  -B=: Only read packets at or before the given time
+  --novlan: Remove VLAN info before checking for duplicates
+  -d: Remove duplicate packets, window 5
+  -D=: Remove duplicate packets with a configurable window
+  -w=: Remove duplicate packets within a relative time window
+  --skip-radiotap-header: Skip the radiotap header when checking duplicates
+  --set-unused: Set unused bytes to zero in the SLL link address
+  -s=: Truncate each packet to a maximum number of bytes
+  -C=: Chop bytes from each packet
+  -L: Adjust the reported frame length when chopping or snapping
+  -R=: Replace the timestamp for a given frame number
+  -t=: Adjust the timestamp of each packet
+  -S=: Adjust timestamps to ensure strict chronological order
+  -E=: Probability that a packet byte is randomly changed
+  -o=: Bytes to skip at the start when injecting errors
+  --seed=: Seed for the pseudo-random number generator
+  -I=: Bytes to ignore at the start during MD5 hash calculation
+  -a=: Add or replace a comment for a given frame number
+  --discard-packet-comments: Discard pre-existing packet comments
+  --preserve-packet-comments: Preserve pre-existing packet comments
+  -c=: Split output into files of a maximum packet count
+  -i=: Split output into files of a maximum time interval
+  -F=: Set the output file type
+  -T=: Set the output file encapsulation type
+  --inject-secrets=: Insert decryption secrets of a given type from a file
+  --extract-secrets: Extract decryption secrets into the output file
+  --discard-all-secrets: Discard all decryption secrets from the input file
+  --capture-comment=: Add a capture file comment
+  --discard-capture-comment: Discard capture file comments from the input file
+  --compress=: Compress the output file
+  -h, --help: Display this help and exit
+  -V: Verbose output
+  -v, --version: Display version info and exit
+completion:
+  positional:
+    - ["$files([.pcap, .pcapng, .cap, .gz, .pcap.gz, .pcapng.gz])"]
+    - ["$files([.pcap, .pcapng, .cap, .gz, .pcap.gz, .pcapng.gz])"]

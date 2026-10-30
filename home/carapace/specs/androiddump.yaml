@@ -1,0 +1,46 @@
+name: androiddump
+description: Extcap capture from Android devices
+flags:
+  --extcap-interfaces: List the extcap interfaces
+  --extcap-dlts: List the data link types
+  --extcap-interface=: Specify the extcap interface
+  --extcap-config: List the interface configuration
+  --capture: Run the capture
+  --extcap-capture-filter=: Capture filter
+  --fifo=: Dump data to file or fifo
+  --extcap-version: Print tool version
+  --log-level=: Set the log level
+  --log-file=: Set a log file in addition to the console
+  --help: Print help
+  --adb-server-ip=: IP address of the ADB server
+  --adb-server-tcp-port=: TCP port of the ADB server
+  --logcat-text: Use logcat text format
+  --logcat-ignore-log-buffer: Ignore log buffer
+  --logcat-custom-options=: Custom logcat parameters
+  --bt-server-tcp-port=: Bluetooth server TCP port
+  --bt-forward-socket=: Bluetooth forward socket
+  --bt-local-ip=: Bluetooth local IP
+  --bt-local-tcp-port=: Bluetooth local TCP port
+completion:
+  flag:
+    extcap-interface:
+      - android-logcat-main
+      - android-logcat-system
+      - android-logcat-radio
+      - android-logcat-events
+      - android-logcat-text-main
+      - android-logcat-text-system
+      - android-logcat-text-radio
+      - android-logcat-text-events
+      - android-logcat-text-crash
+      - android-bluetooth-hcidump
+      - android-bluetooth-external-parser
+      - android-bluetooth-btsnoop-net
+      - android-tcpdump
+    log-level:
+      - critical
+      - warning
+      - message
+      - info
+      - debug
+      - noisy
