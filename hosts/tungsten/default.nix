@@ -13,7 +13,15 @@
 
   nixpkgs.hostPlatform = "aarch64-linux";
 
+  # Deploys are cross-architecture builds from a machine without a cache
+  # signing key. The host is key-only and single-purpose, and its substituters
+  # remain explicitly configured.
+  nix.settings.require-sigs = false;
+
   networking.hostName = "tungsten";
+
+  # The card is the only writable disk; avoid unnecessary metadata writes.
+  fileSystems."/".options = [ "noatime" ];
 
   system.stateVersion = lib.mkForce "26.05";
 
@@ -62,6 +70,10 @@
     };
   };
 
+  # Keep logs in RAM so journal writes do not wear the SD card. Logs are lost
+  # on reboot, which is acceptable for a stateless exit node.
+  services.journald.settings.Journal.Storage = "volatile";
+
   services.tailscale = {
     enable = true;
     openFirewall = true;
@@ -75,6 +87,24 @@
       "--advertise-exit-node"
       "--accept-dns=false"
     ];
+  };
+
+  # Tailscale asks for this on exit nodes; it improves forwarded UDP
+  # throughput. Wait for the interface device so ethtool has a link to act on.
+  systemd.services.tailscale-gro = {
+    description = "Enable UDP GRO forwarding for Tailscale exit-node traffic";
+    wantedBy = [ "multi-user.target" ];
+    wants = [ "sys-subsystem-net-devices-end0.device" ];
+    after = [ "sys-subsystem-net-devices-end0.device" ];
+
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+    };
+
+    script = ''
+      ${pkgs.ethtool}/bin/ethtool -K end0 rx-udp-gro-forwarding on rx-gro-list off
+    '';
   };
 
   sdImage = {
