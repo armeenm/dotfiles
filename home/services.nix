@@ -115,4 +115,42 @@ in {
       };
     };
   };
+
+  # polkitd drops every registered authentication agent when it restarts, and
+  # NixOS restarts polkit on every switch. hyprpolkitagent only registers once
+  # at startup, so watch the system bus and restart it when polkitd comes back,
+  # or polkit prompts silently never appear (e.g. KDE Partition Manager).
+  systemd.user = lib.mkIf (hostPlatform.isLinux && !isHeadless) {
+    services.polkit-agent-watch = {
+      Unit = {
+        Description = "Restart hyprpolkitagent when polkitd restarts";
+        PartOf = [ config.wayland.systemd.target ];
+        After = [ config.wayland.systemd.target "hyprpolkitagent.service" ];
+      };
+
+      Install.WantedBy = [ config.wayland.systemd.target ];
+
+      Service = {
+        Restart = "always";
+        RestartSec = "5s";
+        ExecStart = toString (pkgs.writeShellScript "polkit-agent-watch" ''
+          set -u
+
+          # gdbus uses a normal signal subscription; dbus-broker refuses
+          # unprivileged monitoring, so dbus-monitor never sees these signals.
+          # stdbuf and --line-buffered are both needed or nothing arrives
+          # until the pipeline exits.
+          # Matches only the acquire signal: the new owner (third argument)
+          # must be non-empty, which excludes polkitd going away.
+          ${pkgs.coreutils}/bin/stdbuf -oL ${lib.getBin pkgs.glib}/bin/gdbus monitor --system \
+            --dest org.freedesktop.DBus --object-path /org/freedesktop/DBus \
+          | ${pkgs.gnugrep}/bin/grep --line-buffered -E \
+            "NameOwnerChanged \('org\.freedesktop\.PolicyKit1', '[^']*', '[^']+'\)$" \
+          | while read -r _; do
+              ${pkgs.systemd}/bin/systemctl --user restart hyprpolkitagent.service || true
+            done
+        '');
+      };
+    };
+  };
 }

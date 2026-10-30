@@ -178,7 +178,6 @@ in {
         feishin
         gimp-with-plugins
         google-chrome
-        gparted
         grim
         gtk3
         hyprland-qtutils

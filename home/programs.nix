@@ -595,4 +595,8 @@ in {
       };
     };
   };
+
+  # ControlMaster sockets live here; ssh does not create the directory itself,
+  # so make sure it exists before the first connection.
+  home.file.".ssh/sockets/.keep".text = "";
 }

@@ -70,6 +70,7 @@
   programs = {
     dconf.enable = true;
     nix-ld.enable = true;
+    partition-manager.enable = true;
 
     hyprland = let
       hyprPkgs = inputs.hyprland.packages.${pkgs.system};
