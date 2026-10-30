@@ -62,7 +62,13 @@ jobs:
         # its cache as an extra substituter. This repo has no FlakeHub cache
         # entitlement, so every narinfo request returns 401. Use only our
         # caches for this invocation.
+        #
+        # On master, keep building after a failure so the cache still gets
+        # filled with everything that does build; pull requests stay fast and
+        # fail at the first broken check.
+        env:
+          KEEP_GOING: ${{ github.ref == 'refs/heads/master' && '--keep-going' || '' }}
         run: |
-          nix flake check --build-all ${{ matrix.args }} \
+          nix flake check --build-all ${{ matrix.args }} $KEEP_GOING \
             --option substituters "https://cache.armeen.xyz https://cache.nixos.org https://nix-on-droid.cachix.org https://hyprland.cachix.org https://nix-community.cachix.org" \
             --option extra-substituters ""
