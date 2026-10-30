@@ -596,7 +596,19 @@ in {
     };
   };
 
-  # ControlMaster sockets live here; ssh does not create the directory itself,
-  # so make sure it exists before the first connection.
-  home.file.".ssh/sockets/.keep".text = "";
+  home.file = lib.mkMerge [
+    # ControlMaster sockets live here; ssh does not create the directory
+    # itself, so make sure it exists before the first connection.
+    { ".ssh/sockets/.keep".text = ""; }
+
+    # Discord's settings.json lives under ~/Library/Application Support on
+    # macOS, which carries a com.apple.macl TCC xattr. The home-manager
+    # activation runs as the user via launchctl/sudo and cannot replace the
+    # symlink there ("Operation not permitted"), which fails the whole
+    # activation. Let Discord own the file instead; set any desired settings
+    # in the app.
+    (lib.mkIf hostPlatform.isDarwin {
+      "Library/Application Support/discord/settings.json".enable = lib.mkForce false;
+    })
+  ];
 }

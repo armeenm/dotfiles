@@ -42,6 +42,12 @@
   services = {
     fstrim.enable = true;
 
+    tailscale = {
+      enable = true;
+      openFirewall = true;
+      extraSetFlags = [ "--operator=${user.login}" ];
+    };
+
     openssh = {
       enable = true;
 
