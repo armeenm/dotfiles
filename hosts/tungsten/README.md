@@ -36,5 +36,5 @@ build aarch64 (for example lithium):
 
 ```sh
 nixos-rebuild switch --flake .#tungsten \
-  --target-host armeen@tungsten --use-remote-sudo
+  --target-host armeen@tungsten --elevate=sudo
 ```
