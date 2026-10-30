@@ -54,26 +54,28 @@ def run_help(cmd):
     for key in ("DISPLAY", "WAYLAND_DISPLAY", "XDG_SESSION_TYPE"):
         base.pop(key, None)
     base.update({"LC_ALL": "C", "TERM": "dumb", "HOME": "/tmp"})
-    for flag in ("--help", "-h", "--usage"):
-        try:
-            proc = subprocess.Popen(
-                [cmd, flag],
-                stdout=subprocess.PIPE,
-                stderr=subprocess.STDOUT,
-                stdin=subprocess.DEVNULL,
-                env=base,
-                start_new_session=True,
-            )
+    with tempfile.TemporaryDirectory() as cwd:
+        for flag in ("--help", "-h", "--usage"):
             try:
-                out, _ = proc.communicate(timeout=4)
-            except subprocess.TimeoutExpired:
-                os.killpg(proc.pid, signal.SIGKILL)
-                out, _ = proc.communicate()
-        except OSError:
-            continue
-        text = out.decode("utf-8", "replace")
-        if text.strip():
-            return text
+                proc = subprocess.Popen(
+                    [cmd, flag],
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.STDOUT,
+                    stdin=subprocess.DEVNULL,
+                    env=base,
+                    cwd=cwd,
+                    start_new_session=True,
+                )
+                try:
+                    out, _ = proc.communicate(timeout=4)
+                except subprocess.TimeoutExpired:
+                    os.killpg(proc.pid, signal.SIGKILL)
+                    out, _ = proc.communicate()
+            except OSError:
+                continue
+            text = out.decode("utf-8", "replace")
+            if text.strip():
+                return text
     return ""
 
 
@@ -147,8 +149,10 @@ def spec_for(cmd):
     return body, text
 
 
-def candidates(spec_name, spec, workdir):
-    with tempfile.TemporaryDirectory() as cfg:
+def candidates(spec_name, spec):
+    with tempfile.TemporaryDirectory() as cfg, tempfile.TemporaryDirectory() as workdir:
+        with open(os.path.join(workdir, "probe.txt"), "w") as handle:
+            handle.write("probe\n")
         specs = os.path.join(cfg, "carapace", "specs")
         os.makedirs(specs)
         with open(os.path.join(specs, spec_name + ".yaml"), "w") as handle:
@@ -237,13 +241,11 @@ def main():
         print("\n".join(missing))
         return 0
 
-    workdir = os.path.join(REPO, "home", "carapace", "specs")
-
     def process(cmd):
         if cmd in GUI:
             return cmd, {"completion": {"positionalany": ["$files"]}}, 1, ""
         body, _ = spec_for(cmd)
-        count, err = candidates(cmd, body, workdir)
+        count, err = candidates(cmd, body)
         return cmd, body, count, err
 
     written = 0

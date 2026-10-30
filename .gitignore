@@ -122,3 +122,9 @@ tags
 .pulumi/
 infra/**/node_modules/
 infra/**/bin/
+
+### Generated artifacts ###
+__pycache__/
+*.py[cod]
+*.yuv
+/--help.tgz
