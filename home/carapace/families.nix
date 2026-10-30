@@ -705,6 +705,127 @@ in
       };
     };
   }
+  # ---------------------------------------------------------------- rpc
+  // {
+    rpc-gssd = render "rpc-gssd" {
+      description = "NFS GSS daemon";
+      flags = {
+        "-f" = "run in the foreground";
+        "-M" = "use machine credentials";
+        "-n" = "do not use a daemon";
+        "-v" = "verbose";
+        "-r" = "use the default realm";
+        "-p=" = "pipefs directory";
+        "-k=" = "keytab file";
+        "-d=" = "ccache directory";
+        "-t=" = "timeout";
+        "-T=" = "RPC timeout";
+        "-R=" = "preferred realm";
+        "-D" = "debug";
+        "-H" = "use host credentials";
+        "-U=" = "upcall timeout";
+        "-C" = "use the default ccache";
+      };
+    };
+    rpc-idmapd = render "rpc-idmapd" {
+      description = "NFS id mapping daemon";
+      flags = {
+        "-h" = "show help";
+        "-f" = "run in the foreground";
+        "-v" = "verbose";
+        "-C" = "use the default cache";
+        "-S" = "use the system cache";
+        "-p=" = "pipefs directory";
+        "-c=" = "config file";
+      };
+    };
+    rpc-mountd = render "rpc-mountd" {
+      description = "NFS mount daemon";
+      flags = {
+        "-F, --foreground" = "run in the foreground";
+        "-h, --help" = "show help";
+        "-v, --version" = "show version";
+        "-d, --debug=" = "debug level";
+        "-l, --log-auth" = "log authentication";
+        "-i, --cache-use-ipaddr" = "use the IP address as the cache key";
+        "-T, --ttl=" = "cache TTL";
+        "-o, --descriptors=" = "number of file descriptors";
+        "-p, --port=" = "port to listen on";
+        "-V, --nfs-version=" = "NFS version to support";
+        "-N, --no-nfs-version=" = "NFS version to disable";
+        "-n, --no-tcp" = "disable TCP";
+        "-H, --ha-callout=" = "high-availability callout program";
+        "-r, --reverse-lookup" = "reverse lookup";
+        "-s, --state-directory-path=" = "state directory";
+        "-g, --manage-gids" = "manage gids";
+        "-t, --num-threads=" = "number of threads";
+        "-u, --no-udp" = "disable UDP";
+        "-L, --no-netlink" = "disable netlink";
+      };
+    };
+    rpc-nfsd = render "rpc-nfsd" {
+      description = "NFS kernel server daemon";
+      flags = {
+        "-d, --debug" = "debug";
+        "-H=" = "hostname";
+        "-p, --port=" = "port to listen on";
+        "-N, --no-nfs-version=" = "NFS version to disable";
+        "-V, --nfs-version=" = "NFS version to support";
+        "-s, --syslog" = "log to syslog";
+        "-t, --tcp" = "enable TCP";
+        "-T, --no-tcp" = "disable TCP";
+        "-u, --udp" = "enable UDP";
+        "-U, --no-udp" = "disable UDP";
+        "-r, --rdma=" = "RDMA port";
+        "-G, --grace-time=" = "grace time";
+        "-L, --leasetime=" = "lease time";
+      };
+      completion.positional = files;
+    };
+    rpc-statd = render "rpc-statd" {
+      description = "NFS lock manager";
+      flags = {
+        "--help" = "show help";
+        "-F, --foreground" = "run in the foreground";
+        "-d, --no-syslog" = "log to stderr";
+        "-p, --port=" = "port to listen on";
+        "-o, --outgoing-port=" = "outgoing port";
+        "-T, --nlm-port=" = "NLM TCP port";
+        "-U, --nlm-udp-port=" = "NLM UDP port";
+        "-V, --version" = "show version";
+        "-v" = "verbose";
+        "-n, --name=" = "local hostname";
+        "-P=" = "state directory";
+        "-N" = "notify-only mode";
+      };
+    };
+    rpc-svcgssd = render "rpc-svcgssd" {
+      description = "NFS GSS service daemon";
+      flags = {
+        "-n" = "do not use a daemon";
+        "-f" = "run in the foreground";
+        "-v" = "verbose";
+        "-r" = "use the default realm";
+        "-i" = "use the default ccache";
+        "-p=" = "principal";
+      };
+    };
+    f2fs-fibmap = render "f2fs-fibmap" {
+      description = "Map f2fs file blocks";
+      completion.positional = files;
+    };
+    f2fs-parse = render "f2fs-parse" {
+      description = "Parse an f2fs log";
+      flags = {
+        "-a" = "sort by pid and file types";
+        "-f" = "sort by file types";
+        "-p" = "sort by pid";
+        "-m=" = "major number";
+        "-n=" = "minor number";
+      };
+      completion.positional = files;
+    };
+  }
   # ---------------------------------------------------------------- systemd
   // family {
     flags = {

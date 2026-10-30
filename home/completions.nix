@@ -30,15 +30,27 @@
   # Families of commands that share one definition; families.nix renders one
   # spec per command name from that single definition.
   families = import ./carapace/families.nix {inherit lib pkgs;};
-  generated =
+  familySpecs =
     lib.mapAttrs' (name: source: lib.nameValuePair "carapace/specs/${name}.yaml" {inherit source;})
     families;
+
+  # Long-tail specs produced by util/generate-completions. Kept as one JSON
+  # manifest so a package bump can refresh them with one command.
+  generatedManifest = builtins.fromJSON (builtins.readFile ./carapace/generated.json);
+  generated =
+    lib.mapAttrs' (name: body:
+      lib.nameValuePair "carapace/specs/${name}.yaml" {
+        source = pkgs.writeText "${name}.yaml" (builtins.toJSON ({name = name;}
+          // body));
+      })
+    generatedManifest;
 
   # Commands whose interface is the same as an existing completer. One zsh
   # function is shared by every alias and rewrites the command word before
   # calling the canonical completer. Kept in JSON so the coverage check reads
   # the same mapping.
   delegates = builtins.fromJSON (builtins.readFile ./carapace/delegates.json);
+  fileOnly = builtins.fromJSON (builtins.readFile ./carapace/file-only.json);
 
   delegateCode = ''
     typeset -gA _completion_delegates
@@ -79,7 +91,9 @@ in {
     source ${opencodeCompletions}
 
     ${delegateCode}
+
+    compdef _files ${lib.escapeShellArgs fileOnly}
   '';
 
-  xdg.configFile = handWritten // generated;
+  xdg.configFile = handWritten // familySpecs // generated;
 }

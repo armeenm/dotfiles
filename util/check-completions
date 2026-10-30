@@ -34,6 +34,8 @@ BASELINE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "completion-
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 REPO_SPECS = os.path.join(REPO, "home", "carapace", "specs")
 DELEGATES = os.path.join(REPO, "home", "carapace", "delegates.json")
+GENERATED = os.path.join(REPO, "home", "carapace", "generated.json")
+FILE_ONLY = os.path.join(REPO, "home", "carapace", "file-only.json")
 DEFAULT_SPEC_DIRS = [
     REPO_SPECS,
     os.path.expanduser("~/.local/state/nix/profiles/home-manager/home-files/.config/carapace/specs"),
@@ -117,6 +119,17 @@ def carapace_completions(spec_dirs):
                     seen[name] = os.path.join(directory, name)
         for name, source in seen.items():
             os.symlink(source, os.path.join(specs, name))
+        try:
+            with open(GENERATED) as handle:
+                manifest = json.load(handle)
+        except FileNotFoundError:
+            manifest = {}
+        for name, body in manifest.items():
+            target = os.path.join(specs, name + ".yaml")
+            if os.path.lexists(target):
+                os.unlink(target)
+            with open(target, "w") as handle:
+                json.dump({"name": name, **body}, handle)
         env["XDG_CONFIG_HOME"] = config_home
         proc = subprocess.run([carapace, "_carapace", "zsh"], capture_output=True, text=True, env=env)
     match = re.search(r"^compdef _carapace_completer (.*)$", proc.stdout, re.MULTILINE)
@@ -161,6 +174,11 @@ def main():
     covered = available & installed
     covered |= delegated_completions(available) & installed
     covered |= GENERATOR_COMPLETIONS & installed
+    try:
+        with open(FILE_ONLY) as handle:
+            covered |= set(json.load(handle)) & installed
+    except FileNotFoundError:
+        pass
     uncovered = sorted(installed - covered)
     baseline = read_baseline()
     regressions = sorted((baseline & installed) - covered)

@@ -1,0 +1,17 @@
+name: ld-so
+description: ELF program interpreter
+flags:
+  --list: list all dependencies and how they are resolved
+  --verify: verify that the object is a dynamically linked executable
+  --inhibit-cache: do not use ld.so.cache
+  --library-path=: search path for libraries
+  --glibc-hwcaps-prepend=: search glibc-hwcaps subdirectories first
+  --glibc-hwcaps-mask=: only search the listed glibc-hwcaps subdirectories
+  --inhibit-rpath=: ignore RUNPATH and RPATH entries
+  --audit=: load the audit library
+  --preload=: preload the shared object
+  --argv0=: set argv[0] of the program
+  --version: show version
+  --help: show help
+completion:
+  positionalany: ["$executables", "$files"]

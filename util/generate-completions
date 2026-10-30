@@ -1,0 +1,269 @@
+#!/usr/bin/env python3
+"""Generate carapace specs for commands that have no upstream completion.
+
+Runs each command's --help/-h in a throwaway, GUI-less environment, extracts
+flag definitions, and writes a JSON spec per command. Output is a manifest
+(name -> spec body) that Nix renders into ~/.config/carapace/specs.
+
+Usage:
+  util/generate-completions [--all] [--check] command...
+"""
+
+import argparse
+import json
+from concurrent.futures import ThreadPoolExecutor
+import os
+import re
+import shutil
+import signal
+import subprocess
+import sys
+import tempfile
+
+REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+MANIFEST = os.path.join(REPO, "home", "carapace", "generated.json")
+
+# GUI/session tools: do not invoke them, not even with --help. They still get
+# a minimal file-completion spec.
+GUI = {
+    "Telegram", "bruno", "discord", "element-desktop", "evince-previewer",
+    "evince-thumbnailer", "feishin", "imv-dir", "imv-msg", "imv-wayland",
+    "imv-x11", "libreoffice", "moonlight", "mozillavpn", "nomacs", "obs",
+    "obs-ffmpeg-mux", "obs-nvenc-test", "openchamber", "remmina",
+    "remmina-file-wrapper", "scalc", "sdraw", "signal-desktop", "simpress",
+    "smath", "soffice", "swriter", "virt-manager", "waybar", "wdisplays",
+    "xeyes", "zathura-sandbox", "zoom", "zoom-us",
+}
+
+SAFE_NAME = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_-]*$")
+
+FLAG_LINE = re.compile(r"^\s*(-{1,2}[^\s].*)$")
+TOKEN = re.compile(r"(?<![A-Za-z0-9])(--?[A-Za-z0-9?][A-Za-z0-9_-]*)")
+SEP = re.compile(r"\s{2,}")
+
+
+def clean(text):
+    text = re.sub(r"\x1b\[[0-9;]*[A-Za-z]", "", text)
+    text = text.replace("\r", " ")
+    text = re.sub(r"\s+", " ", text).strip()
+    return text[:180]
+
+
+def run_help(cmd):
+    base = os.environ.copy()
+    for key in ("DISPLAY", "WAYLAND_DISPLAY", "XDG_SESSION_TYPE"):
+        base.pop(key, None)
+    base.update({"LC_ALL": "C", "TERM": "dumb", "HOME": "/tmp"})
+    for flag in ("--help", "-h", "--usage"):
+        try:
+            proc = subprocess.Popen(
+                [cmd, flag],
+                stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT,
+                stdin=subprocess.DEVNULL,
+                env=base,
+                start_new_session=True,
+            )
+            try:
+                out, _ = proc.communicate(timeout=4)
+            except subprocess.TimeoutExpired:
+                os.killpg(proc.pid, signal.SIGKILL)
+                out, _ = proc.communicate()
+        except OSError:
+            continue
+        text = out.decode("utf-8", "replace")
+        if text.strip():
+            return text
+    return ""
+
+
+def parse_flags(text):
+    flags = {}
+    used_short = set()
+    used_long = set()
+    for raw in text.splitlines():
+        match = FLAG_LINE.match(raw)
+        if not match:
+            continue
+        line = match.group(1).strip()
+        parts = SEP.split(line, maxsplit=1)
+        spec_part = parts[0]
+        desc = clean(parts[1]) if len(parts) > 1 else ""
+        if not re.match(r"^-", spec_part):
+            continue
+        tokens = TOKEN.findall(spec_part)
+        if not tokens:
+            continue
+        shorts = []
+        longs = []
+        for token in tokens:
+            if token.startswith("--"):
+                name = token[2:]
+                if name.startswith("[no-]"):
+                    name = name[5:]
+                    if name:
+                        longs.append("--no-" + name)
+                if name:
+                    longs.append("--" + name)
+            elif len(token) == 2:
+                shorts.append(token)
+        if not shorts and not longs:
+            continue
+        takes_arg = bool(re.search(r"(=|<|\[=|\s(ARG|FILE|PATH|NUM|N|VALUE|STRING|NAME|ADDR|PORT|TYPE|MODE))", spec_part))
+        optional = bool(re.search(r"\[[^]]*\]|(\?)$", spec_part))
+        repeat = "..." in spec_part or "*" in spec_part
+        # Carapace order: value, repeatable, optional.
+        mods = ("=" if takes_arg else "") + ("*" if repeat else "") + ("?" if optional and not takes_arg else "")
+        long = next((l for l in longs if l not in used_long), None)
+        short = next((s for s in shorts if s not in used_short), None)
+        if long is None and short is None:
+            continue
+        if long:
+            used_long.add(long)
+        if short:
+            used_short.add(short)
+        key = ", ".join([x for x in (short, long) if x]) + mods
+        if key in flags:
+            continue
+        flags[key] = desc or "option"
+        # Alternate long forms like --no-foo are exposed as separate flags.
+        for alt in longs:
+            if alt == long or alt in used_long:
+                continue
+            used_long.add(alt)
+            alt_key = alt + mods
+            if alt_key not in flags:
+                flags[alt_key] = desc or "option"
+    return flags
+
+
+def spec_for(cmd):
+    text = run_help(cmd)
+    flags = parse_flags(text)
+    body = {}
+    if flags:
+        body["flags"] = flags
+    body["completion"] = {"positionalany": ["$files"]}
+    return body, text
+
+
+def candidates(spec_name, spec, workdir):
+    with tempfile.TemporaryDirectory() as cfg:
+        specs = os.path.join(cfg, "carapace", "specs")
+        os.makedirs(specs)
+        with open(os.path.join(specs, spec_name + ".yaml"), "w") as handle:
+            json.dump({"name": spec_name, **spec}, handle)
+        env = dict(os.environ)
+        env["XDG_CONFIG_HOME"] = cfg
+        env["CARAPACE_BRIDGES"] = ""
+        env["LC_ALL"] = "C"
+        try:
+            proc = subprocess.run(
+                ["carapace", spec_name, "zsh", spec_name, "-"],
+                capture_output=True,
+                timeout=10,
+                env=env,
+                cwd=workdir,
+            )
+        except (subprocess.TimeoutExpired, OSError):
+            return -1, ""
+        out = proc.stdout.decode("utf-8", "replace")
+        err = proc.stderr.decode("utf-8", "replace")
+        parts = out.split("\x01")
+        if len(parts) < 4:
+            return -1, err
+        count = 0
+        for block in parts[3].split("\x02"):
+            fields = block.split("\x03")
+            if len(fields) >= 3:
+                count += len([v for v in fields[2].split("\x04") if v.strip()])
+        if count == 0:
+            for probe in ("--", ""):
+                proc = subprocess.run(
+                    ["carapace", spec_name, "zsh", spec_name, probe],
+                    capture_output=True,
+                    timeout=10,
+                    env=env,
+                    cwd=workdir,
+                )
+                out = proc.stdout.decode("utf-8", "replace")
+                parts = out.split("\x01")
+                if len(parts) >= 4:
+                    count = 0
+                    for block in parts[3].split("\x02"):
+                        fields = block.split("\x03")
+                        if len(fields) >= 3:
+                            count += len([v for v in fields[2].split("\x04") if v.strip()])
+                if count:
+                    break
+        return count, err
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("commands", nargs="*")
+    parser.add_argument("--all", action="store_true", help="generate for every untracked command on PATH")
+    parser.add_argument("--check", action="store_true", help="only report commands with no manifest entry")
+    parser.add_argument("--from-file", metavar="FILE", help="read command names from FILE")
+    args = parser.parse_args()
+
+    existing = {}
+    if os.path.exists(MANIFEST):
+        with open(MANIFEST) as handle:
+            existing = json.load(handle)
+
+    commands = list(args.commands)
+    if args.from_file:
+        with open(args.from_file) as handle:
+            commands += [line.strip() for line in handle if line.strip()]
+    if args.all:
+        seen = set()
+        for directory in os.environ.get("PATH", "").split(os.pathsep):
+            try:
+                entries = os.listdir(directory)
+            except OSError:
+                continue
+            for name in entries:
+                path = os.path.join(directory, name)
+                if name not in seen and os.path.isfile(path) and os.access(path, os.X_OK):
+                    seen.add(name)
+                    commands.append(name)
+    commands = sorted(set(commands))
+    invalid = [c for c in commands if not SAFE_NAME.match(c)]
+    commands = [c for c in commands if SAFE_NAME.match(c)]
+
+    if args.check:
+        missing = [c for c in commands if c not in existing]
+        print("\n".join(missing))
+        return 0
+
+    workdir = os.path.join(REPO, "home", "carapace", "specs")
+
+    def process(cmd):
+        if cmd in GUI:
+            return cmd, {"completion": {"positionalany": ["$files"]}}, 1, ""
+        body, _ = spec_for(cmd)
+        count, err = candidates(cmd, body, workdir)
+        return cmd, body, count, err
+
+    written = 0
+    with ThreadPoolExecutor(max_workers=8) as pool:
+        for cmd, body, count, err in pool.map(process, commands):
+            if count < 0:
+                print(f"invalid {cmd}: {err.strip().splitlines()[0] if err.strip() else 'no output'}", file=sys.stderr)
+                continue
+            existing[cmd] = body
+            written += 1
+            print(f"{cmd}: {len(body.get('flags', {}))} flags, {count} candidates", file=sys.stderr)
+
+    if invalid:
+        print("skipped (carapace cannot name): " + " ".join(invalid), file=sys.stderr)
+
+    with open(MANIFEST, "w") as handle:
+        json.dump(existing, handle, indent=1, sort_keys=True)
+        handle.write("\n")
+    print(f"wrote {written} specs to {MANIFEST}", file=sys.stderr)
+
+
+if __name__ == "__main__":
+    main()
