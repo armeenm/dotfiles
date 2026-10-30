@@ -62,11 +62,6 @@
   # on reboot, which is acceptable for a stateless node.
   services.journald.settings.Journal.Storage = "volatile";
 
-  services.tailscale = {
-    enable = true;
-    openFirewall = true;
-  };
-
   # tailscaled otherwise picks iptables-nft compatibility tables on Linux.
   # The host is nftables-only, so force its native nftables backend.
   systemd.services.tailscaled.environment.TS_DEBUG_FIREWALL_MODE = "nftables";
