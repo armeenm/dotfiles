@@ -7,19 +7,28 @@ let
     inputs.ragenix.homeManagerModules.default
   ];
 
-  nixosBase = [
+  # base is the common subset; full adds home-manager and the desktop stack,
+  # while minimal is the headless appliance profile.
+  nixosBase = [ ./nixos/base.nix ];
+
+  nixosFull = [
     inputs.determinate.nixosModules.default
     inputs.home-manager.nixosModules.default
     inputs.niks3.nixosModules.default
     inputs.ragenix.nixosModules.default
     { home-manager.sharedModules = hmBase; }
-    ./nixos
+    ./shared
+    ./nixos/full.nix
   ];
 
-  nixosInteractive = nixosBase ++ [
+  nixosInteractive = nixosFull ++ [
     inputs.stylix.nixosModules.stylix
     ./nixos/interactive.nix
   ];
+
+  nixosMinimal = [ ./nixos/minimal.nix ];
+
+  nixosRpi = [ ./nixos/rpi.nix ];
 
   hmDarwinBase = hmBase ++ [
     inputs.mac-app-util.homeManagerModules.default
@@ -41,7 +50,10 @@ let
 in {
   hmBase = { ... }: { imports = hmBase; };
   nixosBase = { ... }: { imports = nixosBase; };
+  nixosFull = { ... }: { imports = nixosFull; };
   nixosInteractive = { ... }: { imports = nixosInteractive; };
+  nixosMinimal = { ... }: { imports = nixosMinimal; };
+  nixosRpi = { ... }: { imports = nixosRpi; };
   nixosUser = { ... }: { imports = [ ./nixos/user.nix ]; };
 
   hmDarwinBase = { ... }: { imports = hmDarwinBase; };
