@@ -78,15 +78,6 @@
     "fsck.fuse.bcachefs",
     "fsck.fuseblk.bcachefs"
   ],
-  "mkfs": [
-    "mkfs.fat",
-    "mkfs.msdos",
-    "mkfs.vfat",
-    "mkdosfs",
-    "mkfs.ntfs",
-    "mkfs.ntfsplus",
-    "mkntfs"
-  ],
   "exfat-mkfs": [
     "mkfs.exfat"
   ],
@@ -146,5 +137,25 @@
     "pw-midi2play",
     "pw-midi2record",
     "pw-sysex"
+  ],
+  "mkfs-fat": [
+    "mkfs.fat",
+    "mkfs.msdos",
+    "mkfs.vfat",
+    "mkdosfs"
+  ],
+  "mkfs-ntfs": [
+    "mkfs.ntfs",
+    "mkfs.ntfsplus",
+    "mkntfs"
+  ],
+  "Hyprland": [
+    "hyprland"
+  ],
+  "python3": [
+    "python3.14"
+  ],
+  "rsync": [
+    "rsync-ssl"
   ]
 }

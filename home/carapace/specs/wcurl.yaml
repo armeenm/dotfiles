@@ -1,0 +1,13 @@
+name: wcurl
+description: Simple wrapper around curl to download files
+flags:
+  --curl-options=*: Extra options to pass to curl
+  --no-decode-filename: Do not percent-decode the output filename
+  -o, --output=: Output path instead of using the URL
+  -O=: Output path instead of using the URL
+  --dry-run: Do not actually execute curl
+  -V, --version: Print version information
+  -h, --help: Print this usage message
+completion:
+  flag:
+    output: ["$files"]

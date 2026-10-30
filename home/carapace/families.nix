@@ -173,6 +173,65 @@ in
       flags = fsCommon;
       completion.positional = files;
     };
+    mkfs-fat = render "mkfs-fat" {
+      description = "Create a FAT filesystem";
+      flags = {
+        "-a" = "disable alignment of data structures";
+        "-A" = "toggle the Atari variant";
+        "-b=" = "location of the FAT32 backup boot sector";
+        "-c" = "check the device for bad blocks";
+        "-C" = "create the target file";
+        "-D=" = "BIOS drive number";
+        "-f=" = "number of file allocation tables";
+        "-F=" = "FAT size (12, 16 or 32)";
+        "-g=" = "disk geometry (heads/sectors_per_track)";
+        "-h=" = "hidden sectors";
+        "-i=" = "volume ID";
+        "-I" = "ignore safety checks";
+        "-l=" = "read bad blocks from this file";
+        "-m=" = "replace the default error message in the boot block";
+        "-M=" = "media type";
+        "--mbr?" = "fill the MBR with a partition spanning the whole disk";
+        "-n=" = "volume name";
+        "--codepage=" = "DOS codepage for the label";
+        "-r=" = "root directory entries";
+        "-R=" = "minimal number of reserved sectors";
+        "-s=" = "sectors per cluster";
+        "-S=" = "logical sector size";
+        "-v" = "verbose execution";
+        "--variant=" = "filesystem variant (standard or Atari)";
+        "--invariant" = "use fixed timestamps";
+        "--offset=" = "write the filesystem at this sector offset";
+        "--help" = "show help";
+      };
+      completion.positional = files;
+    };
+    mkfs-ntfs = render "mkfs-ntfs" {
+      description = "Create an NTFS filesystem";
+      flags = {
+        "-f, --fast" = "perform a quick format";
+        "-Q, --quick" = "perform a quick format";
+        "-L, --label=" = "volume label";
+        "-C, --enable-compression" = "enable compression";
+        "-I, --no-indexing" = "disable indexing";
+        "-n, --no-action" = "do not write to disk";
+        "-c, --cluster-size=" = "cluster size";
+        "-s, --sector-size=" = "sector size";
+        "-p, --partition-start=" = "partition start sector";
+        "-H, --heads=" = "number of heads";
+        "-S, --sectors-per-track=" = "sectors per track";
+        "-z, --mft-zone-multiplier=" = "MFT zone multiplier";
+        "-T, --zero-time" = "use a fixed timestamp";
+        "-F, --force" = "force execution despite errors";
+        "-q, --quiet" = "quiet execution";
+        "-v, --verbose" = "verbose execution";
+        "--debug" = "very verbose execution";
+        "-V, --version" = "show version";
+        "-l, --license" = "show licensing information";
+        "-h, --help" = "show help";
+      };
+      completion.positional = files;
+    };
   }
   # ---------------------------------------------------------------- blockfs
   // family {

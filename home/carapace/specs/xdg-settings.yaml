@@ -1,0 +1,31 @@
+name: xdg-settings
+description: Get various settings from the desktop environment
+flags:
+  --list: List all properties xdg-settings knows about
+  -h, --help: Show command synopsis
+  --manual: Show the manual page
+  --version: Show the xdg-utils version information
+completion:
+  positional:
+    - ["get\tGet a setting", "check\tCheck a setting", "set\tSet a setting"]
+commands:
+  - name: get
+    description: Get a desktop setting
+    completion:
+      positional:
+        - ["default-web-browser", "default-url-scheme-handler"]
+        - []
+  - name: check
+    description: Check whether a setting has a value
+    completion:
+      positional:
+        - ["default-web-browser", "default-url-scheme-handler"]
+        - []
+        - []
+  - name: set
+    description: Set a desktop setting
+    completion:
+      positional:
+        - ["default-web-browser", "default-url-scheme-handler"]
+        - []
+        - []

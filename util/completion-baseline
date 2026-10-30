@@ -246,6 +246,7 @@ gimptool-3
 gimptool-3.2
 git
 git-cvsserver
+git-filter-repo
 git-receive-pack
 git-shell
 git-upload-archive
@@ -259,6 +260,7 @@ gpasswd
 gprof
 grep
 grepdiff
+grim
 groupadd
 groupdel
 groupmod
@@ -285,6 +287,7 @@ hugetop
 hwclock
 hyperfine
 hyprctl
+hyprland
 hyprlock
 hyprpicker
 hyprpm
@@ -318,6 +321,7 @@ ip6tables-translate
 ipcmk
 ipcrm
 ipcs
+iperf3
 iptables
 iptables-apply
 iptables-legacy
@@ -496,6 +500,7 @@ namei
 nano
 navi
 nc
+ncat
 ncdu
 networkctl
 newgrp
@@ -533,6 +538,9 @@ nohup
 nom
 nom-build
 nom-shell
+noti
+notify-send
+nping
 nproc
 nsenter
 ntfs-3g
@@ -577,6 +585,7 @@ paste
 pasuspender
 patch
 pathchk
+pay-respects
 pdftexi2dvi
 pgrep
 pidof
@@ -639,6 +648,7 @@ pwd
 pwdx
 python
 python3
+python3.14
 rage
 rage-keygen
 ragenix
@@ -662,6 +672,7 @@ rmdir
 rmmod
 rnano
 rsync
+rsync-ssl
 rtcwake
 run-on-ac
 run-on-bat
@@ -702,6 +713,7 @@ sk
 slabtop
 sleep
 sload.f2fs
+slurp
 smartctl
 sort
 split
@@ -875,6 +887,7 @@ wall
 warp-cli
 watch
 wc
+wcurl
 wdctl
 wget
 whatis
@@ -898,6 +911,10 @@ wt
 wwan
 xargs
 xbacklight
+xdg-email
+xdg-mime
+xdg-open
+xdg-settings
 xkill
 xtables-legacy-multi
 xtables-monitor
