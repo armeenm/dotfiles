@@ -27,7 +27,9 @@ pkgs.python3Packages.buildPythonApplication rec {
 
   build-system = [ pkgs.python3Packages.hatchling ];
 
-  dependencies = [ pkgs.python3Packages.mcp ];
+  # hypruse pins `mcp>=1.21.1,<2`; nixpkgs' `mcp` is 2.x, so use the 1.x
+  # package nixpkgs keeps alongside it.
+  dependencies = [ pkgs.python3Packages.mcp_1 ];
 
   nativeBuildInputs = [ pkgs.makeWrapper ];
 

@@ -236,7 +236,7 @@ in {
         (google-chrome.overrideAttrs (old: {
           src = pkgs.fetchurl {
             url = lib.lists.head old.src.urls;
-            hash = "sha256-FdnYoz7rhYZnlG8enSnSqCYZIUyJ0bsWqxE8tj7BE1U=";
+            hash = "sha256-dw9tHUkBfdgOMH8ftB3zjRLrNrcJR8V4C/tHWSxM0dc=";
           };
         }))
         libreoffice

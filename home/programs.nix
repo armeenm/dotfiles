@@ -536,8 +536,8 @@ in {
           {
             name = "llama-vscode";
             publisher = "ggml-org";
-            version = "0.0.70";
-            sha256 = "sha256-uYXtH+fuKz8mPtFF3k2kM4JflyYXaB9zK5UXDUUrSGc=";
+            version = "0.0.74";
+            sha256 = "sha256-qiV0cBSv1yCX3WFV8GngE7WfXPHeZnLXqQTZsVgBQRU=";
           }
         ] ++ lib.optionals hostPlatform.isLinux [
           ms-vscode.cpptools

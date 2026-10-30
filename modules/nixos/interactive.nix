@@ -4,13 +4,6 @@
   imports = [ ../shared/stylix.nix ];
 
   boot = {
-    initrd = {
-      systemd = {
-        enable = true;
-        network.enable = true;
-      };
-    };
-
     loader = {
       efi.canTouchEfiVariables = true;
 
@@ -32,7 +25,6 @@
     };
     consoleLogLevel = 0;
     extraModulePackages = with config.boot.kernelPackages; [ ddcci-driver ];
-    initrd.verbose = false;
   };
 
   environment = {
