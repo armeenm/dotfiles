@@ -1,0 +1,28 @@
+name: lshw
+description: List hardware configuration
+flags:
+  -version: print program version
+  -help: display the available command line options
+  -X: launch the X11 GUI
+  -html: output the hardware tree as HTML
+  -xml: output the hardware tree as XML
+  -json: output the hardware tree as JSON
+  -short: output hardware paths
+  -businfo: output bus information
+  -dump=: dump collected information into a file
+  -class=: only show a certain class of hardware
+  -C=: alias for -class
+  -c=: alias for -class
+  -enable=: enable a hardware detection test
+  -disable=: disable a hardware detection test
+  -quiet: don't display status
+  -sanitize: remove sensitive information from output
+  -numeric: output numeric IDs for PCI and USB devices
+  -notime: exclude volatile attributes from output
+completion:
+  flag:
+    class: [system, bus, memory, processor, display, generic, storage, disk, volume, network, multimedia, communication, input, printer, scanner, chip, cache, tape, cdrom, usb, pci]
+    C: [system, bus, memory, processor, display, generic, storage, disk, volume, network, multimedia, communication, input, printer, scanner, chip, cache, tape, cdrom, usb, pci]
+    c: [system, bus, memory, processor, display, generic, storage, disk, volume, network, multimedia, communication, input, printer, scanner, chip, cache, tape, cdrom, usb, pci]
+    enable: [dmi, device-tree, spd, memory, cpuinfo, cpuid, pci, isapnp, pcmcia, ide, usb, scsi, network]
+    disable: [dmi, device-tree, spd, memory, cpuinfo, cpuid, pci, isapnp, pcmcia, ide, usb, scsi, network]

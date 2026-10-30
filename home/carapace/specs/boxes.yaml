@@ -1,0 +1,34 @@
+name: boxes
+description: Draw or remove a box around text
+flags:
+  -a, --align=: Alignment and positioning of text inside the box
+  -c, --create=: Use a single-shape box design with this shape
+  --color: Force output of ANSI sequences
+  --no-color: Force monochrome output
+  -d, --design=: Box design
+  -e, --eol=: Override line break type
+  -f, --config=: Configuration file
+  -h, --help: Print usage information
+  -i, --indent=: Indentation mode
+  -k=: Leading/trailing blank line retention on removal
+  --kill-blank: Kill leading/trailing blank lines on removal
+  --no-kill-blank: Retain leading/trailing blank lines on removal
+  -l, --list: List available box designs with samples
+  -m, --mend: Mend (repair) a box
+  -n, --encoding=: Character encoding of input and output
+  -p, --padding=: Padding
+  -q, --tag-query=: Query the list of designs by tag
+  -r, --remove: Remove a box
+  -s, --size=: Box size as width and/or height
+  -t, --tabs=: Tab stop distance and expansion
+  -v, --version: Print version information
+completion:
+  flag:
+    config: ["$files"]
+    k: ["true", "false"]
+    eol: ["LF", "CRLF"]
+    indent: ["box", "text", "none"]
+    encoding: ["UTF-8", "ISO-8859-1", "ASCII"]
+  positional:
+    - ["$files"]
+    - ["$files"]

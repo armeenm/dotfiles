@@ -1,0 +1,186 @@
+name: hyprctl
+description: Control and query a running Hyprland compositor
+flags:
+  -j: Output in JSON
+  -r: Refresh state after issuing command
+  --batch=: Execute a semicolon separated batch of commands
+  -i, --instance=: Use a specific instance by signature or index
+  -q, --quiet: Disable the output of hyprctl
+completion:
+  flag:
+    instance: ["$(hyprctl instances 2>/dev/null | grep -E '^instance' | cut -d' ' -f2-)"]
+commands:
+  - name: activewindow
+    description: Get the active window name and its properties
+  - name: activeworkspace
+    description: Get the active workspace and its properties
+  - name: animations
+    description: Get the configured animation and bezier info
+  - name: binds
+    description: List all registered binds
+  - name: clients
+    description: List all windows with their properties
+  - name: configerrors
+    description: List current config parsing errors
+  - name: cursorpos
+    description: Get the current cursor position in global layout coordinates
+  - name: decorations
+    description: List decorations for windows matching a regex
+    completion:
+      positional:
+        - []
+  - name: devices
+    description: List connected keyboards and mice
+  - name: dismissnotify
+    description: Dismiss all or up to AMOUNT notifications
+    completion:
+      positional:
+        - ["1", "2", "5", "10"]
+  - name: dispatch
+    description: Call a keybind dispatcher with arguments
+    completion:
+      positional:
+        - []
+  - name: eval
+    description: Evaluate a Lua string
+    completion:
+      positional:
+        - []
+  - name: getoption
+    description: Get the status of a config option
+    completion:
+      positional:
+        - []
+  - name: globalshortcuts
+    description: List all global shortcuts
+  - name: getprop
+    description: Get a window property
+    completion:
+      positional:
+        - []
+        - []
+  - name: hyprpaper
+    description: Issue a hyprpaper request
+    commands:
+      - name: wallpaper
+        description: Set a wallpaper dynamically
+        completion:
+          positional:
+            - []
+            - ["$files([.png, .jpg, .jpeg, .webp])"]
+            - []
+  - name: hyprsunset
+    description: Issue a hyprsunset request
+    commands:
+      - name: temperature
+        description: Enable the blue-light filter at a temperature
+        completion:
+          positional:
+            - ["1000", "2000", "3000", "4000", "5000", "6000", "6500"]
+      - name: identity
+        description: Disable the blue-light filter
+      - name: gamma
+        description: Enable the gamma filter
+        completion:
+          positional:
+            - ["50", "75", "100", "125", "150"]
+  - name: instances
+    description: List running Hyprland instances and their info
+  - name: keyword
+    description: Set a config keyword dynamically
+    completion:
+      positional:
+        - []
+        - []
+  - name: kill
+    description: Enter kill mode to kill a window by clicking it
+  - name: layers
+    description: List all surface layers
+  - name: layouts
+    description: List all available layouts
+  - name: monitors
+    description: List active outputs, or all outputs
+    completion:
+      positional:
+        - ["all"]
+  - name: notify
+    description: Send a notification via the built-in notification system
+    completion:
+      positional:
+        - ["0\tWarning", "1\tInfo", "2\tHint", "3\tError", "4\tConfused", "5\tOk", "6\tNo icon", "-1\tNo icon"]
+        - ["1000", "2000", "5000", "10000"]
+        - []
+        - []
+  - name: output
+    description: Add or remove fake outputs
+    commands:
+      - name: create
+        description: Create a virtual output
+        completion:
+          positional:
+            - ["wayland", "x11", "headless", "auto"]
+      - name: remove
+        description: Remove a virtual output by name
+        completion:
+          positional:
+            - []
+  - name: plugin
+    description: Issue a plugin request
+    commands:
+      - name: load
+        description: Load a plugin by absolute path
+        completion:
+          positional:
+            - ["$files([.so])"]
+      - name: unload
+        description: Unload a plugin by absolute path
+        completion:
+          positional:
+            - ["$files([.so])"]
+      - name: list
+        description: List all loaded plugins
+  - name: reload
+    description: Reload the config
+    completion:
+      positional:
+        - ["config-only\tSkip monitor reload"]
+  - name: repl
+    description: Enter interactive Lua REPL mode or evaluate a string
+  - name: rollinglog
+    description: Print the tail of the log
+    flags:
+      -f, --follow: Follow the log
+  - name: setcursor
+    description: Set the cursor theme and reload the cursor manager
+    completion:
+      positional:
+        - []
+        - ["16", "24", "32", "48"]
+  - name: seterror
+    description: Set the hyprctl error string
+  - name: setprop
+    description: Set a window property
+    completion:
+      positional:
+        - []
+        - []
+        - []
+        - ["lock"]
+  - name: splash
+    description: Get the current splash
+  - name: status
+    description: Get internal status information
+  - name: switchxkblayout
+    description: Set the xkb layout index for a keyboard
+    completion:
+      positional:
+        - []
+        - ["next", "prev"]
+  - name: systeminfo
+    description: Get system info
+  - name: version
+    description: Print the Hyprland version
+  - name: workspacerules
+    description: List all workspace rules
+  - name: workspaces
+    description: List all workspaces with their properties

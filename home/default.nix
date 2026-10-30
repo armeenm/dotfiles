@@ -13,6 +13,7 @@ in {
   imports = [
     ./home.nix
     ./programs.nix
+    ./completions.nix
     ./services.nix
     ./starship.nix
     ./systemd.nix

@@ -1,0 +1,25 @@
+name: wlr-randr
+description: Manage outputs of a wlroots compositor
+flags:
+  --help: Show help
+  --dryrun: Do not apply any changes
+  --json: Print output information as JSON
+  --output=: Output to configure
+  --on: Enable the output
+  --off: Disable the output
+  --toggle: Toggle the output
+  --mode=: Set a mode as widthxheight@refresh
+  --custom-mode=: Set a custom mode as widthxheight@refresh
+  --preferred: Use the preferred mode
+  --pos=: Set the position as x,y
+  --left-of=: Place the output left of another
+  --right-of=: Place the output right of another
+  --above=: Place the output above another
+  --below=: Place the output below another
+  --transform=: Set the transform
+  --scale=: Set the scale factor
+  --adaptive-sync=: Enable or disable adaptive sync
+completion:
+  flag:
+    transform: ["normal", "90", "180", "270", "flipped", "flipped-90", "flipped-180", "flipped-270"]
+    adaptive-sync: ["enabled", "disabled"]

@@ -1,0 +1,18 @@
+name: agenix
+description: Edit and rekey age-encrypted secrets
+flags:
+  -e, --edit=: Edit the age-encrypted file using $EDITOR
+  -r, --rekey: Re-encrypt all secrets with the specified recipients
+  -i, --identity=*: Private key to use when decrypting
+  -v, --verbose: Verbose output
+  -s, --schema: Print the JSON schema for agenix rules
+  --editor=: Editor to use when editing the file
+  --rules=: Path to the Nix file specifying recipient public keys
+  -h, --help: Print help
+  -V, --version: Print version
+completion:
+  flag:
+    edit: ["$files"]
+    identity: ["$files"]
+    editor: ["$executables"]
+    rules: ["$files([.nix])"]
