@@ -33,6 +33,23 @@ in {
     fastfetch.enable = true;
     git-worktree-switcher.enable = true;
     gitui.enable = hostPlatform.isLinux;
+    hex = {
+      enable = enableSocial && hostPlatform.isLinux && hostPlatform.isx86_64;
+      autostart = true;
+      installModel = true;
+      # English-only but streams while speaking, unlike the multilingual v3.
+      model = "parakeet_unified_en";
+      language = "en";
+      # F13/F14 are kmonad's, not on the keyboard: see hosts/argentum/builtin.kbd.
+      # Toggle, not hold: right Alt is a tap, not a chord to hold down.
+      shortcut = "f13";
+      settings = {
+        shortcut_mode = "toggle";
+        paste_last_hotkey = "f14";
+        # Ctrl+Shift+V, so foot and Emacs (conf/emacs/init.el) paste the same way.
+        paste_with_shift = true;
+      };
+    };
     home-manager.enable = true;
     htop.enable = true;
     imv.enable = hostPlatform.isLinux && !isHeadless;

@@ -3,6 +3,7 @@
 let
   hmBase = [
     inputs.direnv-instant.homeModules.direnv-instant
+    inputs.hex.homeManagerModules.hex
     inputs.nix-index-database.homeModules.nix-index
     inputs.ragenix.homeManagerModules.default
   ];
