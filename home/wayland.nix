@@ -356,14 +356,14 @@ in {
           (mkBind "XF86AudioMute" ''hl.dsp.exec_cmd("pamixer -t")'')
           (mkBind "XF86AudioMicMute" ''hl.dsp.exec_cmd("pamixer --default-source -t")'')
 
-          # Hex voice dictation. Its shortcuts come from the GlobalShortcuts
-          # portal, which Hyprland grants without a key, so the global
-          # shortcuts Hex registers need dispatching from here. The keys come
-          # from kmonad (right Alt, and hold-Alt p on the builtin keyboard),
-          # so no modifier is held when Hex pastes.
-          (mkBind "F13" ''hl.dsp.global("hex:dictation")'')
-          (mkBind "F14" ''hl.dsp.global("hex:paste-last")'')
-          (modBind "escape" ''hl.dsp.global("hex:cancel-dictation")'')
+          # Hex voice dictation. Hyprland's GlobalShortcuts portal does not
+          # deliver Hex's registered globals (dispatching hex:dictation is a
+          # no-op), so drive its control CLI instead. The keys come from
+          # kmonad (right Alt, and hold-Alt p on the builtin keyboard), so no
+          # modifier is held when Hex pastes.
+          (mkBind "F13" ''hl.dsp.exec_cmd("hex dictation toggle")'')
+          (mkBind "F14" ''hl.dsp.exec_cmd("hex paste-last")'')
+          (modBind "escape" ''hl.dsp.exec_cmd("hex dictation cancel")'')
         ] ++ builtins.concatMap
           (x: [
             (modBind "${toString (lib.mod x 10)}"
