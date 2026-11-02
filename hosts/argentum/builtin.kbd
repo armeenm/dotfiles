@@ -3,6 +3,8 @@
   lctrl
   lalt
   h j k l
+  ralt
+  p
 )
 
 (deflayer default
@@ -10,6 +12,8 @@
   lalt
   (layer-toggle nav)
   h j k l
+  f13
+  p
 )
 
 (deflayer nav
@@ -17,4 +21,6 @@
   _
   XX
   lft down up right
+  f13
+  f14
 )

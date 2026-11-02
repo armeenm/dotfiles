@@ -355,6 +355,20 @@ in {
           (mkBind "XF86AudioNext" ''hl.dsp.exec_cmd("playerctl next")'')
           (mkBind "XF86AudioMute" ''hl.dsp.exec_cmd("pamixer -t")'')
           (mkBind "XF86AudioMicMute" ''hl.dsp.exec_cmd("pamixer --default-source -t")'')
+
+          # Hex voice dictation. Hyprland's GlobalShortcuts portal does not
+          # deliver Hex's registered globals (dispatching hex:dictation is a
+          # no-op), so drive its control CLI instead. The keys come from
+          # kmonad (right Alt, and hold-Alt p on the builtin keyboard), so no
+          # modifier is held when Hex pastes.
+          #
+          # kmonad emits KEY_F13/KEY_F14, but xkb keycodes 191/192 carry the
+          # keysyms XF86Tools/XF86Launch5 in the us keymap, so binding "F13"
+          # matches nothing: `xkbcli compile-keymap --layout us` maps <FK13>
+          # to XF86Tools. Bind what the compositor actually receives.
+          (mkBind "XF86Tools" ''hl.dsp.exec_cmd("hex dictation toggle")'')
+          (mkBind "XF86Launch5" ''hl.dsp.exec_cmd("hex paste-last")'')
+          (modBind "escape" ''hl.dsp.exec_cmd("hex dictation cancel")'')
         ] ++ builtins.concatMap
           (x: [
             (modBind "${toString (lib.mod x 10)}"

@@ -413,6 +413,8 @@
     "M-/" 'avy-goto-char-timer
     "C-." 'embark-act
     "M-." 'embark-dwim
+    ;; Hex pastes with Ctrl+Shift+V; yank reads the clipboard when it changed.
+    "C-S-v" 'yank
     "M-s e" 'consult-isearch-history)
 
   (general-define-key
