@@ -1,0 +1,109 @@
+name: virt-install
+description: Create a new virtual machine from specified install media
+flags:
+  -h, --help: show help
+  --version: show program version
+  --connect=: connect to hypervisor with libvirt URI
+  -n, --name=: name of the guest instance
+  --memory=: configure guest memory allocation
+  --vcpus=: number of vCPUs to configure
+  --cpu=: CPU model and features
+  --metadata=: configure guest metadata
+  --xml=: perform raw XML XPath options on the final XML
+
+  --cdrom=: CD-ROM installation media
+  -l, --location=: distro install URL or path
+  --pxe: boot from the network using PXE
+  --import: build guest around an existing disk image
+  -x, --extra-args=: additional arguments for the install kernel
+  --initrd-inject=: add file to root of initrd
+  --unattended?: perform an unattended installation
+  --install=: specify fine grained install options
+  --reinstall=: reinstall existing VM
+  --cloud-init?: perform a cloud image installation
+  --boot=: configure guest boot settings
+  --idmap=: enable user namespace for LXC container
+
+  --osinfo=: the OS being installed in the guest
+  --os-variant=: the OS being installed in the guest
+
+  --disk=: specify storage with various options
+  -w, --network=: configure a guest network interface
+  --graphics=: configure guest display settings
+  --controller=: configure a guest controller device
+  --input=: configure a guest input device
+  --serial=: configure a guest serial device
+  --parallel=: configure a guest parallel device
+  --channel=: configure a guest communication channel
+  --console=: configure a text console connection
+  --hostdev=: share physical host devices with the guest
+  --filesystem=: pass host directory to the guest
+  --sound?: configure guest sound device emulation
+  --audio=: configure host audio backend
+  --watchdog=: configure a guest watchdog device
+  --video=: configure guest video hardware
+  --smartcard=: configure a guest smartcard device
+  --redirdev=: configure a guest redirection device
+  --memballoon=: configure a guest memballoon device
+  --tpm=: configure a guest TPM device
+  --rng=: configure a guest RNG device
+  --panic=: configure a guest panic device
+  --shmem=: configure a guest shared memory device
+  --memdev=: configure a guest memory device
+  --vsock=: configure guest vsock sockets
+  --iommu=: configure an IOMMU device
+  --pstore=: configure a nvram storage device
+
+  --iothreads=: set domain iothreads configuration
+  --seclabel=: set domain seclabel configuration
+  --security=: set domain seclabel configuration
+  --keywrap=: configure S390 cryptographic key management
+  --cputune=: tune CPU parameters
+  --numatune=: tune NUMA policy
+  --memtune=: tune memory policy
+  --blkiotune=: tune blkio policy
+  --memorybacking=: set memory backing policy
+  --features=: set domain features XML
+  --clock=: set domain clock XML
+  --pm=: configure VM power management features
+  --events=: configure VM lifecycle management policy
+  --resource=: configure VM resource partitioning
+  --sysinfo=: configure SMBIOS system information
+  --qemu-commandline=: pass arguments directly to the QEMU emulator
+  --launchSecurity=: configure VM launch security
+  --launchsecurity=: configure VM launch security
+
+  -v, --hvm: fully virtualized guest
+  -p, --paravirt: paravirtualized guest
+  --container: container guest
+  --virt-type=: hypervisor name to use
+  --arch=: CPU architecture to simulate
+  --machine=: machine type to emulate
+
+  --autostart: have domain autostart on host boot
+  --transient: create a transient domain
+  --destroy-on-exit: power off the domain when the console viewer closes
+  --wait?: minutes to wait for install to complete
+  --autoconsole=: configure guest console auto connect
+  --noautoconsole: do not automatically connect to the guest console
+  --noreboot: do not boot guest after completing install
+  --print-xml?: print the generated domain XML rather than create the guest
+  --dry-run: run through install process but do not create devices or define the guest
+  --check=: enable or disable validation checks
+  -q, --quiet: suppress non-error output
+  -d, --debug: print debugging information
+
+completion:
+  flag:
+    connect: ["qemu:///system", "qemu:///session", "lxc:///", "xen:///"]
+    cdrom: ["$files"]
+    location: ["$files"]
+    initrd-inject: ["$files"]
+    cloud-init: ["$files"]
+    graphics: ["spice", "vnc", "none"]
+    autoconsole: ["text", "graphical", "none"]
+    virt-type: ["kvm", "qemu", "xen", "lxc"]
+    arch: ["x86_64", "i686", "aarch64", "ppc64le", "s390x"]
+    machine: ["q35", "pc", "virt"]
+    sound: ["ich9", "ac97", "usb"]
+    check: ["all=off", "path_in_use=off"]

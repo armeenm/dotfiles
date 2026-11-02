@@ -1,0 +1,25 @@
+name: dpauxmon
+description: Extcap capture of DisplayPort AUX channel data
+flags:
+  --extcap-interfaces: List the extcap interfaces
+  --extcap-dlts: List the data link types
+  --extcap-interface=: Specify the extcap interface
+  --extcap-config: List the interface configuration
+  --capture: Run the capture
+  --extcap-capture-filter=: Capture filter
+  --fifo=: Dump data to file or fifo
+  --extcap-version: Print tool version
+  --log-level=: Set the log level
+  --log-file=: Set a log file in addition to the console
+  --help: Print help
+  --version: Print the version
+  --port=: The dpauxmon interface index
+completion:
+  flag:
+    log-level:
+      - critical
+      - warning
+      - message
+      - info
+      - debug
+      - noisy

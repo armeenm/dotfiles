@@ -1,0 +1,9 @@
+name: mmdbresolve
+description: Resolve IP addresses to geolocation information with MaxMind databases
+flags:
+  -v: Display version info and exit
+  -h: Display this help and exit
+  -f=: Path to a MaxMind Database file
+completion:
+  flag:
+    f: ["$files([.mmdb])"]

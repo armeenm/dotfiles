@@ -1,0 +1,7 @@
+name: strace-log-merge
+description: Merge strace -ff log files into a single timestamp-sorted stream
+flags:
+  -h, --help: Show usage
+completion:
+  positional:
+    - ["$files"]

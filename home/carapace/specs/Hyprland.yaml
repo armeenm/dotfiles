@@ -1,0 +1,19 @@
+name: Hyprland
+description: Dynamic tiling Wayland compositor
+aliases: [hyprland]
+flags:
+  -h, --help: Show help
+  -c, --config=: Specify a config file to use
+  --socket=: Set the Wayland socket name
+  --wayland-fd=: Set the Wayland socket fd
+  --watchdog-fd=: Watchdog fd used by start-hyprland
+  --safe-mode: Start Hyprland in safe mode
+  --systeminfo: Print system info
+  --i-am-really-stupid: Omit the root user privilege check
+  --verify-config: Only verify the config and print errors
+  -v, --version: Print the version
+  --version-json: Print the version as JSON
+  --locked-cmd?: Command to launch the locker on startup
+completion:
+  flag:
+    config: ["$files([.conf, .lua])"]

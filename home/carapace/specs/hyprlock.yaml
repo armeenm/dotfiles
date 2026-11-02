@@ -1,0 +1,16 @@
+name: hyprlock
+description: Hyprland screen locker
+flags:
+  -h, --help: Show help
+  -V, --version: Print the version
+  -v, --verbose: Enable verbose logging
+  -q, --quiet: Disable logging
+  -c, --config=: Specify a config file to use
+  -g, --grace=: Seconds before authentication is required
+  --immediate-render: Draw the background immediately
+  --no-fade-in: Disable the fade-in animation
+  --display=: Wayland display to connect to
+  --immediate: Deprecated, use --grace 0
+completion:
+  flag:
+    config: ["$files([.conf])"]

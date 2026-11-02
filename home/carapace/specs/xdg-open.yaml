@@ -1,0 +1,9 @@
+name: xdg-open
+description: Open a file or URL in the user's preferred application
+flags:
+  -h, --help: Show command synopsis
+  --manual: Show the manual page
+  --version: Show the xdg-utils version information
+completion:
+  positional:
+    - ["$files"]

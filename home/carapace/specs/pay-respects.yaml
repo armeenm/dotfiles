@@ -1,0 +1,10 @@
+name: pay-respects
+description: Blazing fast terminal command suggestions
+flags:
+  -h, --help: Show help message and exit
+  --alias?: Set a custom alias instead of f
+  --nocnf: Disable command-not-found handler
+completion:
+  positional:
+    - ["bash\tBash init", "zsh\tZsh init", "fish\tFish init", "nu\tNushell init", "pwsh\tPowerShell init"]
+    - []

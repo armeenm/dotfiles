@@ -1,0 +1,23 @@
+name: hyprpicker
+description: Wayland color picker
+flags:
+  -a, --autocopy: Automatically copy the output to the clipboard
+  -f, --format=: Output format
+  -o, --output-format=: Template for the output color
+  -n, --notify: Send a desktop notification when a color is picked
+  -b, --no-fancy: Disable colored output
+  -h, --help: Show help
+  -r, --render-inactive: Freeze inactive displays
+  -z, --no-zoom: Disable the zoom lens
+  -q, --quiet: Disable most logs
+  -v, --verbose: Enable more logs
+  -t, --no-fractional: Disable fractional scaling support
+  -d, --disable-preview: Disable live preview of the color
+  -c, --cursor: Include the cursor in the frozen preview
+  -l, --lowercase-hex: Output the hex code in lowercase
+  -s, --scale=: Set the zoom scale
+  -u, --radius=: Set the circle radius
+  -V, --version: Print version info
+completion:
+  flag:
+    format: ["cmyk", "hex", "rgb", "hsl", "hsv"]

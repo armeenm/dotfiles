@@ -1,0 +1,38 @@
+name: noti
+description: Monitor a process and trigger a notification
+flags:
+  -t, --title=: Set notification title
+  -m, --message=: Set notification message
+  -e, --time: Show execution time in message
+  -b, --banner: Trigger a banner notification
+  --icon=: Path to notification icon image
+  -s, --speech: Trigger a speech notification
+  -c, --bearychat: Trigger a BearyChat notification
+  --keybase: Trigger a Keybase notification
+  -p, --pushbullet: Trigger a Pushbullet notification
+  -o, --pushover: Trigger a Pushover notification
+  -u, --pushsafer: Trigger a Pushsafer notification
+  -l, --simplepush: Trigger a Simplepush notification
+  -k, --slack: Trigger a Slack notification
+  -n, --gchat: Trigger a Google Chat notification
+  -i, --chanify: Trigger a Chanify notification
+  -a, --mattermost: Trigger a Mattermost notification
+  -g, --telegram: Trigger a Telegram notification
+  -z, --zulip: Trigger a Zulip notification
+  --twilio: Trigger a twilio SMS notification
+  --ntfy: Trigger a Ntfy notification
+  --bark: Trigger a Bark notification
+  -w, --pwatch=: Monitor a process by PID
+  -f, --file=: Path to noti.yaml configuration file
+  --verbose: Enable verbose mode
+  -v, --version: Print version and exit
+  -h, --help: Print help and exit
+completion:
+  flag:
+    title: []
+    message: []
+    icon: ["$files"]
+    pwatch: []
+    file: ["$files"]
+  positional:
+    - ["$executables"]

@@ -1,0 +1,41 @@
+name: dftest
+description: Show how Wireshark display filters are parsed
+flags:
+  -V, --verbose: Enable verbose mode
+  -C=: Run with the specified configuration profile
+  -d, --debug=?: Increase or set debug level
+  -D: Set maximum debug level
+  -f, --flex: Enable Flex debug trace
+  -l, --lemon: Enable Lemon debug trace
+  -s, --syntax: Print syntax tree
+  -m, --macros: Print saved macros
+  -t, --timer: Print elapsed compilation time
+  -r, --return-vals: Return field values for the tree root
+  -0: Do not optimize, check syntax only
+  --optimize=: Optimization level
+  --types: Show field value types
+  --refs: Dump some runtime data structures
+  --file=: Read filters line-by-line from a file
+  -h, --help: Display this help and exit
+  -v, --version: Print version
+  --log-level=: Set the active log level
+  --log-fatal=: Set level to abort the program
+  --log-domains=: Comma-separated list of active log domains
+  --log-fatal-domains=: Domains that cause the program to abort
+  --log-debug=: Domains with debug level
+  --log-noisy=: Domains with noisy level
+  --log-file=: File to output messages to
+completion:
+  flag:
+    log-level:
+      - critical
+      - warning
+      - message
+      - info
+      - debug
+      - noisy
+    log-fatal:
+      - critical
+      - warning
+    file:
+      - "$files"

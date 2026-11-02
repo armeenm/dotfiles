@@ -1,0 +1,18 @@
+name: uwsm-app
+description: Launch an application as a systemd unit via uwsm
+flags:
+  -h, --help: Show help
+  -s=: Slice selector
+  -t=: Type of unit to launch
+  -a=: Override app name
+  -u=: Override the unit name
+  -d=: Unit description
+  -p=: Pass a unit property assignment
+  -S=: Silence stdout, stderr, or both
+  -T: Launch the app in a terminal
+completion:
+  flag:
+    s: ["a", "b", "s"]
+    t: ["scope", "service"]
+    S: ["out", "err", "both"]
+  positionalany: ["$executables"]

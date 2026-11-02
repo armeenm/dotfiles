@@ -1,0 +1,38 @@
+name: randpkt
+description: Generate random packet capture files
+flags:
+  -b=: Maximum bytes per packet
+  -c=: Packet count
+  -F=: Output file type
+  -r: Select a different random type for each packet
+  -t=: Packet type
+  -h, --help: Display this help and exit
+  -v, --version: Print version information and exit
+completion:
+  flag:
+    t:
+      - "arp\tAddress Resolution Protocol"
+      - "bgp\tBorder Gateway Protocol"
+      - "bvlc\tBACnet Virtual Link Control"
+      - "dns\tDomain Name Service"
+      - "eth\tEthernet"
+      - "fddi\tFiber Distributed Data Interface"
+      - "giop\tGeneral Inter-ORB Protocol"
+      - "icmp\tInternet Control Message Protocol"
+      - "ieee802.15.4\tIEEE 802.15.4"
+      - "ip\tInternet Protocol"
+      - "ipv6\tInternet Protocol Version 6"
+      - "llc\tLogical Link Control"
+      - "m2m\tWiMAX M2M Encapsulation Protocol"
+      - "megaco\tMEGACO"
+      - "nbns\tNetBIOS-over-TCP Name Service"
+      - "ncp2222\tNetWare Core Protocol"
+      - "sctp\tStream Control Transmission Protocol"
+      - "syslog\tSyslog message"
+      - "tds\tTDS NetLib"
+      - "tcp\tTransmission Control Protocol"
+      - "tr\tToken-Ring"
+      - "udp\tUser Datagram Protocol"
+      - "usb-linux\tUniversal Serial Bus with Linux specific header"
+  positional:
+    - ["$files([.pcap, .pcapng, .cap])"]

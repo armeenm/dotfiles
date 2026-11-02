@@ -1,0 +1,34 @@
+name: xdg-mime
+description: Query and modify file type handling
+flags:
+  --mode=: Install mode (user or system)
+  --novendor: Do not check the vendor prefix
+  -h, --help: Show command synopsis
+  --manual: Show the manual page
+  --version: Show the xdg-utils version information
+completion:
+  flag:
+    mode: ["user", "system"]
+commands:
+  - name: query
+    description: Query file type information
+    completion:
+      positional:
+        - ["filetype\tMIME type of a file", "default\tDefault application for a MIME type"]
+        - ["$files"]
+  - name: default
+    description: Set the default application for MIME types
+    completion:
+      positional:
+        - []
+        - []
+  - name: install
+    description: Add file type descriptions
+    completion:
+      positional:
+        - ["$files([.xml])"]
+  - name: uninstall
+    description: Remove file type descriptions
+    completion:
+      positional:
+        - ["$files([.xml])"]

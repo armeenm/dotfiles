@@ -1,0 +1,31 @@
+name: virt-clone
+description: Duplicate a virtual machine, changing unique host side configuration
+flags:
+  -h, --help: show help
+  --version: show program version
+  --connect=: connect to hypervisor with libvirt URI
+  -o, --original=: name of the original guest to clone
+  --original-xml=: XML file to use as the original guest
+  --auto-clone: auto generate clone name and storage paths
+  -n, --name=: name for the new guest
+  --reflink: use btrfs COW lightweight copy
+  -f, --file=: new file to use as the disk image for the new guest
+  --force-copy=: force copy of the device target
+  --skip-copy=: skip copy of the device target
+  --nonsparse: do not use a sparse file for the clone disk image
+  --preserve-data: leave contents of specified existing paths untouched
+  --nvram=: new file to use as storage for nvram VARS
+  -m, --mac=: new fixed MAC address for the clone guest
+  --replace: overwrite any guest with the same name
+  --print-xml: print the generated domain XML rather than create the guest
+  --check=: enable or disable validation checks
+  -q, --quiet: suppress non-error output
+  -d, --debug: print debugging information
+
+completion:
+  flag:
+    connect: ["qemu:///system", "qemu:///session", "lxc:///", "xen:///"]
+    original-xml: ["$files"]
+    file: ["$files"]
+    nvram: ["$files"]
+    check: ["all=off", "path_in_use=off"]

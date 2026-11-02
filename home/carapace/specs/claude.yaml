@@ -1,0 +1,175 @@
+name: claude
+description: Claude Code
+flags:
+  --add-dir=*: additional directories to allow tool access to
+  --agent=: agent for the current session
+  --agents=: JSON object or file defining custom agents
+  --allow-dangerously-skip-permissions: allow bypassing all permission checks
+  --allowedTools=*: comma or space separated tool names to allow
+  --append-system-prompt=: append to the default system prompt
+  --autocompact=: auto-compact window size (auto or tokens)
+  --ax-screen-reader: render screen-reader friendly output
+  --bg: start the session in the background
+  --background: start the session in the background
+  --bare: minimal mode
+  --betas=*: beta headers to include in API requests
+  --brief: enable the SendUserMessage tool
+  --chrome: enable Claude in Chrome integration
+  --cloud?: create a cloud session
+  -c, --continue: continue the most recent conversation
+  --dangerously-skip-permissions: bypass all permission checks
+  -d, --debug?: enable debug mode
+  --debug-file=: write debug logs to this file
+  --desktop: open in the Claude Desktop app
+  --disable-slash-commands: disable all skills
+  --disallowedTools=*: comma or space separated tool names to disallow
+  --effort=: effort level for the session
+  --environment=: cloud environment id
+  --exclude-dynamic-system-prompt-sections: exclude dynamic prompt sections
+  --fallback-model=: automatic fallback model
+  --file=*: file resources to download at startup
+  --fork-session: create a new session id when resuming
+  --forward-subagent-text: forward subagent text and thinking
+  --from-pr?: resume a session linked to a pull request
+  -h, --help: display help
+  --ide: automatically connect to the IDE
+  --include-hook-events: include hook lifecycle events
+  --include-partial-messages: include partial message chunks
+  --input-format=: input format
+  --json-schema=: JSON schema for structured output
+  --max-budget-usd=: maximum spend on API calls
+  --mcp-config=*: MCP servers from JSON files or strings
+  --model=: model for the session
+  -n, --name=: session display name
+  --no-chrome: disable Claude in Chrome integration
+  --no-session-persistence: disable session persistence
+  --output-format=: output format
+  --permission-mode=: permission mode
+  --permission-prompts=: who answers permission prompts
+  --plugin-dir=: load a plugin from a directory or zip
+  --plugin-url=: fetch a plugin zip from a URL
+  -p, --print: print the response and exit
+  --prompt-suggestions?: enable prompt suggestions
+  --remote-control?: start an interactive remote-control session
+  --remote-control-session-name-prefix=: remote-control session name prefix
+  --replay-user-messages: re-emit user messages from stdin
+  --restricted: restricted mode
+  -r, --resume?: resume a conversation
+  --safe-mode: start without customizations
+  --session-id=: session id to use
+  --setting-sources=: comma separated list of setting sources
+  --settings=: settings file or JSON
+  --strict-mcp-config: only use MCP servers from --mcp-config
+  --system-prompt=: system prompt for the session
+  --system-prompt-snapshot=: record the system prompt once per session
+  --teleport?: resume a teleport session
+  --tmux: create a tmux session for the worktree
+  --tools=*: available tools
+  --verbose: verbose output
+  -v, --version: output the version
+  -w, --worktree?: create a new git worktree
+completion:
+  flag:
+    autocompact: ["auto"]
+    effort: ["low", "medium", "high"]
+    input-format: ["text", "stream-json"]
+    output-format: ["text", "json", "stream-json"]
+    permission-mode: ["default", "acceptEdits", "bypassPermissions", "plan"]
+    system-prompt-snapshot: ["on", "off"]
+commands:
+  - name: agents
+    description: Manage background agents
+    flags:
+      --json: print output as JSON
+      --all: include all agents
+  - name: attach
+    description: Open a background session in this terminal
+  - name: auth
+    description: Manage authentication
+    commands:
+      - name: login
+        description: Sign in to your Anthropic account
+      - name: logout
+        description: Log out of your Anthropic account
+      - name: status
+        description: Show authentication status
+  - name: auto-mode
+    description: Inspect or reset auto mode classifier configuration
+  - name: doctor
+    description: Check the health of the installation
+  - name: gateway
+    description: Run the enterprise auth and telemetry gateway
+  - name: import
+    description: Import config from another AI coding agent
+  - name: install
+    description: Install the Claude Code native build
+  - name: logs
+    description: Print a background session's recent output
+  - name: mcp
+    description: Configure and manage MCP servers
+    commands:
+      - name: add
+        description: Add an MCP server
+        flags:
+          --transport=: transport type
+          --header=*: HTTP header
+          -e, --env=*: environment variable
+          --scope=: configuration scope
+      - name: add-from-claude-desktop
+        description: Import MCP servers from Claude Desktop
+      - name: add-json
+        description: Add an MCP server from JSON
+      - name: get
+        description: Get details about an MCP server
+      - name: list
+        description: List configured MCP servers
+      - name: login
+        description: Authenticate with an MCP server
+      - name: logout
+        description: Clear stored OAuth credentials
+      - name: remove
+        description: Remove an MCP server
+      - name: reset-project-choices
+        description: Reset approved and rejected servers
+      - name: serve
+        description: Start the Claude Code MCP server
+  - name: plugin
+    description: Manage Claude Code plugins
+    aliases: [plugins]
+    commands:
+      - name: configure
+        description: Show a plugin's options
+      - name: details
+        description: Show a plugin's component inventory
+      - name: disable
+        description: Disable an enabled plugin
+      - name: enable
+        description: Enable a disabled plugin
+      - name: eval
+        description: Run eval cases
+      - name: init
+        description: Scaffold a new plugin
+        aliases: [new]
+      - name: install
+        description: Install a plugin
+        aliases: [i]
+      - name: list
+        description: List installed plugins
+      - name: marketplace
+        description: Manage Claude Code marketplaces
+  - name: purge
+    description: Delete all state for a project
+  - name: respawn
+    description: Restart a background session
+  - name: rm
+    description: Delete a background session
+  - name: setup-token
+    description: Set up a long-lived authentication token
+  - name: stop
+    description: Stop a background session
+    aliases: [kill]
+  - name: ultrareview
+    description: Run a cloud-hosted multi-agent code review
+  - name: update
+    description: Check for updates and install
+    aliases: [upgrade]

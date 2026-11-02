@@ -1,0 +1,23 @@
+name: pamixer
+description: PulseAudio command line mixer
+flags:
+  -h, --help: Show help
+  -v, --version: Print version info
+  --sink=: Choose a sink instead of the default
+  --source=: Choose a source instead of the default
+  --default-source: Select the default source
+  --get-volume: Get the current volume
+  --get-volume-human: Get the volume percentage or muted
+  --set-volume=: Set the volume
+  -i, --increase=: Increase the volume
+  -d, --decrease=: Decrease the volume
+  -t, --toggle-mute: Toggle mute
+  -m, --mute: Mute
+  --allow-boost: Allow volume above 100%
+  --set-limit=: Set a volume limit
+  --gamma=: Gamma correction for increase and decrease
+  -u, --unmute: Unmute
+  --get-mute: Print whether the volume is muted
+  --list-sinks: List sinks
+  --list-sources: List sources
+  --get-default-sink: Print the default sink

@@ -1,0 +1,85 @@
+name: mergiraf
+description: Syntax-aware merge driver for Git
+flags:
+  -v, --verbose: Verbosity
+  -h, --help: Print help
+  -V, --version: Print version
+completion:
+  flag:
+    verbose: []
+commands:
+  - name: merge
+    description: Do a three-way merge
+    flags:
+      --fast: Only attempt to solve textual conflicts
+      -v, --verbose: Verbosity
+      -d, --debug=: Write debug files to this directory
+      -c, --compact?=: Display compact conflicts
+      -l, --conflict-marker-size=: Length of conflict markers
+      -L, --language=: Override automatic language detection
+      --allow-parse-errors?=: Merge despite the presence of syntax errors
+      -g, --git: Behave as a git merge driver
+      -o, --output=: Path to write the merge result to
+      -p, --path-name=: Final path of the merged result
+      -s, --base-name=: Name to use for the base revision in conflict markers
+      -x, --left-name=: Name to use for the left revision in conflict markers
+      -y, --right-name=: Name to use for the right revision in conflict markers
+      -t, --timeout=: Milliseconds to try merging before falling back
+      -h, --help: Print help
+      -V, --version: Print version
+    completion:
+      flag:
+        debug: ["$directories"]
+        compact: ["true", "false"]
+        language: ["$(mergiraf languages | sed 's/ (.*//')"]
+        allow-parse-errors: ["true", "false"]
+        output: ["$files"]
+        path-name: ["$files"]
+      positional:
+        - ["$files"]
+        - ["$files"]
+        - ["$files"]
+  - name: solve
+    description: Solve the conflicts in a merged file
+    flags:
+      -d, --debug=: Write debug files to this directory
+      -v, --verbose: Verbosity
+      -c, --compact?=: Display compact conflicts
+      -l, --conflict-marker-size=: Length of conflict markers
+      -L, --language=: Override automatic language detection
+      --allow-parse-errors?=: Resolve despite the presence of syntax errors
+      -p, --stdout: Show the resolution on standard output, leaving the file untouched
+      --keep-backup?=: Keep a copy of the original file with a .orig suffix
+      -h, --help: Print help
+      -V, --version: Print version
+    completion:
+      flag:
+        debug: ["$directories"]
+        compact: ["true", "false"]
+        language: ["$(mergiraf languages | sed 's/ (.*//')"]
+        allow-parse-errors: ["true", "false"]
+        keep-backup: ["true", "false"]
+      positional:
+        - ["$files"]
+  - name: review
+    description: Review the resolution of a merge
+    flags:
+      -v, --verbose: Verbosity
+      -h, --help: Print help
+      -V, --version: Print version
+  - name: report
+    description: Create a bug report for a bad merge
+    flags:
+      -v, --verbose: Verbosity
+      -h, --help: Print help
+      -V, --version: Print version
+    completion:
+      positional:
+        - ["$files"]
+  - name: languages
+    description: Show the supported languages
+    flags:
+      --gitattributes: Print in a format suitable for gitattributes
+      -v, --verbose: Verbosity
+      -h, --help: Print help
+      -V, --version: Print version

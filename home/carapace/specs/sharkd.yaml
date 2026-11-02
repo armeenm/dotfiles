@@ -1,0 +1,13 @@
+name: sharkd
+description: Daemon variant of Wireshark
+flags:
+  -a, --api=: Listen on this socket instead of the console
+  --foreground: Do not detach from the console
+  -C, --config-profile=: Start with the specified configuration profile
+  -h, --help: Show this help information
+  -v, --version: Show version information
+completion:
+  flag:
+    api:
+      - "unix:/tmp/sharkd.sock\tUnix domain socket file"
+      - "unix:@sharkd\tAbstract Unix socket"

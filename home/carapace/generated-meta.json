@@ -1,0 +1,4774 @@
+{
+ "AP100": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 1,
+  "files": [],
+  "flags": 6,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "AP210": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 1,
+  "files": [],
+  "flags": 6,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "APserver": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 6,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "Discord": {
+  "candidates": 1,
+  "class": "not-help",
+  "exit": -9,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "ModemManager": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 22,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "NetworkManager": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 11,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "Telegram": {
+  "candidates": 1,
+  "class": "gui",
+  "exit": null,
+  "files": [],
+  "flags": 0,
+  "help_flag": null,
+  "source": "gui"
+ },
+ "Vial": {
+  "candidates": 1,
+  "class": "not-help",
+  "exit": 1,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "Xwayland": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 1,
+  "files": [],
+  "flags": 9,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "aa-audit": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 7,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "aa-autodep": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 4,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "aa-cleanprof": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 7,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "aa-complain": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 6,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "aa-decode": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 1,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "aa-disable": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 6,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "aa-enabled": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 1,
+  "files": [],
+  "flags": 3,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "aa-enforce": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 6,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "aa-exec": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 6,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "aa-features-abi": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 5,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "aa-genprof": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 6,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "aa-load": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 5,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "aa-logprof": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 8,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "aa-mergeprof": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 2,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "aa-notify": {
+  "candidates": 1,
+  "class": "error",
+  "exit": 1,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "aa-remove-unknown": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 2,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "aa-show-usage": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 6,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "aa-status": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 10,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "aa-unconfined": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 6,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "accessdb": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 4,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "addr2line": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 13,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "advtest": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 2,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "age-plugin-se": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 5,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "age-plugin-yubikey": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 13,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "agetty": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 36,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "airscan-discover": {
+  "candidates": 1,
+  "class": "not-help",
+  "exit": 1,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "apl": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 41,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "apparmor_status": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 10,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "append2simg": {
+  "candidates": 1,
+  "class": "no-flags",
+  "exit": 1,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "appimage-run": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 1,
+  "files": [],
+  "flags": 4,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "arpd": {
+  "candidates": 1,
+  "class": "no-flags",
+  "exit": 1,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "as": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 62,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "atuin-server": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 2,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "av1encode": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 14,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "avahi-autoipd": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 15,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "avahi-daemon": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 12,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "avahi-dnsconfd": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 7,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "avahi-publish": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 10,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "avahi-publish-address": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 10,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "avahi-publish-service": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 10,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "avahi-set-host-name": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 3,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "avbtool": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 1,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "avcenc": {
+  "candidates": 1,
+  "class": "wrong-program",
+  "exit": 255,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "avcstreamoutdemo": {
+  "candidates": 1,
+  "class": "error",
+  "exit": 0,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "avinfo": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 2,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "avtest": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 9,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "badges": {
+  "candidates": 1,
+  "class": "not-help",
+  "exit": -9,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "bashbug": {
+  "candidates": 1,
+  "class": "no-flags",
+  "exit": 0,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "bcache": {
+  "candidates": 1,
+  "class": "not-help",
+  "exit": 1,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "bcache-super-show": {
+  "candidates": 1,
+  "class": "no-flags",
+  "exit": 1,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "bcmfw": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 1,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "bdaddr": {
+  "candidates": 1,
+  "class": "no-flags",
+  "exit": 0,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "bluemoon": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 8,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "bluetooth-player": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 5,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "bluetoothd": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 11,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "bluetuith": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 14,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "bneptest": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 19,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "boltctl": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 3,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "bridge": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 255,
+  "files": [],
+  "flags": 2,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "broadwayd": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 6,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "bruno": {
+  "candidates": 1,
+  "class": "gui",
+  "exit": null,
+  "files": [],
+  "flags": 0,
+  "help_flag": null,
+  "source": "gui"
+ },
+ "btattach": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 6,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "btconfig": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 1,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "btgatt-client": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 7,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "btgatt-server": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 7,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "btinfo": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 2,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "btiotest": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 18,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "btmgmt": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 6,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "btmon": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 23,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "btmon-logger": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 6,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "btproxy": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 9,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "btsnoop": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 3,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "cancel": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 1,
+  "files": [],
+  "flags": 6,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "capsh": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 41,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "captoinfo": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 1,
+  "files": [],
+  "flags": 28,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "captree": {
+  "candidates": 1,
+  "class": "no-flags",
+  "exit": 0,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "catman": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 6,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "cava": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 3,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "chacl": {
+  "candidates": 1,
+  "class": "no-flags",
+  "exit": 1,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "chdosattr": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 2,
+  "files": [],
+  "flags": 3,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "check-selftest": {
+  "candidates": 1,
+  "class": "no-output",
+  "exit": 0,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--usage",
+  "source": "file"
+ },
+ "chgpasswd": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 5,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "chronyc": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 13,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "chronyd": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 23,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "chvt": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 3,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "ciptool": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 2,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "clock-rs": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 12,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "clockdiff": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 5,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "clrunimap": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 3,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "cltest": {
+  "candidates": 1,
+  "class": "not-help",
+  "exit": 1,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "coreutils": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 2,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "cpufreq-bench": {
+  "candidates": 1,
+  "class": "error",
+  "exit": 1,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "create-image": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 2,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "ctstat": {
+  "candidates": 1,
+  "class": "not-help",
+  "exit": 0,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "cupsaccept": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 1,
+  "files": [],
+  "flags": 4,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "cupsctl": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 1,
+  "files": [],
+  "flags": 3,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "cupsd": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 7,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "cupsdisable": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 1,
+  "files": [],
+  "flags": 5,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "cupsenable": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 1,
+  "files": [],
+  "flags": 5,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "cupsfilter": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 1,
+  "files": [],
+  "flags": 15,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "cupsreject": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 1,
+  "files": [],
+  "flags": 4,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "cupstestppd": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 1,
+  "files": [],
+  "flags": 6,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "dbus-broker": {
+  "candidates": 1,
+  "class": "not-help",
+  "exit": 0,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "dbus-broker-launch": {
+  "candidates": 1,
+  "class": "not-help",
+  "exit": 0,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "dbus-cleanup-sockets": {
+  "candidates": 1,
+  "class": "not-help",
+  "exit": 0,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "dbus-daemon": {
+  "candidates": 1,
+  "class": "not-help",
+  "exit": 1,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "dbus-run-session": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 2,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "dbus-test-tool": {
+  "candidates": 1,
+  "class": "no-flags",
+  "exit": 2,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "dbus-update-activation-environment": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 64,
+  "files": [],
+  "flags": 3,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "dbus-uuidgen": {
+  "candidates": 1,
+  "class": "no-flags",
+  "exit": 0,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "dbxtool": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 8,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "dcb": {
+  "candidates": 1,
+  "class": "no-flags",
+  "exit": 0,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "deallocvt": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 3,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "dehtmldiff": {
+  "candidates": 1,
+  "class": "no-flags",
+  "exit": 0,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "depmod": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 14,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "determinate-nixd": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 3,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "discord": {
+  "candidates": 1,
+  "class": "gui",
+  "exit": null,
+  "files": [],
+  "flags": 0,
+  "help_flag": null,
+  "source": "gui"
+ },
+ "dmsetup": {
+  "candidates": 1,
+  "class": "no-flags",
+  "exit": 0,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "dmstats": {
+  "candidates": 1,
+  "class": "no-flags",
+  "exit": 0,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "dmvdostats": {
+  "candidates": 1,
+  "class": "no-flags",
+  "exit": 0,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "dnscheck": {
+  "candidates": 1,
+  "class": "not-help",
+  "exit": -9,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "dumpkeys": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 14,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "dwp": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 6,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "e2fsdroid": {
+  "candidates": 1,
+  "class": "error",
+  "exit": 1,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "easyeffects": {
+  "candidates": 1,
+  "class": "no-output",
+  "exit": -6,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--usage",
+  "source": "file"
+ },
+ "ebrowse": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 14,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "ectool": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 1,
+  "files": [],
+  "flags": 3,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "eddystone": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 2,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "editdiff": {
+  "candidates": 1,
+  "class": "no-flags",
+  "exit": 0,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "element-desktop": {
+  "candidates": 1,
+  "class": "gui",
+  "exit": null,
+  "files": [],
+  "flags": 0,
+  "help_flag": null,
+  "source": "gui"
+ },
+ "elfedit": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 12,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "espdiff": {
+  "candidates": 1,
+  "class": "no-flags",
+  "exit": 0,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "evince-previewer": {
+  "candidates": 1,
+  "class": "gui",
+  "exit": null,
+  "files": [],
+  "flags": 0,
+  "help_flag": null,
+  "source": "gui"
+ },
+ "evince-thumbnailer": {
+  "candidates": 1,
+  "class": "gui",
+  "exit": null,
+  "files": [],
+  "flags": 0,
+  "help_flag": null,
+  "source": "gui"
+ },
+ "exportfs": {
+  "candidates": 1,
+  "class": "no-flags",
+  "exit": 1,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "ext2simg": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 1,
+  "files": [],
+  "flags": 3,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "faillock": {
+  "candidates": 1,
+  "class": "no-flags",
+  "exit": 1,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "faillog": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 8,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "fancontrol": {
+  "candidates": 1,
+  "class": "error",
+  "exit": 1,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "fatlabel": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 5,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "fc-pattern": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 5,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "fc-query": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 5,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "fc-scan": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 5,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "fc-validate": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 5,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "feishin": {
+  "candidates": 1,
+  "class": "gui",
+  "exit": null,
+  "files": [],
+  "flags": 0,
+  "help_flag": null,
+  "source": "gui"
+ },
+ "fgconsole": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 4,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "fixcvsdiff": {
+  "candidates": 1,
+  "class": "no-flags",
+  "exit": 0,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "flatpak-bisect": {
+  "candidates": 1,
+  "class": "error",
+  "exit": 1,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "flatpak-coredumpctl": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 5,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "fprintd-delete": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 1,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "fprintd-enroll": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 2,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "fprintd-list": {
+  "candidates": 1,
+  "class": "error",
+  "exit": 1,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "fprintd-verify": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 3,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "framework_tool": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 85,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "fsidd": {
+  "candidates": 1,
+  "class": "not-help",
+  "exit": 1,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "fumon": {
+  "candidates": 1,
+  "class": "no-output",
+  "exit": -9,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--usage",
+  "source": "file"
+ },
+ "funzip": {
+  "candidates": 1,
+  "class": "error",
+  "exit": 3,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "gamma4scanimage": {
+  "candidates": 1,
+  "class": "error",
+  "exit": 255,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "gatt-service": {
+  "candidates": 1,
+  "class": "no-output",
+  "exit": -11,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--usage",
+  "source": "file"
+ },
+ "gatttool": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 12,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "gencat": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 6,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "genl": {
+  "candidates": 1,
+  "class": "not-help",
+  "exit": 255,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "get-authkey": {
+  "candidates": 1,
+  "class": "no-flags",
+  "exit": 0,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "getcap": {
+  "candidates": 1,
+  "class": "no-flags",
+  "exit": 1,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "getkeycodes": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 2,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "getpcaps": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 7,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "getsubids": {
+  "candidates": 1,
+  "class": "not-help",
+  "exit": 1,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "getunimap": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 4,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "git-credential-netrc": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 5,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "git-http-backend": {
+  "candidates": 1,
+  "class": "not-help",
+  "exit": 0,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "git-jump": {
+  "candidates": 1,
+  "class": "wrong-program",
+  "exit": 1,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "grpck": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 5,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "grpconv": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 2,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "grpunconv": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 2,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "gstplayer": {
+  "candidates": 1,
+  "class": "error",
+  "exit": null,
+  "files": [],
+  "flags": 0,
+  "help_flag": null,
+  "source": "file"
+ },
+ "gtk-launch": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 5,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "gtk-update-icon-cache": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 8,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "h264encode": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 19,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "hciattach": {
+  "candidates": 1,
+  "class": "no-flags",
+  "exit": 1,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "hciconfig": {
+  "candidates": 1,
+  "class": "no-flags",
+  "exit": 0,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "hcieventmask": {
+  "candidates": 1,
+  "class": "error",
+  "exit": 0,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "hcisecfilter": {
+  "candidates": 1,
+  "class": "not-help",
+  "exit": 0,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "hcitool": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 2,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "hdparm": {
+  "candidates": 1,
+  "class": "not-help",
+  "exit": 22,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "hevcencode": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 19,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "hex2hcd": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 2,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "hid2hci": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 1,
+  "files": [],
+  "flags": 4,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "hwdb": {
+  "candidates": 1,
+  "class": "not-help",
+  "exit": 0,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "hyprland-dialog": {
+  "candidates": 1,
+  "class": "not-help",
+  "exit": 1,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "hyprland-donate-screen": {
+  "candidates": 1,
+  "class": "no-output",
+  "exit": -6,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--usage",
+  "source": "file"
+ },
+ "hyprland-run": {
+  "candidates": 1,
+  "class": "not-help",
+  "exit": 0,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "hyprland-share-picker": {
+  "candidates": 1,
+  "class": "not-help",
+  "exit": 1,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "hyprland-update-screen": {
+  "candidates": 1,
+  "class": "not-help",
+  "exit": 1,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "hyprland-welcome": {
+  "candidates": 1,
+  "class": "not-help",
+  "exit": 0,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "hypruse": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 3,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "ibeacon": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 2,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "idle": {
+  "candidates": 1,
+  "class": "not-help",
+  "exit": 1,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "idle3": {
+  "candidates": 1,
+  "class": "not-help",
+  "exit": 1,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "ifstat": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 255,
+  "files": [],
+  "flags": 13,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "img2simg": {
+  "candidates": 1,
+  "class": "no-flags",
+  "exit": 1,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "imv-dir": {
+  "candidates": 1,
+  "class": "gui",
+  "exit": null,
+  "files": [],
+  "flags": 0,
+  "help_flag": null,
+  "source": "gui"
+ },
+ "imv-msg": {
+  "candidates": 1,
+  "class": "gui",
+  "exit": null,
+  "files": [],
+  "flags": 0,
+  "help_flag": null,
+  "source": "gui"
+ },
+ "imv-wayland": {
+  "candidates": 1,
+  "class": "gui",
+  "exit": null,
+  "files": [],
+  "flags": 0,
+  "help_flag": null,
+  "source": "gui"
+ },
+ "imv-x11": {
+  "candidates": 1,
+  "class": "gui",
+  "exit": null,
+  "files": [],
+  "flags": 0,
+  "help_flag": null,
+  "source": "gui"
+ },
+ "infotocap": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 1,
+  "files": [],
+  "flags": 28,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "init": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 23,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "ippeveprinter": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 26,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "ippfind": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 37,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "ipptool": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 1,
+  "files": [],
+  "flags": 25,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "isadump": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 1,
+  "files": [],
+  "flags": 5,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "isaset": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 1,
+  "files": [],
+  "flags": 4,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "isotest": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 1,
+  "files": [],
+  "flags": 6,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "jpegenc": {
+  "candidates": 1,
+  "class": "no-flags",
+  "exit": 255,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "jsonnet-language-server": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 7,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "kbd_mode": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 9,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "kbdinfo": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 3,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "kbdrate": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 6,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "kexec": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 46,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "keyctl": {
+  "candidates": 1,
+  "class": "not-help",
+  "exit": 2,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "kvantummanager": {
+  "candidates": 1,
+  "class": "wrong-program",
+  "exit": 0,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "kvantumpreview": {
+  "candidates": 1,
+  "class": "no-output",
+  "exit": -6,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--usage",
+  "source": "file"
+ },
+ "l2ping": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 1,
+  "files": [],
+  "flags": 3,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "l2test": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 1,
+  "files": [],
+  "flags": 14,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "ld": {
+  "candidates": 1,
+  "class": "wrong-program",
+  "exit": 0,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "lexgrog": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 9,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "libreoffice": {
+  "candidates": 1,
+  "class": "gui",
+  "exit": null,
+  "files": [],
+  "flags": 0,
+  "help_flag": null,
+  "source": "gui"
+ },
+ "lnstat": {
+  "candidates": 1,
+  "class": "not-help",
+  "exit": 0,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "loadjpeg": {
+  "candidates": 1,
+  "class": "error",
+  "exit": 0,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "loadunimap": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 4,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "login": {
+  "candidates": 1,
+  "class": "not-help",
+  "exit": 1,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "lpadd": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 64,
+  "files": [],
+  "flags": 2,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "lpc": {
+  "candidates": 1,
+  "class": "not-help",
+  "exit": 0,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "lpdump": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 4,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "lpflash": {
+  "candidates": 1,
+  "class": "no-flags",
+  "exit": 64,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "lpmake": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 64,
+  "files": [],
+  "flags": 16,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "lpmove": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 1,
+  "files": [],
+  "flags": 3,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "lpunpack": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 64,
+  "files": [],
+  "flags": 3,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "lsdosattr": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 2,
+  "files": [],
+  "flags": 6,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "lspci": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 1,
+  "files": [],
+  "flags": 20,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "lvmdevices": {
+  "candidates": 1,
+  "class": "no-flags",
+  "exit": 0,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "lvmsadc": {
+  "candidates": 1,
+  "class": "no-flags",
+  "exit": 0,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "lvmsar": {
+  "candidates": 1,
+  "class": "no-flags",
+  "exit": 0,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "lz": {
+  "candidates": 1,
+  "class": "not-help",
+  "exit": 0,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "make-bcache": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 1,
+  "files": [],
+  "flags": 12,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "makedb": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 8,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "man-recode": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 8,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "mandb": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 12,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "manpath": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 9,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "mapscrn": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 5,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "mcheck": {
+  "candidates": 1,
+  "class": "wrong-program",
+  "exit": 1,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "mcomp": {
+  "candidates": 1,
+  "class": "no-flags",
+  "exit": 1,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "mediainfo": {
+  "candidates": 1,
+  "class": "wrong-program",
+  "exit": 0,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "mesh-cfgclient": {
+  "candidates": 1,
+  "class": "not-help",
+  "exit": -9,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "mesh-cfgtest": {
+  "candidates": 1,
+  "class": "wrong-program",
+  "exit": 0,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "meshctl": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 1,
+  "files": [],
+  "flags": 6,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "miracle-dhcp": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 16,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "miracle-gst": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 6,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "miracle-uibcctl": {
+  "candidates": 1,
+  "class": "no-flags",
+  "exit": 1,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "miracled": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 5,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "mkbootimg": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 33,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "mkdtboimg": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 1,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "mkhomedir_helper": {
+  "candidates": 1,
+  "class": "no-output",
+  "exit": 10,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--usage",
+  "source": "file"
+ },
+ "mkmanifest": {
+  "candidates": 1,
+  "class": "no-output",
+  "exit": 0,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--usage",
+  "source": "file"
+ },
+ "mkpasswd": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 8,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "monerod": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 116,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "monitor-sensor": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 6,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "moonlight": {
+  "candidates": 1,
+  "class": "gui",
+  "exit": null,
+  "files": [],
+  "flags": 0,
+  "help_flag": null,
+  "source": "gui"
+ },
+ "mosh-client": {
+  "candidates": 1,
+  "class": "no-flags",
+  "exit": 0,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "mosh-server": {
+  "candidates": 1,
+  "class": "no-flags",
+  "exit": 0,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "mountstats": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 1,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "mozillavpn": {
+  "candidates": 1,
+  "class": "gui",
+  "exit": null,
+  "files": [],
+  "flags": 0,
+  "help_flag": null,
+  "source": "gui"
+ },
+ "mpeg2vaenc": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 1,
+  "files": [],
+  "flags": 6,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "mpeg2vldemo": {
+  "candidates": 1,
+  "class": "error",
+  "exit": 1,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "mpris-proxy": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 4,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "mtr-packet": {
+  "candidates": 1,
+  "class": "no-output",
+  "exit": 0,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--usage",
+  "source": "file"
+ },
+ "mtrace": {
+  "candidates": 1,
+  "class": "not-help",
+  "exit": 127,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "netshaper": {
+  "candidates": 1,
+  "class": "no-flags",
+  "exit": 0,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "newgidmap": {
+  "candidates": 1,
+  "class": "no-flags",
+  "exit": 1,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "newuidmap": {
+  "candidates": 1,
+  "class": "no-flags",
+  "exit": 1,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "newusers": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 4,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "nfbpf_compile": {
+  "candidates": 1,
+  "class": "not-help",
+  "exit": 1,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "nfnl_osf": {
+  "candidates": 1,
+  "class": "no-flags",
+  "exit": 255,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "nfsconf": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 1,
+  "files": [],
+  "flags": 10,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "nfsdcld": {
+  "candidates": 1,
+  "class": "not-help",
+  "exit": 0,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "nfsdclddb": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 2,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "nfsdclnts": {
+  "candidates": 1,
+  "class": "not-help",
+  "exit": 1,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "nfsdctl": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 4,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "nfsidmap": {
+  "candidates": 1,
+  "class": "no-flags",
+  "exit": 1,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "nfsiostat": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 8,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "nfsref": {
+  "candidates": 1,
+  "class": "no-flags",
+  "exit": 1,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "nfsstat": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 16,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "nfsynproxy": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 4,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "nix-channel-index": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 9,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "nix-daemon": {
+  "candidates": 1,
+  "class": "not-help",
+  "exit": 0,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "nix-info": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 5,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "nix-your-shell": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 6,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "nixd": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 13,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "nixos-enter": {
+  "candidates": 1,
+  "class": "not-help",
+  "exit": 1,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "nixos-help": {
+  "candidates": 1,
+  "class": "not-help",
+  "exit": 3,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "nm-online": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 5,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "nokfw": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 1,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "nologin": {
+  "candidates": 1,
+  "class": "not-help",
+  "exit": 1,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "nomacs": {
+  "candidates": 1,
+  "class": "gui",
+  "exit": null,
+  "files": [],
+  "flags": 0,
+  "help_flag": null,
+  "source": "gui"
+ },
+ "nscd": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 11,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "nstat": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 255,
+  "files": [],
+  "flags": 11,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "obex-client-tool": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 10,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "obex-server-tool": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 9,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "obexctl": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 5,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "obexd": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 11,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "objcopy": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 90,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "obs": {
+  "candidates": 1,
+  "class": "gui",
+  "exit": null,
+  "files": [],
+  "flags": 0,
+  "help_flag": null,
+  "source": "gui"
+ },
+ "obs-ffmpeg-mux": {
+  "candidates": 1,
+  "class": "gui",
+  "exit": null,
+  "files": [],
+  "flags": 0,
+  "help_flag": null,
+  "source": "gui"
+ },
+ "obs-nvenc-test": {
+  "candidates": 1,
+  "class": "gui",
+  "exit": null,
+  "files": [],
+  "flags": 0,
+  "help_flag": null,
+  "source": "gui"
+ },
+ "oobtest": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 15,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "openchamber": {
+  "candidates": 1,
+  "class": "gui",
+  "exit": null,
+  "files": [],
+  "flags": 0,
+  "help_flag": null,
+  "source": "gui"
+ },
+ "openvt": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 10,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "outpsfheader": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 2,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "pa-info": {
+  "candidates": 1,
+  "class": "no-flags",
+  "exit": 0,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "pam_timestamp_check": {
+  "candidates": 1,
+  "class": "no-flags",
+  "exit": 1,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "pamu2fcfg": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 13,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "partitionmanager": {
+  "candidates": 1,
+  "class": "no-output",
+  "exit": -6,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--usage",
+  "source": "file"
+ },
+ "pavucontrol": {
+  "candidates": 1,
+  "class": "not-help",
+  "exit": 1,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "pcilmr": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 1,
+  "files": [],
+  "flags": 7,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "pcprofiledump": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 4,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "pcscd": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 19,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "pipewire": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 5,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "pipewire-aes67": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 5,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "pipewire-avb": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 5,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "pipewire-pulse": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 5,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "pipewire-vulkan": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 5,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "pkaction": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 4,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "pkcheck": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 10,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "pkexec": {
+  "candidates": 1,
+  "class": "not-help",
+  "exit": 0,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "pkgconf": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 62,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "pkttyagent": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 6,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "playerctld": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 1,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "pod2texi": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 17,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "podmansh": {
+  "candidates": 1,
+  "class": "no-output",
+  "exit": -9,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--usage",
+  "source": "file"
+ },
+ "ppdc": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 1,
+  "files": [],
+  "flags": 12,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "ppdhtml": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 1,
+  "files": [],
+  "flags": 2,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "ppdi": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 1,
+  "files": [],
+  "flags": 2,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "ppdmerge": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 1,
+  "files": [],
+  "flags": 1,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "ppdpo": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 1,
+  "files": [],
+  "flags": 3,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "psfaddtable": {
+  "candidates": 1,
+  "class": "no-flags",
+  "exit": 64,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "psfgettable": {
+  "candidates": 1,
+  "class": "error",
+  "exit": 66,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "psfstriptable": {
+  "candidates": 1,
+  "class": "no-flags",
+  "exit": 64,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "psfxtable": {
+  "candidates": 1,
+  "class": "no-flags",
+  "exit": 64,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "pueued": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 6,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "putsurface": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 12,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "putsurface_wayland": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 12,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "pwck": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 6,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "pwconv": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 2,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "pwhistory_helper": {
+  "candidates": 1,
+  "class": "not-help",
+  "exit": 4,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "pwmconfig": {
+  "candidates": 1,
+  "class": "not-help",
+  "exit": 1,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "pwunconv": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 2,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "pydoc": {
+  "candidates": 1,
+  "class": "not-help",
+  "exit": 0,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "pydoc3": {
+  "candidates": 1,
+  "class": "not-help",
+  "exit": 0,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "python-config": {
+  "candidates": 1,
+  "class": "no-flags",
+  "exit": 0,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "python3-config": {
+  "candidates": 1,
+  "class": "no-flags",
+  "exit": 0,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "pzstd": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 16,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "qt5ct": {
+  "candidates": 1,
+  "class": "not-help",
+  "exit": -6,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "qt6ct": {
+  "candidates": 1,
+  "class": "no-output",
+  "exit": -6,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--usage",
+  "source": "file"
+ },
+ "rctest": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 1,
+  "files": [],
+  "flags": 9,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "rdma": {
+  "candidates": 1,
+  "class": "no-flags",
+  "exit": 0,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "realpath": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 13,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "recountdiff": {
+  "candidates": 1,
+  "class": "no-flags",
+  "exit": 0,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "rediff": {
+  "candidates": 1,
+  "class": "no-flags",
+  "exit": 0,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "remmina": {
+  "candidates": 1,
+  "class": "gui",
+  "exit": null,
+  "files": [],
+  "flags": 0,
+  "help_flag": null,
+  "source": "gui"
+ },
+ "remmina-file-wrapper": {
+  "candidates": 1,
+  "class": "gui",
+  "exit": null,
+  "files": [],
+  "flags": 0,
+  "help_flag": null,
+  "source": "gui"
+ },
+ "repack_bootimg": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 5,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "request-key": {
+  "candidates": 1,
+  "class": "error",
+  "exit": 1,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "reset": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 1,
+  "files": [],
+  "flags": 12,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "resizecons": {
+  "candidates": 1,
+  "class": "not-help",
+  "exit": 1,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "resolvconf": {
+  "candidates": 1,
+  "class": "error",
+  "exit": 1,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "rfcomm": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 9,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "rga": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 15,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "rga-fzf": {
+  "candidates": 1,
+  "class": "error",
+  "exit": 1,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "rga-fzf-open": {
+  "candidates": 1,
+  "class": "error",
+  "exit": 1,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "rga-preproc": {
+  "candidates": 1,
+  "class": "error",
+  "exit": 1,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "rpcctl": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 1,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "rpcdebug": {
+  "candidates": 1,
+  "class": "no-flags",
+  "exit": 1,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "rtacct": {
+  "candidates": 1,
+  "class": "no-flags",
+  "exit": 255,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "rtkitctl": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 8,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "rtlfw": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 1,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "rtmon": {
+  "candidates": 1,
+  "class": "not-help",
+  "exit": 255,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "rtstat": {
+  "candidates": 1,
+  "class": "not-help",
+  "exit": 0,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "runuser": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 14,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "sane-config": {
+  "candidates": 1,
+  "class": "no-flags",
+  "exit": 1,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "sane-find-scanner": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 5,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "saned": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 12,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "sbase": {
+  "candidates": 1,
+  "class": "wrong-program",
+  "exit": 0,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "scalar": {
+  "candidates": 1,
+  "class": "no-flags",
+  "exit": 129,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "scalc": {
+  "candidates": 1,
+  "class": "gui",
+  "exit": null,
+  "files": [],
+  "flags": 0,
+  "help_flag": null,
+  "source": "gui"
+ },
+ "scanimage": {
+  "candidates": 1,
+  "class": "not-help",
+  "exit": -9,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "scmpuff": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 2,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "scotest": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 1,
+  "files": [],
+  "flags": 6,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "screendump": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 2,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "sdiff": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 20,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "sdptool": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 2,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "sdraw": {
+  "candidates": 1,
+  "class": "gui",
+  "exit": null,
+  "files": [],
+  "flags": 0,
+  "help_flag": null,
+  "source": "gui"
+ },
+ "sensors": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 10,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "sensors-conf-convert": {
+  "candidates": 1,
+  "class": "no-flags",
+  "exit": 0,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "sensors-detect": {
+  "candidates": 1,
+  "class": "error",
+  "exit": 1,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "seq2bseq": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 2,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "servicemenuinstaller": {
+  "candidates": 1,
+  "class": "no-output",
+  "exit": -6,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--usage",
+  "source": "file"
+ },
+ "setcap": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 1,
+  "files": [],
+  "flags": 7,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "setfont": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 15,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "setkeycodes": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 3,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "setleds": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 6,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "setlogcons": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 3,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "setmetamode": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 3,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "setpalette": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 3,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "setpci": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 10,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "setvesablank": {
+  "candidates": 1,
+  "class": "not-help",
+  "exit": 1,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "setvtrgb": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 3,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "sfcsample": {
+  "candidates": 1,
+  "class": "not-help",
+  "exit": 0,
+  "files": [
+   "sfc_sample_176_144_argb.yuv"
+  ],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "sg": {
+  "candidates": 1,
+  "class": "no-flags",
+  "exit": 1,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "shikane": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 6,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "shikanectl": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 3,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "showconsolefont": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 5,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "signal-desktop": {
+  "candidates": 1,
+  "class": "gui",
+  "exit": null,
+  "files": [],
+  "flags": 0,
+  "help_flag": null,
+  "source": "gui"
+ },
+ "simg2img": {
+  "candidates": 1,
+  "class": "no-flags",
+  "exit": 1,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "simple-scan": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 4,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "simpress": {
+  "candidates": 1,
+  "class": "gui",
+  "exit": null,
+  "files": [],
+  "flags": 0,
+  "help_flag": null,
+  "source": "gui"
+ },
+ "size": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 9,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "sk-share": {
+  "candidates": 1,
+  "class": "not-help",
+  "exit": 0,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "sk-tmux": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 9,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "sln": {
+  "candidates": 1,
+  "class": "no-flags",
+  "exit": 0,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "sload_f2fs": {
+  "candidates": 1,
+  "class": "wrong-program",
+  "exit": 1,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "sm-notify": {
+  "candidates": 1,
+  "class": "no-flags",
+  "exit": 1,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "smartd": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 19,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "smath": {
+  "candidates": 1,
+  "class": "gui",
+  "exit": null,
+  "files": [],
+  "flags": 0,
+  "help_flag": null,
+  "source": "gui"
+ },
+ "socksproxy": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 9,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "soffice": {
+  "candidates": 1,
+  "class": "gui",
+  "exit": null,
+  "files": [],
+  "flags": 0,
+  "help_flag": null,
+  "source": "gui"
+ },
+ "sotruss": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 8,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "spa-acp-tool": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 4,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "spa-inspect": {
+  "candidates": 1,
+  "class": "error",
+  "exit": 255,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "spa-json-dump": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 3,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "spa-monitor": {
+  "candidates": 1,
+  "class": "not-help",
+  "exit": 255,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "spa-resample": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 10,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "spawn_console": {
+  "candidates": 1,
+  "class": "not-help",
+  "exit": 1,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "spawn_login": {
+  "candidates": 1,
+  "class": "not-help",
+  "exit": 1,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "spd-say": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 25,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "spdsend": {
+  "candidates": 1,
+  "class": "no-flags",
+  "exit": 1,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "speech-dispatcher": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 15,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "spek": {
+  "candidates": 1,
+  "class": "error",
+  "exit": 255,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "sprof": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 6,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "sshd": {
+  "candidates": 1,
+  "class": "no-flags",
+  "exit": 1,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "start-hyprland": {
+  "candidates": 1,
+  "class": "not-help",
+  "exit": 0,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "start-statd": {
+  "candidates": 1,
+  "class": "not-help",
+  "exit": 1,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "switch_root": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 2,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "swriter": {
+  "candidates": 1,
+  "class": "gui",
+  "exit": null,
+  "files": [],
+  "flags": 0,
+  "help_flag": null,
+  "source": "gui"
+ },
+ "tabs": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 1,
+  "files": [],
+  "flags": 12,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "tailscaled": {
+  "candidates": 1,
+  "class": "no-flags",
+  "exit": 0,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "test": {
+  "candidates": 1,
+  "class": "no-output",
+  "exit": 0,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--usage",
+  "source": "file"
+ },
+ "test-runner": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 14,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "tic": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 1,
+  "files": [],
+  "flags": 28,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "tipc": {
+  "candidates": 1,
+  "class": "not-help",
+  "exit": 255,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "tpm2_ptool": {
+  "candidates": 1,
+  "class": "wrong-program",
+  "exit": 0,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "trans": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 26,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "tset": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 1,
+  "files": [],
+  "flags": 12,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "tzselect": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 4,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "uibc-viewer": {
+  "candidates": 1,
+  "class": "error",
+  "exit": 0,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "ulockmgr_server": {
+  "candidates": 1,
+  "class": "not-help",
+  "exit": 1,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "umax_pp": {
+  "candidates": 1,
+  "class": "not-help",
+  "exit": 0,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "umpv": {
+  "candidates": 1,
+  "class": "no-output",
+  "exit": 0,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--usage",
+  "source": "file"
+ },
+ "unix_chkpwd": {
+  "candidates": 1,
+  "class": "not-help",
+  "exit": -9,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "unopkg": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 9,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "unpack_bootimg": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 5,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "update-mime-database": {
+  "candidates": 1,
+  "class": "no-flags",
+  "exit": 1,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "usb-devices": {
+  "candidates": 1,
+  "class": "not-help",
+  "exit": 0,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "usbhid-dump": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 9,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "usbreset": {
+  "candidates": 1,
+  "class": "not-help",
+  "exit": 1,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "utempter": {
+  "candidates": 1,
+  "class": "no-output",
+  "exit": 1,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--usage",
+  "source": "file"
+ },
+ "uuctl": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 2,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "uz": {
+  "candidates": 1,
+  "class": "not-help",
+  "exit": 0,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "vacopy": {
+  "candidates": 1,
+  "class": "no-flags",
+  "exit": 255,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "vainfo": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 4,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "vavpp": {
+  "candidates": 1,
+  "class": "not-help",
+  "exit": -6,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "vdpa": {
+  "candidates": 1,
+  "class": "no-flags",
+  "exit": 0,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "vgimportdevices": {
+  "candidates": 1,
+  "class": "no-flags",
+  "exit": 0,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "vigr": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 7,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "vipw": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 7,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "virt-manager": {
+  "candidates": 1,
+  "class": "gui",
+  "exit": null,
+  "files": [],
+  "flags": 0,
+  "help_flag": null,
+  "source": "gui"
+ },
+ "vmcore-dmesg": {
+  "candidates": 1,
+  "class": "error",
+  "exit": 2,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "vp8enc": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 255,
+  "files": [],
+  "flags": 13,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "vp9enc": {
+  "candidates": 1,
+  "class": "wrong-program",
+  "exit": 0,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "vpp3dlut": {
+  "candidates": 1,
+  "class": "no-flags",
+  "exit": 255,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "vppblending": {
+  "candidates": 1,
+  "class": "no-flags",
+  "exit": 255,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "vppchromasitting": {
+  "candidates": 1,
+  "class": "no-flags",
+  "exit": 255,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "vppdenoise": {
+  "candidates": 1,
+  "class": "no-flags",
+  "exit": 255,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "vpphdr_tm": {
+  "candidates": 1,
+  "class": "no-flags",
+  "exit": 255,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "vppscaling_csc": {
+  "candidates": 1,
+  "class": "no-flags",
+  "exit": 255,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "vppscaling_n_out_usrptr": {
+  "candidates": 1,
+  "class": "no-flags",
+  "exit": 255,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "vppsharpness": {
+  "candidates": 1,
+  "class": "no-flags",
+  "exit": 255,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "warp-dex": {
+  "candidates": 1,
+  "class": "error",
+  "exit": 127,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "warp-diag": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 7,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "warp-svc": {
+  "candidates": 1,
+  "class": "not-help",
+  "exit": 101,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "warp-taskbar": {
+  "candidates": 1,
+  "class": "error",
+  "exit": 1,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "waybar": {
+  "candidates": 1,
+  "class": "gui",
+  "exit": null,
+  "files": [],
+  "flags": 0,
+  "help_flag": null,
+  "source": "gui"
+ },
+ "wdisplays": {
+  "candidates": 1,
+  "class": "gui",
+  "exit": null,
+  "files": [],
+  "flags": 0,
+  "help_flag": null,
+  "source": "gui"
+ },
+ "wireplumber": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 4,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "woomer": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 1,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "wpa_passphrase": {
+  "candidates": 1,
+  "class": "not-help",
+  "exit": 1,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "wpa_supplicant": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 28,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "wpexec": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 1,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "xdg-desktop-icon": {
+  "candidates": 1,
+  "class": "not-help",
+  "exit": 0,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "xdg-desktop-menu": {
+  "candidates": 1,
+  "class": "not-help",
+  "exit": 0,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "xdg-icon-resource": {
+  "candidates": 1,
+  "class": "not-help",
+  "exit": 0,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "xdg-screensaver": {
+  "candidates": 1,
+  "class": "not-help",
+  "exit": 0,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "xdg-terminal": {
+  "candidates": 1,
+  "class": "not-help",
+  "exit": 0,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "xdg-user-dir": {
+  "candidates": 1,
+  "class": "not-help",
+  "exit": 0,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "file"
+ },
+ "xdg-user-dirs-update": {
+  "candidates": 1,
+  "class": "no-flags",
+  "exit": 0,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "xeyes": {
+  "candidates": 1,
+  "class": "gui",
+  "exit": null,
+  "files": [],
+  "flags": 0,
+  "help_flag": null,
+  "source": "gui"
+ },
+ "xtrace": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 4,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "zathura-sandbox": {
+  "candidates": 1,
+  "class": "gui",
+  "exit": null,
+  "files": [],
+  "flags": 0,
+  "help_flag": null,
+  "source": "gui"
+ },
+ "zforce": {
+  "candidates": 1,
+  "class": "no-flags",
+  "exit": 0,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "zic": {
+  "candidates": 1,
+  "class": "no-flags",
+  "exit": 0,
+  "files": [],
+  "flags": 0,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "znew": {
+  "candidates": 1,
+  "class": "ok",
+  "exit": 0,
+  "files": [],
+  "flags": 7,
+  "help_flag": "--help",
+  "source": "help"
+ },
+ "zoom": {
+  "candidates": 1,
+  "class": "gui",
+  "exit": null,
+  "files": [],
+  "flags": 0,
+  "help_flag": null,
+  "source": "gui"
+ },
+ "zoom-us": {
+  "candidates": 1,
+  "class": "gui",
+  "exit": null,
+  "files": [],
+  "flags": 0,
+  "help_flag": null,
+  "source": "gui"
+ }
+}

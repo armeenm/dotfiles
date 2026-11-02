@@ -1,0 +1,48 @@
+name: navi
+description: Interactive cheatsheet tool
+flags:
+  -p, --path=: colon separated paths containing .cheat files
+  --print: print the snippet instead of executing it
+  --best-match: return the best match
+  --prevent-interpolation: prevent variable interpolation
+  --tldr=: search the tldr-pages repository
+  --tag-rules=: comma separated tag filter
+  --cheatsh=: search the cheat.sh repository
+  -q, --query=: prepopulate the search field
+  --fzf-overrides=: finder overrides for snippet selection
+  --fzf-overrides-var=: finder overrides for variable selection
+  --finder=: finder application
+  -h, --help: print help
+  -V, --version: print version
+completion:
+  flag:
+    finder: ["fzf", "skim"]
+commands:
+  - name: fn
+    description: Call internal functions
+    completion:
+      positional:
+        - ["url::open", "welcome", "widget::last_command", "map::expand", "temp"]
+  - name: repo
+    description: Manage cheatsheet repositories
+    flags:
+      -h, --help: print help
+    commands:
+      - name: add
+        description: Import cheatsheets from a repository
+        flags:
+          -h, --help: print help
+      - name: browse
+        description: Browse featured cheatsheet repositories
+        flags:
+          -h, --help: print help
+  - name: widget
+    description: Output shell widget source code
+    completion:
+      positional:
+        - ["bash", "zsh", "fish", "elvish", "nushell", "power-shell"]
+  - name: info
+    description: Show info
+    completion:
+      positional:
+        - ["cheats-example", "cheats-path", "config-path", "config-example"]

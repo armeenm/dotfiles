@@ -1,0 +1,7 @@
+name: bashmount
+description: Mount, unmount, or eject removable media
+flags:
+  -v, --version: Print version and exit
+completion:
+  positional:
+    - ["$files"]

@@ -1,0 +1,17 @@
+name: nmtui
+description: Text user interface for controlling NetworkManager
+flags:
+  -h, --help: Show help options
+commands:
+  - name: edit
+    description: Edit a connection
+    flags:
+      -h, --help: Show help options
+  - name: connect
+    description: Activate a connection
+    flags:
+      -h, --help: Show help options
+  - name: hostname
+    description: Set the system hostname
+    flags:
+      -h, --help: Show help options

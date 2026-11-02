@@ -1,0 +1,21 @@
+name: nix-locate
+description: Locate files in packages indexed by nix-index
+flags:
+  -d, --db=: Directory where the index is stored
+  -r, --regex: Treat PATTERN as a regular expression
+  -p, --package=: Only show matches from packages matching this name
+  --hash=: Only show matches from the package with this hash
+  --all: Show all matches, not only packages in nix-env -qa
+  -t, --type=*: Only show matches of this file type
+  --no-group: Do not group paths with the same matching part
+  --color=: Whether to use colors in output
+  -w, --whole-name: Match the basename exactly
+  --at-root: Treat PATTERN as an absolute path from the package root
+  --minimal: Only print attribute names
+  -h, --help: Print help
+  -V, --version: Print version
+completion:
+  flag:
+    db: ["$directories"]
+    type: ["r", "x", "d", "s"]
+    color: ["always", "never", "auto"]

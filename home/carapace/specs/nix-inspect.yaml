@@ -1,0 +1,10 @@
+name: nix-inspect
+description: Interactively inspect Nix values and derivations
+flags:
+  -p, --path=: Path to a Nix file or flake
+  -e, --expr=: Nix expression to evaluate
+  -h, --help: Print help
+  -V, --version: Print version
+completion:
+  flag:
+    path: ["$files", "$directories"]

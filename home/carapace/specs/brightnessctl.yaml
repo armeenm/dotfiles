@@ -1,0 +1,19 @@
+name: brightnessctl
+description: Read and control device brightness
+flags:
+  -l, --list: List devices with brightness controls
+  -q, --quiet: Suppress output
+  -p, --pretend: Do not perform write operations
+  -m, --machine-readable: Produce machine-readable output
+  -n, --min-value=: Set the minimum brightness
+  -e, --exponent?: Use an exponential brightness curve
+  -s, --save: Save the previous state
+  -r, --restore: Restore the previously saved state
+  -h, --help: Print help
+  -d, --device=: Specify a device name
+  -c, --class=: Specify a device class
+  -V, --version: Print version and exit
+completion:
+  positional:
+    - ["i\tinfo", "g\tget", "m\tmax", "s\tset"]
+    - ["1%", "5%", "10%", "25%", "50%", "75%", "100%", "+10%", "10%-"]

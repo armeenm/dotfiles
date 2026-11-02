@@ -1,0 +1,187 @@
+name: mmcli
+description: Control and monitor the ModemManager
+flags:
+  -h, --help: show help options
+  -K, --output-keyvalue: machine-friendly key-value output
+  -J, --output-json: machine-friendly json output
+  -v, --verbose: verbose logs
+  -V, --version: print version
+  -a, --async: use asynchronous methods
+  --timeout=: timeout for the operation in seconds
+
+  -B, --get-daemon-version: get ModemManager daemon version
+  -G, --set-logging=: set logging level in the daemon
+  -L, --list-modems: list available modems
+  -M, --monitor-modems: list modems and monitor additions and removals
+  -S, --scan-modems: request a re-scan looking for modems
+  -I, --inhibit-device=: inhibit device given a unique device identifier
+  --report-kernel-event=: report kernel event
+  --report-kernel-event-auto-scan: report kernel events based on udev notifications
+
+  -m, --modem=: specify modem by path, index, UID or any
+  -b, --bearer=: specify bearer by path or index
+  -i, --sim=: specify SIM by path, index, UID or any
+  -s, --sms=: specify SMS by path or index
+  -o, --call=: specify Call by path or index
+  -c, --cbm=: specify CBM by path or index
+
+  -w, --monitor-state: monitor state of a given modem
+  -e, --enable: enable a given modem
+  -d, --disable: disable a given modem
+  --set-power-state-on: set full power state in the modem
+  --set-power-state-low: set low power state in the modem
+  --set-power-state-off: power off the modem
+  -r, --reset: reset a given modem
+  --factory-reset=: reset a given modem to its factory state
+  --command=: send an AT command to the modem
+  --create-bearer=: create a new packet data bearer
+  --delete-bearer=: delete a data bearer
+  --set-current-capabilities=: set current modem capabilities
+  --set-allowed-modes=: set allowed modes
+  --set-preferred-mode=: set preferred mode
+  --set-current-bands=: set bands to be used
+  --set-primary-sim-slot=: switch to the selected SIM slot
+  --get-cell-info: get cell info
+  --inhibit: inhibit the modem
+
+  --3gpp-scan: scan for available networks
+  --3gpp-register-home: register in the home network
+  --3gpp-register-in-operator=: register in the network of the given MCCMNC
+  --3gpp-set-eps-ue-mode-operation=: set the UE mode of operation for EPS
+  --3gpp-set-initial-eps-bearer-settings=: set the initial EPS bearer settings
+  --3gpp-disable-facility-lock=: disable facility personalization
+  --3gpp-set-packet-service-state=: set packet service state
+  --3gpp-set-nr5g-registration-settings=: set 5GNR registration settings
+  --3gpp-set-carrier-lock=: carrier lock
+
+  --3gpp-profile-manager-status: show profile management status
+  --3gpp-profile-manager-list: list available profiles
+  --3gpp-profile-manager-set=: create or update a profile
+  --3gpp-profile-manager-delete=: delete the profile with the given unique key
+
+  --3gpp-ussd-status: show status of any ongoing USSD session
+  --3gpp-ussd-initiate=: initiate a USSD session
+  --3gpp-ussd-respond=: respond to a USSD request
+  --3gpp-ussd-cancel: cancel any ongoing USSD session
+
+  --cdma-activate=: provision the modem for the given carrier
+  --cdma-activate-manual=: provision the modem with the given settings
+  --cdma-activate-manual-with-prl=: use the file contents as PRL data
+
+  --simple-connect=: run full connection sequence
+  --simple-disconnect: disconnect all connected bearers
+
+  --location-status: show status of location gathering
+  --location-get: get all available location information
+  --location-monitor: monitor all available location information
+  --location-enable-3gpp: enable 3GPP location gathering
+  --location-disable-3gpp: disable 3GPP location gathering
+  --location-enable-agps-msa: enable MSA A-GPS location gathering
+  --location-disable-agps-msa: disable MSA A-GPS location gathering
+  --location-enable-agps-msb: enable MSB A-GPS location gathering
+  --location-disable-agps-msb: disable MSB A-GPS location gathering
+  --location-enable-gps-nmea: enable NMEA-based GPS location gathering
+  --location-disable-gps-nmea: disable NMEA-based GPS location gathering
+  --location-enable-gps-raw: enable raw GPS location gathering
+  --location-disable-gps-raw: disable raw GPS location gathering
+  --location-enable-cdma-bs: enable CDMA base station location gathering
+  --location-disable-cdma-bs: disable CDMA base station location gathering
+  --location-enable-gps-unmanaged: enable unmanaged GPS location gathering
+  --location-disable-gps-unmanaged: disable unmanaged GPS location gathering
+  --location-set-supl-server=: set SUPL server address
+  --location-inject-assistance-data=: inject assistance data in the GNSS module
+  --location-set-gps-refresh-rate=: set GPS refresh rate in seconds
+  --location-set-enable-signal: enable location update signaling
+  --location-set-disable-signal: disable location update signaling
+
+  --messaging-status: show status of messaging support
+  --messaging-list-sms: list SMS messages
+  --messaging-create-sms=: create a new SMS
+  --messaging-create-sms-with-data=: use the file as data contents
+  --messaging-create-sms-with-text=: use the file as message contents
+  --messaging-delete-sms=: delete a SMS
+  --set-default-storage=: set default storage for storing SMS
+
+  --voice-status: show status of voice support
+  --voice-list-calls: list calls
+  --voice-create-call=: create a new call
+  --voice-delete-call=: delete a call
+  --voice-hold-and-accept: hold active calls and accept the next call
+  --voice-hangup-and-accept: hang up active calls and accept the next call
+  --voice-hangup-all: hang up all ongoing calls
+  --voice-transfer: join active and held calls and disconnect from them
+  --voice-enable-call-waiting: enable the call waiting service
+  --voice-disable-call-waiting: disable the call waiting service
+  --voice-query-call-waiting: query the call waiting status
+
+  --time: get current network time
+
+  --firmware-status: show status of firmware management
+  --firmware-list: list firmware images
+  --firmware-select=: select a given firmware image
+
+  --sar-status: current status of the SAR
+  --sar-enable: enable dynamic SAR
+  --sar-disable: disable dynamic SAR
+  --sar-set-power-level=: set current dynamic SAR power level
+
+  --signal-setup=: setup signal quality polling in seconds
+  --signal-setup-thresholds=: setup signal quality thresholds
+  --signal-get: get all signal quality information
+
+  --oma-status: current status of OMA device management
+  --oma-setup=: setup OMA features
+  --oma-start-client-initiated-session=: start client initiated OMA DM session
+  --oma-accept-network-initiated-session=: accept network initiated session
+  --oma-reject-network-initiated-session=: reject network initiated session
+  --oma-cancel-session: cancel current OMA DM session
+
+  --pin=: send PIN code to a SIM
+  --puk=: send PUK code to a SIM
+  --enable-pin: enable PIN request in a SIM
+  --disable-pin: disable PIN request in a SIM
+  --change-pin=: change the PIN in a SIM
+  --sim-set-preferred-networks=: set preferred network list stored in a SIM
+
+  --connect: connect a given bearer
+  -x, --disconnect: disconnect a given bearer
+
+  --send: send SMS
+  --store: store the SMS in the default storage
+  --store-in-storage=: store the SMS in the specified storage
+  --create-file-with-data=: create a file with the data contents of the SMS
+
+  --start: start the call
+  --accept: accept the incoming call
+  --deflect=: deflect the incoming call
+  --join-multiparty: join multiparty call
+  --leave-multiparty: leave multiparty call
+  --hangup: hang up the call
+  --send-dtmf=: send specified DTMF tone
+
+  --cell-broadcast-status: show cell broadcast status
+  --cell-broadcast-list-cbm: list cell broadcast messages
+  --cell-broadcast-delete-cbm=: delete a cell broadcast message
+  --cell-broadcast-set-channels=: set the channel list
+
+  --test-session: run in session DBus
+
+completion:
+  flag:
+    timeout: []
+    set-logging: ["ERR", "WARN", "MSG", "INFO", "DEBUG"]
+    set-allowed-modes: ["any", "2g", "3g", "4g", "5g"]
+    set-preferred-mode: ["any", "2g", "3g", "4g", "5g"]
+    set-primary-sim-slot: ["1", "2", "3", "4"]
+    set-power-state-on: []
+    3gpp-register-in-operator: []
+    3gpp-set-eps-ue-mode-operation: ["ps-1", "ps-2", "csps-1", "csps-2"]
+    3gpp-set-packet-service-state: ["attached", "detached"]
+    factory-reset: []
+    location-set-gps-refresh-rate: ["0", "1", "5", "10", "30", "60"]
+    signal-setup: ["0", "1", "5", "10", "30", "60"]
+    firmware-select: []
+    pin: []
+    puk: []
+    change-pin: []
+    send-dtmf: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "*", "#"]

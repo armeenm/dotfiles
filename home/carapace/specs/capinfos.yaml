@@ -1,0 +1,43 @@
+name: capinfos
+description: Print information about capture files
+flags:
+  -t: Display the capture file type
+  -E: Display the capture file encapsulation
+  -I: Display the capture file interface information
+  -F: Display additional capture file information
+  -H: Display SHA256 and SHA1 hashes of the file
+  -k: Display the capture comment
+  -p: Display individual packet comments
+  -c: Display the number of packets
+  -s: Display the size of the file in bytes
+  -d: Display the total length of all packets in bytes
+  -l: Display the packet size limit
+  -u: Display the capture duration in seconds
+  -a: Display the timestamp of the earliest packet
+  -e: Display the timestamp of the latest packet
+  -o: Display the capture file chronological status
+  -S: Display earliest and latest packet timestamps as seconds
+  -y: Display average data rate in bytes per second
+  -i: Display average data rate in bits per second
+  -z: Display average packet size in bytes
+  -x: Display average packet rate in packets per second
+  -n: Display number of resolved IPv4 and IPv6 addresses
+  -D: Display number of decryption secrets
+  -L: Generate a long report
+  -T: Generate a table report
+  -M: Display machine-readable values in long reports
+  -R: Generate a header record
+  -r: Do not generate a header record
+  -B: Separate infos with a TAB character
+  -m: Separate infos with a comma character
+  -b: Separate infos with a SPACE character
+  -N: Do not quote infos
+  -q: Quote infos with single quotes
+  -Q: Quote infos with double quotes
+  -C: Cancel processing if file open fails
+  -A: Generate all infos
+  -h, --help: Display this help and exit
+  -v, --version: Display version info and exit
+completion:
+  positional:
+    - ["$files([.pcap, .pcapng, .cap, .gz, .pcap.gz, .pcapng.gz])"]

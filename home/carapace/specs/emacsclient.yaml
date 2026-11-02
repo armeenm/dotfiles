@@ -1,0 +1,38 @@
+name: emacsclient
+description: Tell the Emacs server to visit files or evaluate expressions
+flags:
+  -V, --version: Just print version info and return
+  -H, --help: Print this usage information message
+  -h: Print this usage information message
+  -t, --tty: Open a new Emacs frame on the current terminal
+  -nw, --no-window-system: Open a new Emacs frame on the current terminal
+  -c, --create-frame: Create a new frame instead of using the current Emacs frame
+  -r, --reuse-frame: Create a new frame if none exists, otherwise use the current frame
+  -F, --frame-parameters=: Set the parameters of a new frame
+  -e, --eval: Evaluate the FILE arguments as Elisp expressions
+  -n, --no-wait: Do not wait for the server to return
+  -w, --timeout=: Seconds to wait before timing out
+  -q, --quiet: Do not display messages on success
+  -u, --suppress-output: Do not display return values from the server
+  -d, --display=: Visit the file in the given display
+  --parent-id=: Open in parent window ID, via XEmbed
+  -s, --socket-name=: Set filename of the UNIX socket for communication
+  -f, --server-file=: Set filename of the TCP authentication file
+  -a, --alternate-editor=: Editor to fall back to if the server is not running
+  -T, --tramp=: PREFIX to prepend to filenames sent for locating files remotely
+completion:
+  flag:
+    frame-parameters: []
+    timeout: []
+    display: []
+    parent-id: []
+    s: ["$files"]
+    socket-name: ["$files"]
+    f: ["$files"]
+    server-file: ["$files"]
+    a: ["$executables"]
+    alternate-editor: ["$executables"]
+    T: []
+    tramp: []
+  positional:
+    - ["$files"]

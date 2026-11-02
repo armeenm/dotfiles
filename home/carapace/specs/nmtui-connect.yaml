@@ -1,0 +1,4 @@
+name: nmtui-connect
+description: Activate a NetworkManager connection
+flags:
+  -h, --help: Show help options

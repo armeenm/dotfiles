@@ -1,0 +1,17 @@
+name: hyprshot
+description: Screenshot utility for Hyprland
+flags:
+  -h, --help: Show help
+  -m, --mode*=: Capture mode, repeat for active or output selection
+  -o, --output-folder=: Directory to save screenshots
+  -f, --filename=: File name of the resulting screenshot
+  -z, --freeze: Freeze the screen on initialization
+  -d, --debug: Print debug information
+  -s, --silent: Do not send a notification when saved
+  -r, --raw: Output raw image data to stdout
+  -t, --notif-timeout=: Notification timeout in milliseconds
+  --clipboard-only: Copy to clipboard without saving to disk
+completion:
+  flag:
+    mode: ["output", "window", "region", "active"]
+    output-folder: ["$directories"]

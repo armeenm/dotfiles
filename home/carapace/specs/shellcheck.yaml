@@ -1,0 +1,30 @@
+name: shellcheck
+description: Shell script static analysis tool
+flags:
+  -a, --check-sourced: include warnings from sourced files
+  -C, --color?: use color (auto, always, never)
+  -i, --include=: consider only the given types of warnings
+  -e, --exclude=: exclude the given types of warnings
+  --extended-analysis=: perform dataflow analysis
+  -f, --format=: output format
+  --list-optional: list checks disabled by default
+  --norc: don't look for .shellcheckrc files
+  --rcfile=: prefer the specified configuration file
+  -o, --enable=: optional checks to enable, or all
+  -P, --source-path=: path when looking for sourced files
+  -s, --shell=: specify the shell dialect
+  -S, --severity=: minimum severity to report
+  -V, --version: print version information
+  -W, --wiki-link-count=: number of wiki links to show
+  -x, --external-sources: allow source outside of FILES
+  --help: show the usage summary
+completion:
+  flag:
+    color: [auto, always, never]
+    extended-analysis: ["true", "false"]
+    format: [checkstyle, diff, gcc, json, json1, quiet, tty]
+    shell: [sh, bash, dash, ksh, busybox]
+    severity: [error, warning, info, style]
+    enable: [all]
+  positional:
+    - ["$files([.sh, .bash, .zsh, .ksh, .dash])"]

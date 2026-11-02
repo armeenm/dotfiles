@@ -1,0 +1,16 @@
+name: nix-tree
+description: Interactively browse dependency graphs of Nix derivations
+flags:
+  --store=: The URL of the Nix store
+  --file=: Interpret installables as attribute paths relative to this Nix expression
+  --version: Show the nix-tree version
+  --derivation: Operate on the store derivation rather than its outputs
+  --impure: Allow access to mutable paths and repositories
+  --dot: Print the dependency graph in dot format
+  -h, --help: Show help
+completion:
+  flag:
+    store: ["daemon", "local", "https://cache.nixos.org"]
+    file: ["$files"]
+  positional:
+    - ["$files", "$directories"]

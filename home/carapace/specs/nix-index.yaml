@@ -1,0 +1,20 @@
+name: nix-index
+description: Index files from nixpkgs for use with nix-locate
+flags:
+  -r, --requests=: Number of parallel HTTP requests
+  -d, --db=: Directory where the index is stored
+  -f, --nixpkgs=: Path to nixpkgs for which to build the index
+  -s, --system=: System platform to build the index for
+  -c, --compression=: Zstandard compression level
+  --show-trace: Show a stack trace on Nix evaluation errors
+  --filter-prefix=: Only add paths starting with this prefix
+  --path-cache: Store and load fetch results in paths.cache
+  --extra-scopes=: Extra package scopes to index
+  -h, --help: Print help
+  -V, --version: Print version
+completion:
+  flag:
+    requests: ["1", "4", "16", "64", "100"]
+    db: ["$directories"]
+    nixpkgs: ["$files"]
+    system: ["x86_64-linux", "aarch64-linux", "x86_64-darwin", "aarch64-darwin"]

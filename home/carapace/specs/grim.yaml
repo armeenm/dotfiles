@@ -1,0 +1,20 @@
+name: grim
+description: Grab images from a Wayland compositor
+flags:
+  -h: Show help message and quit
+  -s=: Set the output image scale factor
+  -g=: Set the region to capture
+  -t=: Set the output filetype
+  -q=: Set the JPEG filetype quality
+  -l=: Set the PNG filetype compression level
+  -o=: Set the output name to capture
+  -T=: Set the identifier of a foreign toplevel handle
+  -c: Include cursors in the screenshot
+completion:
+  flag:
+    t: ["png", "ppm", "jpeg"]
+    g: []
+    q: ["0", "50", "80", "90", "95", "100"]
+    l: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
+  positional:
+    - ["$files([.png, .ppm, .jpg, .jpeg])"]

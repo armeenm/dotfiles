@@ -1,0 +1,89 @@
+name: virt-xml
+description: Edit libvirt XML using command line options
+flags:
+  -h, --help: show help
+  --version: show program version
+  -c, --connect=: connect to hypervisor with libvirt URI
+
+  --edit?: edit VM XML
+  --remove-device: remove specified device
+  --add-device: add specified device
+  --build-xml: output built device XML
+
+  --update: apply changes to the running VM
+  --define: force defining the domain
+  --no-define: force not defining the domain
+  --start: start the domain
+  --print-diff: only print the requested change in diff format
+  --print-xml: only print the requested change in full XML format
+  --confirm: require confirmation before saving results
+
+  --osinfo=: the OS installed in the guest
+  --os-variant=: the OS installed in the guest
+
+  --convert-to-q35?: convert an existing VM from PC/i440FX to Q35
+  --convert-to-vnc?: convert an existing VM to use VNC graphics
+
+  --disk=: specify storage with various options
+  -w, --network=: configure a guest network interface
+  --graphics=: configure guest display settings
+  --metadata=: configure guest metadata
+  --memory=: configure guest memory allocation
+  --vcpus=: number of vCPUs to configure
+  --cpu=: CPU model and features
+  --xml=: perform raw XML XPath options on the final XML
+  --iothreads=: set domain iothreads configuration
+  --seclabel=: set domain seclabel configuration
+  --security=: set domain seclabel configuration
+  --keywrap=: configure S390 cryptographic key management
+  --cputune=: tune CPU parameters
+  --numatune=: tune NUMA policy
+  --memtune=: tune memory policy
+  --blkiotune=: tune blkio policy
+  --memorybacking=: set memory backing policy
+  --features=: set domain features XML
+  --clock=: set domain clock XML
+  --pm=: configure VM power management features
+  --events=: configure VM lifecycle management policy
+  --resource=: configure VM resource partitioning
+  --sysinfo=: configure SMBIOS system information
+  --qemu-commandline=: pass arguments directly to the QEMU emulator
+  --launchSecurity=: configure VM launch security
+  --launchsecurity=: configure VM launch security
+  --boot=: configure guest boot settings
+  --idmap=: enable user namespace for LXC container
+  --controller=: configure a guest controller device
+  --input=: configure a guest input device
+  --serial=: configure a guest serial device
+  --parallel=: configure a guest parallel device
+  --channel=: configure a guest communication channel
+  --console=: configure a text console connection
+  --hostdev=: share physical host devices with the guest
+  --filesystem=: pass host directory to the guest
+  --sound=: configure guest sound device emulation
+  --audio=: configure host audio backend
+  --watchdog=: configure a guest watchdog device
+  --video=: configure guest video hardware
+  --smartcard=: configure a guest smartcard device
+  --redirdev=: configure a guest redirection device
+  --memballoon=: configure a guest memballoon device
+  --tpm=: configure a guest TPM device
+  --rng=: configure a guest RNG device
+  --panic=: configure a guest panic device
+  --shmem=: configure a guest shared memory device
+  --memdev=: configure a guest memory device
+  --vsock=: configure guest vsock sockets
+  --iommu=: configure an IOMMU device
+  --pstore=: configure a nvram storage device
+
+  -q, --quiet: suppress non-error output
+  -d, --debug: print debugging information
+
+completion:
+  flag:
+    connect: ["qemu:///system", "qemu:///session", "lxc:///", "xen:///"]
+    disk: ["$files"]
+    graphics: ["spice", "vnc", "none"]
+    convert-to-q35: []
+    convert-to-vnc: []
+    sound: ["ich9", "ac97", "usb"]

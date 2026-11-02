@@ -1,0 +1,28 @@
+name: notify-send
+description: Create a desktop notification
+flags:
+  -?, --help: Show help options
+  -u, --urgency=: Specifies the urgency level
+  -t, --expire-time=: Timeout in milliseconds at which to expire the notification
+  -a, --app-name=: Specifies the app name for the notification
+  -i, --icon=: Specifies an icon filename or stock icon
+  -n, --app-icon=: Specifies an application icon filename or app icon name
+  -c, --category=: Specifies the notification category
+  -e, --transient: Create a transient notification
+  -h, --hint=: Specifies basic extra data to pass
+  -p, --print-id: Print the notification ID
+  --id-fd=: File descriptor where to write the notification ID
+  -r, --replace-id=: The ID of the notification to replace
+  -w, --wait: Wait for the notification to be closed before exiting
+  -A, --action=*: Specifies the actions to display to the user
+  --selected-action-fd=: File descriptor where to write the chosen action
+  --activation-token-fd=: File descriptor where to write the action activation token
+  -v, --version: Version of the package
+completion:
+  flag:
+    urgency: ["low", "normal", "critical"]
+    icon: ["$files"]
+    app-icon: ["$files"]
+  positional:
+    - []
+    - []

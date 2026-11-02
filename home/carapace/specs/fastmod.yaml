@@ -1,0 +1,30 @@
+name: fastmod
+description: Interactive bulk search and replace across a codebase
+flags:
+  --accept-all: Automatically accept all changes
+  -F, --fixed-strings: Treat the regex as a literal string
+  -h, --help: Print help
+  --hidden: Search hidden files
+  -i, --ignore-case: Perform case-insensitive search
+  -m, --multiline: Have the regex work over multiple lines
+  --print-changed-files: Print the paths of changed files
+  -V, --version: Print version
+  -d, --dir=*: Directory whose descendant files are to be explored
+  -e, --extensions=*: Comma-delimited list of file extensions to process
+  -g, --glob=*: Space-delimited list of globs to process
+  --iglob=*: Space-delimited list of case-insensitive globs to process
+completion:
+  flag:
+    dir: ["$directories"]
+    extensions: ["rs", "go", "py", "js", "ts", "c", "h", "cpp", "nix"]
+  positional:
+    - []
+    - []
+    - ["$files", "$directories"]
+    - ["$files", "$directories"]
+    - ["$files", "$directories"]
+    - ["$files", "$directories"]
+    - ["$files", "$directories"]
+    - ["$files", "$directories"]
+    - ["$files", "$directories"]
+    - ["$files", "$directories"]

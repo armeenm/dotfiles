@@ -1,0 +1,73 @@
+name: rclonefs
+description: Mount rclone remotes as a filesystem
+flags:
+  --allow-other: allow access to other users
+  --allow-non-empty: allow mounting over a non-empty directory
+  --allow-root: allow access to the root user
+  --async-read: use asynchronous reads
+  --attr-timeout=: time to cache file and directory attributes
+  --cache-dir=: directory to use for caching
+  --config=: config file
+  --daemon: run the mount in the background
+  --daemon-timeout=: time limit for rclone to respond to the kernel
+  --daemon-wait=: time to wait for the mount to become ready
+  --debug-fuse: debug the FUSE internals
+  --default-permissions: let the kernel enforce access control
+  --devname=: device name
+  --dir-cache-time=: time to cache directory entries
+  --dir-perms=: directory permissions
+  --direct-io: use direct IO
+  --file-perms=: file permissions
+  --fuse-flag=*: flags passed directly to libfuse
+  --gid=: override the gid field
+  --link-perms=: link permissions
+  --links: translate symlinks to and from .rclonelink files
+  --max-read-ahead=: bytes prefetched for sequential reads
+  --mount-case-insensitive=: mount case sensitivity
+  --network-mode: mount as a remote network drive
+  --no-checksum: do not compare checksums
+  --no-modtime: do not read or write modification times
+  --no-seek: do not allow seeking in files
+  --noappledouble: ignore Apple Double files
+  --noapplexattr: ignore Apple extended attributes
+  -o, --option=*: option for libfuse
+  --poll-interval=: time between polls for changes
+  --read-only: allow read-only access
+  --uid=: override the uid field
+  --umask=: override permission bits
+  --vfs-block-norm-dupes: hide duplicate filenames after normalization
+  --vfs-cache-max-age=: maximum time since last access of objects in the cache
+  --vfs-cache-max-size=: maximum total size of objects in the cache
+  --vfs-cache-min-free-space=: minimum free space on the cache disk
+  --vfs-cache-mode=: cache mode
+  --vfs-cache-poll-interval=: interval to poll the cache for stale objects
+  --vfs-case-insensitive: find case insensitive matches
+  --vfs-disk-space-total-size=: total disk space to report
+  --vfs-fast-fingerprint: use fast fingerprints for change detection
+  --vfs-links: translate symlinks for the VFS
+  --vfs-metadata-extension=: extension to read metadata from
+  --vfs-read-ahead=: extra read ahead when using cache mode full
+  --vfs-read-chunk-size=: read source objects in chunks
+  --vfs-read-chunk-size-limit=: maximum chunk doubling size
+  --vfs-read-chunk-streams=: number of parallel read streams
+  --vfs-read-wait=: time to wait for in-sequence reads
+  --vfs-refresh: refresh the directory cache on start
+  --vfs-write-back=: time to write back files after last use
+  --vfs-write-wait=: time to wait for in-sequence writes
+  --volname=: volume name
+  --write-back-cache: let the kernel buffer writes
+  -f, --filter=*: add a file filtering rule
+  --exclude=*: exclude files matching a pattern
+  --exclude-from=*: read exclude patterns from a file
+  --include=*: include files matching a pattern
+  --include-from=*: read include patterns from a file
+  --max-age=: only transfer files younger than this
+  --max-depth=: limit recursion depth
+  --max-size=: only transfer files smaller than this
+  --transfers=: number of parallel file transfers
+  -v, --verbose: verbose output
+  -q, --quiet: quiet output
+  -h, --help: print help
+completion:
+  flag:
+    vfs-cache-mode: ["off", "minimal", "writes", "full"]

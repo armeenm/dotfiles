@@ -1,0 +1,16 @@
+name: cxxfilt
+description: Demangle C++ and other compiler-mangled symbol names
+flags:
+  --strip-underscore: ignore the first leading underscore
+  -n, --no-strip-underscore: do not ignore a leading underscore
+  -p, --no-params: do not display function arguments
+  -i, --no-verbose: do not show implementation details
+  -R, --recurse-limit: enable the recursion limit
+  -r, --no-recurse-limit: disable the recursion limit
+  -t, --types: demangle type encodings
+  -s, --format=: demangling format
+  -h, --help: show help
+  -v, --version: show version
+completion:
+  flag:
+    format: ["none", "auto", "gnu-v3", "java", "gnat", "dlang", "rust"]

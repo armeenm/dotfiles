@@ -1,0 +1,68 @@
+name: ncat
+description: Concatenate and redirect sockets
+flags:
+  -4: Use IPv4 only
+  -6: Use IPv6 only
+  -U, --unixsock: Use Unix domain sockets only
+  --vsock: Use vsock sockets only
+  -C, --crlf: Use CRLF for EOL sequence
+  -c, --sh-exec=: Execute the given command via /bin/sh
+  -e, --exec=: Execute the given command
+  --lua-exec=: Execute the given Lua script
+  -g=: Loose source routing hop points
+  -G=: Loose source routing hop pointer
+  -m, --max-conns=: Maximum simultaneous connections
+  -h, --help: Display help screen
+  -d, --delay=: Wait between reads and writes
+  -o, --output=: Dump session data to a file
+  -x, --hex-dump=: Dump session data as hex to a file
+  -i, --idle-timeout=: Idle read and write timeout
+  -p, --source-port=: Specify source port to use
+  -s, --source=: Specify source address to use
+  -l, --listen: Bind and listen for incoming connections
+  -k, --keep-open: Accept multiple connections in listen mode
+  -n, --nodns: Do not resolve hostnames via DNS
+  -t, --telnet: Answer Telnet negotiations
+  -u, --udp: Use UDP instead of default TCP
+  --sctp: Use SCTP instead of default TCP
+  -v, --verbose: Set verbosity level
+  -w, --wait=: Connect timeout
+  -z: Zero-I/O mode, report connection status only
+  --append-output: Append rather than clobber specified output files
+  --send-only: Only send data, ignoring received
+  --recv-only: Only receive data, never send anything
+  --no-shutdown: Continue half-duplex when receiving EOF on stdin
+  -q=: After EOF on stdin, wait then quit
+  --allow=: Allow only given hosts to connect
+  --allowfile=: A file of hosts allowed to connect
+  --deny=: Deny given hosts from connecting
+  --denyfile=: A file of hosts denied from connecting
+  --broker: Enable connection brokering mode
+  --chat: Start a simple chat server
+  --proxy=: Specify address of host to proxy through
+  --proxy-type=: Specify proxy type
+  --proxy-auth=: Authenticate with HTTP or SOCKS proxy server
+  --proxy-dns=: Specify where to resolve proxy destination
+  --ssl: Connect or listen with SSL
+  --ssl-cert=: Specify SSL certificate file for listening
+  --ssl-key=: Specify SSL private key for listening
+  --ssl-verify: Verify trust and domain name of certificates
+  --ssl-trustfile=: PEM file containing trusted SSL certificates
+  --ssl-ciphers=: Cipherlist containing SSL ciphers to use
+  --ssl-servername=: Request distinct server name (SNI)
+  --ssl-alpn=: ALPN protocol list to use
+  --version: Display version information and exit
+completion:
+  flag:
+    sh-exec: []
+    exec: ["$executables"]
+    lua-exec: ["$files([.lua])"]
+    output: ["$files"]
+    hex-dump: ["$files"]
+    allowfile: ["$files"]
+    denyfile: ["$files"]
+    proxy-type: ["http", "socks4", "socks5"]
+    proxy-dns: ["local", "remote", "both"]
+    ssl-cert: ["$files([.pem, .crt])"]
+    ssl-key: ["$files([.pem, .key])"]
+    ssl-trustfile: ["$files([.pem, .crt])"]
