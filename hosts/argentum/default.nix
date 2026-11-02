@@ -180,6 +180,7 @@
   #systemd.services.dlm.wantedBy = [ "multi-user.target" ];
 
   security.pki.certificateFiles = [
+    ./corp-hierarch-ca.pem
     (pkgs.writeText "foo-web-int-ca" ''
 -----BEGIN CERTIFICATE-----
 MIIDYzCCAuqgAwIBAgIUCSU6nXFXyXsstcjC8f2rxYLLGf4wCgYIKoZIzj0EAwIw
