@@ -1,0 +1,17 @@
+name: spd-conf
+description: Configure Speech Dispatcher and diagnose problems
+flags:
+  -h, --help: show help
+  -u, --create-user-conf: create a user configuration
+  -c, --config-basic-settings-user: configure basic user settings
+  -C, --config-basic-settings-system: configure basic system settings
+  -d, --diagnostics: diagnose problems with the current setup
+  -s, --test-spd-say: test the connection using spd-say
+  --test-festival: test whether Festival works as a server
+  --test-espeak: test whether espeak works as a standalone binary
+  --test-alsa: test ALSA audio output
+  --test-pulse: test PulseAudio output
+  -e, --espeak: use espeak to synthesize messages
+  -n, --dont-ask: use default values without asking
+  -D, --debug: debug a problem and generate a report
+  --version: show version

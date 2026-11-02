@@ -1,0 +1,260 @@
+name: hex
+description: Local voice dictation and meeting transcription
+persistentflags:
+  -h, --help: print help
+flags:
+  -V, --version: print version
+commands:
+  - name: status
+    description: Show what the running Hex is doing
+    flags:
+      --json: print the versioned JSON reply
+  - name: start
+    description: Open Hex if it isn't running
+    flags:
+      --json: print the versioned JSON reply
+  - name: quit
+    description: Quit Hex
+    flags:
+      --force: quit even while recording
+      --json: print the versioned JSON reply
+  - name: restart
+    description: Quit and reopen Hex
+    flags:
+      --force: restart even while recording
+      --json: print the versioned JSON reply
+  - name: dictation
+    description: Start, stop, cancel, or toggle a dictation
+    flags:
+      --print: with stop, print the transcript instead of pasting
+      --raw: paste the raw transcript
+      --json: print the versioned JSON reply
+    completion:
+      positional:
+        - ["start", "stop", "cancel", "toggle"]
+  - name: paste-last
+    description: Paste the last dictation
+    flags:
+      --json: print the versioned JSON reply
+  - name: settings
+    description: Read and change persisted settings
+    commands:
+      - name: list
+        description: Every setting with its value and kind
+        flags:
+          --json: print the versioned JSON reply
+      - name: get
+        description: One setting's value, or every setting under a prefix
+        flags:
+          --json: print the versioned JSON reply
+      - name: set
+        description: Change a setting
+        flags:
+          --json: print the versioned JSON reply
+      - name: apply
+        description: Set several settings from a JSON object
+        flags:
+          --json: print the versioned JSON reply
+        completion:
+          positional:
+            - ["$files"]
+  - name: model
+    description: List, switch, and install transcription models
+    commands:
+      - name: list
+        description: Every model with its languages and size
+      - name: use
+        description: Switch to an installed model
+        flags:
+          --language=: language the model supports
+          --json: print the versioned JSON reply
+      - name: install
+        description: Download a model, then switch to it
+        flags:
+          --language=: language the model supports
+          --json: print the versioned JSON reply
+      - name: cancel
+        description: Stop a download or load in progress
+      - name: status
+        description: Whether a model is installed and verified
+      - name: devices
+        description: Transcribe.cpp compute devices
+      - name: check
+        description: Load and prewarm an installed model
+      - name: transcribe
+        description: Transcribe a WAV file with an installed model
+        flags:
+          --model=: model to use
+          --language=: language to use
+        completion:
+          positional:
+            - ["$files([.wav])"]
+  - name: window
+    description: Open the Hex window at a pane, or close it
+    commands:
+      - name: show
+        description: Open the window, at a pane if given
+        flags:
+          --json: print the versioned JSON reply
+        completion:
+          positional:
+            - ["settings", "models", "modes", "history", "meetings"]
+      - name: hide
+        description: Close the window
+      - name: story
+        description: Open the window on a playground story
+        flags:
+          --variant=: story variant, by number or name
+          --play: run the story's trigger
+          --json: print the versioned JSON reply
+  - name: onboarding
+    description: Replay the first-run onboarding
+    commands:
+      - name: reset
+        description: Open the first-run onboarding now
+        aliases: [restart]
+        flags:
+          --json: print the versioned JSON reply
+  - name: check-for-updates
+    description: Check for a Hex update now
+    flags:
+      --json: print the versioned JSON reply
+  - name: launch-at-login
+    description: Show or set Launch at Login
+    flags:
+      --json: print the versioned JSON reply
+    completion:
+      positional:
+        - ["on", "off"]
+  - name: vocabulary
+    description: List, add, and remove vocabulary terms
+    commands:
+      - name: list
+        description: Every term with its sounds-like spellings
+      - name: add
+        description: Add a term or more spellings
+        flags:
+          --sounds-like=: comma-separated spellings
+          --json: print the versioned JSON reply
+      - name: remove
+        description: Remove a term and its spellings
+        flags:
+          --json: print the versioned JSON reply
+  - name: history
+    description: Read retained dictation history
+    flags:
+      --since=: lower time bound
+      --until=: exclusive upper time bound
+      --app=: exact application name
+      --grep=: case-insensitive substring
+      --search=: rank by relevance
+      --limit=: maximum number of entries
+      --raw: include the raw transcript
+      --json: print the versioned JSON reply
+      --oldest-first: sort oldest first
+    commands:
+      - name: clear
+        description: Delete every retained dictation
+        flags:
+          --yes: confirm deleting the history
+          --json: print the versioned JSON reply
+  - name: meetings
+    description: Read and search recorded meetings
+    commands:
+      - name: list
+        description: List recorded meetings
+      - name: show
+        description: Read a full transcript and notes
+        flags:
+          --md: markdown output
+          --json: JSON output
+          --srt: SubRip subtitles
+          --vtt: WebVTT subtitles
+          --from=: only entries at or after this offset
+          --to=: only entries starting before this offset
+          --chapter=: only chapter N
+      - name: chapters
+        description: List a meeting's chapters
+      - name: search
+        description: Search transcripts and notes
+        flags:
+          --since=: lower time bound
+          --until=: upper time bound
+          --limit=: maximum number of results
+      - name: record
+        description: Start recording a meeting
+        flags:
+          --title=: meeting title
+          --json: print the versioned JSON reply
+      - name: stop
+        description: Stop the recording meeting and transcribe it
+      - name: copy-last
+        description: Copy the last meeting's transcript
+  - name: mcp
+    description: Serve recorded meetings to agents over MCP
+    flags:
+      --meetings-dir=: read meetings from this folder
+  - name: commands
+    description: Manage the personal transformations workspace
+    commands:
+      - name: init
+        description: Create ~/.config/hex with a starter config
+      - name: check
+        description: Load the config and report what it registers
+  - name: labs
+    description: List and toggle Labs features
+    commands:
+      - name: list
+        description: List every Labs feature
+      - name: on
+        description: Turn a Labs feature on
+      - name: off
+        description: Turn a Labs feature off
+  - name: annotate
+    description: Record, list, and send annotated captures
+    commands:
+      - name: start
+        description: Start recording a capture
+      - name: stop
+        description: End the capture and write it
+      - name: cancel
+        description: End the capture and discard it
+      - name: status
+        description: What records and what is being written
+      - name: list
+        description: The newest captures
+      - name: show
+        description: One capture's words, files, and destination
+      - name: send
+        description: Send a capture to an OpenCode session
+        flags:
+          --to=: session ID or name
+          --always: save a rule for this capture's site or app
+          --json: print the versioned JSON reply
+      - name: draw
+        description: Turn the pen on or off while recording
+      - name: undo
+        description: Take back the newest send
+      - name: route
+        description: What routing sees for a capture
+        flags:
+          --ask-jev: ask Jev again now
+          --json: print the versioned JSON reply
+  - name: logs
+    description: Print Hex's recent log lines
+    flags:
+      --process: read process.log instead of the event log
+      -n, --lines=: number of lines from the end
+      -f, --follow: keep printing new lines
+  - name: app
+    description: Open the Hex window
+    flags:
+      --hidden: start Hex in the background
+  - name: service
+    description: Run Hex in the foreground
+  - name: dictate
+    description: Run hotkey dictation and automatic paste
+    flags:
+      --device=: input device name fragment
+  - name: devices
+    description: List microphone devices visible through ALSA

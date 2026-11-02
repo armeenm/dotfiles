@@ -412,7 +412,6 @@ fsidd
 fstrim
 fumon
 funzip
-fusermount
 fusermount3
 fwupdmgr
 fwupdtool
@@ -495,6 +494,7 @@ hd
 hdparm
 head
 hevcencode
+hex
 hex2hcd
 hexdump
 hexyl
@@ -746,7 +746,6 @@ miracle-sinkctl
 miracle-uibcctl
 miracle-wifictl
 miracle-wifid
-miracled
 mkbootimg
 mkdir
 mkdosfs
@@ -804,7 +803,6 @@ mosh-client
 mosh-server
 mount
 mount.bcachefs
-mount.fuse
 mount.fuse.bcachefs
 mount.fuse3
 mount.fuseblk.bcachefs
@@ -817,6 +815,7 @@ mount.rclone
 mountpoint
 mountstats
 mozillavpn
+mozillavpn-obfuscator
 mpartition
 mpeg2vaenc
 mpeg2vldemo
@@ -1246,6 +1245,7 @@ spa-monitor
 spa-resample
 spawn_console
 spawn_login
+spd-conf
 spd-say
 spdsend
 speech-dispatcher
@@ -1377,7 +1377,6 @@ udisksctl
 udpdump
 uibc-viewer
 ul
-ulockmgr_server
 umax_pp
 umount
 umount.nfs

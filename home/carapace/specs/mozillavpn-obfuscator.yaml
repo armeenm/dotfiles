@@ -1,0 +1,14 @@
+name: mozillavpn-obfuscator
+description: Run a Mozilla VPN obfuscator as a standalone local proxy
+flags:
+  -s, --server=: server IPv4 or IPv6 address
+  -p, --port=: server port
+  -l, --listen-port=: local UDP port to listen on
+  --fwmark=: fwmark applied to the outbound socket
+  -h, --help: print help
+  -V, --version: print version
+commands:
+  - name: udp-over-tcp
+    description: Tunnel WireGuard UDP through a TCP stream
+  - name: lwo
+    description: Obfuscate WireGuard UDP with Lightweight Obfuscation
