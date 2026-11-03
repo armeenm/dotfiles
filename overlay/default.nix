@@ -94,9 +94,13 @@ final: prev: {
     # still appends that same commit to `patches`; patch(1) sees it as reversed
     # and aborts. Skip the automatic patch phase and apply only the patches
     # that were on nixpkgs' 1.2.0 build (currently LoongArch64/IA64).
+    #
+    # The patches must be applied in postUnpack, not postPatch: `dontPatch`
+    # skips the whole patch phase, and the postPatch hook lives inside it.
+    # postUnpack runs before stdenv cds into $sourceRoot, so cd explicitly.
     dontPatch = true;
-    postPatch = (old.postPatch or "") + lib.concatMapStrings (p: ''
-      patch -p1 < ${p}
+    postUnpack = (old.postUnpack or "") + lib.concatMapStrings (p: ''
+      (cd "$sourceRoot" && patch -p1 < ${p})
     '') (old.patches or [ ]);
   });
 
