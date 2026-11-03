@@ -89,6 +89,15 @@ final: prev: {
       tag = "v1.2.1";
       hash = "sha256-llY72cYffDv0ugsH0p89xIPEbElV4L8u7U/Fe8hT3gI=";
     };
+
+    # 1.2.1 already contains the CVE fix. nixpkgs' nodejs (22.x and 26.x)
+    # still appends that same commit to `patches`; patch(1) sees it as reversed
+    # and aborts. Skip the automatic patch phase and apply only the patches
+    # that were on nixpkgs' 1.2.0 build (currently LoongArch64/IA64).
+    dontPatch = true;
+    postPatch = (old.postPatch or "") + lib.concatMapStrings (p: ''
+      patch -p1 < ${p}
+    '') (old.patches or [ ]);
   });
 
   # CVE-2026-111497 for the CFFI binding. It links against the system brotli
