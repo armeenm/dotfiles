@@ -75,4 +75,78 @@ final: prev: {
   openchamber-desktop = final.callPackage ./openchamber.nix {
     electron = final.electron_44;
   };
+
+  # CVE-2026-111497 (CVSS 9.2): a crafted brotli stream could overflow the
+  # decoder's buffer in 1.2.0. 1.2.1 fixes it. python3Packages.brotli inherits
+  # version and src from this package, so it follows automatically.
+  # The LoongArch64/IA64 build fix is not in 1.2.1 yet, so the existing patch
+  # is kept.
+  brotli = prev.brotli.overrideAttrs (old: {
+    version = "1.2.1";
+    src = prev.fetchFromGitHub {
+      owner = "google";
+      repo = "brotli";
+      tag = "v1.2.1";
+      hash = "sha256-llY72cYffDv0ugsH0p89xIPEbElV4L8u7U/Fe8hT3gI=";
+    };
+
+    # 1.2.1 already contains the CVE fix. nixpkgs' nodejs (22.x and 26.x)
+    # still appends that same commit to `patches`; patch(1) sees it as reversed
+    # and aborts. Skip the automatic patch phase and apply only the patches
+    # that were on nixpkgs' 1.2.0 build (currently LoongArch64/IA64).
+    #
+    # The patches must be applied in postUnpack, not postPatch: `dontPatch`
+    # skips the whole patch phase, and the postPatch hook lives inside it.
+    # postUnpack runs before stdenv cds into $sourceRoot, so cd explicitly.
+    dontPatch = true;
+    postUnpack = (old.postUnpack or "") + lib.concatMapStrings (p: ''
+      (cd "$sourceRoot" && patch -p1 < ${p})
+    '') (old.patches or [ ]);
+  });
+
+  # CVE-2026-111497 for the CFFI binding. It links against the system brotli
+  # above (USE_SHARED_BROTLI=1), but bump the binding as well so version
+  # scanners see the patched release.
+  python3Packages = prev.python3Packages.override {
+    overrides = _self: super: {
+      brotlicffi = super.brotlicffi.overridePythonAttrs (_: {
+        version = "1.2.1.0";
+        src = prev.fetchFromGitHub {
+          owner = "python-hyper";
+          repo = "brotlicffi";
+          tag = "v1.2.1.0";
+          hash = "sha256-N2zxPLsCaXcLpthGvbaKerWayo3ZGMOQ0Is5cpgXGKA=";
+        };
+      });
+    };
+  };
+
+  # CVE-2026-111497 in bun's bundled brotli decoder. Sources are prebuilt
+  # per platform; bump the URL and hash together. OpenChamber declares
+  # `packageManager: bun@1.4.4`, so this also matches its expectation.
+  bun = prev.bun.overrideAttrs (old: {
+    version = "1.4.4";
+    src = prev.fetchurl {
+      url = "https://github.com/oven-sh/bun/releases/download/bun-v1.4.4/bun-${
+        {
+          aarch64-darwin = "darwin-aarch64";
+          aarch64-linux = "linux-aarch64";
+          x86_64-linux = "linux-x64-baseline";
+        }.${prev.stdenvNoCC.hostPlatform.system}
+          or (throw "bun: unsupported system ${prev.stdenvNoCC.hostPlatform.system}")
+      }.zip";
+      hash = {
+        aarch64-darwin = "sha256-wkDX8My5DCY6hJ/NsJt+5iYw2SE0jtaq/ahrnVd7xRA=";
+        aarch64-linux = "sha256-uqa7NvUdblhWHgK76oJQOKnfRU9nPW13bou/hvjHhQ4=";
+        x86_64-linux = "sha256-4ERutVmVdy65iUvrrppr42jZhai5Jx7hJEhvmUbu3XY=";
+      }.${prev.stdenvNoCC.hostPlatform.system};
+    };
+  });
+
+  # Node 24.21.0 bundles brotli 1.2.0 (CVE-2026-111497). The stable channel's
+  # nodejs_24 is 24.22.1, which bundles brotli 1.2.1. Use it for both the
+  # versioned attribute and the default alias so anything that pulls `nodejs`
+  # (e.g. openchamber-desktop) gets the patched decoder.
+  nodejs_24 = final.stable.nodejs_24;
+  nodejs = final.stable.nodejs;
 }
