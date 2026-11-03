@@ -75,4 +75,58 @@ final: prev: {
   openchamber-desktop = final.callPackage ./openchamber.nix {
     electron = final.electron_44;
   };
+
+  # CVE-2026-111497 (CVSS 9.2): a crafted brotli stream could overflow the
+  # decoder's buffer in 1.2.0. 1.2.1 fixes it. python3Packages.brotli inherits
+  # version and src from this package, so it follows automatically.
+  # The LoongArch64/IA64 build fix is not in 1.2.1 yet, so the existing patch
+  # is kept.
+  brotli = prev.brotli.overrideAttrs (old: {
+    version = "1.2.1";
+    src = prev.fetchFromGitHub {
+      owner = "google";
+      repo = "brotli";
+      tag = "v1.2.1";
+      hash = "sha256-llY72cYffDv0ugsH0p89xIPEbElV4L8u7U/Fe8hT3gI=";
+    };
+  });
+
+  # CVE-2026-111497 for the CFFI binding. It links against the system brotli
+  # above (USE_SHARED_BROTLI=1), but bump the binding as well so version
+  # scanners see the patched release.
+  python3Packages = prev.python3Packages.override {
+    overrides = _self: super: {
+      brotlicffi = super.brotlicffi.overridePythonAttrs (_: {
+        version = "1.2.1.0";
+        src = prev.fetchFromGitHub {
+          owner = "python-hyper";
+          repo = "brotlicffi";
+          tag = "v1.2.1.0";
+          hash = "sha256-N2zxPLsCaXcLpthGvbaKerWayo3ZGMOQ0Is5cpgXGKA=";
+        };
+      });
+    };
+  };
+
+  # CVE-2026-111497 in bun's bundled brotli decoder. Sources are prebuilt
+  # per platform; bump the URL and hash together. OpenChamber declares
+  # `packageManager: bun@1.4.4`, so this also matches its expectation.
+  bun = prev.bun.overrideAttrs (old: {
+    version = "1.4.4";
+    src = prev.fetchurl {
+      url = "https://github.com/oven-sh/bun/releases/download/bun-v1.4.4/bun-${
+        {
+          aarch64-darwin = "darwin-aarch64";
+          aarch64-linux = "linux-aarch64";
+          x86_64-linux = "linux-x64-baseline";
+        }.${prev.stdenvNoCC.hostPlatform.system}
+          or (throw "bun: unsupported system ${prev.stdenvNoCC.hostPlatform.system}")
+      }.zip";
+      hash = {
+        aarch64-darwin = "sha256-wkDX8My5DCY6hJ/NsJt+5iYw2SE0jtaq/ahrnVd7xRA=";
+        aarch64-linux = "sha256-uqa7NvUdblhWHgK76oJQOKnfRU9nPW13bou/hvjHhQ4=";
+        x86_64-linux = "sha256-4ERutVmVdy65iUvrrppr42jZhai5Jx7hJEhvmUbu3XY=";
+      }.${prev.stdenvNoCC.hostPlatform.system};
+    };
+  });
 }
