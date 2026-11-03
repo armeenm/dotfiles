@@ -129,4 +129,11 @@ final: prev: {
       }.${prev.stdenvNoCC.hostPlatform.system};
     };
   });
+
+  # Node 24.21.0 bundles brotli 1.2.0 (CVE-2026-111497). The stable channel's
+  # nodejs_24 is 24.22.1, which bundles brotli 1.2.1. Use it for both the
+  # versioned attribute and the default alias so anything that pulls `nodejs`
+  # (e.g. openchamber-desktop) gets the patched decoder.
+  nodejs_24 = final.stable.nodejs_24;
+  nodejs = final.stable.nodejs;
 }
