@@ -134,6 +134,10 @@
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
 
   services = {
+    # Draws the boot and shutdown jobs on the console, including the initrd,
+    # where it answers bcachefs' unlock passphrase.
+    bootvine.enable = true;
+
     cloudflare-warp.enable = true;
     dbus.packages = [ pkgs.miraclecast ];
     hardware.bolt.enable = true;

@@ -8,6 +8,11 @@
 
     nixpkgs-patcher.url = "github:gepbird/nixpkgs-patcher";
 
+    bootvine = {
+      url = "git+https://codeberg.org/wvhulle/bootvine";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     brew-api = {
       url = "github:armeenm/brew-api";
       flake = false;
@@ -294,6 +299,7 @@
           nixosModules.nixosUser
           inputs.nixos-hardware.nixosModules.framework-12th-gen-intel
           inputs.lanzaboote.nixosModules.lanzaboote
+          inputs.bootvine.nixosModules.default
           ./hosts/argentum
         ];
 
