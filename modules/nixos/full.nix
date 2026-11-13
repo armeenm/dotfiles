@@ -38,6 +38,10 @@
   nixpkgs.overlays = [ inputs.emacs-overlay.overlays.default ];
 
   services = {
+    # Draws the boot and shutdown jobs on the console, including the initrd,
+    # where it also answers the bcachefs unlock passphrase on argentum.
+    bootvine.enable = true;
+
     devmon.enable = true;
     fwupd.enable = true;
     pcscd.enable = true;
