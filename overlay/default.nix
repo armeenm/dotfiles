@@ -34,6 +34,9 @@ final: prev: {
   python3Packages = prev.python3Packages.overrideScope (self: super: {
     gunicorn = super.gunicorn.overrideAttrs (_: {
       doCheck = !prev.stdenv.hostPlatform.isDarwin;
+      # gunicorn runs its suite from installCheckPhase, which doCheck does not
+      # gate.
+      doInstallCheck = !prev.stdenv.hostPlatform.isDarwin;
     });
   });
 
