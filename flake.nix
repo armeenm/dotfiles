@@ -80,9 +80,6 @@
     hyprsplit = {
       url = "github:shezdy/hyprsplit";
       inputs.hyprland.follows = "hyprland";
-      # Follow Hyprland's nixpkgs so the plugin builds against the same glibc
-      # and libraries as the compositor instead of pinning its own.
-      inputs.nixpkgs.follows = "hyprland/nixpkgs";
     };
 
     hypr-darkwindow = {
@@ -93,9 +90,6 @@
     hypr-dynamic-cursors = {
       url = "github:VirtCode/hypr-dynamic-cursors";
       inputs.hyprland.follows = "hyprland";
-      # Follow Hyprland's nixpkgs so the plugin builds against the same glibc
-      # and libraries as the compositor instead of pinning its own.
-      inputs.nixpkgs.follows = "hyprland/nixpkgs";
     };
 
     lanzaboote = {
