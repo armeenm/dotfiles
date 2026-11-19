@@ -320,9 +320,12 @@ in {
       # revoked eMudhra intermediates after the October 2026 CA compromise.
       # Point them at the system trust store, which carries the blacklist.
       # https://emudhra.we-have-a-problem.com/
+      # `ca-certificates.crt` is the name NixOS builds in /etc/ssl/certs; the
+      # cacert package itself only ships `ca-bundle.crt`, on Linux as well, so
+      # Darwin has to point at that file directly and not invent the alias.
       SSL_CERT_FILE = if hostPlatform.isLinux
         then "/etc/ssl/certs/ca-certificates.crt"
-        else "${pkgs.cacert}/etc/ssl/certs/ca-certificates.crt";
+        else "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
       UV_NATIVE_TLS = "1";
     };
 
