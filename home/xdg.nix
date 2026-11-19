@@ -10,6 +10,28 @@ let
   conf = ../conf;
   home = config.home.homeDirectory;
 
+  # Everything imv.desktop claims to handle, so images open in imv instead of
+  # falling through to whatever browser is registered for the type.
+  imageMimeTypes = [
+    "image/x-farbfeld"
+    "image/tiff"
+    "image/tiff-fx"
+    "image/png"
+    "image/x-png"
+    "image/jpeg"
+    "image/jpg"
+    "image/pjpeg"
+    "image/svg+xml"
+    "image/gif"
+    "image/bmp"
+    "image/x-bmp"
+    "image/heif"
+    "image/avif"
+    "image/jxl"
+    "image/webp"
+    "image/qoi"
+  ];
+
   browserPicker = pkgs.writeShellScript "browser-picker" ''
     local_state="${config.xdg.configHome}/google-chrome/Local State"
 
@@ -87,16 +109,18 @@ in
     mime.enable = hostPlatform.isLinux;
     mimeApps = {
       enable = hostPlatform.isLinux;
-      defaultApplications = {
-        "text/html" = ["browser-picker.desktop"];
-        "x-scheme-handler/http" = ["browser-picker.desktop"];
-        "x-scheme-handler/https" = ["browser-picker.desktop"];
-        "x-scheme-handler/about" = ["browser-picker.desktop"];
-        "x-scheme-handler/unknown" = ["browser-picker.desktop"];
-        "x-scheme-handler/pdf" = ["org.pwmt.zathura.desktop"];
-        "application/pdf" = ["org.pwmt.zathura.desktop"];
-        "inode/directory" = ["dolphin.desktop"];
-      };
+      defaultApplications =
+        lib.genAttrs imageMimeTypes (_: [ "imv.desktop" ])
+        // {
+          "text/html" = ["browser-picker.desktop"];
+          "x-scheme-handler/http" = ["browser-picker.desktop"];
+          "x-scheme-handler/https" = ["browser-picker.desktop"];
+          "x-scheme-handler/about" = ["browser-picker.desktop"];
+          "x-scheme-handler/unknown" = ["browser-picker.desktop"];
+          "x-scheme-handler/pdf" = ["org.pwmt.zathura.desktop"];
+          "application/pdf" = ["org.pwmt.zathura.desktop"];
+          "inode/directory" = ["dolphin.desktop"];
+        };
     };
 
     configFile = {
