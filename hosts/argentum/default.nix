@@ -158,6 +158,29 @@
         };
       };
     };
+
+    # Moonlight host, so rhenium (the TV) can stream this desktop.
+    #
+    # `capture = "wlr"` is pinned deliberately. Hyprland exposes
+    # zwlr_screencopy_manager_v1, which needs no privileges, but the module's
+    # `capSysAdmin` wrapper makes Sunshine attempt DRM/KMS capture first: on
+    # this single-GPU session that hangs before it ever logs "Listening for
+    # control" and no port gets bound. Verified by hand: plain binary plus
+    # `capture=wlr` listens on 47984/47989/47990/48010 at once.
+    #
+    # `port` is spelled out even though it is the default: the module only
+    # hands Sunshine a config file when a setting other than the port is
+    # present, and without the file it ignores `sunshine_name` and keeps
+    # everything in the web UI.
+    sunshine = {
+      enable = true;
+      openFirewall = true;
+      settings = {
+        capture = "wlr";
+        sunshine_name = "argentum";
+        port = 47989;
+      };
+    };
   };
 
   system.stateVersion = lib.mkForce "24.11";
