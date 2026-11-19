@@ -23,6 +23,20 @@ final: prev: {
     doCheck = !prev.stdenv.hostPlatform.isDarwin;
   });
 
+  # Two more darwin test suites that cannot pass in the build environment:
+  # harfbuzz 14.5.1's in-house coretext test expects the glyph ids macOS < 27
+  # produces (HarfBust shapes to one glyph on 27), and gunicorn's ASGI test
+  # needs a socket the macOS sandbox refuses (EPERM). Packages are unaffected.
+  harfbuzz = prev.harfbuzz.overrideAttrs (_: {
+    doCheck = !prev.stdenv.hostPlatform.isDarwin;
+  });
+
+  python3Packages = prev.python3Packages.overrideScope (self: super: {
+    gunicorn = super.gunicorn.overrideAttrs (_: {
+      doCheck = !prev.stdenv.hostPlatform.isDarwin;
+    });
+  });
+
   # TODO: Remove when clipcat allows `renamed_and_removed_lints`. Its workspace
   # denies that lint, and rustc 1.99 removed several lints the workspace also
   # denies (e.g. `no_mangle_generic_items`), which turns the build into an error.
