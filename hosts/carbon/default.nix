@@ -2,6 +2,7 @@
 
 {
   imports = [
+    ./libvirt.nix
     ./niks3.nix
     ./router.nix
   ];
@@ -524,10 +525,6 @@
 
   home-manager.extraSpecialArgs = {
     isHeadless = true;
-  };
-
-  virtualisation = {
-    libvirtd.enable = true;
   };
 
   age.secrets.arash-pw.file = ../../secrets/arash-pw.age;
