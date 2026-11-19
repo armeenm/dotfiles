@@ -268,6 +268,34 @@
       };
     };
 
+    # nix-darwin has no `switch-to-configuration`, so activation runs the
+    # built system's own `activate` script. The Mac builds that itself
+    # (`remoteBuild`), because no Linux builder can produce aarch64-darwin
+    # outputs. deploy-rs' canary modes do not apply to that script, hence the
+    # rollbacks are off. Addressed by IP: the LAN name is not resolvable from
+    # every machine, and the Kea lease keeps .135 stable.
+    deployDarwinNodes = with self.darwinConfigurations; let
+      inherit (inputs.deploy-rs) lib;
+      mk = system: node: hostname: {
+        inherit system;
+        node = {
+          inherit hostname;
+          remoteBuild = true;
+          autoRollback = false;
+          magicRollback = false;
+          profiles.system = {
+            sshUser = user.login;
+            user = "root";
+            path = lib.${system}.activate.custom
+              node.config.system.build.toplevel
+              "${node.config.system.build.toplevel}/activate";
+          };
+        };
+      };
+    in {
+      rhenium = mk "aarch64-darwin" rhenium "192.168.0.135";
+    };
+
     commonModules = [
       { _module.args = { inherit inputs user; }; }
     ];
@@ -424,7 +452,7 @@
     overlays.default = lib.composeManyExtensions allOverlays;
 
     deploy = {
-      nodes = lib.mapAttrs (_: node: node.node) deployNodes;
+      nodes = lib.mapAttrs (_: node: node.node) (deployNodes // deployDarwinNodes);
     };
 
     devShells = forAllSystems (system: pkgs: with pkgs; {
