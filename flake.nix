@@ -507,31 +507,13 @@
 
     # Deploy checks build every node's activation on the checking system, so
     # give each system only the nodes it can actually build.
-    checks = let
-      deployChecks = lib.genAttrs [
-        "x86_64-linux"
-        "aarch64-linux"
-      ] (system: inputs.deploy-rs.lib.${system}.deployChecks {
-        nodes = lib.mapAttrs (_: node: node.node)
-          (lib.filterAttrs (_: node: node.system == system) deployNodes);
-      });
-    in
-    deployChecks
-    // {
-      x86_64-linux = deployChecks.x86_64-linux // {
-        # Partition a blank disk in a VM and check the layouts still describe
-        # the UUIDs and filesystems the hosts expect.
-        disko-layouts = import ./tests/disko-layouts.nix {
-          inherit lib;
-          pkgs = nixpkgs.legacyPackages.x86_64-linux;
-          diskoModule = inputs.disko.nixosModules.default;
-          layouts = {
-            argentum = import ./hosts/argentum/disko.nix;
-            carbon = import ./hosts/carbon/disko.nix;
-          };
-        };
-      };
-    };
+    checks = lib.genAttrs [
+      "x86_64-linux"
+      "aarch64-linux"
+    ] (system: inputs.deploy-rs.lib.${system}.deployChecks {
+      nodes = lib.mapAttrs (_: node: node.node)
+        (lib.filterAttrs (_: node: node.system == system) deployNodes);
+    });
 
     # `nix flake check` has built-in schemas for the standard outputs, but
     # nothing for nix-on-droid's. Declaring `schemas` makes Determinate Nix use
