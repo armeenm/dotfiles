@@ -16,6 +16,7 @@ let
   inherit (inputs.nix-misc.packages.${hostPlatform.system}) launchk;
 
   hyprland-qtutils = inputs.hyprland-qtutils.packages.${hostPlatform.system}.default;
+  browse = import ./browse.nix { inherit lib pkgs; };
   hypruse = import ./hypruse.nix { inherit lib pkgs; };
   strace-macos = inputs.strace-macos.packages.${hostPlatform.system}.default;
 
@@ -83,6 +84,7 @@ in {
         ast-grep
         bitwarden-cli
         boxes
+        browse
         croc
         dos2unix
         duf
