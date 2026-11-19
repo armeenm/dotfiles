@@ -54,7 +54,9 @@
   };
 
   environment.systemPackages = with pkgs; [
+    bcachefs-tools
     btop
+    disko
     gh
     git
     hdparm

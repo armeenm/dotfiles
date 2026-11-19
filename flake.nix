@@ -12,6 +12,10 @@
       url = "git+https://codeberg.org/wvhulle/bootvine";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     brew-api = {
       url = "github:armeenm/brew-api";
@@ -274,6 +278,15 @@
 
   in rec {
     nixosModules = import ./modules { inherit inputs; };
+
+    # Install-time disk layouts, usable with
+    # `nix run github:nix-community/disko -- --flake .#argentum --mode destroy,format,mount`.
+    # They are not imported into the hosts, so the running systems keep their
+    # current fileSystems until they are reinstalled.
+    diskoConfigurations = {
+      argentum = ./hosts/argentum/disko.nix;
+      carbon = ./hosts/carbon/disko.nix;
+    };
 
     nixosConfigurations = {
       lithium = nixpkgs-patcher.lib.nixosSystem {
