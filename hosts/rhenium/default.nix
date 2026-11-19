@@ -16,5 +16,10 @@
     harddisk = "never";
   };
 
+  # Stealth mode makes the Application Firewall drop ICMP echo requests, so
+  # the Mac answers nothing on the LAN and every liveness check has to be TCP
+  # (it could not even ping itself). Keep the firewall on, drop that behaviour.
+  networking.applicationFirewall.enableStealthMode = false;
+
   system.stateVersion = 6;
 }
