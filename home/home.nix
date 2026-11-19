@@ -84,7 +84,6 @@ in {
         ast-grep
         bitwarden-cli
         boxes
-        browse
         croc
         dos2unix
         duf
@@ -168,6 +167,7 @@ in {
         tamsyn
         yubikey-manager
       ] ++ lib.optionals enableSocial [
+        browse
         claude-code
         element-desktop
         signal-desktop
