@@ -74,10 +74,6 @@ in {
         variables = [ "--all" ];
       };
 
-      plugins = lib.optionals
-        (inputs.hypr-dynamic-cursors.packages ? ${hostPlatform.system})
-        [ inputs.hypr-dynamic-cursors.packages.${hostPlatform.system}.default ];
-
       extraLuaFiles = {
         "hyprsplit/init" = {
           autoLoad = false;
@@ -145,16 +141,6 @@ in {
             groupbar = {
               font_size = 18;
               gradients = true;
-            };
-          };
-
-          plugin = {
-            # hyphens in plugin option names are normalized to underscores for Lua
-            dynamic_cursors = {
-              enabled = true;
-              mode = "none";
-              hyprcursor.enabled = true;
-              shake.enabled = true;
             };
           };
 
