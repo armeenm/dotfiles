@@ -330,8 +330,6 @@ in {
 
       vi = "${editor}";
       vim = "${editor}";
-    } // lib.optionalAttrs hostPlatform.isLinux {
-      doas = "doas ";
     };
   };
 }

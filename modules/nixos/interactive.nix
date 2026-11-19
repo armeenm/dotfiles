@@ -82,29 +82,38 @@
 
   security = {
     pam = {
-      u2f.enable = true;
-
+      # Fingerprint and U2F authentication are opt-in per service. Enabling
+      # them globally adds the modules to services that cannot show a prompt,
+      # where they just block until they time out.
       services = {
-        doas = {
-          fprintAuth = true;
-          u2fAuth = true;
-        };
-
         hyprlock = {
           fprintAuth = true;
-          u2fAuth = true;
+          u2f.enable = true;
         };
 
         login = {
           fprintAuth = true;
-          u2fAuth = true;
+          u2f.enable = true;
         };
+
+        polkit-1.fprintAuth = true;
+
+        sudo.fprintAuth = true;
       };
     };
   };
 
   services = {
-    fprintd.enable = true;
+    fprintd = {
+      enable = true;
+
+      # fprintAuth defaults to this, which puts pam_fprintd (and its 30 second
+      # timeout) in front of the password in every PAM service. cupsd
+      # re-authenticates each web UI request, so the admin pages stalled until
+      # the sensor timed out; sudo, polkit and the rest waited too.
+      enablePam = false;
+    };
+
     gnome.gnome-keyring.enable = true;
     gvfs.enable = true;
     mozillavpn.enable = true;
