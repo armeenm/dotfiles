@@ -18,7 +18,10 @@
     };
 
     brew-api = {
-      url = "github:armeenm/brew-api";
+      # TODO: unpin once armeenm/brew-api's scheduled job emits casks again.
+      # Since ea33c42 (2026-11-16) it commits an empty cask.json, which leaves
+      # `brewCasks` empty and breaks every darwin host that references it.
+      url = "github:armeenm/brew-api/c94ca5a25fbed37c837bd656ae619aca0e7f8407";
       flake = false;
     };
 

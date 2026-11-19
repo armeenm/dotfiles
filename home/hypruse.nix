@@ -1,7 +1,7 @@
 { lib, pkgs }:
 
 let
-  version = "0.13.0";
+  version = "0.15.1";
 
   # hypruse drives Hyprland through its IPC surface plus a handful of wlroots
   # binaries it finds on PATH; bake the ones it needs in so the MCP server works
@@ -21,8 +21,8 @@ pkgs.python3Packages.buildPythonApplication rec {
   pyproject = true;
 
   src = pkgs.fetchurl {
-    url = "https://files.pythonhosted.org/packages/8b/d4/61354f93e776131e202f02855e04dd152c7dfe10aae7589136e33fa35394/hypruse-${version}.tar.gz";
-    hash = "sha256-MhNiORIjKDokUEuZMtqrJnJnxBWbQLwtheDVp6xOEUs=";
+    url = "https://files.pythonhosted.org/packages/5c/c8/b2fd60cef21ad7600de374fb55202bbf2eaf4afa2ee00a061aac7775d4d6/hypruse-${version}.tar.gz";
+    hash = "sha256-fPydxj3fb9dS86s7a+sRo00EYYWvBec+gwglhOCIoGo=";
   };
 
   build-system = [ pkgs.python3Packages.hatchling ];
