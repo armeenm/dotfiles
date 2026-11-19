@@ -8,8 +8,8 @@ let
   domain = "armeen.xyz";
 
   wan = "enp90s0";
-  lan = "enp87s0";
-  aux = "enp2s0f0np0";
+  lan = "enp2s0f0np0";
+  aux = "enp87s0";
 
   prefix = "192.168.0";
   prefixRev = rev-ip4 prefix;
@@ -232,6 +232,15 @@ in
               id = 1;
               inherit subnet;
               pools = [ { pool = "${prefix}.128 - ${prefix}.254"; } ];
+              reservations = [
+                {
+                  # Canon MF642C. Fixed so the DDNS record Kea registers for
+                  # this name always points at the same address.
+                  hw-address = "ec:5c:84:2a:5a:ee";
+                  ip-address = "192.168.0.40";
+                  hostname = "canonac7911";
+                }
+              ];
             }
           ];
 
