@@ -233,10 +233,13 @@ in {
         betterdisplay
         bettertouchtool
         gimp
+        # The cask declares `sha256 :no_check` and its URL is a moving pointer
+        # (GGRO/googlechrome.dmg), so the hash has to be pinned by hand and
+        # refreshed whenever a build fails with a hash mismatch.
         (google-chrome.overrideAttrs (old: {
           src = pkgs.fetchurl {
             url = lib.lists.head old.src.urls;
-            hash = "sha256-dw9tHUkBfdgOMH8ftB3zjRLrNrcJR8V4C/tHWSxM0dc=";
+            hash = "sha256-dbn9t1c6q4qJ8bADGWkqH3hftOb9B+l5FqE7ALPTS64=";
           };
         }))
         libreoffice
