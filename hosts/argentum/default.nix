@@ -1,6 +1,8 @@
 { lib, user, pkgs, ... }:
 
 {
+  imports = [ ../../modules/nixos/resolver.nix ];
+
   boot = {
     initrd.availableKernelModules = [
       "xhci_pci"
