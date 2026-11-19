@@ -104,22 +104,6 @@ in
     '';
   };
 
-  # postgresqlBackup's tmpfiles rule still creates /srv/tank/postgresql at
-  # boot, while the tank is locked. rmdir only removes empty directories, so
-  # this never touches leaked data; it just keeps an empty shadow tree off the
-  # root disk.
-  systemd.services.tank-shadow-cleanup = {
-    description = "Remove empty tank directories from the root filesystem";
-    wantedBy = [ "multi-user.target" ];
-    requires = [ "systemd-tmpfiles-setup.service" ];
-    after = [ "systemd-tmpfiles-setup.service" ];
-    unitConfig.ConditionPathIsMountPoint = "!${tankMount}";
-    serviceConfig = {
-      Type = "oneshot";
-      ExecStart = "-${pkgs.coreutils}/bin/rmdir ${tankMount}/postgresql ${tankMount}/vaultwarden";
-    };
-  };
-
   systemd.services = {
     # Vaultwarden's own data stays in /var/lib/vaultwarden; only the oneshot
     # backup writes to the tank.
