@@ -12,6 +12,10 @@
       url = "git+https://codeberg.org/wvhulle/bootvine";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     brew-api = {
       url = "github:armeenm/brew-api";
@@ -275,6 +279,15 @@
   in rec {
     nixosModules = import ./modules { inherit inputs; };
 
+    # Install-time disk layouts, usable with
+    # `nix run github:nix-community/disko -- --flake .#argentum --mode destroy,format,mount`.
+    # They are not imported into the hosts, so the running systems keep their
+    # current fileSystems until they are reinstalled.
+    diskoConfigurations = {
+      argentum = ./hosts/argentum/disko.nix;
+      carbon = ./hosts/carbon/disko.nix;
+    };
+
     nixosConfigurations = {
       lithium = nixpkgs-patcher.lib.nixosSystem {
         modules = baseModules ++ [
@@ -494,13 +507,31 @@
 
     # Deploy checks build every node's activation on the checking system, so
     # give each system only the nodes it can actually build.
-    checks = lib.genAttrs [
-      "x86_64-linux"
-      "aarch64-linux"
-    ] (system: inputs.deploy-rs.lib.${system}.deployChecks {
-      nodes = lib.mapAttrs (_: node: node.node)
-        (lib.filterAttrs (_: node: node.system == system) deployNodes);
-    });
+    checks = let
+      deployChecks = lib.genAttrs [
+        "x86_64-linux"
+        "aarch64-linux"
+      ] (system: inputs.deploy-rs.lib.${system}.deployChecks {
+        nodes = lib.mapAttrs (_: node: node.node)
+          (lib.filterAttrs (_: node: node.system == system) deployNodes);
+      });
+    in
+    deployChecks
+    // {
+      x86_64-linux = deployChecks.x86_64-linux // {
+        # Partition a blank disk in a VM and check the layouts still describe
+        # the UUIDs and filesystems the hosts expect.
+        disko-layouts = import ./tests/disko-layouts.nix {
+          inherit lib;
+          pkgs = nixpkgs.legacyPackages.x86_64-linux;
+          diskoModule = inputs.disko.nixosModules.default;
+          layouts = {
+            argentum = import ./hosts/argentum/disko.nix;
+            carbon = import ./hosts/carbon/disko.nix;
+          };
+        };
+      };
+    };
 
     # `nix flake check` has built-in schemas for the standard outputs, but
     # nothing for nix-on-droid's. Declaring `schemas` makes Determinate Nix use
