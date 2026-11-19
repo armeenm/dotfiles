@@ -487,10 +487,6 @@ in {
           controlMaster = "auto";
           controlPath = "~/.ssh/sockets/cm-%r@%h:%p";
         };
-
-        "carbon.armeen.xyz" = {
-          proxyCommand = "${pkgs.cloudflared}/bin/cloudflared access ssh --hostname %h";
-        };
       };
 
       extraOptionOverrides = lib.optionalAttrs hostPlatform.isDarwin {
