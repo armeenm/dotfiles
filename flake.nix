@@ -8,6 +8,11 @@
 
     nixpkgs-patcher.url = "github:gepbird/nixpkgs-patcher";
 
+    bootvine = {
+      url = "git+https://codeberg.org/wvhulle/bootvine";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     brew-api = {
       url = "github:armeenm/brew-api";
       flake = false;

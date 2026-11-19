@@ -13,6 +13,7 @@ let
   nixosBase = [ ./nixos/base.nix ];
 
   nixosFull = [
+    inputs.bootvine.nixosModules.default
     inputs.determinate.nixosModules.default
     inputs.home-manager.nixosModules.default
     inputs.niks3.nixosModules.default
