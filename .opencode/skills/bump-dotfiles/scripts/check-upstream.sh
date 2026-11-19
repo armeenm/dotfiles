@@ -12,6 +12,7 @@ printf 'lanzaboote     %s\n' "$(gh release list --repo nix-community/lanzaboote 
 echo
 echo "== hand-pinned packages =="
 printf 'opencode       %s\n' "$(curl -fsS https://registry.npmjs.org/@opencode/cli-linux-x64 | jget 'd["dist-tags"]["latest"]')"
+printf 'browse         %s\n' "$(curl -fsS https://registry.npmjs.org/@opencode/browse | jget 'd["dist-tags"]["latest"]')"
 printf 'openchamber    %s\n' "$(git ls-remote --tags https://github.com/openchamber/openchamber | sed 's#.*refs/tags/##' | grep -v '\^{}' | sort -V | tail -1)"
 printf 'hypruse        %s\n' "$(curl -fsS https://pypi.org/pypi/hypruse/json | jget 'd["info"]["version"]')"
 printf 'emsg-blame     %s\n' "$(gh api repos/ISouthRain/emsg-blame/commits --jq '.[0].sha')"

@@ -54,6 +54,7 @@ Compare, then update the file:
 | File | Package | Bump |
 | --- | --- | --- |
 | `home/opencode.nix` | opencode | `version` + the three `sha512-…` hashes |
+| `home/browse.nix` | browse | `version`, the `src`/`dist` hashes, all four platform hashes, **and** the `node-modules` fixed-output hash |
 | `overlay/openchamber.nix` | openchamber-desktop | `version`, `src` hash, **and** the two `node-modules*` fixed-output hashes |
 | `home/hypruse.nix` | hypruse | `version` + `src` hash (the tarball URL embeds the version) |
 | `home/programs.nix` | llama-vscode | `version` + `sha256` |
@@ -85,6 +86,14 @@ nix build --impure --keep-going --file /tmp/openchamber-build.nix
 with a small expression that imports the flake and returns
 `pkgs.openchamber-desktop`. Then build it for real to confirm 2.x still has the
 `build:web-assets` / `bundle:main` scripts the derivation calls.
+
+`home/browse.nix` carries five hashes: the npm launcher tarball (`dist`), the
+GitHub tag used for `cli/bun.lock` (`src`), one native tarball per platform
+(`browse-linux-x64`, `browse-linux-arm64`, `browse-darwin-x64`,
+`browse-darwin-arm64`), and one `bun install` tree (`node-modules`, refreshed
+the same way as openchamber's). The launcher resolves its dependencies and its
+native binary through `node_modules`, so all of them move together with
+`version`.
 
 Smoke-test the packaged app against an isolated profile instead of replacing the
 running desktop app:
