@@ -1,0 +1,18 @@
+<network>
+  <!--
+    carbon's libvirt NAT network.
+
+    No DHCP and no DNS element on purpose. libvirt starts a dnsmasq for a
+    network that has either, and dnsmasq's DHCP socket is bound to the
+    wildcard address device-scoped (0.0.0.0%virbr0:67), which reserves UDP/67
+    for the whole host. Kea then cannot bind 192.168.0.1:67 on the LAN
+    interface and the LAN loses DHCP. With neither element, libvirt starts no
+    dnsmasq and virbr0 still provides the NAT gateway at 192.168.122.1.
+
+    Guests on this network need a static address in 192.168.122.0/24.
+  -->
+  <name>default</name>
+  <forward mode='nat'/>
+  <bridge name='virbr0' stp='on' delay='0'/>
+  <ip address='192.168.122.1' netmask='255.255.255.0'/>
+</network>
