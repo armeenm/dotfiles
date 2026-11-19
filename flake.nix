@@ -272,8 +272,8 @@
     # built system's own `activate` script. The Mac builds that itself
     # (`remoteBuild`), because no Linux builder can produce aarch64-darwin
     # outputs. deploy-rs' canary modes do not apply to that script, hence the
-    # rollbacks are off. Addressed by IP: the LAN name is not resolvable from
-    # every machine, and the Kea lease keeps .135 stable.
+    # rollbacks are off. Addressed by name: Knot on carbon serves the LAN
+    # zone, so rhenium.armeen.xyz follows the DHCP lease.
     deployDarwinNodes = with self.darwinConfigurations; let
       inherit (inputs.deploy-rs) lib;
       mk = system: node: hostname: {
@@ -293,7 +293,7 @@
         };
       };
     in {
-      rhenium = mk "aarch64-darwin" rhenium "192.168.0.135";
+      rhenium = mk "aarch64-darwin" rhenium "rhenium.armeen.xyz";
     };
 
     commonModules = [
