@@ -5,6 +5,7 @@
     ./libvirt.nix
     ./niks3.nix
     ./router.nix
+    ./tank.nix
   ];
 
   age = {
@@ -153,18 +154,7 @@
       options = ["noatime"];
     };
 
-    /*
-    "/srv/tank" = {
-      device = "/dev/nvme0n1:/dev/nvme1n1";
-      fsType = "bcachefs";
-    };
-    */
-
-    "/export/tank" = {
-      device = "/srv/tank";
-      options = [ "bind" ];
-      fsType = "nfs4";
-    };
+    # /srv/tank and /export/tank live in ./tank.nix.
   };
 
   environment.systemPackages = with pkgs; [
