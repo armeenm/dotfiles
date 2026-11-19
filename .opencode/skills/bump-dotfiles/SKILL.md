@@ -117,6 +117,20 @@ newer one, pass it from `overlay/default.nix`
 
 ## 4. Verify
 
+### Memory
+
+Argentum is the desktop, not a build farm: 31 GiB shared with the user's
+session. An OOM kill has ended this routine before.
+
+- Check `free -g` and `df -h /nix` before starting; leave at least 4 GiB free.
+- Build one configuration at a time locally, with `--max-jobs 8` or less.
+- Prefer the remote builders: `carbon`, `hierarch-corp-bm-lx-01`, and
+  `cadmium`/`rhenium` for the darwin configs.
+- aarch64 hosts (`tungsten`, `iridium`) need binfmt (lithium) or emulation;
+  keep jobs low there.
+- Run long builds in the background with output to a log, and report what is
+  running instead of blocking on it.
+
 ```sh
 nix flake check --no-build      # evaluation only, does NOT build
 nix build --keep-going --print-out-paths \
