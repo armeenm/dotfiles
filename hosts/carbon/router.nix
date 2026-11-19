@@ -47,17 +47,26 @@ let
     ${rev-ip4 ip}. PTR ${hostName}.${domain}.
   '';
 
-  # The SOA serial is a hash of the records, so changing the zone changes the
-  # serial without anyone having to remember to bump it. knot's default
-  # serial-policy ("increment") keeps it monotonic in the journal if the hash
-  # happens to go down.
-  zoneSerial = records: lib.fromHexString (builtins.substring 0 8 (builtins.hashString "sha256" records));
+  # knot only applies its journal when the changelog continues from the SOA
+  # serial in the zone file. A serial derived from the record contents breaks
+  # that chain on every rebuild that changes them: knot then loads the file
+  # alone and silently serves the static records without any of the
+  # DHCP-registered names, which only come back as Kea re-registers them. Keep
+  # the forward zone's serial fixed so the journal always applies; knot still
+  # increments the served serial in the journal on each DDNS change. The value
+  # is the last hash-derived serial, so the journal written before this change
+  # still applies on the first boot with it.
+  forwardZoneSerial = 1865290577;
 
-  mkZone = origin: records: ''
+  # The reverse zone takes no dynamic updates, so a content hash is harmless
+  # there and keeps the serial tracking edits.
+  contentSerial = records: lib.fromHexString (builtins.substring 0 8 (builtins.hashString "sha256" records));
+
+  mkZone = origin: serial: records: ''
     $ORIGIN ${origin}.
     $TTL 5m
     @ SOA ns1 hostmaster (
-      ${toString (zoneSerial records)} ; serial
+      ${toString serial} ; serial
       4h  ; refresh
       15m ; retry
       8h  ; expire
@@ -66,8 +75,8 @@ let
     ${records}
   '';
 
-  zoneFile = pkgs.writeText "${domain}.zone" (mkZone domain zoneRecords);
-  reverseZoneFile = pkgs.writeText "${prefixRev}.zone" (mkZone prefixRev reverseZoneRecords);
+  zoneFile = pkgs.writeText "${domain}.zone" (mkZone domain forwardZoneSerial zoneRecords);
+  reverseZoneFile = pkgs.writeText "${prefixRev}.zone" (mkZone prefixRev (contentSerial reverseZoneRecords) reverseZoneRecords);
 
   # DHCP registrations are signed with a TSIG key that is generated on first
   # boot and kept out of the store (both knot and kea can read it by group).
@@ -350,7 +359,8 @@ in
             file = "${domain}.zone";
             acl = "update_acl";
             # The zone file is a store symlink; knot must only write the
-            # journal, never the file.
+            # journal, never the file. The serial is fixed (see
+            # forwardZoneSerial) so the journal keeps applying across rebuilds.
             zonefile-sync = "-1";
           }
           {
