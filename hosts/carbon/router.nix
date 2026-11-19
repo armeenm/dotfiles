@@ -231,9 +231,16 @@ in
       dhcp4 = {
         enable = true;
         settings = {
-          rebind-timer = 2000;
-          renew-timer = 1000;
-          valid-lifetime = 4000;
+          # A 24h lease keeps a name registered through a night's sleep; the
+          # previous 4000s (Kea's default) expired names after about an hour.
+          # T1/T2 follow the usual 50%/87.5% of the lease.
+          valid-lifetime = 86400;
+          renew-timer = 43200;
+          rebind-timer = 75600;
+          # Kea derives the record TTL as a third of the lease lifetime, which
+          # would be 8h with a 24h lease. Cap it so a host that changes address
+          # is not cached under the old one for that long.
+          ddns-ttl-max = 3600;
           ddns-qualifying-suffix = domain;
 
           subnet4 = [
