@@ -169,17 +169,16 @@
     "brew-api": {
       "flake": false,
       "locked": {
-        "lastModified": 1793303959,
-        "narHash": "sha256-7giFs94uBcA5pc5/sfiFJLcrz8Etmw8C0cp9JY7kEok=",
+        "lastModified": 1795085935,
+        "narHash": "sha256-d5FO9+Di8+V0qN1Y19KQJY2yNiVsLU8dSzIx1TYJo6E=",
         "owner": "armeenm",
         "repo": "brew-api",
-        "rev": "c94ca5a25fbed37c837bd656ae619aca0e7f8407",
+        "rev": "51eb5fc07e3a7fae3a2b3bfcad7bf6e3dbb71caf",
         "type": "github"
       },
       "original": {
         "owner": "armeenm",
         "repo": "brew-api",
-        "rev": "c94ca5a25fbed37c837bd656ae619aca0e7f8407",
         "type": "github"
       }
     },
@@ -836,11 +835,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1795068097,
-        "narHash": "sha256-RpAJAcu2DBWX5n0uan+0nTq54QifHyUsTCymY5Jwe+g=",
+        "lastModified": 1795101493,
+        "narHash": "sha256-hCCVV3vMEwAM70yxPkJhCeDraO66l7yfhw4QCYK38Yg=",
         "owner": "anomalyco",
         "repo": "hex",
-        "rev": "8d3ea95f91295d5d54ebcb4c996da26da07f9be3",
+        "rev": "b33db219c946749b10917c985c3c5afeb1b02290",
         "type": "github"
       },
       "original": {
@@ -1470,9 +1469,7 @@
         "bdwgc": "bdwgc",
         "flake-parts": "flake-parts_4",
         "git-hooks-nix": "git-hooks-nix",
-        "nixpkgs": [
-          "nixpkgs"
-        ],
+        "nixpkgs": "nixpkgs_7",
         "nixpkgs-23-11": "nixpkgs-23-11",
         "nixpkgs-regression": "nixpkgs-regression"
       },
@@ -1640,7 +1637,7 @@
     },
     "nixos-hardware": {
       "inputs": {
-        "nixpkgs": "nixpkgs_7"
+        "nixpkgs": "nixpkgs_8"
       },
       "locked": {
         "lastModified": 1795018746,
@@ -1879,6 +1876,20 @@
     },
     "nixpkgs_7": {
       "locked": {
+        "lastModified": 1794872590,
+        "narHash": "sha256-E+XLAfnC7+bdr4qlEgRv6cdGmiqTU5oeFNKCha7epqQ=",
+        "rev": "f68407657ad294471eb4b2e65d193df26edf729f",
+        "revCount": 1018921,
+        "type": "tarball",
+        "url": "https://api.flakehub.com/f/pinned/NixOS/nixpkgs/0.2605.1018921%2Brev-f68407657ad294471eb4b2e65d193df26edf729f/01a1ea95-6db4-7d02-8a1d-753f3849fe0e/source.tar.gz"
+      },
+      "original": {
+        "type": "tarball",
+        "url": "https://flakehub.com/f/NixOS/nixpkgs/0.2605"
+      }
+    },
+    "nixpkgs_8": {
+      "locked": {
         "lastModified": 1789546076,
         "narHash": "sha256-vWkSk5bbfTqdtMoSgD9FshACO8JCvXTFi+3cqEp0mH0=",
         "rev": "b1b875982b17dabde9b4a37f3e229e74913e6db3",
@@ -1890,7 +1901,7 @@
         "url": "https://channels.nixos.org/nixos-unstable/nixexprs.tar.xz"
       }
     },
-    "nixpkgs_8": {
+    "nixpkgs_9": {
       "locked": {
         "lastModified": 1795043757,
         "narHash": "sha256-KbzskcTIYRdZPVqxDbWj1wJfP+/sIswq0cdItmrhpCs=",
@@ -2066,7 +2077,7 @@
         "nix-on-droid": "nix-on-droid",
         "nixgl": "nixgl",
         "nixos-hardware": "nixos-hardware",
-        "nixpkgs": "nixpkgs_8",
+        "nixpkgs": "nixpkgs_9",
         "nixpkgs-patcher": "nixpkgs-patcher",
         "nixpkgs-stable": "nixpkgs-stable",
         "ragenix": "ragenix",
