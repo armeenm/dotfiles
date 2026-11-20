@@ -21,7 +21,7 @@ let
       RHENIUM="''${RHENIUM:-rhenium.local}"
       HOST="''${CAST_HOST:-argentum.local}"
       APP="''${CAST_APP:-Desktop}"
-      BITRATE="''${CAST_BITRATE:-50000}"
+      BITRATE="''${CAST_BITRATE:-30000}"
       RES="''${CAST_RES:-1080}"
       FPS="''${CAST_FPS:-60}"
 
