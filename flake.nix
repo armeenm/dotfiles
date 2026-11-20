@@ -41,7 +41,6 @@
 
     nix = {
       url = "https://flakehub.com/f/DeterminateSystems/nix-src/3.21.8";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     determinate = {

@@ -23,6 +23,33 @@ final: prev: {
     doCheck = !prev.stdenv.hostPlatform.isDarwin;
   });
 
+  # Two more darwin test suites that cannot pass in the build environment:
+  # harfbuzz 14.5.1's in-house coretext test expects the glyph ids macOS < 27
+  # produces (HarfBust shapes to one glyph on 27), and gunicorn's ASGI test
+  # needs a socket the macOS sandbox refuses (EPERM). Packages are unaffected.
+  # Only on darwin: overriding them on Linux would change their derivation
+  # hashes (and with python3Packages.overrideScope, the whole Python set's) and
+  # force rebuilds of packages that substitutes already cover.
+  harfbuzz = if prev.stdenv.hostPlatform.isDarwin
+    then prev.harfbuzz.overrideAttrs (_: { doCheck = false; })
+    else prev.harfbuzz;
+
+  # skim's cargo test run fails under the darwin build sandbox as well.
+  skim = if prev.stdenv.hostPlatform.isDarwin
+    then prev.skim.overrideAttrs (_: { doCheck = false; })
+    else prev.skim;
+
+  python3Packages = if prev.stdenv.hostPlatform.isDarwin
+    then prev.python3Packages.overrideScope (self: super: {
+      gunicorn = super.gunicorn.overrideAttrs (_: {
+        doCheck = false;
+        # gunicorn runs its suite from installCheckPhase, which doCheck does
+        # not gate.
+        doInstallCheck = false;
+      });
+    })
+    else prev.python3Packages;
+
   # TODO: Remove when clipcat allows `renamed_and_removed_lints`. Its workspace
   # denies that lint, and rustc 1.99 removed several lints the workspace also
   # denies (e.g. `no_mangle_generic_items`), which turns the build into an error.
@@ -70,9 +97,5 @@ final: prev: {
     ];
   });
 
-  # OpenChamber 2.5.0 uses `webContents.setZoomMode`, which Electron 44 added.
-  # nixpkgs' `electron` is still 43, so pin the desktop app to Electron 44.
-  openchamber-desktop = final.callPackage ./openchamber.nix {
-    electron = final.electron_44;
-  };
+  openchamber-desktop = final.callPackage ./openchamber.nix { };
 }

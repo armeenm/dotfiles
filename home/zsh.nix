@@ -9,9 +9,12 @@ let
   carapaceBaseCompleters = pkgs.runCommandLocal "carapace-base-completers" {
     nativeBuildInputs = [ config.programs.carapace.package ];
   } ''
+    # carapace 1.8.2 emits the completer list as one unquoted,
+    # space-separated line (1.8.1 quoted every name), so split on spaces
+    # instead of looking for quoted strings.
     carapace _carapace zsh \
       | sed -n 's/^compdef _carapace_completer //p' \
-      | grep -o '"[^"]*"' | tr -d '"' | sort -u > $out
+      | tr ' ' '\n' | tr -d '"' | sed '/^$/d' | sort -u > $out
   '';
 in {
   programs.zsh = {

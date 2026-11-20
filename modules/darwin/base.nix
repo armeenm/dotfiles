@@ -36,8 +36,14 @@ in
     };
 
     customSettings = config.nix.settings // {
-      # Nix defaults sandboxing off on Darwin; keep builds sandboxed.
-      sandbox = true;
+      # Nix defaults sandboxing off on Darwin; keep builds sandboxed. Some
+      # nixpkgs darwin derivations (fish's test suite, miniserve) carry their
+      # own sandbox profile, which nix only allows when the sandbox is
+      # "relaxed".
+      sandbox = "relaxed";
+      # Emacs' build scans /etc/ssl/certs for GnuTLS; the darwin sandbox blocks
+      # it ("Opening directory ... Operation not permitted") unless it is listed.
+      extra-sandbox-paths = [ "/etc/ssl/certs" ];
       allowed-users = lib.mkForce [ "@staff" ];
       trusted-users = lib.mkForce [ "@admin" ];
     };
