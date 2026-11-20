@@ -34,6 +34,11 @@ final: prev: {
     then prev.harfbuzz.overrideAttrs (_: { doCheck = false; })
     else prev.harfbuzz;
 
+  # skim's cargo test run fails under the darwin build sandbox as well.
+  skim = if prev.stdenv.hostPlatform.isDarwin
+    then prev.skim.overrideAttrs (_: { doCheck = false; })
+    else prev.skim;
+
   python3Packages = if prev.stdenv.hostPlatform.isDarwin
     then prev.python3Packages.overrideScope (self: super: {
       gunicorn = super.gunicorn.overrideAttrs (_: {
