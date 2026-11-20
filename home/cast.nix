@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ lib, pkgs, ... }:
 
 let
   # One-command casting of this machine's desktop to the TV, which is a Mac
@@ -12,13 +12,16 @@ let
   #    "Quit event received" the moment that connection closes.
   cast = pkgs.writeShellApplication {
     name = "cast";
-    runtimeInputs = [ pkgs.openssh pkgs.systemd ];
+    # systemd only exists as a package on Linux; this module is imported by the
+    # darwin hosts too, where referencing it breaks flake evaluation outright.
+    runtimeInputs = [ pkgs.openssh ]
+      ++ lib.optionals pkgs.stdenv.hostPlatform.isLinux [ pkgs.systemd ];
     text = ''
       # Override any of these in the environment.
       RHENIUM="''${RHENIUM:-rhenium.local}"
       HOST="''${CAST_HOST:-argentum.local}"
       APP="''${CAST_APP:-Desktop}"
-      BITRATE="''${CAST_BITRATE:-30000}"
+      BITRATE="''${CAST_BITRATE:-50000}"
       RES="''${CAST_RES:-1080}"
       FPS="''${CAST_FPS:-60}"
 
@@ -26,9 +29,12 @@ let
 
       case "''${1:-start}" in
         start)
-          # The host side has to be up before the client can connect.
-          systemctl --user is-active --quiet sunshine \
-            || systemctl --user start sunshine
+          # The host side has to be up before the client can connect. On a
+          # non-Linux host there is no local Sunshine to start.
+          if command -v systemctl >/dev/null 2>&1; then
+            systemctl --user is-active --quiet sunshine \
+              || systemctl --user start sunshine
+          fi
           remote "
             moonlight quit >/dev/null 2>&1 || true
             sleep 1
