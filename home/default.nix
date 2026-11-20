@@ -15,6 +15,7 @@ in {
     ./programs.nix
     ./cast.nix
     ./completions.nix
+    ./hyprsunset.nix
     ./services.nix
     ./starship.nix
     ./systemd.nix

@@ -76,26 +76,6 @@ in {
       };
     };
 
-    hyprsunset = {
-      enable = !isHeadless && hostPlatform.isLinux;
-      settings = {
-        profile = [
-          {
-            time = "6:00";
-            temperature = 6500;
-          }
-          {
-            time = "9:00";
-            identity = true;
-          }
-          {
-            time = "19:00";
-            temperature = 3500;
-          }
-        ];
-      };
-    };
-
     jankyborders = {
       enable = !isHeadless && hostPlatform.isDarwin;
     };
