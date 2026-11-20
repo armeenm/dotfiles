@@ -75,8 +75,10 @@ in
       # Fallback domains that carry a resolver are the zones WARP answers for
       # itself; the ones without one tell WARP to defer to the system resolver
       # and must not be routed here.
+      # The TOS flag is stored in $HOME, which a system unit does not have,
+      # so warp-cli refuses to answer without --accept-tos here.
       domains=""
-      settings=$(warp-cli -j settings 2>/dev/null) || true
+      settings=$(warp-cli --accept-tos -j settings 2>/dev/null) || true
       if [ -n "$settings" ]; then
         domains=$(
           printf '%s' "$settings" |
@@ -84,6 +86,7 @@ in
         ) || true
       fi
 
+      echo "warp-dns-split: routing ''${domains:-<no zones>} and ~warp-svc to 127.0.2.2/3" >&2
       resolvectl domain ${warpLink} '~warp-svc' ''${domains}
     '';
   };
