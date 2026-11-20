@@ -211,7 +211,6 @@ in {
         wl-screenrec
         wlogout
         wlr-randr
-        woomer
         xdg-user-dirs
         xdg-utils
         xeyes

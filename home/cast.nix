@@ -70,7 +70,27 @@ let
       esac
     '';
   };
+
+  grab = pkgs.writeShellApplication {
+    name = "grab";
+    runtimeInputs = [ pkgs.moonlight-qt ];
+    text = ''
+      if [ "$#" -lt 1 ]; then
+        echo "usage: grab <host> [app]" >&2
+        exit 2
+      fi
+      HOST="$1"
+      APP="''${2:-''${GRAB_APP:-Desktop}}"
+      RES="''${GRAB_RES:-1080}"
+      FPS="''${GRAB_FPS:-60}"
+      BITRATE="''${GRAB_BITRATE:-30000}"
+      MODE="''${GRAB_MODE:-windowed}"
+
+      exec moonlight stream "$HOST" "$APP" \
+        --"$RES" --fps "$FPS" --bitrate "$BITRATE" --display-mode "$MODE"
+    '';
+  };
 in
 {
-  home.packages = [ cast ];
+  home.packages = [ cast grab ];
 }

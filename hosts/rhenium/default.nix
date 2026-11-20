@@ -9,7 +9,34 @@
       # Moonlight client: the TV runs macOS, so this is the end that receives
       # the stream from Sunshine on argentum. SwitchAudioSource moves the
       # default output to the HDMI sink, which macOS will not do from ssh.
-      packages = [ pkgs.moonlight-qt pkgs.switchaudio-osx ];
+      #
+      # sunshine is the reverse direction: it lets a Moonlight client on
+      # argentum (or anywhere) drive this Mac's desktop, which beats VNC for
+      # the occasional remote fix.
+      packages = [ pkgs.moonlight-qt pkgs.switchaudio-osx pkgs.sunshine ];
+
+      file.".config/sunshine/sunshine.conf".text = ''
+        sunshine_name = rhenium
+        lan_encryption_mode = 1
+        origin_web_ui_allowed = pc
+      '';
+    };
+  };
+
+  # Sunshine is not a NixOS-only service here: nix-darwin has no module for it,
+  # so it runs as a user agent in the logged-in session, which is what gives it
+  # access to the WindowServer for capture and input.
+  launchd.user.agents.sunshine = {
+    serviceConfig = {
+      ProgramArguments = [
+        "${pkgs.sunshine}/bin/sunshine"
+        "/Users/${user.login}/.config/sunshine/sunshine.conf"
+      ];
+      RunAtLoad = true;
+      KeepAlive.SuccessfulExit = false;
+      ProcessType = "Interactive";
+      StandardOutPath = "/Users/${user.login}/Library/Logs/sunshine.log";
+      StandardErrorPath = "/Users/${user.login}/Library/Logs/sunshine.log";
     };
   };
 
