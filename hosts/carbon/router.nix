@@ -258,6 +258,22 @@ in
                 }
               ];
             }
+            {
+              # libvirt's NAT network. Kea is the only DHCP server on the
+              # host: libvirt's own dnsmasq would bind UDP/67 on the wildcard
+              # address and take the port away from the LAN.
+              id = 2;
+              subnet = "192.168.122.0/24";
+              pools = [ { pool = "192.168.122.2 - 192.168.122.254"; } ];
+              option-data = [
+                {
+                  name = "routers";
+                  data = "192.168.122.1";
+                }
+              ];
+              # Keep virtual-machine names out of the LAN zone.
+              ddns-send-updates = false;
+            }
           ];
 
           option-data = [
@@ -280,7 +296,13 @@ in
           ];
 
           interfaces-config = {
-            interfaces = [ lan ];
+            # virbr0 is libvirt's bridge. It only counts as "running" when it
+            # has a carrier, which needs a port; the network hook in
+            # libvirt.nix keeps a dummy port attached so Kea can bind it even
+            # when no VM is running. Kea skips it if it is absent and picks it
+            # up on the next reload (interfaces are re-detected on SIGHUP).
+            interfaces = [ lan "virbr0" ];
+            service-sockets-require-all = false;
           };
 
           lease-database = {
@@ -511,5 +533,6 @@ in
       wants = [ "knot-ddns-key.service" ];
       after = [ "knot-ddns-key.service" ];
     };
+
   };
 }
