@@ -13,6 +13,17 @@
           nix-store = prev.nix-store.overrideAttrs (_: {
             mesonBuildDir = "_build";
           });
+
+          # Determinate's packaging/wasmtime.nix never asks for pkg-config, so
+          # zstd-sys' build script aborts with "The pkg-config command could
+          # not be found" whenever its output cannot be substituted. For
+          # aarch64-darwin it is published nowhere we can read (determinate's
+          # cache 404s, FlakeHub Cache 401s), so build it with what it needs.
+          wasmtime = (pkgs.callPackage (inputs.nix.outPath + "/packaging/wasmtime.nix") { })
+            .overrideAttrs (old: {
+              nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [ pkgs.pkg-config ];
+              buildInputs = (old.buildInputs or [ ]) ++ [ pkgs.zstd ];
+            });
         };
       in
       if pkgs.stdenv.hostPlatform.isDarwin then
