@@ -174,11 +174,19 @@
     # everything in the web UI.
     sunshine = {
       enable = true;
+      # Started by `cast start` and stopped by `cast stop` rather than at
+      # login: this is a laptop, and Sunshine's ports should not be listening
+      # on whatever network it happens to join.
+      autoStart = false;
       openFirewall = true;
       settings = {
         capture = "wlr";
         sunshine_name = "argentum";
         port = 47989;
+        # Encrypt LAN streams when the client supports it, and keep the web UI
+        # on localhost only; `cast` reaches it on 127.0.0.1.
+        lan_encryption_mode = "1";
+        origin_web_ui_allowed = "pc";
       };
     };
   };
