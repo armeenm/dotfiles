@@ -146,6 +146,9 @@
     "/boot" = {
       device = "/dev/disk/by-uuid/E777-4036";
       fsType = "vfat";
+      # The ESP returns EIO for FITRIM, which fails the whole fstrim unit.
+      # Skip it; the root filesystem is still trimmed.
+      options = [ "defaults" "X-fstrim.notrim" ];
     };
 
     "/" = {

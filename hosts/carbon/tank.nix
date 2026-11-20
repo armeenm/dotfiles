@@ -16,6 +16,7 @@
 
 let
   tankUuid = "63afad52-6581-4e67-a769-035d16c4c080";
+  tankDevice = "/dev/disk/by-uuid/${tankUuid}";
   tankMount = "/srv/tank";
   exportMount = "/export/tank";
 
@@ -41,7 +42,7 @@ in
     # mount the tank before the passphrase has been supplied. nofail stops a
     # failed mount attempt from blocking the boot.
     "/srv/tank" = {
-      device = "/dev/disk/by-uuid/${tankUuid}";
+      device = tankDevice;
       fsType = "bcachefs";
       options = [ "noauto" "nofail" ];
     };
@@ -105,10 +106,21 @@ in
   };
 
   systemd.services = {
+    # `bcachefs unlock -c` exits 0 for both the locked and the unlocked
+    # state, so the module's ExecCondition always passes and the unit prompts
+    # even after tank-unlock has already unlocked the device. Match the
+    # message instead: the unit only runs while the filesystem is locked.
+    "unlock-bcachefs-srv-tank" = {
+      serviceConfig.ExecCondition = lib.mkForce (
+        "${pkgs.bash}/bin/bash -c \"! ${pkgs.bcachefs-tools}/bin/bcachefs unlock -c ${tankDevice} | ${pkgs.gnugrep}/bin/grep -q unlocked\""
+      );
+    };
+
     # Vaultwarden's own data stays in /var/lib/vaultwarden; only the oneshot
-    # backup writes to the tank.
+    # backup writes to the tank. It is triggered by its timer (which is
+    # wanted by tank.target), not started directly, so unlocking does not
+    # block on a long backup.
     backup-vaultwarden = {
-      wantedBy = tankWantedBy;
       partOf = tankPartOf;
       unitConfig = tankUnitConfig;
       requires = lib.mkAfter [ "tank-init.service" ];
@@ -116,14 +128,12 @@ in
     };
 
     restic-backups-b2 = {
-      wantedBy = tankWantedBy;
       partOf = tankPartOf;
       unitConfig = tankUnitConfig;
       after = lib.mkAfter [ "tank-init.service" ];
     };
 
     postgresqlBackup = {
-      wantedBy = tankWantedBy;
       partOf = tankPartOf;
       unitConfig = tankUnitConfig;
       requires = lib.mkAfter [ "tank-init.service" ];
@@ -172,6 +182,10 @@ in
     postgresqlBackup = {
       wantedBy = tankWantedBy;
       partOf = tankPartOf;
+      # Unlike the restic and vaultwarden timers, the postgres module's timer
+      # is not persistent. Make it catch up when tank.target starts so the
+      # first unlock still takes a dump without blocking the target.
+      timerConfig.Persistent = true;
     };
     restic-backups-b2 = {
       wantedBy = tankWantedBy;
@@ -188,17 +202,16 @@ in
         exit 1
       fi
 
-      device="/dev/disk/by-uuid/${tankUuid}"
+      device="${tankDevice}"
 
       if ${pkgs.util-linux}/bin/findmnt --mountpoint ${tankMount} >/dev/null 2>&1; then
         echo "tank-unlock: ${tankMount} is already mounted; skipping the unlock"
       else
-        # `unlock -c` exits 0 while the filesystem is still locked. A failed
-        # interactive unlock aborts here instead of falling through to the
-        # mount: srv-tank.mount pulls in NixOS's ask-password unlock service,
-        # which would wait forever for a password agent this SSH session does
-        # not have.
-        if ${pkgs.bcachefs-tools}/bin/bcachefs unlock -c "$device"; then
+        # `bcachefs unlock -c` exits 0 for both the locked and the unlocked
+        # state, so check the message. The mount unit's unlock helper uses the
+        # same check and skips once the key is in the keyring, so this prompt
+        # is the only one.
+        if ${pkgs.bcachefs-tools}/bin/bcachefs unlock -c "$device" | ${pkgs.gnugrep}/bin/grep -q "and locked"; then
           # Prompts on the controlling terminal and keeps the key in root's
           # keyring for this boot only.
           ${pkgs.bcachefs-tools}/bin/bcachefs unlock "$device"
