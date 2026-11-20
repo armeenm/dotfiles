@@ -50,6 +50,11 @@ let
           ;;
         stop)
           remote "moonlight quit >/dev/null 2>&1 || pkill -f 'MacOS/Moonlight' || true"
+          # Sunshine must not keep listening once the stream is over; it is
+          # only running because `cast start` brought it up.
+          if command -v systemctl >/dev/null 2>&1; then
+            systemctl --user stop sunshine || true
+          fi
           echo "stream stopped"
           ;;
         status)
