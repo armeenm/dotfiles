@@ -13,6 +13,7 @@ in {
   imports = [
     ./home.nix
     ./programs.nix
+    ./cast.nix
     ./completions.nix
     ./services.nix
     ./starship.nix
