@@ -88,6 +88,19 @@ in {
           hs = require("hyprsplit")
           hs.config({ num_workspaces = 10 })
         '';
+
+        # Super chords are also Hyprland chords (SUPER+SPACE, SUPER+TAB, ...),
+        # so while a streamed remote desktop has focus they are consumed here
+        # and never reach the client, which then never sees its own
+        # command-key shortcuts. This submap unbinds them all, so the focused
+        # window receives them instead.
+        "10-remote-submap" = ''
+          hl.bind("SUPER + B", hl.dsp.submap("remote"))
+          hl.define_submap("remote", function()
+            -- Leave with the same chord; everything else is passed through.
+            hl.bind("SUPER + B", hl.dsp.submap("reset"))
+          end)
+        '';
       };
 
       settings = {
@@ -346,7 +359,6 @@ in {
           (modBind "SHIFT + S" ''hl.dsp.exec_cmd("makoctl mode -s default && pkill -SIGRTMIN+1 waybar")'')
           (modBind "X" ''hl.dsp.exec_cmd("loginctl lock-session")'')
           (modBind "SHIFT + X" ''hl.dsp.exec_cmd("sleep 2 && systemctl suspend")'')
-          (modBind "B" ''hl.dsp.exec_cmd("woomer")'')
 
           (mkBind "XF86AudioPause" ''hl.dsp.exec_cmd("playerctl play-pause")'')
           (mkBind "XF86AudioPlay" ''hl.dsp.exec_cmd("playerctl play-pause")'')
