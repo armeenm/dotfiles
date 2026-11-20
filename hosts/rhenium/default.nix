@@ -7,8 +7,9 @@
       stateVersion = lib.mkForce "25.11";
 
       # Moonlight client: the TV runs macOS, so this is the end that receives
-      # the stream from Sunshine on argentum.
-      packages = [ pkgs.moonlight-qt ];
+      # the stream from Sunshine on argentum. SwitchAudioSource moves the
+      # default output to the HDMI sink, which macOS will not do from ssh.
+      packages = [ pkgs.moonlight-qt pkgs.switchaudio-osx ];
     };
   };
 
